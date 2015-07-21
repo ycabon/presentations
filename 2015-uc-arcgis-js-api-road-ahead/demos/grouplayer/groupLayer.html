@@ -6,9 +6,9 @@
 
     <link href="../commons/css/style.css" rel="stylesheet" type="text/css">
     <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
-    <script src="../commons/dojo-config.js"></script>
+    <script src="../commons/js/dojo-config.js"></script>
      
-    <link href="//js.arcgis.com/4.0beta1/esri/css/jsapi.css" rel="stylesheet" type="text/css">
+    <link href="//js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
     <script src="//js.arcgis.com/4.0beta1/"></script>
 
     <style>
@@ -33,11 +33,11 @@
         "esri/Map",
         "esri/Camera",
 
-        "esri/views/View3D",
+        "esri/views/SceneView",
 
         "esri/layers/GroupLayer",
         "esri/layers/FeatureLayer",
-        "esri/layers/ArcGISTiledMapServiceLayer",
+        "esri/layers/ArcGISTiledLayer",
 
         "widgets/LayerWidget/LayerWidget",
 
@@ -45,7 +45,7 @@
         "dojo/domReady!"
       ], function(
         Map, Camera,
-        View3D,
+        SceneView,
         GroupLayer, FeatureLayer, ArcGISTiledLayer,
         LayerWidget
       ) {
@@ -53,15 +53,68 @@
         //----------------------------------
         //  Setup the map
         //----------------------------------
-        
-        map = new Map();
-        view = new View3D({
-          map: map,
-          container: 'mapDiv'
-        });
 
         // listMode: 'show', 'hide', 'hide-children'
         // visibilityMode: 'independent', 'exclusive', 'inherit'
+        
+        // Create the Map with it's layers
+        map = new Map({
+          layers: [
+            new ArcGISTiledLayer({
+              title: 'Dark Gray Canvas',
+              url: '//services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer',
+              //listMode: 'hide',
+            }),
+
+            new GroupLayer({
+              title: 'USA Tiled Services',
+              visibilityMode: 'exclusive',
+              //listMode: 'hide-children',
+              layers: [
+                new ArcGISTiledLayer({
+                  url: '//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer',
+                  title: 'Median Household Income',
+                  visible: false
+                }),
+                new ArcGISTiledLayer({
+                  "url": '//services.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Tapestry/MapServer',
+                  "title": "Tapestry Segmentation",
+                  visible: true
+                }),
+                new ArcGISTiledLayer({
+                  url: '//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Population_Density/MapServer',
+                  title: 'Population Density',
+                  visible: false
+                })
+              ]
+            })
+          ]
+        });
+
+        // Create a view over the US
+        view = new SceneView({
+          map: map,
+          container: 'viewDiv',
+          camera: Camera.fromJSON({
+            position: {
+              x: -11311115,
+              y: 2353487,
+              spatialReference: {
+                wkid: 102100
+              },
+              z: 5856400
+            },
+            heading: 0,
+            tilt: 16
+          })
+        });
+
+        var layerWidget = new LayerWidget({
+          view: view
+        }, 'layersWidgetDiv');
+  
+        /*
+        Alternative way to add the group
 
         map.add(new ArcGISTiledLayer({
           title: 'Dark Gray Canvas',
@@ -90,31 +143,12 @@
           title: 'Population Density',
           visible: false
         }));
-
         map.add(group);
+        // group.listMode = 'hide-children';
+        // group.visibilityMode = 'independent';
+        */
 
-        var layerWidget = new LayerWidget({
-          view: view
-        }, 'layersWidgetDiv');
 
-        // tmp workaround
-        map.then(function() {
-          view.set('camera', Camera.fromJson({
-            position: {
-              x: -11311115.587871078,
-              y: 2353487.8214855953,
-              spatialReference: {
-                wkid: 102100
-              },
-              z: 5856400.415709892
-            },
-            heading: 1.0432519863514758,
-            tilt: 16.53901228750022
-          }));
-        })
-
-        // group.set('listMode', 'hide-children');
-        // group.set('visibilityMode', 'independent');
       });
       
     </script>
@@ -123,7 +157,7 @@
 <!-- possible values: light & dark -->
   <body class="light">
     <div class="application">
-      <div id="mapDiv" class="esriMap">
+      <div id="viewDiv">
         <div id="layersWidgetDivWrapper" class="shadowed">
           <div id="layersWidgetDiv"></div>
         </div>

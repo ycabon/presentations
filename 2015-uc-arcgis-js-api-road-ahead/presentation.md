@@ -52,7 +52,7 @@ var map = new Map({
 map.add(new FeatureLayer(...));
 
 // create a 3D view for the Map
-var view = new View3D({
+var view = new SceneView({
   map: map,
   container: "viewDiv"
 });
@@ -64,21 +64,13 @@ var view = new View3D({
  - Mixin similar to `dojo/Stateful`
    - single object constructor
    - `get()`, `set()`, `watch()`
- - Difference: watch callback signature is a bit different
 
-     `Stateful`:
-```javascript
-map.watch('basemap', function(name, oldValue, newValue) {
-  // ...
-});
-```
-     `Accessor`:
 ```javascript
 map.watch('basemap', function(newValue, oldValue, name, target) {
   // ...
 });
 ```
- - Difference: no support for setters returning a promise
+   - support for ES7 `Object.observe()`
 
 ---
 
@@ -151,7 +143,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
     basemap: 'topo'
   });
 
-  map.set('basemap', 'streets');
+  map.basemap = 'streets';
   ```
 
  - `basemap` as an instance of `Basemap`
@@ -162,12 +154,12 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
   var toner = new Basemap({
     baseLayers: [
       new WebTiledLayer({
-        urlTemplate
+        urlTemplate: '...'
       })
     ]
   })
 
-  map.set('basemap', toner);
+  map.basemap = toner;
   ```
 
 ---

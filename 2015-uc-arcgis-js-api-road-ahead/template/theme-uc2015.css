@@ -134,7 +134,9 @@ body {
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
 
 .reveal code {
-  font-family: monospace; }
+  font-family: monospace; 
+  color: gold;
+}
 
 .reveal pre code {
   display: block;
@@ -186,7 +188,7 @@ body {
  * LINKS
  *********************************************/
 .reveal a {
-  color: #FAD542;
+  color: lavender;
   text-decoration: none;
   -webkit-transition: color 0.15s ease;
   -moz-transition: color 0.15s ease;
@@ -206,9 +208,9 @@ body {
  *********************************************/
 .reveal section img {
   margin: 15px 0px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 4px solid #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+  /* background: rgba(255, 255, 255, 0.12); */
+  /* border: 4px solid #fff; */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */ }
 
 .reveal a img {
   -webkit-transition: all 0.15s linear;

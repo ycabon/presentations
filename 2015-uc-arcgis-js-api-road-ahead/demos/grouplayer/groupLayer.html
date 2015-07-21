@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>4.0</title>
+
+    <link href="../commons/css/style.css" rel="stylesheet" type="text/css">
+    <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+    <script src="../commons/dojo-config.js"></script>
+     
+    <link href="//js.arcgis.com/4.0beta1/esri/css/jsapi.css" rel="stylesheet" type="text/css">
+    <script src="//js.arcgis.com/4.0beta1/"></script>
+
+    <style>
+      #layersWidgetDivWrapper {
+        background: white;
+        position: absolute;
+        top: 100px;
+        left: 20px;
+        z-index: 100;
+        padding: 20px;
+      }
+      #layersWidgetDiv {
+        width: 275px;
+      }
+    </style>
+
+    <script type="text/javascript">
+
+      var map, view, group;
+      
+      require([
+        "esri/Map",
+        "esri/Camera",
+
+        "esri/views/View3D",
+
+        "esri/layers/GroupLayer",
+        "esri/layers/FeatureLayer",
+        "esri/layers/ArcGISTiledMapServiceLayer",
+
+        "widgets/LayerWidget/LayerWidget",
+
+        "commons/init",
+        "dojo/domReady!"
+      ], function(
+        Map, Camera,
+        View3D,
+        GroupLayer, FeatureLayer, ArcGISTiledLayer,
+        LayerWidget
+      ) {
+        
+        //----------------------------------
+        //  Setup the map
+        //----------------------------------
+        
+        map = new Map();
+        view = new View3D({
+          map: map,
+          container: 'mapDiv'
+        });
+
+        // listMode: 'show', 'hide', 'hide-children'
+        // visibilityMode: 'independent', 'exclusive', 'inherit'
+
+        map.add(new ArcGISTiledLayer({
+          title: 'Dark Gray Canvas',
+          url: '//services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer',
+          //listMode: 'hide',
+        }));
+
+        group = new GroupLayer({
+          title: 'USA Tiled Services',
+          visibilityMode: 'exclusive',
+          //listMode: 'hide-children'
+        });
+
+        group.add(new ArcGISTiledLayer({
+          url: '//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Median_Household_Income/MapServer',
+          title: 'Median Household Income',
+          visible: false
+        }));
+        group.add(new ArcGISTiledLayer({
+          "url": '//services.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Tapestry/MapServer',
+          "title": "Tapestry Segmentation",
+          visible: true
+        }));
+        group.add(new ArcGISTiledLayer({
+          url: '//server.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Population_Density/MapServer',
+          title: 'Population Density',
+          visible: false
+        }));
+
+        map.add(group);
+
+        var layerWidget = new LayerWidget({
+          view: view
+        }, 'layersWidgetDiv');
+
+        // tmp workaround
+        map.then(function() {
+          view.set('camera', Camera.fromJson({
+            position: {
+              x: -11311115.587871078,
+              y: 2353487.8214855953,
+              spatialReference: {
+                wkid: 102100
+              },
+              z: 5856400.415709892
+            },
+            heading: 1.0432519863514758,
+            tilt: 16.53901228750022
+          }));
+        })
+
+        // group.set('listMode', 'hide-children');
+        // group.set('visibilityMode', 'independent');
+      });
+      
+    </script>
+  </head>
+  
+<!-- possible values: light & dark -->
+  <body class="light">
+    <div class="application">
+      <div id="mapDiv" class="esriMap">
+        <div id="layersWidgetDivWrapper" class="shadowed">
+          <div id="layersWidgetDiv"></div>
+        </div>
+      </div>
+      <div class="applicationUI">
+
+<!-- possible values: applicationBar + (none, green, orange) -->
+        <div class="applicationBar">
+          <div class="content">
+            <div class="cartouche">
+              <span class="label">4.0</span>
+            </div>
+            <div class="main">
+              <span class="title">GroupLayer</span>
+            </div>
+            <div class="actionBar">
+<!-- top right content, have some style issues -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  
+</html>

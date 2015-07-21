@@ -5,10 +5,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>4.0 - ViewPadding</title>
     <link href="../../commons/css/style.css" rel="stylesheet" type="text/css">
-    <link href="/arcgis-js-api-4/esri/css/esri.css" rel="stylesheet" type="text/css">
-    <script src="../../commons/dojo-config.js"></script>
-
-    <script src="/arcgis-js-api-4/dojo/dojo.js"></script>    
+    <script src="../../commons/js/dojo-config.js"></script>
+    <link href="//js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
+    <script src="//jsdev.arcgis.com/4.0beta1/"></script>    
     <style>
       .basemap {
         margin-top: 20px;
@@ -22,9 +21,10 @@
       require([
         "dojo/query",
         "dojo/dom-attr",
+        "dojo/fx/easing",
         
         "esri/Map",
-
+        
         "esri/geometry/SpatialReference",
         "esri/geometry/Extent",
         
@@ -32,7 +32,7 @@
         
         "dojo/domReady!"
       ], function(
-        domQuery, domAttr,
+        domQuery, domAttr, easing,
         Map, SpatialReference,
         Extent,
         SceneView
@@ -51,16 +51,11 @@
         });
 
         view = new SceneView({
-          container: "mapDiv",
+          container: "viewDiv",
           map: map,
-          continousZoom: true
-        });
-
-        // tmp workaround
-        map.then(function() {
-          view.set('padding', {
+          padding: {
             top: 80
-          });
+          }
         });
         
         //----------------------------------
@@ -69,36 +64,35 @@
         
         // Set a view padding when clicking on the cartouche
         // Open the drawer
-        var closedExtent;
         domQuery(".cartouche").on("click", function(event) {
           var appUI = domQuery(".applicationUI");
           appUI.toggleClass("open");
           open = !open;
           if (open) {
-            //closedExtent = view.get("extent");
-            view.set("padding", {
+            view.padding = {
               left: 300,
               top: 80
-            });
+            };
           } else {
-            view.set({
-              padding: {
-                top: 80,
-                left: 0
-              }
-            });
+            view.padding = {
+              top: 80
+            };
           }
         });
         
         
         // Rotate left
         domQuery("#rotMinus").on("click", function() {
-          view.rotateBy(-20);
+          view.animateTo({
+            rotation: view.rotation - 20
+          });
         });
         
         // Rotate right
         domQuery("#rotPlus").on("click", function() {
-          view.rotateBy(20);
+          view.animateTo({
+            rotation: view.rotation + 20
+          });
         });
         
         
@@ -117,13 +111,16 @@
             parseFloat(dataExtent[3]),
             new SpatialReference(102100)
           );
-          view.set("extent", bookmark);
+          view.animateTo(bookmark, {
+            duration: 2000,
+            easing: easing.quadInOut
+          });
         });
 
         // Basemaps
         domQuery(".basemap").on("click", function(event) {
           var bsm = domAttr.get(event.currentTarget, "data-basemap");
-          map.set("basemap", bsm);
+          map.basemap = bsm;
         });
         
       });
@@ -133,7 +130,7 @@
   
   <body class="light">
     <div class="application">
-      <div id="mapDiv" class="esriMap">
+      <div id="viewDiv" class="esriMap">
         <div class="logo-med"></div>
       </div>
       <div class="applicationUI">

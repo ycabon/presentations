@@ -35,11 +35,11 @@ define([
         this.startup();
       },
 
-      _setMapAttr: function(value) {
-        this.map = value;
-        this.set("view", value.get("view"));
-        this.map.watch("view", function(newValue) {
-          this.set("view", newValue);
+      _setViewAttr: function(value) {
+        this.view = value;
+        this.map = value.map;
+        this.view.watch("map", function(newValue) {
+          this.set("map", newValue);
         }.bind(this));
       },
 
@@ -92,6 +92,7 @@ define([
         }
         return new LayerItem({
           map: this.map,
+          view: this.view,
           layer: layer,
           layerWidget: this
         });

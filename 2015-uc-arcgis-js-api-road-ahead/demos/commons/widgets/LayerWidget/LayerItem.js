@@ -133,6 +133,7 @@ define([
       _addLayerItem: function(layer, idx) {
         var it = new LayerItem({
           map: this.map,
+          view: this.view,
           layer: layer,
           layerWidget: this.layerWidget,
           parentGroup: this.layer,
@@ -233,17 +234,17 @@ define([
       },
 
       _layerVisInputCheckboxChange: function(checked) {
-        if (this.layer.get("visible") !== checked) {
-          this.layer.set("visible", checked);
+        if (this.layer.visible !== checked) {
+          this.layer.visible = checked;
         }
       },
       
       _layerFrameButtonClick: function() {
         if (this.layer.fullExtent) {
-          this.map.view.animateTo({
+          this.view.animateTo({
             target: this.layer.fullExtent,
-            tilt: this.map.view.get("camera").tilt,
-            heading: this.map.view.get("camera").heading
+            tilt: this.view.camera.tilt,
+            heading: this.view.camera.heading
           });
         }
       }

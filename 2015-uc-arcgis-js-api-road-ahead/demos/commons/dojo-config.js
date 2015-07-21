@@ -4,15 +4,15 @@ var dojoConfig = {
   packages: [
     {
       name: "commons",
-      location: location.origin + "/4.0-2015-devsummit-demos/commons/js" 
+      location: location.href.substring(0, location.href.lastIndexOf('/') + 1) + "../commons/js" 
     },
     {
       name: "widgets",
-      location: location.origin + "/4.0-2015-devsummit-demos/commons/widgets" 
+      location: location.href.substring(0, location.href.lastIndexOf('/') + 1) + "../commons/widgets" 
     },
     {
       name: "libs",
-      location: location.origin + "/4.0-2015-devsummit-demos/commons/libs" 
+      location: location.href.substring(0, location.href.lastIndexOf('/') + 1) + "../commons/libs" 
     },
     {
       name: "local",

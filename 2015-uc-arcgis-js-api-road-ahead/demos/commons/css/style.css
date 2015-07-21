@@ -2,7 +2,7 @@
 *     Layout
 ********************/
 
-html, body, #mapDiv {
+html, body, #viewDiv {
   position: absolute;
   height:  100%;
   width:   100%; 

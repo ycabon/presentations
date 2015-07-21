@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>4.0 - ViewResize</title>
+    <link href="../commons/css/style.css" rel="stylesheet" type="text/css">
+    <link href="//js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
+    <script src="../commons/dojo-config.js"></script>
+    
+    <style>
+      body.light {
+        background: #fff;
+      }
+    
+      #Div {
+        background: url(../commons/images/noisy_grid_light.png) #fff;
+        width: 400px;
+        height: 400px;
+        top: 200px;
+        left: 200px;
+        position: absolute;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+    </style>
+    
+    <script src="//js.arcgis.com/4.0beta1/"></script>    
+    <script src="../commons/libs/yui/yui/yui-min.js"></script>
+    
+    <script type="text/javascript">
+      var map, view, resizer;
+      
+      require([
+        "dojo/query",
+        "dojo/dom-attr",
+        
+        "esri/Map",
+        
+        "esri/geometry/SpatialReference",
+        "esri/geometry/Extent",
+
+        "esri/views/MapView",
+        
+        "dojo/domReady!"
+      ], function(
+        domQuery, domAttr,
+        Map,
+        SpatialReference, Extent,
+        MapView
+      ) {
+        
+        //----------------------------------
+        //  Setup the map
+        //----------------------------------
+        
+        map = new Map({
+          basemap: 'satellite',
+          extent: {
+            xmin: -15664087.332420409,
+            ymin: 2627027.469713314,
+            xmax: -6271505.296740449,
+            ymax: 7347778.336604545,
+            spatialReference: { wkid: 102100 }
+          }
+        });
+
+        view = new MapView({
+          container: 'viewDiv',
+          map: map,
+          constraints: {
+            minZoom: 3,
+            maxZoom: 10,
+            snapToZoom: false
+          },
+          width: 400,
+          height: 400
+        });
+        
+        bookmark = new Extent(
+          -13864470.529727584,2843782.8381202556,-7465774.017920611,6366001.101500241,
+          new SpatialReference(102100)
+        );
+        
+        //----------------------------------
+        //  Setup the ui
+        //----------------------------------
+        
+        var resizeAlignSelect = domQuery("#resizeAlignSelect")[0];
+        var preserveExtentChk = domQuery("#preserveExtentChk")[0];
+        var mapExtent;
+
+        YUI().use("resize", function(Y) {
+          resizer = new Y.Resize({
+            node: "#viewDiv",
+            top: "200px",
+            left: "200px",
+            width: "200px",
+            height: "300px"
+          });
+          resizer.on("resize:start", function(event) {
+            view.interacting = true;
+            if (preserveExtentChk.checked) {
+              mapExtent = view.extent;
+            }
+          });
+          resizer.on("resize:resize", function(event) {
+            view.resizeAlign = resizeAlignSelect.value;
+            view.width = event.info.offsetWidth;
+            view.height = event.info.offsetHeight;
+            if (preserveExtentChk.checked) {
+              view.extent = mapExtent;
+            }
+          });
+          resizer.on("resize:end", function(event) {
+            view.interacting = false;
+          });
+        });
+
+        // temp workaround
+        view._widthSetter = view._heightSetter = null;
+        //
+      });
+        
+      
+    </script>
+  </head>
+  
+  <body class="light">
+    <div class="application">
+      <div id="viewDiv" style="top: 200px; left: 200px; width: 400px, height: 400px">
+        <div class="logo-med"></div>
+      </div>
+      <div class="applicationBar">
+        <div class="content">
+          <div class="cartouche">
+            <span class="label">4.0</span>
+          </div>
+          <div class="main">
+            <span class="title">Resize</span>
+          </div>
+          <div class="actionBar">
+            <label id="blendChk" class="topcoat-checkbox">
+              Preserve extent
+              <input id="preserveExtentChk" type="checkbox">
+              <div class="topcoat-checkbox__checkmark"></div>
+            </label>
+            <span style="margin-top:22px;">Resize align: </span>
+            <select id="resizeAlignSelect" name="select" style="margin-top:22px;">
+              <option value="center" selected>center</option>
+              <option value="top">top</option>
+              <option value="left">left</option>
+              <option value="bottom">bottom</option>
+              <option value="right">right</option>
+              <option value="top-left">top-left</option>
+              <option value="top-right">top-right</option>
+              <option value="bottom-left">bottom-left</option>
+              <option value="bottom-right">bottom-right</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </body>
+  
+</html>

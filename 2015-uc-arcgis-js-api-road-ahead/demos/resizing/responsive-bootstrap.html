@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ArcGIS JS 4.0 Bootstrap Responsive Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+     <meta name="description" content="ArcGIS JS 4.0 Bootstrap Responsive Test">
+    <!-- Fonts -->
+    <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/3706abc4-0756-424b-b07b-1748122f85d8.css">
+    <!-- Step 1. Add CSS for Bootstrap, ArcGIS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <!--link rel="stylesheet" href="//cabon.esri.com/arcgis-js-api-4/esri/css/esri.css"-->
+    <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+    <style>
+      html, body {
+        font-family: "Avenir LT W01 35 Light";
+      }
+      .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      #view2D, #view3D {
+        min-height: 100px;
+/*         max-height: 400px; */
+        padding: 5px 0 5px;
+        margin: 5px 0 5px;
+      }
+      .esriZoom.esriVertical.esriComponent {
+        left: 5px;
+        top: 5px;
+      }
+      .title-back {
+        background-color: #eee;
+      }
+      .map-back {
+        background-color: #000;
+      }
+      .col-no-padding {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      h1 {
+        margin: 8px 0 5px;
+      }
+      h4 {
+        margin: 5px 0 10px;
+      }
+      .nav {
+        padding: 26px 0px 0px 10px;
+      }
+      .nav>li>a {
+        padding: 5px 10px 3px;
+      }
+      .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+        background-color: #BEBEBE;
+      }
+      @media (max-width: 768px) { 
+        .container {
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+        h1 {
+          font-size: 28px;
+        }
+        .nav {
+          padding: 8px 10px 0px 0px;
+        }
+        #view2D, #view3D {
+          padding: 0px 0 0;
+          margin: 0px 0 0;
+        }
+      } 
+    </style>
+
+    <!-- Step 2. Add JS lirbaries -->
+    <script src="//js.arcgis.com/4.0beta1/"></script>
+    <script>
+      var map, view2D, view3D;
+      require([
+        "esri/Map",
+
+        "esri/views/SceneView",
+        "esri/views/MapView",
+
+        "dojo/on",
+        "dojo/dom-style",
+        "dojo/dom",
+        "dojo/domReady!"
+      ], 
+      function(
+        Map,
+        SceneView, MapView,
+        on, style, dom
+      ) {
+        // Map 
+        map = new Map({
+          basemap: "streets"
+        });
+
+        // Map View
+        view2D = new MapView({
+          container: "view2D",
+          map: map,
+          center: [-100, 40],
+          zoom: 4
+        });
+
+        // Scene View
+        view3D = new SceneView({
+          container: "view3D",
+          map: map,
+          center: [-100, 40],
+          zoom: 4
+        });
+      });
+    </script>
+    <!-- jQuery (for Bootstrap's JavaScript plugins). NOTE: You can also use pure Dojo. See examples. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all  plugins or individual files as needed -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    
+  </head>
+  <body>
+    <!-- Step 3. Add HTML to define the layout of the map and page -->
+    <div class="container">
+      <div class="row title-back">
+        <div class="col-xs-8">
+          <h1>ArcGIS JS 4.0 Beta</h1>
+          <h4 class="hidden-xs">Responsive Resize Test with Bootstrap</h4>
+        </div>
+        <div class="col-xs-4">
+          <ul class="nav nav-pills pull-right">
+            <li class="active" role="presentation"><a href="#2D" data-toggle="tab">2D<span class="hidden-xs"> View</span></a></li>
+            <li role="presentation"><a href="#3D" data-toggle="tab">3D<span class="hidden-xs"> View</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row body-back">
+        <div class="col-xs-12 col-no-padding">
+          <div class="tab-content">
+            <div class="tab-pane active" id="2D">
+              <div id="view2D"></div>
+            </div>
+            <div class="tab-pane" id="3D">
+              <div id="view3D"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -3,7 +3,7 @@
 #Road-ahead
 Jeremy Bartley - Yann Cabon
 
-
+---
 
 ## 3.x
  - [Geometry Engine](http://developers.arcgis.com/javascript/samples/ge_geodesic_buffers/)
@@ -11,14 +11,14 @@ Jeremy Bartley - Yann Cabon
  - [Image Server](http://developers.arcgis.com/javascript/samples/layers_imageservicevector/)
  - [Quantization](demos/quantization/PIXELATE_ALL_THE_POLYGONS.html) vs. [Generalization](demos/quantization/TRIANGULATE_ALL_THE_POLYGONS.html)
 
-
+---
 
 ## 4.0 - highlights
  - 2D/3D
  - multiple betas during 2015
  - API 4.0: new concepts & changes
 
-
+---
 
 ## 2D/3D
  - Starting point of 4.0: 3D is coming!
@@ -28,7 +28,7 @@ Jeremy Bartley - Yann Cabon
  - Can't work, WebGL renders in one Canvas
  - Solution?
 
-
+---
 
 ## 2D/3D
  - Separate the business logic from the drawing logic.
@@ -37,12 +37,12 @@ Jeremy Bartley - Yann Cabon
    - clean decoupling
    - clearer about what's going on when something changes 
 
-
+---
 
 Experiment - Map running in node
 ![Map running in node](images/map-node.png)
 
-
+---
 
 ```javascript
 // create the map and its layers
@@ -58,7 +58,7 @@ var view = new View3D({
 });
 ```
 
-
+---
 
 ## `esri/Accessor`
  - Mixin similar to `dojo/Stateful`
@@ -80,7 +80,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 ```
  - Difference: no support for setters returning a promise
 
-
+---
 
 ## Properties watching
 
@@ -96,7 +96,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - in 4.0 `extent` watchers will be call very often
    - new events for animation. 
 
-
+---
 
 ## Layers
 
@@ -108,7 +108,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - `SceneLayer`
    - `GroupLayer`
 
-
+---
 
 ## GroupLayer
 
@@ -119,7 +119,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - listMode: `hide-children`, `hidden`
  - [demo](demos/grouplayer/groupLayer.html)
 
-
+---
 
 ## Collection
 
@@ -128,7 +128,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - emit "change" events when something is added/removed/moved
  - used for layers, used for layers in Basemap, used for graphics
 
-
+---
 
 ## Basemap
 
@@ -140,7 +140,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
   - or custom [Basemap instance](demos/basemap/basemap2d-custom.html)
   - in 2D and [3D](demos/basemap/basemap3d.html)
 
-
+---
 
 ## Basemap
 
@@ -170,7 +170,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
   map.set('basemap', toner);
   ```
 
-
+---
 
 ## 2D
  - new "engine" in the work.
@@ -182,7 +182,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - [continous zoom](demos/view2d/resize-extent.html)
  - rotation
 
-
+---
 
 ## 3D
  - webgl engine to display the earth.
@@ -190,39 +190,39 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - support for simple symbols
  - new 3D Symbols
 
-
+---
 
 ## Animation
  - generic functions like `animateTo(target, options):Promise`
  - `esri/Viewpoint`: common way to share between 2D/3D
 
-
+---
 
 ### Webmap & Webscene APIs
  - read
  - save
  - save as
 
-
+---
 
 ## Other
  - legacy dojo loader removed - AMD only
  - classes will be properly cased: esri/Map, esri/Graphic, esri/layers/Layer
  - Simplifying Popup
 
-
+---
 
 ## Conclusion
  - One API
  - 3D, and better 2D
  - simplified API
 
+---
 
-
-<!-- .slide: data-background="Picture1.jpg" -->
+<!-- .slide: data-background="template/Picture4.jpg" -->
 # Questions
 
-
+---
 
 <!-- .slide: data-background="template/Picture1.jpg" -->
 # Rate This Session

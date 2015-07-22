@@ -7,7 +7,7 @@ define([
   query
 ) {
 
-esriConfig.request.corsEnabledServers.push("genesis.esri.com");
+esriConfig.request.corsEnabledServers.push("scenesampleserverdev.arcgis.com");
 esriConfig.request.proxyUrl = "/proxy/proxy.ashx";
 // esriConfig.defaults.io.proxyUrl = "/proxy-test/proxy.jsp";
 

@@ -204,6 +204,14 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
 ---
 
+<!-- .slide: data-background="images/atmosphere.png" -->
+
+---
+
+<!-- .slide: data-background="images/atmosphere-realistic.png" -->
+
+---
+
 ## Conclusion
  - One API
  - 3D, and better 2D

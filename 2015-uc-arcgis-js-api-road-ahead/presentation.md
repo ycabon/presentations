@@ -1,7 +1,7 @@
 <!-- .slide: data-background="template/Picture1.jpg" -->
 #ArcGIS API for Javascript
 #Road-ahead
-Jeremy Bartley - Yann Cabon
+Yann Cabon - Jeremy Bartley
 
 ---
 
@@ -194,6 +194,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - display graphics while zooming.
  - rotation
  - continous zoom
+ - [vector map tiles](http://blogs.esri.com/esri/arcgis/2015/07/20/vector-tiles-preview/), [basemaps](http://basemapsbeta.arcgis.com/preview/app/index.html)
 
 ---
 

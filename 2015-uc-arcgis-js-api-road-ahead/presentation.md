@@ -15,9 +15,10 @@ Jeremy Bartley - Yann Cabon
 
 ## 4.0 - highlights
  - 2D/3D
- - multiple betas during 2015
  - 4.0beta1 released July 15th!
+ - multiple betas coming
  - API 4.0: new concepts & changes
+ - IE9+ for 2D, IE11+ for 3D
 
 ---
 
@@ -105,8 +106,8 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
  - Examples
    - [dbind](demos/integration/dbind.html)
-   - [React](http://jsbin...)
-   - [camera recorder](http://jsbin...)
+   - [React](http://jsbin.com/togemadodo/1/edit?js,output)
+   - [camera recorder](http://output.jsbin.com/robegolosa)
 
 ---
 
@@ -263,7 +264,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - more widgets
  - performance improvements
  - 3D
-   - realistic atmosphere
+   - [realistic atmosphere](demos/whats-next/atmosphere.html)
    - [subsurface rendering](demos/whats-next/subsurface.html)
    - point cloud
    - planar mode

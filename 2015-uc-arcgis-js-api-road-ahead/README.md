@@ -1,5 +1,6 @@
 - [url](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/)
 - demos:
+ - Animation: [random](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/animation/random.html), [with TweenJS](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/animation/tweenjs.html)
  - Basemap: [2D](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/basemap/2d.html), [3D](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/basemap/3d.html), [2D custom](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/basemap/2d-custom.html)
  - [GroupLayer](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/grouplayer/index.html)
  - view padding: [2D](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/padding/2d.html), [3D](https://ycabon.github.io/presentations/2015-uc-arcgis-js-api-road-ahead/demos/padding/3d.html)

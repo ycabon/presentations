@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Subsurface</title>
+
+    <link href="//localhost/~yann6817/arcgis-js-api-4/esri/css/esri.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+      html, body, #mapDiv {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+
+    <script src="//localhost/~yann6817/arcgis-js-api-4/dojo/dojo.js"></script>
+
+    <script>
+    var map, view;
+
+    require([
+      "esri/Map", 
+
+      "esri/layers/FeatureLayer", 
+
+      "esri/renderers/support/jsonUtils", 
+
+      "esri/views/SceneView", 
+
+      "dojo/domReady!"
+    ], 
+    function(
+    Map, 
+    FeatureLayer,
+    jsonUtils,
+    SceneView
+    ) {
+
+      map = new Map({
+        basemap: 'topo',
+        layers: [
+          streets = new FeatureLayer({
+            url: 'http://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/Street2_WFL/FeatureServer/0',
+            renderer: jsonUtils.fromJSON({
+              type: "uniqueValue",
+              field1: "Tunnel",
+              field2: null,
+              field3: null,
+              fieldDelimiter: ", ",
+              defaultSymbol: {
+                type: "LineSymbol3D",
+                symbolLayers: [{
+                    type: "Line",
+                    size: 4,
+                    material: {
+                      color: [127, 201, 127],
+                      transparency: 0
+                    }
+                  }]
+              },
+              defaultLabel: "",
+              uniqueValueInfos: [{
+                  symbol: {
+                    type: "LineSymbol3D",
+                    symbolLayers: [{
+                        type: "Line",
+                        size: 6,
+                        material: {
+                          color: [248, 213, 169],
+                          transparency: 0
+                        }
+                      }, 
+                      {
+                        type: "Path",
+                        size: 5,
+                        material: {
+                          color: [248, 213, 169],
+                          transparency: 50
+                        }
+                      }]
+                  },
+                  value: "0",
+                  label: "Street",
+                  description: ""
+                }, 
+                {
+                  symbol: {
+                    type: "LineSymbol3D",
+                    symbolLayers: [{
+                        type: "Line",
+                        size: 5,
+                        material: {
+                          color: [220, 158, 158],
+                          transparency: 0
+                        }
+                      }, 
+                      {
+                        type: "Path",
+                        size: 25,
+                        material: {
+                          color: [220, 158, 158],
+                          transparency: 50
+                        }
+                      }]
+                  },
+                  value: "1",
+                  label: "Tunnel",
+                  description: ""
+                }]
+            }),
+            elevationInfo: {
+              mode: 'absoluteHeight',
+              offset: 60
+            }
+          })
+        ]
+      });
+
+      view = new SceneView({
+        map: map,
+        container: 'mapDiv',
+        camera: {
+          position: {
+            x: -13620697.076016676,
+            y: 4552750.187039613,
+            z: 430.2184319784865,
+            spatialReference: {
+              wkid: 102100
+            }
+          },
+          heading: 261.7817394068261,
+          tilt: 63.93920481888184
+        }
+      });
+    });
+
+    var transparent = false;
+    toggleTransparency = function() {
+      if (!transparent) {
+        transparent = true;
+        applyTransparency(view, 1);
+      }
+      else {
+        transparent = false;
+        applyTransparency(view, 0);
+      }
+    }
+
+    applyTransparency = function(view, transparency) {
+      if ((transparency !== undefined) && (transparency !== 0)) {
+        view.basemapTerrain.opacity = 0.99;
+        view.basemapTerrain.wireframe = {
+          mode: "shader",
+          wireOpacity: 1.0,
+          surfaceOpacity: 0,
+          width: 1,
+          subdivision: "constant",
+          subdivisionReduceLevels: 2
+        };
+        view.basemapTerrain.frontMostTransparent = true;
+        view.map.basemap.transparency = 0.9;
+      } else {
+        view.basemapTerrain.wireframe = false;
+        view.basemapTerrain.frontMostTransparent = false;
+        view.basemapTerrain.opacity = 1.0;
+        view.map.basemap.transparency = 0;
+      }
+    }
+
+    </script>
+  </head>
+
+  <body>
+    <div id="mapDiv"></div>
+    <button onclick="toggleTransparency();" style="position: absolute; top: 10px; right: 10px;">toggle subsurface</button>
+  </body>
+</html>

@@ -150,9 +150,9 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 - basemap's layers are not part of the `map.layers`, but from `map.basemap`
 - contains 3 Collections: baseLayers, referenceLayers, elevationLayers
 - can be set with
-  - [string for esri's basemap](demos/basemap/basemap2d.html)
-  - or custom [Basemap instance](demos/basemap/basemap2d-custom.html)
-  - in 2D and [3D](demos/basemap/basemap3d.html)
+  - [string for esri's basemap](demos/basemap/2d.html)
+  - or custom [Basemap instance](demos/basemap/2d-custom.html)
+  - in 2D and [3D](demos/basemap/3d.html)
 
 ---
 

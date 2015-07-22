@@ -105,6 +105,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - better/easier integration
 
  - Examples
+   - [side by side views](demos/accessor/side-by-side.html)
    - [dbind](demos/integration/dbind.html)
    - [React](http://jsbin.com/togemadodo/1/edit?js,output)
    - [camera recorder](http://output.jsbin.com/robegolosa)
@@ -192,6 +193,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - abstraction to draw in DOM or Canvas, possibly webgl ;-)
  - display graphics while zooming.
  - rotation
+ - continous zoom
 
 ---
 
@@ -205,8 +207,9 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
 ## Resizing logic
  - automatically measure and position the view
+ - [resize by center, or not](demos/resizing/manual-resize.html)
  - better integration with responsive design pages
- - [continous zoom](demos/view2d/resize-extent.html)
+ - and [frameworks](demos/resizing/responsive-bootstrap.html)
 
 ---
 

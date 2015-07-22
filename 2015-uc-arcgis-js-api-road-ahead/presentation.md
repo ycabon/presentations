@@ -16,6 +16,7 @@ Jeremy Bartley - Yann Cabon
 ## 4.0 - highlights
  - 2D/3D
  - multiple betas during 2015
+ - 4.0beta1 released July 15th!
  - API 4.0: new concepts & changes
 
 ---
@@ -35,7 +36,13 @@ Jeremy Bartley - Yann Cabon
 ![New model: Map/Layers + View(s)/LayerViews](images/architecture.png)
  - Communication model by __events__ and __properties watching__
    - clean decoupling
-   - clearer about what's going on when something changes 
+   - clearer about what's going on when something changes
+
+---
+
+## 2D/3D
+ - For the rest, one API
+ - [demo](demos/visualization/epic-citadel.html)
 
 ---
 
@@ -62,15 +69,15 @@ var view = new SceneView({
 
 ## `esri/Accessor`
  - Mixin similar to `dojo/Stateful`
-   - single object constructor
-   - `get()`, `set()`, `watch()`
+ - single object constructor
+ - `get()`, `set()`, `watch()`
 
 ```javascript
 map.watch('basemap', function(newValue, oldValue, name, target) {
   // ...
 });
 ```
-   - support for ES7 `Object.observe()`
+ - support for ES7 `Object.observe()`
 
 ---
 
@@ -78,7 +85,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
  - Direct benefits:
    - remove inconsistancies between constructor, getter, setter functions, events
-   - one convention everywhere. _"just need to know what property for a sclass"_
+   - one convention everywhere. _"just need to know what properties for a class"_
    - Single object constructor, no more 3+ constructors
    - Leaner SDK: we doc only the properties, the rest is convention
 
@@ -86,7 +93,20 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - no more **_property_**-change events, use `watch()`
    - in 3.x, listen for `extent-change` event.
    - in 4.0 `extent` watchers will be call very often
-   - new events for animation. 
+   - new events and properties for animation. 
+
+---
+
+## Properties watching
+
+ - Frameworks integration
+   - properties are framework agnostic
+   - better/easier integration
+
+ - Examples
+   - [dbind](demos/integration/dbind.html)
+   - [React](http://jsbin...)
+   - [camera recorder](http://jsbin...)
 
 ---
 
@@ -94,9 +114,9 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
  - `map.layers`, a collection of the operational layers
    - mix of image AND graphics
- - Shorter names: `TiledLayer`, `DynamicLayer`
+ - Shorter names: `ArcGISTiledLayer`, `ArcGISDynamicLayer`
  - new ones:
-   - `ElevationLayer`
+   - `ArcGISElevationLayer`
    - `SceneLayer`
    - `GroupLayer`
 
@@ -109,7 +129,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - structure your data visualization
  - visibility mode: `exclusive`, `independent`, `inherit`
  - listMode: `hide-children`, `hidden`
- - [demo](demos/grouplayer/groupLayer.html)
+ - [demo](demos/grouplayer/index.html)
 
 ---
 
@@ -118,7 +138,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - More or less like an Array
  - `add` / `remove` / `forEach` / `map` / `find` / `findIndex`...
  - emit "change" events when something is added/removed/moved
- - used for layers, used for layers in Basemap, used for graphics
+ - used for layers, used for layers in Basemap, used for graphics...
 
 ---
 
@@ -170,8 +190,6 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - abstraction to draw tiles and dynamic images to ease custom layers/layerviews
    - abstraction to draw in DOM or Canvas, possibly webgl ;-)
  - display graphics while zooming.
- - [viewpadding](demos/view2d/view-padding.html)
- - [continous zoom](demos/view2d/resize-extent.html)
  - rotation
 
 ---
@@ -184,23 +202,72 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
 ---
 
+## Resizing logic
+ - automatically measure and position the view
+ - better integration with responsive design pages
+ - [continous zoom](demos/view2d/resize-extent.html)
+
+---
+
+## Padding
+ - easier fullscreen view application.
+ - defines inner margin to make space for UI.
+ - [2D](demos/padding/2d.html)
+ - [3D](demos/padding/3d.html)
+
+---
+
 ## Animation
- - generic functions like `animateTo(target, options):Promise`
+ - generic function `animateTo(target, options):Promise`
+ - customize [easing, duration, chaining](demos/animation/random.html)
+ - DIY using [other libs](demos/animation/tweenjs.html) or [custom](demos/whats-next/routing.html)
  - `esri/Viewpoint`: common way to share between 2D/3D
 
 ---
 
-### Webmap & Webscene APIs
+## Widgets
+ - `ui` property on view to quickly place components
+ - widgets designed as MVVM
+   - separates the logic from the UI implementation
+   - easier to create new versions using other frameworks
+ - ported to 4.0beta1: Search, Zoom, Attribution
+ - new ones: Compass
+
+---
+
+## WebMap & WebScene APIs
  - read
- - save
- - save as
+ - save / save as
+ - easier portal / arcgis.com interaction
+
+---
+
+## SDK
+ - new SDK, built from scratch
+ - simpler, focused samples
+ - user experience
+ - more code snippets
 
 ---
 
 ## Other
  - legacy dojo loader removed - AMD only
- - classes will be properly cased: esri/Map, esri/Graphic, esri/layers/Layer
- - Simplifying Popup
+ - classes properly cased: esri/Map, esri/Graphic, esri/layers/Layer
+ - new folder structure.
+
+---
+
+## Beta2
+ - initial implementation of WebMap and WebScene. reading first
+ - more layer support
+ - more widgets
+ - performance improvements
+ - 3D
+   - realistic atmosphere
+   - [subsurface rendering](demos/whats-next/subsurface.html)
+   - point cloud
+   - planar mode
+ - bugs...
 
 ---
 
@@ -233,5 +300,4 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 ---
 
 <!-- .slide: data-background="template/Picture1.jpg" -->
-# Rate This Session
-[www.esri.com/RateMyDevSummitSession](www.esri.com/RateMyDevSummitSession)
+# 

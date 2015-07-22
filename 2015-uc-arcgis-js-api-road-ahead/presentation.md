@@ -212,6 +212,14 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
 
 ---
 
+<!-- .slide: data-background="images/subsurface-data.png" -->
+
+---
+
+<!-- .slide: data-background="images/subsurface-data-wireframe.png" -->
+
+---
+
 ## Conclusion
  - One API
  - 3D, and better 2D

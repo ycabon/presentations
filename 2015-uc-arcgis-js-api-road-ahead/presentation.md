@@ -268,8 +268,8 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
  - more widgets
  - performance improvements
  - 3D
-   - [realistic atmosphere](demos/whats-next/atmosphere.html)
-   - [subsurface rendering](demos/whats-next/subsurface.html)
+   - realistic atmosphere
+   - subsurface rendering
    - point cloud
    - planar mode
  - bugs...

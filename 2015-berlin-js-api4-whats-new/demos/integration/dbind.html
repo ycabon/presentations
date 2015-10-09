@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Map</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <script src="../commons/js/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta1/"></script>
+
+  <style>
+    .info-box {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+      background: white;
+      -webkit-box-shadow: 0px 5px 20px 0px rgba(158,158,158,1);
+      -moz-box-shadow: 0px 5px 20px 0px rgba(158,158,158,1);
+      box-shadow: 0px 5px 20px 0px rgba(158,158,158,1);
+    }
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+
+      "local/bind",
+      
+      "local/dbindSupport!",
+      "dojo/domReady!"
+    ], function(
+      Map, MapView,
+      bind
+    ) {
+
+      map = new Map({
+        basemap: "streets"
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        zoom: 3,
+        constraints: {
+          minZoom: 2,
+          maxZoom: 10
+        }
+      });
+
+      var centerToString = bind(function(c) {
+        return "[ " + (c ? [c.longitude.toFixed(2), c.latitude.toFixed(2)] : [0, 0]).join(", ") + " ]";
+      });
+
+      var toFixed = bind(function(z) {
+        return z != null ? z.toFixed(2) : 0;
+      });
+
+      var extent2String = bind(function(e) {
+        if (!e) { return ""; }
+        return "[ " + [e.xmin.toFixed(2), e.ymin.toFixed(2), e.xmax.toFixed(2), e.ymax.toFixed(2)].join(", ") + " ]";
+      });
+
+      var toBool = bind(function(b) {
+        return (b || "false").toString();
+      });
+
+      bind(stationaryInput).to(toBool.to(view, "stationary"));
+      bind(interactingInput).to(toBool.to(view, "interacting"));
+      bind(centerInput).to(centerToString.to(view, "center"));
+      bind(zoomInput).to(toFixed.to(view, "zoom"));
+      bind(scaleInput).to(toFixed.to(view, "scale"));
+      bind(extentInput).to(extent2String.to(view, "extent"));
+      bind(basemapTitle).to(map, "basemap.title");
+      bind(numLayerViews).to(view, "layerViewsFlat.length");
+      
+    });
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+  <div class="info-box">
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{font-family:monospace;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+      .tg th{font-family:monospace;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    </style>
+    <table class="tg">
+      <tr>
+        <td class="tg-031e">stationary</td>
+        <td class="tg-031e"><span id="stationaryInput"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">interacting</td>
+        <td class="tg-031e"><span id="interactingInput"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">center</td>
+        <td class="tg-031e"><span id="centerInput"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">zoom</td>
+        <td class="tg-031e"><span id="zoomInput"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">scale</td>
+        <td class="tg-031e"><span id="scaleInput"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">extent</td>
+        <td class="tg-031e"><span id="extentInput"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">basemap</td>
+        <td class="tg-031e"><span id="basemapTitle"></span></td>
+      </tr>
+      <tr>
+        <td class="tg-031e">layerviews</td>
+        <td class="tg-031e"><span id="numLayerViews"></span></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

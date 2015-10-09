@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>4.0 - ViewPadding</title>
+    <link href="../commons/css/style.css" rel="stylesheet" type="text/css">
+    <script src="../commons/js/dojo-config.js"></script>
+    <link href="//js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
+    <script src="//jsdev.arcgis.com/4.0beta1/"></script>    
+    <style>
+      .basemap {
+        margin-top: 20px;
+        margin-left: 20px;
+      }
+    </style>    
+
+    <script type="text/javascript">
+      var map, view, bookmark, open = false;
+      
+      require([
+        "dojo/query",
+        "dojo/dom-attr",
+        "dojo/fx/easing",
+        
+        "esri/Map",
+        
+        "esri/geometry/SpatialReference",
+        "esri/geometry/Extent",
+        
+        "esri/views/MapView",
+        
+        "dojo/domReady!"
+      ], function(
+        domQuery, domAttr, easing,
+        Map, SpatialReference,
+        Extent,
+        MapView
+      ) {
+        
+        //----------------------------------
+        //  Setup the map
+        //----------------------------------
+        
+        map = new Map({
+          extent: new Extent(
+            -13864470.529727584,2843782.8381202556,-7465774.017920611,6366001.101500241,
+            new SpatialReference(102100)
+          ),
+          basemap: 'topo'
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map: map,
+          padding: {
+            top: 80
+          }
+        });
+        
+        //----------------------------------
+        //  Setup the ui
+        //----------------------------------
+        
+        // Set a view padding when clicking on the cartouche
+        // Open the drawer
+        domQuery(".cartouche").on("click", function(event) {
+          var appUI = domQuery(".applicationUI");
+          appUI.toggleClass("open");
+          open = !open;
+          if (open) {
+            view.padding = {
+              left: 300,
+              top: 80
+            };
+          } else {
+            view.padding = {
+              top: 80
+            };
+          }
+        });
+        
+        
+        // Rotate left
+        domQuery("#rotMinus").on("click", function() {
+          view.animateTo({
+            rotation: view.rotation - 20
+          });
+        });
+        
+        // Rotate right
+        domQuery("#rotPlus").on("click", function() {
+          view.animateTo({
+            rotation: view.rotation + 20
+          });
+        });
+        
+        
+        bookmark = new Extent(
+          -13864470.529727584,2843782.8381202556,-7465774.017920611,6366001.101500241,
+          new SpatialReference(102100)
+        );
+        
+        // Bookmarks
+        domQuery(".bookmark").on("click", function(event) {
+          var dataExtent = domAttr.get(event.currentTarget, "data-extent").split(",");
+          bookmark = new Extent(
+            parseFloat(dataExtent[0]),
+            parseFloat(dataExtent[1]),
+            parseFloat(dataExtent[2]),
+            parseFloat(dataExtent[3]),
+            new SpatialReference(102100)
+          );
+          view.animateTo(bookmark, {
+            duration: 2000,
+            easing: easing.quadInOut
+          });
+        });
+
+        // Basemaps
+        domQuery(".basemap").on("click", function(event) {
+          var bsm = domAttr.get(event.currentTarget, "data-basemap");
+          map.basemap = bsm;
+        });
+        
+      });
+      
+    </script>
+  </head>
+  
+  <body class="light">
+    <div class="application">
+      <div id="viewDiv" class="esriMap">
+        <div class="logo-med"></div>
+      </div>
+      <div class="applicationUI">
+        <div class="drawer">
+          <div class="basemap" data-basemap="gray">
+            <img src="images/basemap_canvas.png"></img>
+          </div>
+          <div class="basemap" data-basemap="satellite">
+            <img src="images/basemap_imagery.png"></img>
+          </div>
+          <div class="basemap" data-basemap="national-geographic">
+            <img src="images/basemap_natgeo.png"></img>
+          </div>
+          <div class="basemap" data-basemap="streets">
+            <img src="images/basemap_streets.png"></img>
+          </div>
+          <div class="basemap" data-basemap="topo">
+            <img src="images/basemap_topo.png"></img>
+          </div>
+        </div>
+        <div class="applicationBar">
+          <div class="content">
+            <div class="cartouche">
+              <span class="label">4.0</span>
+            </div>
+            <div class="main">
+              <span class="title">viewPadding</span>
+            </div>
+            <div class="actionBar">
+              <div style="margin-top:16px">
+                <img id="rotMinus" src="images/rotate_left.png"></img>
+              </div>
+              <div style="margin-top:16px">
+                <img id="rotPlus" src="images/rotate_right.png"></img>
+              </div>
+              <div class="bookmark" data-extent="-13864470.529727584,2843782.8381202556,-7465774.017920611,6366001.101500241">
+                <span>USA</span>
+              </div>
+              <div class="bookmark" data-extent="-12976556.373877252,4001686.211787164,-12963628.961468538,4008842.628560354">
+                <span>Palm Springs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </body>
+  
+</html>
+

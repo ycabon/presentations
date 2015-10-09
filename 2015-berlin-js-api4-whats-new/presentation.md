@@ -99,13 +99,27 @@ var view = new SceneView({
  - Mixin similar to `dojo/Stateful`
  - single object constructor
  - `get()`, `set()`, `watch()`
+ - support for ES7 `Object.observe()`
+
+---
+
+## Properties watching
+
 
 ```javascript
-map.watch('basemap', function(newValue, oldValue, name, target) {
-  // ...
-});
+
+	featureLayer = new featureLayer({url});
+
+	map.add(featureLayer);
+
+	featureLayer.watch("loaded", function(newValue, oldValue, property, object) {
+		if (property === "loaded") {
+			//Do something
+		}
+	});
+
+
 ```
- - support for ES7 `Object.observe()`
 
 ---
 
@@ -124,6 +138,7 @@ map.watch('basemap', function(newValue, oldValue, name, target) {
    - new events and properties for animation. 
 
 ---
+
 
 ## Properties watching
 

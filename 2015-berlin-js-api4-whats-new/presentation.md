@@ -15,10 +15,37 @@ Yann Cabon - Andy Gup
 
 ## 4.0 - highlights
  - 2D/3D
- - 4.0beta1 released July 15th!
- - multiple betas coming
+ - 4.0beta2
+ - Additional betas coming
  - API 4.0: new concepts & changes
  - IE9+ for 2D, IE11+ for 3D
+
+---
+
+## Promises
+
+ - 4.0 is a promises-based architecture!
+ 
+The basic pattern looks like this:
+
+
+```javascript
+someAsyncFunction.then(callback, errback);  
+```
+
+And, it's implemented like this:
+
+
+```javascript
+someAsyncFunction().then(function(resolvedVal){
+  //This is called when the promise resolves
+  console.log(resolvedVal);  //logs the value the promise resolves to
+}, function(error){
+  //This function is called when the promise is rejected
+  console.error(error);  //logs the error message
+});
+
+```
 
 ---
 

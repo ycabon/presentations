@@ -26,26 +26,23 @@ Yann Cabon - Andy Gup
 
  - 4.0 is a promises-based architecture!
  
-The basic pattern looks like this:
+ - The basic pattern looks like this:
 
+  ```javascript
+  someAsyncFunction.then(callback, errback);  
+  ```
+  
+ - And, it's implemented like this:
 
-```javascript
-someAsyncFunction.then(callback, errback);  
-```
-
-And, it's implemented like this:
-
-
-```javascript
-someAsyncFunction().then(function(resolvedVal){
-  //This is called when the promise resolves
-  console.log(resolvedVal);  //logs the value the promise resolves to
-}, function(error){
-  //This function is called when the promise is rejected
-  console.error(error);  //logs the error message
-});
-
-```
+  ```javascript
+  someAsyncFunction().then(function(resolvedVal){
+    //This is called when the promise resolves
+    console.log(resolvedVal);  //logs the value the promise resolves to
+  }, function(error){
+    //This function is called when the promise is rejected
+    console.error(error);  //logs the error message
+  });
+  ```
 
 ---
 
@@ -95,10 +92,10 @@ var view = new SceneView({
 
 ---
 
-## `esri/Accessor`
+## `esri/core/Accessor`
  - Mixin similar to `dojo/Stateful`
  - single object constructor
- - `get()`, `set()`, `watch()`
+ - Consistent pattern for `get()`, `set()`, `watch()`
  - support for ES7 `Object.observe()`
 
 ---
@@ -304,17 +301,9 @@ var view = new SceneView({
 
 ---
 
-## Beta2
- - initial implementation of WebMap and WebScene. reading first
- - more layer support
- - more widgets
- - performance improvements
- - 3D
-   - realistic atmosphere
-   - subsurface rendering
-   - point cloud
-   - planar mode
- - bugs...
+## Beta3 ????
+ - ?????????????
+
 
 ---
 
@@ -336,8 +325,9 @@ var view = new SceneView({
 
 ## Conclusion
  - One API
+ - Promises, promises
  - 3D, and better 2D
- - simplified API
+ - simplified and consistent API
 
 ---
 

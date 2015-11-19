@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  <link href="responsive/widgets/Basemaps/css/Basemaps.css" rel="stylesheet" type="text/css">
+  <link href="//js.arcgis.com/4.0beta2/esri/css/main.css" rel="stylesheet" type="text/css">
+
+  <style>
+    html,
+    body,
+    #view {
+      font-family: "Open Sans", sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    #view {
+      position: relative;
+    }
+
+    .esri-view-width-smaller-than-small .esri-logo {
+      display: none;
+    }
+
+    .esri-view-width-smaller-than-medium .esri-zoom {
+      display: none;
+    }
+
+    .esri-view-width-smaller-than-medium .esri-attribution {
+      max-width: 300px;
+    }
+
+    .esri-view-width-larger-than-medium .esri-attribution {
+      max-width: 600px;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      async: true,
+      packages: [{
+          name: "demo",
+          location: location.pathname.replace(/\/[^/]+$/, "/responsive")
+      }]
+    };
+  </script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+  <script type="text/javascript">
+    var map, view, search, home, basemaps;
+
+    require([
+      "demo/widgets/Basemaps",
+
+      "esri/core/watchUtils",
+      "esri/Map",
+      "esri/views/MapView",
+
+      "esri/widgets/Home",
+      "esri/widgets/Search",
+
+      "dojo/domReady!"
+    ],
+    function(
+      Basemaps,
+      watchUtils, Map, MapView,
+      Home, Search
+    ) {
+
+      map = new Map({
+        basemap: "dark-gray"
+      });
+
+      view = new MapView({
+        container: "view",
+        map: map,
+        center: [13.400913962890408, 52.50082657876682],
+        zoom: 12,
+        ui: {
+          components: ["zoom", "compass", "logo", "attribution"]
+        }
+      });
+
+      search = new Search({
+        view: view
+      });
+      search.startup();
+
+      home = new Home({
+        view: view
+      });
+      home.startup();
+
+      basemaps = new Basemaps({
+        viewModel: {
+          view: view
+        }
+      });
+      basemaps.startup();
+
+      view.then(function() {
+        var ui = view.ui;
+
+        ui.add(search, "top-right");
+        ui.add(home, {
+          position: "top-left",
+          index: 0
+        });
+        ui.add(basemaps, "top-left");
+
+        watchUtils.init(view, "cssTraits.active.width", function(width) {
+
+          var lessThanMedium = width === "small" ||
+                               width === "xsmall";
+
+          search.set({
+            enableButtonMode: lessThanMedium,
+            expanded: !lessThanMedium
+          });
+
+          var compassPosition = lessThanMedium ? "bottom-left" : "top-left";
+
+          ui.move("compass", compassPosition);
+
+        });
+
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="view"></div>
+</body>
+
+</html>

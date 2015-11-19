@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Mapping 2 variables</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/3.15/esri/css/esri.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/3.15/"></script>
+
+  <script>
+    var map;
+
+    require(
+    [
+      'esri/map',
+      'esri/Color',
+
+      'esri/layers/FeatureLayer',
+
+      'esri/renderers/UniqueValueRenderer',
+
+      'esri/symbols/SimpleLineSymbol',
+
+      'esri/dijit/Legend',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ],
+    function(
+      Map, Color,
+      FeatureLayer,
+      UniqueValueRenderer,
+      SimpleLineSymbol,
+      Legend
+    ) {
+
+      map = new Map('viewDiv', {
+        basemap: 'dark-gray',
+
+        // over Florida
+        center: [ -81.457, 28.591 ],
+        zoom: 9
+      });
+
+      var url = '//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Florida_Annual_Average_Daily_Traffic/FeatureServer/0';
+      layer = new FeatureLayer(url, {
+        mode: FeatureLayer.AUTO,
+        outFields: '*'
+      });
+
+      // create a unique value renderer and its unique value info
+      var renderer = new UniqueValueRenderer(null, 'DISTRICT');
+      var createSymbol = function(color) {
+        return new SimpleLineSymbol('solid', new Color(color), 1.5);
+      }
+      renderer.addValue("1", createSymbol("#6EC4AE"));
+      renderer.addValue("2", createSymbol("#37A9B7"));
+      renderer.addValue("3", createSymbol("#D68989"));
+      renderer.addValue("4", createSymbol("#BC7EBA"));
+      renderer.addValue("5", createSymbol("#F97B60"));
+      renderer.addValue("6", createSymbol("#7BFAEB"));
+      renderer.addValue("7", createSymbol("#A1D77E"));
+      renderer.addValue("8", createSymbol("#FBDE7F"));
+
+      // define visual variables that varies the width and opacity of the lines based on the average 
+      renderer.setVisualVariables([
+        {
+          type: 'sizeInfo',
+          field: 'AADT',
+          minSize: 0.75,
+          maxSize: 8.25,
+          minDataValue: 10,
+          maxDataValue: 150000
+        },
+        {
+          type: 'opacityInfo',
+          field: 'AADT',
+          stops: [
+            {
+              value: 10,
+              opacity: 0.5
+            },
+            {
+              value: 38518,
+              opacity: 1
+            }
+          ]
+        }
+      ]);
+
+      layer.setRenderer(renderer);
+      map.addLayer(layer);
+
+      map.on('load', function() {
+        // Create a simple legend
+        var legend = new Legend({
+          map: map,
+          layerInfos: [
+            {
+              layer: layer,
+              title: "Florida Annual Average Daily Traffic"
+            }
+          ]
+        }, "legendDiv");
+        legend.startup();
+      });
+
+    });
+  </script>
+</head>
+<body class="dark">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code left shadowed" style="height: 600px">
+        <textarea id="codemirror">
+// create a unique value renderer and its unique value info
+var renderer = new UniqueValueRenderer(null, 'DISTRICT');
+var createSymbol = function(color) {
+  return new SimpleLineSymbol('solid', new Color(color), 1.5);
+}
+renderer.addValue("1", createSymbol("#6EC4AE"));
+renderer.addValue("2", createSymbol("#37A9B7"));
+renderer.addValue("3", createSymbol("#D68989"));
+renderer.addValue("4", createSymbol("#BC7EBA"));
+renderer.addValue("5", createSymbol("#F97B60"));
+renderer.addValue("6", createSymbol("#7BFAEB"));
+renderer.addValue("7", createSymbol("#A1D77E"));
+renderer.addValue("8", createSymbol("#FBDE7F"));
+
+// define visual variables that varies the width and opacity
+// of the lines based on the average 
+renderer.setVisualVariables([
+  {
+    type: 'sizeInfo',
+    field: 'AADT',
+    minSize: 0.75,
+    maxSize: 8.25,
+    minDataValue: 10,
+    maxDataValue: 150000
+  },
+  {
+    type: 'opacityInfo',
+    field: 'AADT',
+    stops: [
+      {
+        value: 10,
+        opacity: 0.5
+      },
+      {
+        value: 38518,
+        opacity: 1
+      }
+    ]
+  }
+]);
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">3.15</span>
+        </div>
+        <div class="main">
+          <span class="title">Mapping 2 variables</span>
+        </div>
+      </div>
+    </div>
+    <div class="legend shadowed">
+      <div id="legendDiv"></div>
+    </div>
+  </div>
+</body>
+</html>

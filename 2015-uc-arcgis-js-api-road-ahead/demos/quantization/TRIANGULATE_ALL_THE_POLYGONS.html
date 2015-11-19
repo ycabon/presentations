@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>Predominant Crop Opacity</title>
+    <link rel="stylesheet" href="//js.arcgis.com/3.13/esri/css/esri.css" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        margin: 0;
+        background-color: #000000;
+      }
+      #toleranceRange {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+    </style>
+
+    <script src="//js.arcgis.com/3.13/"></script>
+
+    <script>
+      var map, featureLayer;
+      require([
+        "dojo/dom",
+        "dojo/on",
+
+        "esri/map",
+        "esri/Color",
+
+        "esri/geometry/Extent",
+
+        "esri/layers/FeatureLayer",
+
+        "esri/renderers/UniqueValueRenderer",
+
+        "esri/symbols/SimpleFillSymbol",
+
+        "dojo/domReady!"
+      ], function (
+        dom, on,
+        Map, Color,
+        Extent, 
+        FeatureLayer, 
+        UniqueValueRenderer,
+        SimpleFillSymbol
+      ){
+
+        map = new Map("map", {
+          basemap: 'dark-gray',
+          center: [-100, 40],
+          zoom: 5
+        });
+
+        var featureLayerOptions = {
+          quantize: false,
+          mode: FeatureLayer.MODE_AUTO,
+          outFields: ["M163_07", "M172_07", "M188_07", "M193_07", "M217_07", "COUNTY", "STATE", "AREA", "M086_07"]
+        }
+
+        featureLayer = new FeatureLayer('//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/USA_County_Crops_2007/FeatureServer/0', featureLayerOptions);
+        
+        // --------------------------------------------------------------------
+        // Custom function to compute the crop that has the largest value
+        // in a particular count. Using a custom function with a renderer
+        // is a really powerful method of having control over symbology
+        // client-side, especially if you don't have control over the service.
+        // --------------------------------------------------------------------
+
+        var uniqueValueRenderer = new UniqueValueRenderer(createSymbol("#d9d9d9"), function (graphic){
+          var maxField = "Other";
+          var max = 0;
+
+          featureLayerOptions.outFields.forEach(function (field){
+            if (graphic.attributes[field] > max) {
+              maxField = field;
+              max = graphic.attributes[field];
+            }
+          });
+
+          return maxField;
+        });
+
+        // --------------------------------------------------------------------
+        // Helper function for creating symbols for the UniqueValueRenderer
+        // --------------------------------------------------------------------
+        function createSymbol(color){
+          return new SimpleFillSymbol()
+            .setColor(new Color(color))
+            .setOutline(null);
+        }
+
+        uniqueValueRenderer.addValue({ value: "M217_07", symbol: createSymbol("#fd7f6f"), label: "Vegetables" });
+        uniqueValueRenderer.addValue({ value: "M188_07", symbol: createSymbol("#b2e061"), label: "Cotton" });
+        uniqueValueRenderer.addValue({ value: "M172_07", symbol: createSymbol("#bd7ebe"), label: "Wheat" });
+        uniqueValueRenderer.addValue({ value: "M193_07", symbol: createSymbol("#7eb0d5"), label: "Soybeans" });
+        uniqueValueRenderer.addValue({ value: "M163_07", symbol: createSymbol("#ffb55a"), label: "Corn" });
+
+        // --------------------------------------------------------------------
+        // Use the average data values to control opacity
+        // Field:       M086_07f
+        
+        // Description: The acres of total cropland as a percentage of land area in acres.
+        //
+        // Standard Deviation:    28.9616022263796
+        // Average:               39.457298802092
+        // Standard Deviation -1: 10.495696576
+        // Standard Deviation +1: 68.418901028
+        //
+        // For more information about statistics: see the outStatistics
+        // parameter in the ArcGIS REST API Help.
+        // --------------------------------------------------------------------
+        uniqueValueRenderer.setOpacityInfo({
+          field: "M086_07",
+          stops: [
+            { value: 10, opacity: 0   },  // -1 stddev,     transparent
+            { value: 39, opacity: 0.5 },  // average value, 50% transparent
+            { value: 68, opacity: 1   }   // +1 stddev,     completely opaque
+          ]
+        });
+
+        featureLayer.setRenderer(uniqueValueRenderer);
+        map.addLayer(featureLayer);
+
+        var range = dom.byId("toleranceRange");
+        on(range, "change", function() {
+          size = 0;
+          featureLayer.setAutoGeneralize(false);
+          featureLayer.setMaxAllowableOffset(map.__tileInfo.lods[range.value].resolution);
+          featureLayer.refresh();
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <input id="toleranceRange" type="range" min="0" max="16" value="5" style="width: 300px"></input>
+  </body>
+</html>

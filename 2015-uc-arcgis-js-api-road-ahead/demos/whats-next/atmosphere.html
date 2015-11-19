@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Atmosphere</title>
+
+    <link href="//localhost/~yann6817/arcgis-js-api-4/esri/css/esri.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+      html, body, #mapDiv {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+
+    <script src="//localhost/~yann6817/arcgis-js-api-4/dojo/dojo.js"></script>
+
+    <script>
+    var map, view;
+
+    require([
+      "esri/Map", 
+
+      "esri/layers/FeatureLayer", 
+
+      "esri/renderers/support/jsonUtils", 
+
+      "esri/views/SceneView", 
+
+      "dojo/domReady!"
+    ], 
+    function(
+    Map, 
+    FeatureLayer,
+    jsonUtils,
+    SceneView
+    ) {
+
+      map = new Map({
+        basemap: 'satellite'
+      });
+
+      view = new SceneView({
+        map: map,
+        container: 'mapDiv',
+        camera: {
+          position: {
+            x: -1077998,
+            y: 4296144,
+            spatialReference: {
+              wkid: 102100
+            },
+            z: 1018441
+          },
+          heading: 20,
+          tilt: 45
+        }
+      });
+    });
+
+    var isRealistic = false;
+    toggleAtmosphere = function() {
+      if (!isRealistic) {
+        isRealistic = true;
+        view.environmentManager._atmosphereSwitch(true);
+      }
+      else {
+        isRealistic = false;
+        view.environmentManager._atmosphereSwitch(false);
+      }
+    }
+
+    </script>
+  </head>
+
+  <body>
+    <div id="mapDiv"></div>
+    <button onclick="toggleAtmosphere();" style="position: absolute; top: 10px; right: 10px;">toggle atmosphere</button>
+  </body>
+</html>

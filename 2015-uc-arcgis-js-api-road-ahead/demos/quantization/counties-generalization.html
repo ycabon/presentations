@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" href="//js.arcgis.com/3.13/esri/css/esri.css">
+    <style>
+      html,body, #mapDiv {
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0px 0 0 0;
+      }
+    </style>
+    <script src="//js.arcgis.com/3.13/"></script>
+
+    <script>
+      var map;
+
+      require([
+        "esri/map",
+        "esri/Color",
+
+        "esri/layers/FeatureLayer",
+
+        "esri/renderers/SimpleRenderer",
+        
+        "esri/symbols/SimpleFillSymbol",
+        "esri/symbols/SimpleLineSymbol",
+
+        "dojo/domReady!"
+      ], function(
+        Map, Color,
+        FeatureLayer,
+        SimpleRenderer,
+        SimpleFillSymbol, SimpleLineSymbol
+      ){
+        
+        map = new Map("mapDiv", {
+          center: [-100, 38],
+          zoom: 5,
+          basemap: "dark-gray"
+        });
+
+        var featureLayer = new FeatureLayer("//services.arcgis.com/fa6Gs17Ms3q4AztR/arcgis/rest/services/us-counties/FeatureServer/0", {
+          quantize: false
+        });
+        featureLayer.setRenderer(
+          new SimpleRenderer(
+            new SimpleFillSymbol(
+              SimpleFillSymbol.STYLE_SOLID,
+              null,
+              new Color([ 255, 255, 255, .9 ])
+            )
+          )
+        )
+        map.addLayer(featureLayer);
+
+      });
+    </script>
+  </head>
+  
+  <body class="">
+     <div id="mapDiv">
+     </div>
+  </body>
+
+</html>

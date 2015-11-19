@@ -1,0 +1,135 @@
+.esri-basemaps {
+  color: #4c4c4c;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #57585a;
+  background-color: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.esri-basemaps .esri-icon {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  display: inline-block;
+}
+
+.esri-basemaps:hover {
+  background-color: #eee;
+}
+
+.esri-basemaps:active {
+  background-color: #ddd;
+}
+
+.esri-basemaps-container {
+  position: absolute;
+  pointer-events: auto;
+  overflow-y: auto;
+  width: 464px;
+  background-color: #efefef;
+  top: 10px;
+  /* bottom: 10px; */
+  left: 60px;
+  right: 10px;
+  z-index: 10;
+}
+
+.esri-basemaps-item img {
+  height: 133px;
+  width: 200px;
+}
+
+.esri-basemaps-item {
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.esri-view-width-larger-than-small .esri-basemaps-item {
+  padding: 8px;
+  border: solid transparent 4px;
+}
+
+.esri-view-width-larger-than-small .esri-basemaps-item:hover {
+  box-sizing: border-box;
+  border-color: #90cdf2;
+  background-color: #90cdf2;
+}
+
+.esri-basemaps-item:last-child {
+  margin-right: 0;
+}
+
+.esri-basemaps-list {
+  overflow: visible;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.esri-view-width-large .esri-basemaps-container {
+  width: 688px;
+}
+
+.esri-view-width-xlarge .esri-basemaps-container {
+  width: 912px;
+}
+
+.esri-view-width-smaller-than-medium .esri-basemaps-container {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 260px;
+  width: auto;
+}
+
+.esri-view-width-smaller-than-medium .esri-basemaps-item {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  max-height: 80px;
+}
+
+.esri-view-width-smaller-than-medium .esri-basemaps-list .esri-basemaps-item:hover {
+  background-color: #90cdf2;
+}
+
+.esri-view-width-smaller-than-medium .esri-basemaps-item:nth-child(2n+0) {
+  background-color: #e0e0e0;
+}
+
+.esri-view-width-smaller-than-medium .esri-basemaps-item img {
+  display: inline-block;
+  height: 80px;
+  width: 130px;
+  padding-left: 6px;
+}
+
+.esri-view-width-smaller-than-medium .esri-basemaps-item-title {
+  display: inline-block;
+  line-height: 3.3;
+  padding-left: 20px;
+  font-size: 1.5em;
+  max-width: none;
+}
+
+.esri-basemaps-item-title {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

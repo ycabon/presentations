@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>epic citadel</title>
+ 
+    <style>
+      html, body {
+        margin:0;
+        padding:0;
+      }
+    </style>
+
+    <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+    <script src="//js.arcgis.com/4.0beta1/"></script>
+
+    <script type="text/javascript">
+          
+      require([
+        "esri/Map",
+        "esri/Camera",
+
+        "esri/views/SceneView",
+
+        "esri/layers/FeatureLayer",
+
+        "esri/symbols/PolygonSymbol3D",
+
+        "esri/renderers/SimpleRenderer",
+        
+        "dojo/domReady!"
+      ], function(
+        Map, Camera,
+        SceneView,
+        FeatureLayer,
+        PolygonSymbol3D,
+        SimpleRenderer
+      ) {
+
+        var map = new Map({
+          basemap: "dark-gray",
+          layers: [
+            new FeatureLayer({
+              url: "http://services1.arcgis.com/PMShNXB1carltgVf/arcgis/rest/services/Travel%20Times%20USA%20ZIP%20Codes%20%282013%29/FeatureServer/0",
+              mode: FeatureLayer.MODE_SNAPSHOT,
+              renderer: new SimpleRenderer({
+                symbol: PolygonSymbol3D.fromJSON({
+                  symbolLayers: [{
+                    enable: true,
+                    type: "Object",
+                    resource: {
+                      primitive: "cone"
+                    },
+                    width: 2000,
+                    height: 1000,
+                    material: {
+                      color: [128, 128, 255]
+                    }
+                  }]
+                }),
+                visualVariables: [{
+                  type: "sizeInfo",
+                  field: "POP12_SQMI",
+                  axis: "height",
+                  minSize: 50,
+                  maxSize: 100000,
+                  minDataValue: 0,
+                  maxDataValue: 150000
+                }, {
+                  type: "sizeInfo",
+                  axis: "width",
+                  minSize: 1000
+                }, {
+                  type: "colorInfo",
+                  field: "POP12_SQMI",
+                  stops: [
+                    { color: "blue", value: -99 },
+                    { color: "white", value: 1000 },
+                    { color: "red", value: 150000 } 
+                  ]
+                }]
+              })
+            })
+          ]
+        });
+
+        view = new SceneView({
+          container: "viewDiv",
+          map: map,
+          camera:{
+            position: {
+              x: -7903763,
+              y: 4780594,
+              spatialReference: {
+                wkid: 102100
+              },
+              z: 123889
+            },
+            heading: 284,
+            tilt: 70
+          }
+        });
+      });
+      
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv">
+    </div>
+  </body>
+  
+</html>

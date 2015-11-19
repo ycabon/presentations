@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Basic 3D map - 4.0 beta 1</title>
+
+    <style>
+        html, body, #map {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            font-family: sans-serif;
+            font-size: small;
+        }
+        li{
+            padding: 10px 0 0 0;
+        }
+        button{
+            position:absolute;
+            width:80px;
+            top:20px;
+        }
+        #dvInfo{
+            position: absolute;
+            left: 300px;
+            right: 300px;
+            top: 300px;
+            height: 300px;
+            background-color: #ffffff;
+            text-align: center;
+            padding: 50px;
+            border: solid 1px #a0a0a0;
+            max-width: 500px;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+    <script src="//js.arcgis.com/4.0beta1/"></script>
+
+    <script>
+        var map, view, fl1, fl2, fl3, flw1, flw2, flw3,gl, dw, rt, rp, ss, g, ground,
+                srv = "http://scenesample.arcgis.com:6080/arcgis/rest/services/Hosted/",
+                srv2 = "http://services.arcgis.com/VICBscfQATsxnCsz/arcgis/rest/services/";
+
+        require([
+            "esri/Map",
+            "esri/Camera",
+            "esri/geometry/Point",
+            "esri/geometry/Polyline",
+            "esri/Graphic",
+            "esri/layers/ArcGISTiledLayer",
+            "esri/layers/FeatureLayer",
+            "esri/layers/GraphicsLayer",
+            "esri/views/SceneView",
+            "esri/layers/SceneLayer",
+            "esri/symbols/SimpleLineSymbol",
+            "esri/symbols/PointSymbol3D",
+            "esri/symbols/ObjectSymbol3DLayer",
+            "esri/symbols/LineSymbol3D",
+            "esri/symbols/PathSymbol3DLayer",
+            "esri/renderers/SimpleRenderer",
+
+            "esri/tasks/RouteTask",
+            "esri/tasks/support/RouteParameters",
+            "esri/tasks/support/FeatureSet",
+
+            "dojo/domReady!"
+        ], function(
+                Map,
+                Camera,
+                Point,
+                Polyline,
+                Graphic,
+                ArcGISTiledLayer,
+                FeatureLayer,
+                GraphicsLayer,
+                SceneView,
+                SceneLayer,
+                SimpleLineSymbol,
+                PointSymbol3D,
+                ObjectSymbol3DLayer,
+                LineSymbol3D,
+                PathSymbol3DLayer,
+                SimpleRenderer,
+
+                RouteTask,
+                RouteParams,
+                FeatureSet
+        ) {
+            map = new Map({
+                basemap: "topo"
+            });
+            view = new SceneView({
+                container: "map",
+                map: map,
+                camera: {
+                    "position": new Point({
+                        "x": -13046280.720964516,
+                        "y": 4036227.168251184,
+                        "spatialReference": {"wkid": 102100, "latestWkid": 3857},
+                        "z": 466.8874240964651
+                    }),
+                    "heading": 46.75013062947406,
+                    "tilt": 63.858136624849195
+                }
+            });
+            gl = new GraphicsLayer();
+            map.add(gl);
+
+            ground = 396;
+            var ft = 3.2808399;
+            fl1 = new FeatureLayer(srv2 + "QFloors102100_1/FeatureServer/0", {
+                mode: FeatureLayer.MODE_SNAPSHOT,
+                elevationInfo: {mode: "absoluteHeight", offset: ground + 0.1},
+                opacity: 0.9
+            });
+            fl1.renderer = new SimpleRenderer({"type":"simple","label":"","description":"","symbol":{"color":[250,217,202,255],"outline":{"color":[110,110,110,255],"width":0.4,"type":"esriSLS","style":"esriSLSSolid"},"type":"esriSFS","style":"esriSFSSolid"}});
+
+            fl2 = new FeatureLayer(srv2 + "QFloors102100_2/FeatureServer/0", {
+                mode: FeatureLayer.MODE_SNAPSHOT,
+                elevationInfo: {mode: "absoluteHeight", offset: ground + 16.97},
+                opacity: 0.9
+            });
+            fl2.renderer = new SimpleRenderer({"type":"simple","label":"","description":"","symbol":{"color":[200,247,200,255],"outline":{"color":[110,110,110,255],"width":0.4,"type":"esriSLS","style":"esriSLSSolid"},"type":"esriSFS","style":"esriSFSSolid"}});
+            fl3 = new FeatureLayer(srv2 + "QFloors102100_3/FeatureServer/0", {
+                mode: FeatureLayer.MODE_SNAPSHOT,
+                elevationInfo: {mode: "absoluteHeight", offset: ground + 32},
+                opacity: 0.9
+            });
+            fl3.renderer = new SimpleRenderer({"type":"simple","label":"","description":"","symbol":{"color":[189,242,241,255],"outline":{"color":[110,110,110,255],"width":0.4,"type":"esriSLS","style":"esriSLSSolid"},"type":"esriSFS","style":"esriSFSSolid"}});
+            flw1 = new SceneLayer(srv + "Q_Floors102100_1_lines_extruded/SceneServer/layers/0", {opacity: 0.80, visible: false});
+            flw2 = new SceneLayer(srv + "Q_Floors102100_2_lines_extruded/SceneServer/layers/0", {opacity: 0.80, visible: false});
+            flw3 = new SceneLayer(srv + "Q_Floors102100_3_lines_extruded/SceneServer/layers/0", {opacity: 0.80, visible: false});
+            ss = new SceneLayer(srv + "CityEngine_Q_47m/SceneServer/layers/0", {opacity: .75, visible: false});
+
+            map.add([fl1, fl2, fl3, flw1, flw2, flw3, ss]);
+
+            var disableTerrainCheck = function (disable) {
+                if (!window.tcProc) {
+                    window.tcProc = view.navigation.getCameraIntersectTerrain;
+                }
+                if (disable) {
+                    view.navigation.getCameraIntersectTerrain = function (eye, center, up, threshold) {
+                        var ret = view.navigation._curCam.copy();
+                        if (eye) {ret.eye = eye;}
+                        if (center) {ret.center = center;}
+                        if (up) {ret.up = up;}
+                        return ret;
+                    }
+                } else {
+                    view.navigation.getCameraIntersectTerrain = window.tcProc;
+                }
+            };
+            map.then(function () {
+                //creating RouteTask & Co
+                rt = new RouteTask("http://3dcampus.arcgis.com/arcgis/rest/services/Routing/BuildingQ/NAServer/Route");
+                rp = new RouteParams({
+                    stops: new FeatureSet(),
+                    returnRoutes: true,
+                    returnDirections: false,
+                    outputGeometryPrecision: 2,
+                    outputGeometryPrecisionUnits: "esriMeters"
+                });
+            });
+
+            //digitizing new stops listener
+            view.on("tap", function (evt) {
+                if (evt.graphic && evt.graphic.layer && evt.graphic.layer.name && evt.graphic.layer.name.startsWith("QFloors")) {
+                    evt.mapPoint.z = evt.graphic.layer.elevationInfo.offset + .5;
+                    //adding stop
+                    var gr = new Graphic(
+                        evt.mapPoint,
+                        new PointSymbol3D(
+                            new ObjectSymbol3DLayer({
+                                width: 1.5,
+                                height: 1.5,
+                                resource: { primitive: "diamond" },
+                                material: { color: "green" }
+                            })
+                        ),
+                        {Name: "STOP #" + (rp.stops.features.length + 1)}
+                    );
+                    gl.add(gr);
+                    var rs = Graphic.fromJSON(gr.toJSON());
+                    rs.geometry.z = (rs.geometry.z - ground) / ft;
+                    rp.stops.features.push(rs);
+                    if (rp.stops.features.length > 1) {
+                        rt.solve(rp).then(function (rr) {
+                            g = rr.routeResults[0].route.geometry;
+                            for (var i = 0; i < g.paths.length; i++) {
+                                for (var j = 0; j < g.paths[i].length; j++) {
+                                    g.paths[i][j][0] -= 0.8;
+                                    g.paths[i][j][1] -= 1.2;
+                                    g.paths[i][j][2] = g.paths[i][j][2] * ft + ground + 0.2;
+                                }
+                            }
+                            pilot.setFlightPath(g.paths[0]);
+                            gl.add(new Graphic({
+                                geometry: new Polyline({
+                                    paths: g.paths,
+                                    hasZ: true,
+                                    spatialReference: map.spatialReference
+                                }),
+                                symbol: new LineSymbol3D(
+                                        new PathSymbol3DLayer({
+                                            size: .75,
+                                            material: { color: "#6464ff" }
+                                        })
+                                )
+                            }));
+                        }, function (err) {
+                            console.log(err);
+                        });
+                    }
+                }
+            });
+
+            window.toggleWalls = function () {
+                flw1.visible = !flw3.visible;
+                flw2.visible = !flw3.visible;
+                flw3.visible = !flw3.visible;
+            };
+            window.reset = function () {
+                rp.stops.features = [];
+                gl.clear();
+            };
+            window.animate = function () {
+                //Animate!
+                if (g) {
+                    if (window.flyTimer) {
+                        clearTimeout(flyTimer);
+                        disableTerrainCheck(false);
+                        flyTimer = null;
+                    } else {
+                        var move = function () {
+                            var t = (new Date()).getTime() - window.t0;
+                            if (t <= pilot.tLen) {
+                                var c = view.camera.toJSON();
+                                pilot.fly(t, c);
+                                view.camera = c;
+                            } else {
+                                window.t0 = (new Date()).getTime() + 3000;
+                            }
+                            window.flyTimer = setTimeout(move, 15);
+                        };
+                        disableTerrainCheck(true);
+                        window.t0 = (new Date()).getTime();
+                        move();
+                    }
+                }
+            };
+        });
+        var pilot = {
+            len : 0,
+            tLen : 0,
+            _speed : 15, //km/h
+            _xs : [],
+            _ys : [],
+            _zs : [],
+            _ls : [],
+            _ts : [],
+            _xks : [],
+            _yks : [],
+            _zks : [],
+            _lks : [],
+            _x2 : 0,
+            _y2 : 0,
+            _z2 : 0,
+
+            //Spline calculations
+            _CSPL : {
+                _gaussJ: {
+                    solve: function (A, x) { // in Matrix, out solutions
+                        var m = A.length;
+                        for (var k = 0; k < m; k++)  // column
+                        {
+                            // pivot for column
+                            var i_max = 0;
+                            var vali = Number.NEGATIVE_INFINITY;
+                            for (var i = k; i < m; i++) if (A[i][k] > vali) {
+                                i_max = i;
+                                vali = A[i][k];
+                            }
+                            this.swapRows(A, k, i_max);
+
+                            // for all rows below pivot
+                            for (var i = k + 1; i < m; i++) {
+                                for (var j = k + 1; j < m + 1; j++)
+                                    A[i][j] = A[i][j] - A[k][j] * (A[i][k] / A[k][k]);
+                                A[i][k] = 0;
+                            }
+                        }
+
+                        for (var i = m - 1; i >= 0; i--){   // rows = columns
+                            var v = A[i][m] / A[i][i];
+                            x[i] = v;
+                            for (var j = i - 1; j >= 0; j--)   // rows
+                            {
+                                A[j][m] -= A[j][i] * v;
+                                A[j][i] = 0;
+                            }
+                        }
+                    },
+                    zerosMat: function (r, c) {
+                        var A = [];
+                        for (var i = 0; i < r; i++) {
+                            A.push([]);
+                            for (var j = 0; j < c; j++) A[i].push(0);
+                        }
+                        return A;
+                    },
+                    printMat: function (A) {
+                        for (var i = 0; i < A.length; i++) console.log(A[i]);
+                    },
+                    swapRows: function (m, k, l) {
+                        var p = m[k];
+                        m[k] = m[l];
+                        m[l] = p;
+                    }
+                },
+                getNaturalKs: function (xs, ys, ks) {   // in x values, in y values, out k values
+                    var n = xs.length - 1;
+                    var A = this._gaussJ.zerosMat(n + 1, n + 2);
+                    for (var i = 1; i < n; i++){ // rows
+                        A[i][i - 1] = 1 / (xs[i] - xs[i - 1]);
+                        A[i][i] = 2 * (1 / (xs[i] - xs[i - 1]) + 1 / (xs[i + 1] - xs[i]));
+                        A[i][i + 1] = 1 / (xs[i + 1] - xs[i]);
+                        A[i][n + 1] = 3 * ( (ys[i] - ys[i - 1]) / ((xs[i] - xs[i - 1]) * (xs[i] - xs[i - 1])) + (ys[i + 1] - ys[i]) / ((xs[i + 1] - xs[i]) * (xs[i + 1] - xs[i])) );
+                    }
+                    A[0][0] = 2 / (xs[1] - xs[0]);
+                    A[0][1] = 1 / (xs[1] - xs[0]);
+                    A[0][n + 1] = 3 * (ys[1] - ys[0]) / ((xs[1] - xs[0]) * (xs[1] - xs[0]));
+
+                    A[n][n - 1] = 1 / (xs[n] - xs[n - 1]);
+                    A[n][n] = 2 / (xs[n] - xs[n - 1]);
+                    A[n][n + 1] = 3 * (ys[n] - ys[n - 1]) / ((xs[n] - xs[n - 1]) * (xs[n] - xs[n - 1]));
+
+                    this._gaussJ.solve(A, ks);
+                },
+
+                evalSpline: function (x, xs, ys, ks) {
+                    var i = 1;
+                    while (xs[i] < x) i++;
+                    var t = (x - xs[i - 1]) / (xs[i] - xs[i - 1]);
+                    var a = ks[i - 1] * (xs[i] - xs[i - 1]) - (ys[i] - ys[i - 1]);
+                    var b = -ks[i] * (xs[i] - xs[i - 1]) + (ys[i] - ys[i - 1]);
+                    var q = (1 - t) * ys[i - 1] + t * ys[i] + t * (1 - t) * (a * (1 - t) + b * t);
+                    return q;
+                }
+            },
+
+            _parsePath : function(){
+                var length = 0;
+                this._xs = [this.g[0][0]];
+                this._ys = [this.g[0][1]];
+                this._zs = [this.g[0][2]];
+                this._ls = [80];
+                this._ts = [0]; // start time is zero
+                for (var i = 1; i < this.g.length; i++){
+                    //euclidean length of the segment
+                    var len = Math.sqrt(Math.pow(this.g[i - 1][0] - this.g[i][0], 2) + Math.pow(this.g[i - 1][1] - this.g[i][1], 2) + Math.pow(this.g[i - 1][2] - this.g[i][2], 2));
+                    this._xs[i] = this.g[i][0];
+                    this._ys[i] = this.g[i][1];
+                    this._zs[i] = this.g[i][2];
+                    this._ts[i] = this._ts[i - 1] + 3600 * len / this._speed; //time span of the segment in ms
+                    length += len; //total length
+
+                    //tilt
+                    var hor = Math.sqrt(Math.pow(this.g[i - 1][0] - this.g[i][0], 2) + Math.pow(this.g[i - 1][1] - this.g[i][1], 2)),
+                            ver = this.g[i][2] - this.g[i - 1][2];
+                    this._ls[i] = Math.abs(ver) < hor ? 80 : (ver > 0? 100 : 60);
+                }
+                this.len = length;
+                this.tLen = this._ts[this._ts.length - 1];
+
+                //calculating the Ks
+                this._xks = []; this._CSPL.getNaturalKs(this._ts, this._xs, this._xks);
+                this._yks = []; this._CSPL.getNaturalKs(this._ts, this._ys, this._yks);
+                this._zks = []; this._CSPL.getNaturalKs(this._ts, this._zs, this._zks);
+                this._lks = []; this._CSPL.getNaturalKs(this._ts, this._ls, this._lks);
+            },
+
+
+            setFlightPath : function(flightPath, secondPass){
+                this.g = flightPath;
+                this._parsePath();
+
+                if (!secondPass) {
+                    //second pass to filter out high xy plane 'frequencies'
+                    var p2 = [], step = 25.0 /*meters*/, tStep = 1000 * step / this._speed, t = 0;
+                    while (t < this.tLen) {
+                        p2.push([
+                            x2 = this._CSPL.evalSpline(t, this._ts, this._xs, this._xks),
+                            y2 = this._CSPL.evalSpline(t, this._ts, this._ys, this._yks),
+                            z2 = this._CSPL.evalSpline(t, this._ts, this._zs, this._zks)
+                        ]);
+                        t += tStep;
+                    }
+                    if (t !== this.tLen) {
+                        t = this.tLen;
+                        p2.push([
+                            x2 = this._CSPL.evalSpline(t, this._ts, this._xs, this._xks),
+                            y2 = this._CSPL.evalSpline(t, this._ts, this._ys, this._yks),
+                            z2 = this._CSPL.evalSpline(t, this._ts, this._zs, this._zks)
+                        ]);
+                    }
+                    this.setFlightPath(p2, true);
+                }
+            },
+
+            fly : function(time, camera){
+                if (time < 0){return;}
+                //position
+                var
+                        x1 = this._x2? this._x2 : camera.position.x,
+                        y1 = this._y2? this._y2 : camera.position.y,
+                        z1 = this._z2? this._z2 : camera.position.z,
+                        x2 = this._CSPL.evalSpline(time, this._ts, this._xs, this._xks),
+                        y2 = this._CSPL.evalSpline(time, this._ts, this._ys, this._yks),
+                        z2 = this._CSPL.evalSpline(time, this._ts, this._zs, this._zks) + 3.5;
+                this._x2 = x2;
+                this._y2 = y2;
+                this._z2 = z2;
+
+                //positioning camera N meters behind...
+                var d = 9; //m behind the geometry
+                var l = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                if (l) {
+                    var x0 = d * (x1 - x2) / l + x1;
+                    var y0 = d * (y1 - y2) / l + y1;
+                    camera.position.x = x0;
+                    camera.position.y = y0;
+                }
+                camera.position.z = z2;
+
+                //heading
+                var dy = y2 - y1,
+                        dx = x2 - x1,
+                        a = Math.atan(dy / dx) * 180 / Math.PI;
+                if (!isNaN(a)) {
+                    camera.heading = dx >= 0 ? 90 - a : 270 - a;
+                }
+                camera.tilt = this._CSPL.evalSpline(time, this._ts, this._ls, this._lks);
+            }
+        };
+    </script>
+</head>
+
+<body class="claro">
+<div id="map">
+</div>
+<button data-dojo-type="dijit/form/Button" type="button" style="left:50px;" onclick="toggleWalls();">Walls</button>
+<button data-dojo-type="dijit/form/Button" type="button" style="left:150px;" onclick="reset();">Reset</button>
+<button data-dojo-type="dijit/form/Button" type="button" style="left:275px;" onclick="window.animate();">Animate!</button>
+</body>
+
+</html>

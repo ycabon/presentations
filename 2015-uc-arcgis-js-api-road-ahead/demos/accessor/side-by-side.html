@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Map</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    #basemapToggleDiv {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 50;
+    }
+  </style>
+
+  <script src="../commons/js/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta1/"></script>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+
+      "esri/layers/ArcGISTiledLayer",
+      "esri/layers/FeatureLayer",
+      "esri/layers/SceneLayer",
+      "esri/layers/GroupLayer",
+
+      "esri/views/SceneView",
+      
+      "esri/widgets/BasemapToggle",
+
+      "esri/core/watchUtils",
+      "esri/core/Scheduler",
+      
+      "commons/init",
+      "dojo/domReady!"
+    ], function(
+      Map,
+      ArcGISTiledLayer, FeatureLayer, SceneLayer, GroupLayer,
+      SceneView,
+      BasemapToggle,
+
+      watchUtils,
+      Scheduler
+    ) {
+
+
+      ///////////////////////////////////////////////////
+      //
+      // Map
+      //
+      ///////////////////////////////////////////////////
+
+
+      // Common layers to both views
+      var topo3D = new ArcGISTiledLayer({
+        url: '//tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Portland_v1/MapServer'
+      });
+      var portlandBuildings = new SceneLayer({
+        url: '//scenesample.arcgis.com:6080/arcgis/rest/services/Hosted/ExistingBuildings2/SceneServer/layers/0',
+        opacity: 0.8,
+        title: 'Non-Project Buildings'
+      });
+      var developmentArea = new FeatureLayer({
+        url: '//services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0',
+        title: 'Project Area'
+      });
+
+      var groupA = GroupLayer({
+        title: 'Development A',
+        layers: [
+          treesA = new SceneLayer({
+            id: "trees-a",
+            url: 'https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Trees/SceneServer/layers/0',
+            title: 'Trees'
+          }),
+          pathwaysA = new SceneLayer({
+            id: "pathways-a",
+            url: 'https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Pathways/SceneServer/layers/0',
+            title: 'Pathways'
+          }),
+          buildingsA = new SceneLayer({
+            id: "buildings-a",
+            url: 'https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_BuildingShell_Textured/SceneServer/layers/0',
+            title: 'Buildings'
+          })          
+        ]
+      });
+
+      var groupB = GroupLayer({
+        title: 'Development B',
+        layers: [
+          treesB = new SceneLayer({
+            id: "trees-b",
+            url: 'https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevB_Trees/SceneServer/layers/0',
+            title: 'Trees'
+          }),
+          pathwaysB = new FeatureLayer({
+            id: "pathways-b",
+            url: 'https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevB_Pathways/FeatureServer/0',
+            title: 'Pathways'
+          }),
+          buildingsB = new SceneLayer({
+            id: "buildings-b",
+            url: 'https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevB_BuildingShell_Textured/SceneServer/layers/0',
+            title: 'Buildings'
+          })
+        ]
+      });
+
+      map = new Map({
+        basemap: 'topo',
+        layers: [topo3D, portlandBuildings, developmentArea, groupA, groupB]
+      });
+
+      var toggle = new BasemapToggle({
+        map: map,
+        basemap: 'satellite'
+      }, 'basemapToggleDiv');
+      toggle.startup();
+
+
+      ///////////////////////////////////////////////////
+      //
+      // Views
+      //
+      ///////////////////////////////////////////////////
+
+      view1 = new SceneView({
+        id: 'view1',
+        container: 'view1Div',
+        map: map,
+        ui: {
+          components: ['zoom', 'compass']
+        },
+        environment: {
+          lighting: {
+            directShadows: true
+          }
+        },
+        camera: {
+          position: {
+            x: -1.3657983104147995E7,
+            y: 5706248.07426214,
+            z: 358.4342414261773,
+            spatialReference: {
+              wkid: 102100,
+              latestWkid:3857
+            }
+          },
+          heading: 117.19472712223444,
+          tilt: 59.77661903172106
+        }
+      });
+
+      view1.on('layer-view-create', function(evt) {
+        if (evt.layer === groupB) {
+          evt.layerView.visible = false;
+        }
+      });
+
+      view2 = new SceneView({
+        id: 'view2',
+        container: 'view2Div',
+        map: map,
+        ui: {
+          components: ['logo', 'attribution']
+        },
+        environment: {
+          lighting: {
+            directShadows: true
+          }
+        },
+        camera: {
+          position: {
+            x: -1.3657983104147995E7,
+            y: 5706248.07426214,
+            z: 358.4342414261773,
+            spatialReference: {
+              wkid: 102100,
+              latestWkid:3857
+            }
+          },
+          heading: 117.19472712223444,
+          tilt: 59.77661903172106
+        }
+      });
+      view2.on('layer-view-create', function(evt) {
+        if (evt.layer === groupA) {
+          evt.layerView.visible = false;
+        }
+      });
+
+      ///////////////////////////////////////////////////
+      //
+      // Utilities to add to the API
+      //
+      ///////////////////////////////////////////////////
+
+      var bindView = function(view, others) {
+        others = Array.isArray(others) ? others : [others];
+
+        var hdl;
+        var hdl2;
+        var otherInteractHandlers;
+        var timer;
+
+        var clear = function() {
+          if (otherInteractHandlers) {
+            otherInteractHandlers.forEach(function(h) {
+              h.remove();
+            });
+          }
+          if (hdl) {
+            hdl.remove();
+          }
+          if (hdl2) {
+            hdl2.remove();
+          }
+          if (timer) {
+            timer.remove();
+          }
+          otherInteractHandlers = hdl = hdl2 = timer = null;
+        };
+
+        var interactWatcher = view.watch('interacting,animation', function(newValue) {
+          if (!newValue) {
+            if (timer) {
+              timer.remove();
+              timer = null;
+            }
+            return;
+          }
+          if (hdl || timer) {
+            return;
+          }
+          timer = Scheduler.schedule(function() {
+            timer = null;
+            hdl = view.watch('camera', function(newValue) {
+              others.forEach(function(v) {
+                v.camera = newValue;
+              });
+            });
+            otherInteractHandlers = others.map(function(v) {
+              return v.watch('stationary', function() {
+                if (!newValue) {
+                  clear();
+                }
+              });
+            });
+            hdl2 = view.watch('stationary', function(newValue) {
+              if (newValue) {
+                clear();
+              }
+            });
+          });
+        });
+
+        return {
+          remove: function() {
+            this.remove = function() {};
+            clear();
+            interactWatcher.remove();
+          }
+        }
+      };
+      var bindViews = function(views) {
+        var hdls = views.map(function(view, idx, views) {
+          var others = views.concat();
+          others.splice(idx, 1);
+          return bindView(view, others);
+        });
+
+        return {
+          remove: function() {
+            this.remove = function() {};
+            hdls.forEach(function(h) {
+              h.remove();
+            });
+            hdls = null;
+          }
+        }
+      }
+
+      bindViews([view1, view2]);
+
+      // tmp beta1 fix
+      setTimeout(function() {
+        [treesA, treesB, pathwaysA, pathwaysB, buildingsA, buildingsB].forEach(function(lyr) {
+          lyr._promiseProps.dfd.resolve(lyr);
+        });
+      }, 2000)
+
+    });
+  </script>
+</head>
+<body>
+  <div id="view1Div" style="float: left; width: 50%; height: 100%;"></div>
+  <div id="view2Div" style="float: left; width: 50%; height: 100%;"></div>
+  <div id="basemapToggleDiv"></div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>VectorTileLayer - custom style</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/3.15/esri/css/esri.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/3.15/"></script>
+
+  <script>
+    var map, layer;
+
+    require([
+      "esri/map", 
+      "esri/layers/VectorTileLayer", 
+      "esri/IdentityManager",
+      "commons/init",
+      "dojo/domReady!"
+    ], function(
+      Map, 
+      VectorTileLayer
+    ) {
+
+      map = new Map("viewDiv", {
+        center: [ 13, 48 ],
+        zoom: 5,
+        smartNavigation: false
+      });
+
+      // Load a style by service object
+      layer = new VectorTileLayer({
+        "glyphs": "//www.arcgis.com/sharing/rest/content/items/00cd8e843bae49b3a040423e5d65416b/resources/fonts/{fontstack}/{range}.pbf",
+        "sprite": "//www.arcgis.com/sharing/rest/content/items/00cd8e843bae49b3a040423e5d65416b/resources/sprites/sprite",
+        "version": 8,
+        "sources": {
+          "esri": {
+            "url": "//basemapsdev.arcgis.com/arcgis/rest/services/World_Basemap/VectorTileServer",
+            "type": "vector"
+          }
+        },
+        "layers": [{
+          "id": "background",
+          "type": "background",
+          "paint": {
+            "background-color": "#556688"
+          }
+        }, {
+          "id": "Land",
+          "type": "fill",
+          "source": "esri",
+          "source-layer": "Land",
+          "paint": {
+            "fill-color": "#273344"
+          },
+        }, {
+          "id": "roads",
+          "type": "line",
+          "source": "esri",
+          "source-layer": "Road",
+          "layout": {
+            "line-join": "round"
+          },
+          "paint": {
+            "line-width": 1,
+            "line-color": "#131622"
+          }
+        }]
+      });
+
+      map.addLayer(layer);
+
+    });
+  </script>
+</head>
+<body class="dark">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code right visible shadowed" style="top: 85px; height: auto; width: 600px;">
+        <textarea id="codemirror">
+layer = new VectorTileLayer({
+  "sources": {
+    "esri": {
+      "url": "//basemapsdev.arcgis.com/arcgis/rest/services/World_Basemap/VectorTileServer",
+      "type": "vector"
+    }
+  },
+  "layers": [{
+    "id": "background",
+    "type": "background",
+    "paint": {
+      "background-color": "#556688"
+    }
+  }, {
+    "id": "Land",
+    "type": "fill",
+    "source": "esri",
+    "source-layer": "Land",
+    "paint": {
+      "fill-color": "#273344"
+    },
+  }, {
+    "id": "roads",
+    "type": "line",
+    "source": "esri",
+    "source-layer": "Road",
+    "layout": {
+      "line-join": "round"
+    },
+    "paint": {
+      "line-width": 1,
+      "line-color": "#131622"
+    }
+  }]
+});
+
+map.addLayer(layer);
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">3.15</span>
+        </div>
+        <div class="main">
+          <span class="title">VectorTileLayer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

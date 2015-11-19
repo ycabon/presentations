@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>New Popup - custom actions</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+
+  <script type="text/javascript">
+    var map, view, featureLayer;
+
+    require([
+        'esri/Map',
+        'esri/views/MapView',
+
+        'esri/layers/FeatureLayer',
+
+        'esri/renderers/SimpleRenderer',
+        'esri/symbols/SimpleMarkerSymbol',
+
+        'commons/init',
+
+        'dojo/domReady!'
+      ],
+      function (
+        Map, MapView,
+        FeatureLayer, 
+        SimpleRenderer, SimpleMarkerSymbol
+      ) {
+
+        map = new Map({
+          basemap: 'streets'
+        });
+
+        view = new MapView({
+          container: 'viewDiv',
+          map: map,
+          center: [-82.442, 35.613],
+          zoom: 17,
+          padding: {
+            top: 85,
+            right: 830
+          }
+        });
+
+        var renderer = new SimpleRenderer(
+          new SimpleMarkerSymbol({
+            color: '#5C5',
+            outline: {
+              width: 2,
+              color: 'white'
+            }
+          })
+        );
+        renderer.setVisualVariables([
+          {
+            type: 'sizeInfo',
+            field: 'C_Storage',
+            minSize: 6,
+            maxSize: 37.5,
+            minDataValue: 0,
+            maxDataValue: 13228
+          },
+          {
+            type: 'opacityInfo',
+            field: 'C_Storage',
+            stops: [
+              {value: 0, opacity: 0},
+              {value: 13228, opacity: 1}
+            ]
+          }
+        ]);
+
+        /********************
+         * Add feature layer
+         ********************/
+
+        // Carbon storage of trees in Warren Wilson College.
+        featureLayer = new FeatureLayer({
+          url: 'http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0',
+          outFields: ['*'],
+
+          renderer: renderer,
+
+          // add a custom action
+          popupTemplate: {
+            title: '{Cmn_Name}',
+            content: '{*}',
+            actions: [
+              {
+                id: 'tree-photos',
+                className: 'esri-icon-media',
+                title: 'Tree Photos'
+              }
+            ],
+            overwriteActions: false
+          }
+        });
+
+        map.add(featureLayer);
+
+        var popup = view.popup;
+        popup.on('action-click', function (evt) {
+          if (evt.action.id === 'tree-photos') {
+            var attributes = popup.selectedFeature.attributes;
+            window.open('https://www.flickr.com/search/?text=' + attributes.Cmn_Name + ' tree');
+
+          } else if (evt.action.id === 'zoom-out') {
+            view.animateTo({
+              center: view.center,
+              zoom: view.zoom - 2
+            });
+          }
+        });
+      });
+  </script>
+
+</head>
+
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+
+// Carbon storage of trees in Warren Wilson College.
+featureLayer = new FeatureLayer({
+  url: 'http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0',
+  outFields: ['*'],
+
+  // add a custom action
+  popupTemplate: {
+    title: '{Cmn_Name}',
+    content: '{*}',
+    actions: [
+      {
+        id: 'tree-photos',
+        className: 'esri-icon-media',
+        title: 'Tree Photos'
+      }
+    ],
+    overwriteActions: false
+  }
+});
+
+view.popup.on('action-click', function (event) {
+  var actionId = event.action.id;
+  var feature = popup.selectedFeature;
+  var attributes = feature.attributes;
+  
+  // Search on Flickr with the name of the tree
+  if (actionId === 'tree-photos') {
+    var search = 'https://www.flickr.com/search/?text=' + attributes.Cmn_Name + ' tree';
+    window.open(search);
+  }
+});
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">New Popup - custom actions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Random animations</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+
+  <style>
+    html, body, {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+  </style>
+
+  <script src="//js.arcgis.com/4.0beta1/"></script>
+
+  <script>
+    var map, view;
+
+    require([
+      'dojo/fx/easing',
+      'dojo/Deferred',
+
+      'esri/Map',
+      'esri/views/MapView',
+      'dojo/domReady!'
+    ], function(easing, Deferred, Map, MapView) {
+
+      window.easing = easing;
+
+      map = new Map({
+        basemap: 'satellite'
+      });
+
+      view = new MapView({
+        container: 'viewDiv',
+        map: map,
+        center: [ -100, 40 ],
+        ui: {
+          components: ['zoom', 'logo', 'attribution', 'compass']
+        },
+        zoom: 3,
+        constraints: {
+          minZoom: 2,
+          maxZoom: 5,
+          snapToZoom: false
+        }
+      });
+
+      view.then(function() {
+        animate();
+      });
+
+      var animate = function() {
+        var location = {
+          center: [Math.random() * 360 - 180, Math.random() * 120 - 60],
+          rotation: view.rotation + (Math.random() * 20 - 10),
+          zoom: view.zoom + (Math.random() * 0.5 - 0.25)
+        };
+        var duration = Math.random() * 2000 + 1000;
+        var easingFns = Object.keys(easing);
+        var easingFn = easing[easingFns[Math.round(Math.random() * easingFns.length)]];
+
+        view.animateTo(location, {
+          duration: duration,
+          easing: easingFn,
+
+        }).then(function() {
+          var dfd = new Deferred();
+          setTimeout(dfd.resolve.bind(dfd), 2000);
+          return dfd.promise;
+        }).then(animate);
+      }
+    });
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>

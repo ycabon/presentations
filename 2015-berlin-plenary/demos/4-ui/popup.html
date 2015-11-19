@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>New Popup</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+  
+  <script>
+    var tableDataStrBand = "<table><tr><th>Sept. 5</th><td>7:30pm - Blues with the Mid-Atlantic Symphony Orchestra</td></tr><tr><th>Sept. 9</th><td>6:00pm - Blues | WWII Memorial Evening Concert Series</td></tr><tr><th>Sept. 10</th><td>10:30am - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 11</th><td>10:30am - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 11</th><td>7:30pm - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 12</th><td>2:00pm - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 12</th><td>7:30pm - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 17</th><td>5:00pm - Blues | Music of Herbie Nichols</td></tr><tr><th>Sept. 18</th><td>10:30am - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 18</th><td>7:30pm - The U.S. Army Chorus Baritones in Recital</td></tr><tr><th>Sept. 19</th><td>2:00pm - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 19</th><td>7:30pm - The U.S. Army's Spirit of America</td></tr><tr><th>Sept. 19</th><td>7:30pm - The U.S. Army Chorus Baritones in Recital</td></tr></table>";
+
+    var richTextStr = '<figure><img src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4f/US_Capitol_west_side.JPG/240px-US_Capitol_west_side.JPG" /><figcaption>The west front of the United States Capitol in 2013, before dome restoration scaffolding was erected</figcaption></figure><p>The <b>United States Capitol</b>, often called <b>Capitol Hill</b>, is the seat of the <a title="United States Congress">United States Congress</a>, the <a title="Legislative branch of the United States federal government" class="mw-redirect">legislative branch</a> of the <a title="Federal government of the United States">U.S. federal government</a>. It sits atop <a title="Capitol Hill">Capitol Hill</a>, at the eastern end of the <a title="National Mall">National Mall</a> in <a title="Washington, D.C.">Washington, D.C.</a>. Though not at the geographic center of the <a title="Geography of Washington, D.C.">Federal District</a>, the Capitol forms the origin point for the District\'s street-numbering system and <a title="Quadrants of Washington, D.C.">the District\'s four quadrants</a>.</p><p>The original building was completed in the year 1800 and was subsequently expanded, particularly with the addition of the massive <a href="/wiki/United_States_Capitol_dome" title="United States Capitol dome">dome</a>. Like the principal buildings of the executive and judicial branches, the Capitol is built in a distinctive <a title="Neoclassical architecture">neoclassical style</a> and has a white exterior. Both its east and west elevations are formally referred to as <i>fronts</i>, though only the east front was intended for the reception of visitors and dignitaries.</p><p>In 2014, scaffolding was erected around the dome for a restoration project scheduled to be completed by early 2017.</p>';
+
+    var lawnStr = '<figure><img src="http://www.aoc.gov/sites/default/files/styles/artwork-node/public/6427409965_2c317e1225_o.jpg?itok=0I-oCZH8"></figure><p>Originally a wooded wilderness, the U.S. Capitol Grounds now provide a park-like setting for the nation\'s <a>Capitol Building</a>, offering a picturesque counterpoint to the building\'s formal architecture. The grounds immediately surrounding the U.S. Capitol are bordered by a stone wall and cover an area of 58.8 acres. It’s &nbsp;boundaries are Independence Avenue on the south, Constitution Avenue on the north, First Street NE/SE on the east, and First Street NW/SW on the west.</p><p>Over 100 varieties of trees and bushes are planted around the U.S. Capitol, and thousands of flowers are used in seasonal displays. In contrast to the building\'s straight, neoclassical lines, most of the walkways in the grounds are curved. Benches along the paths offer pleasant spots for visitors to appreciate the building, its landscape, and the surrounding areas, most notably the National Mall to the west.</p><p>The grounds were designed by <a href="/capitol-grounds/frederick-law-olmsted" title="Frederick Law Olmsted">Frederick Law Olmsted</a> (1822-1903), who planned the expansion and landscaping of the area that was performed from 1874 to 1892. Olmsted, who also designed New York\'s Central Park, is considered the greatest American landscape architect of his day. He was a pioneer in the development of public parks in America, and many of his designs were influenced by his studies of European parks, gardens and estates. In describing his plan for the Capitol Grounds, Olmsted noted that "The ground is in design part of the U.S. Capitol, but in all respects subsidiary to the central structure." Therefore, he was careful not to group trees or other landscape features in any way that would distract the viewer from the U.S. Capitol Building. The use of sculpture and other ornamentation has also been kept to a minimum.</p><p>Many of the trees on the Capitol Grounds have historic or memorial associations.&nbsp;A number&nbsp;commemorate members of Congress and other notable citizens, national organizations and special events. In addition, more than 30 states have made symbolic gifts of their state trees to the Capitol Grounds. Many of the trees on the grounds bear plaques that identify their species and their historic significance. The eastern part of the grounds contains the greatest number of historic and commemorative trees.</p><p>At the East Capitol Street entrance to the Capitol Plaza are two large rectangular stone fountains. The bottom levels now contain plantings, but at times in the past they have been used to catch the spillover from the fountains. At other times, both levels have held plantings. Six massive red granite lamp piers topped with light fixtures in wrought-iron cages, and 16 smaller bronze light fixtures, line the paved plaza. Seats are placed at intervals along the sidewalks. Three sets of benches are enclosed with wrought-iron railings and grilles; the roofed bench was originally a shelter for streetcar passengers.</p>';
+  </script>
+
+  <style>
+    .esri-popup-body {
+      font-size: 12pt;
+    }
+    .esri-popup p {
+      font-size: 12pt;
+    }
+    .esri-popup .esri-main {
+      width: 600px;
+    }
+    .esri-popup-body .esri-popup-content {
+      max-height: 250px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    var map, view, popup, features, capitolBuildingFL, ripple;
+
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "dojo/dom-class",
+        "dojo/dom",
+        "dojo/on",
+        "dojo/dom-attr",
+        "dojo/window",
+        "esri/tasks/QueryTask",
+        "esri/tasks/support/Query",
+        "esri/layers/FeatureLayer",
+        "esri/layers/GraphicsLayer",
+        "esri/Graphic",
+        "esri/geometry/Extent",
+        "esri/geometry/Point",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/symbols/PictureMarkerSymbol",
+        "esri/PopupTemplate",
+        "esri/widgets/Popup",
+        "esri/widgets/Ripple",
+        "dojo/dom-construct",
+        "dojo/Deferred",
+        //"esri/symbols/SimpleMarkerSymbol",
+        "dojo/domReady!"
+    ], function (Map, MapView, domClass, dom, on, domAttr, win,
+      QueryTask,
+      Query,
+      FeatureLayer,
+      GraphicsLayer,
+      Graphic,
+      Extent,
+      Point,
+      SimpleMarkerSymbol,
+      PictureMarkerSymbol,
+      PopupTemplate,
+      Popup,
+      Ripple,
+      domConstruct,
+      Deferred
+      //SimpleMarkerSymbol
+    ) {
+      
+      //Create the map
+      map = new Map({
+        basemap: "dark-gray"
+      });
+
+      //Create the MapView
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-77.00912833211676, 38.889752845456115],
+        zoom: 16,
+        padding: {
+          top: 85
+        }
+      });
+/*
+      ripple = new Ripple({
+        visible: true,
+        view: view
+      });
+      ripple.startup();
+      domConstruct.place(ripple.domNode, view.root);*/
+
+
+      popup = new Popup({
+        //position: "right",
+        view: view
+      });
+      popup.startup();
+      view.popup = popup;
+      
+      popup.on("action-click", function(evt){
+        if(evt.action.id === "email"){
+          window.location.href = "mailto:president@whitehouse.gov";
+        }
+        else if(evt.action.id ==="zoom-out"){
+          view.animateTo({
+            center: view.center,
+            zoom: view.zoom - 2
+          });
+        }
+      });
+
+      popup.watch("selectedFeature", function (event) {
+
+        var selected = popup.selectedFeature;
+
+        if (selected) {
+
+          showCurrentFeature(selected.attributes.key);
+        } else {
+          console.log('undefined');
+          showCurrentFeature("undefined");
+        }
+
+      });
+      popup.watch("visible", function (event) {
+
+        if (popup.visible === false) showCurrentFeature("undefined");
+      });
+
+      var offOpacity = 0;
+
+      //Create the FeatureLayer using the popupTemplate
+      capitolBuildingFL = new FeatureLayer({
+
+        url: "http://services.arcgis.com/ZAA95z0SYTDJP9yw/arcgis/rest/services/Capitol_Building_FL/FeatureServer/3",
+        outFields: ["*"]
+      });
+      capitolBuildingFL.opacity = offOpacity;
+
+      var lawnFL = new FeatureLayer({
+        url: "http://services.arcgis.com/ZAA95z0SYTDJP9yw/ArcGIS/rest/services/Capitol_Lawn_FL/FeatureServer/3",
+        outFields: ["*"]
+      });
+      lawnFL.opacity = offOpacity;
+
+      var weststepsFL = new FeatureLayer({
+        url: "http://services.arcgis.com/ZAA95z0SYTDJP9yw/ArcGIS/rest/services/West_Steps_FL/FeatureServer/3",
+        outFields: ["*"]
+      });
+      weststepsFL.opacity = offOpacity;
+
+
+
+      map.add(capitolBuildingFL);
+      map.add(weststepsFL);
+      map.add(lawnFL);
+
+
+      view.on('click', function (event) {
+        if(ripple) ripple.destroy();
+        ripple = new Ripple({
+          visible: true,
+          view: view
+        });
+        ripple.startup();
+        domConstruct.place(ripple.domNode, view.root);
+        ripple.set("visible", true);
+        ripple.set("point", event.mapPoint);
+
+
+        if (event.graphic) {
+          var features = getFeatures(event);
+          if (features.length > 0) {
+            var def = new Deferred();
+
+            setTimeout(function () {
+              def.resolve(features);
+
+           // popup.set("content", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta egestas consectetur. Sed luctus iaculis diam ut posuere. Ut ut purus eu elit interdum pulvinar et ut velit. Integer varius nulla eget libero sodales semper. Duis lobortis gravida risus, at molestie quam aliquet eu. Praesent vitae purus sem. Quisque volutpat tincidunt dictum. Phasellus et posuere dui. Morbi lacus nisl, pellentesque sed feugiat vitae, aliquet quis ipsum. Vivamus id facilisis sem, in tristique dolor. Ut nulla risus, malesuada non magna quis, lobortis eleifend mauris. Aenean pharetra turpis quis magna blandit aliquam. Aliquam consequat metus felis, in porttitor nisi vulputate vel. In dapibus, magna nec fermentum hendrerit, neque sapien dictum felis, viverra pulvinar nulla erat ac mauris. Pellentesque ornare nulla sit amet scelerisque tincidunt. Quisque mollis mattis purus ut pellentesque. Pellentesque tempor, mi et euismod semper, erat mi consequat purus, sed vehicula felis risus eget metus. Praesent vitae nunc sit amet tellus sodales mollis congue ac nibh. Nunc dictum quis nisi ut lobortis. Pellentesque aliquam pretium ultricies. Praesent porta diam fermentum, finibus justo vel, volutpat nibh. Ut felis elit, venenatis at turpis id, gravida scelerisque ipsum. Integer nec ex faucibus, consequat leo id, feugiat lectus. Fusce luctus mollis neque, et fermentum dolor ornare ac.");
+            }, 1500);
+
+            popup.set({
+              promises: [def.promise],
+              location: event.mapPoint,
+              visible: true
+            });
+            /*popup.set({
+              features: features,
+              visible: true,
+              location: event.mapPoint
+            });*/
+          }
+        } else {
+          popup.set({
+            promises: [],
+            visible: false
+          });
+        }
+      });
+
+      function getFeatures(event) {
+        var title = (event.graphic.attributes.title || event.graphic.attributes.TITLE).toLowerCase();
+        var ret = [];
+
+        var featuresRepo = [
+                new Graphic({
+            geometry: event.mapPoint,
+            symbol: new SimpleMarkerSymbol(),
+            attributes: {
+              title: "U.S. Capitol Building",
+              description: richTextStr,
+              key: "capitol building"
+            },
+            popupTemplate: new PopupTemplate({
+              title: "{title}",
+              content: "{description}",
+              actions: [{
+                id: "email",
+                className: "esri-icon-contact",
+                title: "Email"
+              }],
+              key: "{key}"
+            })
+          }),
+                new Graphic({
+            geometry: event.mapPoint,
+            symbol: new SimpleMarkerSymbol(),
+            attributes: {
+              title: "Concerts on the West Steps",
+              description: tableDataStrBand,
+              key: "west steps"
+            },
+            popupTemplate: new PopupTemplate({
+              title: "{title}",
+              content: "{description}",
+              actions: [{
+                id: "zoom-out",
+                className: "esri-icon-zoom-out-magnifying-glass",
+                title: "Zoom out"
+              },{
+                id: "email",
+                className: "esri-icon-contact",
+                title: "Email"
+              }],
+              key: "{key}"
+            })
+          }),
+                new Graphic({
+            geometry: event.mapPoint,
+            symbol: new SimpleMarkerSymbol(),
+            attributes: {
+              title: "U.S Capitol Grounds",
+              description: lawnStr,
+              key: "lawn"
+            },
+            popupTemplate: new PopupTemplate({
+              title: "{title}",
+              content: "{description}",
+              actions: [],
+              overwriteActions: true,
+              key: "{key}"
+            })
+          })
+
+            ];
+
+        showCurrentFeature(title);
+
+        switch (title) {
+
+        case "capitol building":
+          ret = featuresRepo.slice(0, 3);
+          break;
+        case "west steps":
+          ret = featuresRepo.slice(1, 3);
+          break;
+        case "lawn":
+          ret = featuresRepo.slice(2, 3);
+          //lawnFL.opacity = 1;
+          break;
+        }
+
+        return ret;
+      }
+
+
+      function showCurrentFeature(key) {
+
+        weststepsFL.opacity = offOpacity;
+        capitolBuildingFL.opacity = offOpacity;
+        lawnFL.opacity = offOpacity;
+
+        switch (key) {
+        case "west steps":
+          weststepsFL.opacity = 1;
+          break;
+        case "capitol building":
+          capitolBuildingFL.opacity = 1;
+          break;
+        case "lawn":
+          lawnFL.opacity = 1;
+          break;
+        }
+      }
+    });
+  </script>
+</head>
+
+
+<body class="dark">
+  <div class="application">
+    <div id="viewDiv"></div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">New Popup</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Map</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta1/esri/css/esri.css">
+  <link href="../commons/css/style.css" rel="stylesheet" type="text/css">
+
+  <script src="//code.createjs.com/tweenjs-0.6.1.min.js"></script>
+  <script src="//js.arcgis.com/4.0beta1/"></script>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "dojo/domReady!"
+    ], function(Map, MapView) {
+      map = new Map({
+        basemap: "streets"
+      });
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 6,
+        rotation: 30
+      });
+
+      createjs.Ticker.setFPS(60);
+      view.then(function() {
+        var scale = view.scale;
+        view.interacting = true;
+        createjs.Tween.get(view, { loop: true })
+          .wait(500)
+          .to({ scale: 50000000, rotation: -30}, 5000, createjs.Ease.getPowInOut(4))
+          .wait(500)
+          .to({ scale: scale, rotation: 30}, 1000, createjs.Ease.getPowInOut(4));
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>

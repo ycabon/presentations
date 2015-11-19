@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<!-- saved from url=(0099)https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html -->
+<html lang="en" class=" is-copy-enabled"><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=1020">
+    <meta content="origin-when-crossorigin" name="referrer">
+    
+    <title>Editing arcgis-api-js-worker-drawing/tiled-worker-layer.html at master · yann6817/arcgis-api-js-worker-drawing</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="https://devtopia.esri.com/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://devtopia.esri.com/fluidicon.png" title="GitHub">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://devtopia.esri.com/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://devtopia.esri.com/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://devtopia.esri.com/apple-touch-icon-144.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://devtopia.esri.com/apple-touch-icon-144.png">
+    <meta property="fb:app_id" content="1401488693436528">
+
+      <meta content="@github" name="twitter:site"><meta content="summary" name="twitter:card"><meta content="yann6817/arcgis-api-js-worker-drawing" name="twitter:title"><meta content="arcgis-api-js-worker-drawing - experimental implementation for using worker to help drawing features" name="twitter:description"><meta content="https://devtopia.esri.com/avatars/u/189?s=400" name="twitter:image:src">
+      <meta content="GitHub Enterprise" property="og:site_name"><meta content="object" property="og:type"><meta content="https://devtopia.esri.com/avatars/u/189?s=400" property="og:image"><meta content="yann6817/arcgis-api-js-worker-drawing" property="og:title"><meta content="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing" property="og:url"><meta content="arcgis-api-js-worker-drawing - experimental implementation for using worker to help drawing features" property="og:description">
+    <meta name="browser-errors-url" content="https://devtopia.esri.com/api/v3/_private/browser/errors">
+    <link rel="assets" href="https://devtopia.esri.com/">
+    <link rel="web-socket" href="wss://devtopia.esri.com/_sockets/MTg5OmZiODhmODhhOTU2OTE4N2QzZTk1YTcwMTY2ZGJjY2U5OmRjYjM5ZDFlZjNhODEyOWRhYWM1M2NlZDU0MTYyYWY1YTIwZWM2ZjVjYTc4NjJiOGFjNGIxNjllYzU1YmJiMjI=--c37603519d355bede74f74682531c33b724c2da2">
+    <meta name="pjax-timeout" content="1000">
+    <link rel="sudo-modal" href="https://devtopia.esri.com/sessions/sudo_modal">
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="selected-link" value="repo_source" data-pjax-transient="">
+
+
+    
+    
+    <meta content="Rails, view, blob#edit" name="analytics-event">
+    <meta class="js-ga-set" name="dimension1" content="Logged In">
+    <meta name="is-dotcom" content="false">
+      <meta name="hostname" content="devtopia.esri.com">
+    <meta name="user-login" content="yann6817">
+
+      <link rel="icon" sizes="any" mask="" href="https://devtopia.esri.com/pinned-octocat.svg">
+      <meta name="theme-color" content="#4078c0">
+      <link rel="icon" type="image/x-icon" href="https://devtopia.esri.com/favicon-enterprise.ico">
+
+
+    <meta content="authenticity_token" name="csrf-param">
+<meta content="7XdjcF7ioiRsMz+NYGyONgOLvKAdoBOA7QYDOjBeUaTBoRWsVe6hcWdc7zTZeRX33lMY9GpKaqVV/dKK3WSxsA==" name="csrf-token">
+
+    <link crossorigin="anonymous" href="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/index-f988f47530f834135696f2bbf16666d1e7489bdb78d03b0b038def4e84bea878.css" media="all" rel="stylesheet">
+    <link crossorigin="anonymous" href="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/index-bd34877454bf1fa54873160009e8be71aeaccc319692312be41ce60c21e0837e.css" media="all" rel="stylesheet">
+    
+    
+
+
+    <meta http-equiv="x-pjax-version" content="9f2257f4dfe8a69f95a0b613c5a8dfd3">
+
+      
+  <meta name="description" content="arcgis-api-js-worker-drawing - experimental implementation for using worker to help drawing features">
+  <meta name="go-import" content="devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing git https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing.git">
+
+  
+  <link href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/commits/master.atom?token=AAAAvffxDnw9pjV615aWe7mHPQu9SYSkks60WG3ZwA%3D%3D" rel="alternate" title="Recent Commits to arcgis-api-js-worker-drawing:master" type="application/atom+xml">
+
+  <style id="ace_editor.css">.ace_editor {position: relative;overflow: hidden;font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;direction: ltr;}.ace_scroller {position: absolute;overflow: hidden;top: 0;bottom: 0;background-color: inherit;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;cursor: text;}.ace_content {position: absolute;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;min-width: 100%;}.ace_dragging .ace_scroller:before{position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: '';background: rgba(250, 250, 250, 0.01);z-index: 1000;}.ace_dragging.ace_dark .ace_scroller:before{background: rgba(0, 0, 0, 0.01);}.ace_selecting, .ace_selecting * {cursor: text !important;}.ace_gutter {position: absolute;overflow : hidden;width: auto;top: 0;bottom: 0;left: 0;cursor: default;z-index: 4;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;}.ace_gutter-active-line {position: absolute;left: 0;right: 0;}.ace_scroller.ace_scroll-left {box-shadow: 17px 0 16px -16px rgba(0, 0, 0, 0.4) inset;}.ace_gutter-cell {padding-left: 19px;padding-right: 6px;background-repeat: no-repeat;}.ace_gutter-cell.ace_error {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABOFBMVEX/////////QRswFAb/Ui4wFAYwFAYwFAaWGAfDRymzOSH/PxswFAb/SiUwFAYwFAbUPRvjQiDllog5HhHdRybsTi3/Tyv9Tir+Syj/UC3////XurebMBIwFAb/RSHbPx/gUzfdwL3kzMivKBAwFAbbvbnhPx66NhowFAYwFAaZJg8wFAaxKBDZurf/RB6mMxb/SCMwFAYwFAbxQB3+RB4wFAb/Qhy4Oh+4QifbNRcwFAYwFAYwFAb/QRzdNhgwFAYwFAbav7v/Uy7oaE68MBK5LxLewr/r2NXewLswFAaxJw4wFAbkPRy2PyYwFAaxKhLm1tMwFAazPiQwFAaUGAb/QBrfOx3bvrv/VC/maE4wFAbRPBq6MRO8Qynew8Dp2tjfwb0wFAbx6eju5+by6uns4uH9/f36+vr/GkHjAAAAYnRSTlMAGt+64rnWu/bo8eAA4InH3+DwoN7j4eLi4xP99Nfg4+b+/u9B/eDs1MD1mO7+4PHg2MXa347g7vDizMLN4eG+Pv7i5evs/v79yu7S3/DV7/498Yv24eH+4ufQ3Ozu/v7+y13sRqwAAADLSURBVHjaZc/XDsFgGIBhtDrshlitmk2IrbHFqL2pvXf/+78DPokj7+Fz9qpU/9UXJIlhmPaTaQ6QPaz0mm+5gwkgovcV6GZzd5JtCQwgsxoHOvJO15kleRLAnMgHFIESUEPmawB9ngmelTtipwwfASilxOLyiV5UVUyVAfbG0cCPHig+GBkzAENHS0AstVF6bacZIOzgLmxsHbt2OecNgJC83JERmePUYq8ARGkJx6XtFsdddBQgZE2nPR6CICZhawjA4Fb/chv+399kfR+MMMDGOQAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: 2px center;}.ace_gutter-cell.ace_warning {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEX///8AAAD///8AAAAAAABPSzb/5sAAAAB/blH/73z/ulkAAAAAAAD85pkAAAAAAAACAgP/vGz/rkDerGbGrV7/pkQICAf////e0IsAAAD/oED/qTvhrnUAAAD/yHD/njcAAADuv2r/nz//oTj/p064oGf/zHAAAAA9Nir/tFIAAAD/tlTiuWf/tkIAAACynXEAAAAAAAAtIRW7zBpBAAAAM3RSTlMAABR1m7RXO8Ln31Z36zT+neXe5OzooRDfn+TZ4p3h2hTf4t3k3ucyrN1K5+Xaks52Sfs9CXgrAAAAjklEQVR42o3PbQ+CIBQFYEwboPhSYgoYunIqqLn6/z8uYdH8Vmdnu9vz4WwXgN/xTPRD2+sgOcZjsge/whXZgUaYYvT8QnuJaUrjrHUQreGczuEafQCO/SJTufTbroWsPgsllVhq3wJEk2jUSzX3CUEDJC84707djRc5MTAQxoLgupWRwW6UB5fS++NV8AbOZgnsC7BpEAAAAABJRU5ErkJggg==");background-position: 2px center;}.ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAJ0Uk5TAAB2k804AAAAPklEQVQY02NgIB68QuO3tiLznjAwpKTgNyDbMegwisCHZUETUZV0ZqOquBpXj2rtnpSJT1AEnnRmL2OgGgAAIKkRQap2htgAAAAASUVORK5CYII=");background-position: 2px center;}.ace_dark .ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEUAAAChoaGAgIAqKiq+vr6tra1ZWVmUlJSbm5s8PDxubm56enrdgzg3AAAAAXRSTlMAQObYZgAAAClJREFUeNpjYMAPdsMYHegyJZFQBlsUlMFVCWUYKkAZMxZAGdxlDMQBAG+TBP4B6RyJAAAAAElFTkSuQmCC");}.ace_scrollbar {position: absolute;right: 0;bottom: 0;z-index: 6;}.ace_scrollbar-inner {position: absolute;cursor: text;left: 0;top: 0;}.ace_scrollbar-v{overflow-x: hidden;overflow-y: scroll;top: 0;}.ace_scrollbar-h {overflow-x: scroll;overflow-y: hidden;left: 0;}.ace_print-margin {position: absolute;height: 100%;}.ace_text-input {position: absolute;z-index: 0;width: 0.5em;height: 1em;opacity: 0;background: transparent;-moz-appearance: none;appearance: none;border: none;resize: none;outline: none;overflow: hidden;font: inherit;padding: 0 1px;margin: 0 -1px;text-indent: -1em;-ms-user-select: text;-moz-user-select: text;-webkit-user-select: text;user-select: text;}.ace_text-input.ace_composition {background: inherit;color: inherit;z-index: 1000;opacity: 1;text-indent: 0;}.ace_layer {z-index: 1;position: absolute;overflow: hidden;word-wrap: normal;white-space: pre;height: 100%;width: 100%;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;pointer-events: none;}.ace_gutter-layer {position: relative;width: auto;text-align: right;pointer-events: auto;}.ace_text-layer {font: inherit !important;}.ace_cjk {display: inline-block;text-align: center;}.ace_cursor-layer {z-index: 4;}.ace_cursor {z-index: 4;position: absolute;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;border-left: 2px solid}.ace_slim-cursors .ace_cursor {border-left-width: 1px;}.ace_overwrite-cursors .ace_cursor {border-left-width: 0;border-bottom: 1px solid;}.ace_hidden-cursors .ace_cursor {opacity: 0.2;}.ace_smooth-blinking .ace_cursor {-webkit-transition: opacity 0.18s;transition: opacity 0.18s;}.ace_editor.ace_multiselect .ace_cursor {border-left-width: 1px;}.ace_marker-layer .ace_step, .ace_marker-layer .ace_stack {position: absolute;z-index: 3;}.ace_marker-layer .ace_selection {position: absolute;z-index: 5;}.ace_marker-layer .ace_bracket {position: absolute;z-index: 6;}.ace_marker-layer .ace_active-line {position: absolute;z-index: 2;}.ace_marker-layer .ace_selected-word {position: absolute;z-index: 4;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}.ace_line .ace_fold {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;display: inline-block;height: 11px;margin-top: -2px;vertical-align: middle;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi+P//fxgTAwPDBxDxD078RSX+YeEyDFMCIMAAI3INmXiwf2YAAAAASUVORK5CYII=");background-repeat: no-repeat, repeat-x;background-position: center center, top left;color: transparent;border: 1px solid black;border-radius: 2px;cursor: pointer;pointer-events: auto;}.ace_dark .ace_fold {}.ace_fold:hover{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi+P//fz4TAwPDZxDxD5X4i5fLMEwJgAADAEPVDbjNw87ZAAAAAElFTkSuQmCC");}.ace_tooltip {background-color: #FFF;background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.1));background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));border: 1px solid gray;border-radius: 1px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);color: black;max-width: 100%;padding: 3px 4px;position: fixed;z-index: 999999;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;cursor: default;white-space: pre;word-wrap: break-word;line-height: normal;font-style: normal;font-weight: normal;letter-spacing: normal;pointer-events: none;}.ace_folding-enabled > .ace_gutter-cell {padding-right: 13px;}.ace_fold-widget {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;margin: 0 -12px 0 1px;display: none;width: 11px;vertical-align: top;background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: center;border-radius: 3px;border: 1px solid transparent;cursor: pointer;}.ace_folding-enabled .ace_fold-widget {display: inline-block;   }.ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42m3HwQkAMAhD0YzsRchFKI7sAikeWkrxwScEB0nh5e7KTPWimZki4tYfVbX+MNl4pyZXejUO1QAAAABJRU5ErkJggg==");}.ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAGCAYAAAAG5SQMAAAAOUlEQVR42jXKwQkAMAgDwKwqKD4EwQ26sSOkVWjgIIHAzPiCgaqiqnJHZnKICBERHN194O5b9vbLuAVRL+l0YWnZAAAAAElFTkSuQmCCXA==");}.ace_fold-widget:hover {border: 1px solid rgba(0, 0, 0, 0.3);background-color: rgba(255, 255, 255, 0.2);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);}.ace_fold-widget:active {border: 1px solid rgba(0, 0, 0, 0.4);background-color: rgba(0, 0, 0, 0.05);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);}.ace_dark .ace_fold-widget {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2P4//8/AzoGEQ7oGCaLLAhWiSwB146BAQCSTPYocqT0AAAAAElFTkSuQmCC");}.ace_dark .ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQIW2P4//8/AxQ7wNjIAjDMgC4AxjCVKBirIAAF0kz2rlhxpAAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAAHElEQVQIW2P4//+/AxAzgDADlOOAznHAKgPWAwARji8UIDTfQQAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget:hover {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);background-color: rgba(255, 255, 255, 0.1);}.ace_dark .ace_fold-widget:active {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);}.ace_fold-widget.ace_invalid {background-color: #FFB4B4;border-color: #DE5555;}.ace_fade-fold-widgets .ace_fold-widget {-webkit-transition: opacity 0.4s ease 0.05s;transition: opacity 0.4s ease 0.05s;opacity: 0;}.ace_fade-fold-widgets:hover .ace_fold-widget {-webkit-transition: opacity 0.05s ease 0.05s;transition: opacity 0.05s ease 0.05s;opacity:1;}.ace_underline {text-decoration: underline;}.ace_bold {font-weight: bold;}.ace_nobold .ace_bold {font-weight: normal;}.ace_italic {font-style: italic;}.ace_error-marker {background-color: rgba(255, 0, 0,0.2);position: absolute;z-index: 9;}.ace_highlight-marker {background-color: rgba(255, 255, 0,0.2);position: absolute;z-index: 8;}</style><style id="ace-tm">.ace-tm .ace_gutter {background: #f0f0f0;color: #333;}.ace-tm .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-tm .ace_fold {background-color: #6B72E6;}.ace-tm {background-color: #FFFFFF;color: black;}.ace-tm .ace_cursor {color: black;}.ace-tm .ace_invisible {color: rgb(191, 191, 191);}.ace-tm .ace_storage,.ace-tm .ace_keyword {color: blue;}.ace-tm .ace_constant {color: rgb(197, 6, 11);}.ace-tm .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-tm .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-tm .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-tm .ace_invalid {background-color: rgba(255, 0, 0, 0.1);color: red;}.ace-tm .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-tm .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-tm .ace_support.ace_type,.ace-tm .ace_support.ace_class {color: rgb(109, 121, 222);}.ace-tm .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-tm .ace_string {color: rgb(3, 106, 7);}.ace-tm .ace_comment {color: rgb(76, 136, 107);}.ace-tm .ace_comment.ace_doc {color: rgb(0, 102, 255);}.ace-tm .ace_comment.ace_doc.ace_tag {color: rgb(128, 159, 191);}.ace-tm .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-tm .ace_variable {color: rgb(49, 132, 149);}.ace-tm .ace_xml-pe {color: rgb(104, 104, 91);}.ace-tm .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-tm .ace_heading {color: rgb(12, 7, 255);}.ace-tm .ace_list {color:rgb(185, 6, 144);}.ace-tm .ace_meta.ace_tag {color:rgb(0, 22, 142);}.ace-tm .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-tm .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-tm.ace_multiselect .ace_selection.ace_start {box-shadow: 0 0 3px 0px white;border-radius: 2px;}.ace-tm .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-tm .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-tm .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-tm .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-tm .ace_gutter-active-line {background-color : #dcdcdc;}.ace-tm .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-tm .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style><style>    .error_widget_wrapper {        background: inherit;        color: inherit;        border:none    }    .error_widget {        border-top: solid 2px;        border-bottom: solid 2px;        margin: 5px 0;        padding: 10px 40px;        white-space: pre-wrap;    }    .error_widget.ace_error, .error_widget_arrow.ace_error{        border-color: #ff5a5a    }    .error_widget.ace_warning, .error_widget_arrow.ace_warning{        border-color: #F1D817    }    .error_widget.ace_info, .error_widget_arrow.ace_info{        border-color: #5a5a5a    }    .error_widget.ace_ok, .error_widget_arrow.ace_ok{        border-color: #5aaa5a    }    .error_widget_arrow {        position: absolute;        border: solid 5px;        border-top-color: transparent!important;        border-right-color: transparent!important;        border-left-color: transparent!important;        top: -5px;    }</style><script src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/html-a7642273fe62a7b35a53c028e20677a4c2feb2c652430cf16752df91ead9182e.js"></script></head>
+
+
+  <body class="private-mode logged_in enterprise env-production macintosh vis-public page-edit-blob">
+    <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+    <div class="wrapper">
+      
+      
+      
+
+
+        <div class="header header-logged-in true" role="banner">
+  <div class="container clearfix">
+
+    <a class="header-logo-invertocat" href="https://devtopia.esri.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
+  <span class="mega-octicon octicon-mark-github"></span>
+</a>
+
+
+      <div class="site-search repo-scope js-site-search" role="search">
+          <form accept-charset="UTF-8" action="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/yann6817/arcgis-api-js-worker-drawing/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+  <label class="js-chromeless-input-container form-control">
+    <div class="scope-badge">This repository</div>
+    <input type="text" class="js-site-search-focus js-site-search-field is-clearable chromeless-input" data-hotkey="s" name="q" placeholder="Search" data-global-scope-placeholder="Search GitHub" data-repo-scope-placeholder="Search" tabindex="1" autocapitalize="off">
+  </label>
+</form>
+      </div>
+
+      <ul class="header-nav left" role="navigation">
+        <li class="header-nav-item">
+          <a href="https://devtopia.esri.com/pulls" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
+            Pull requests
+</a>        </li>
+        <li class="header-nav-item">
+          <a href="https://devtopia.esri.com/issues" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
+            Issues
+</a>        </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://devtopia.esri.com/gist" data-ga-click="Header, go to gist, text:gist">Gist</a>
+          </li>
+      </ul>
+
+    
+<ul class="header-nav user-nav right" id="user-links">
+  <li class="header-nav-item">
+      <span class="js-socket-channel js-updatable-content" data-channel="notification-changed:yann6817" data-url="/notifications/header">
+      <a href="https://devtopia.esri.com/notifications" aria-label="You have unread notifications" class="header-nav-link notification-indicator tooltipped tooltipped-s" data-ga-click="Header, go to notifications, icon:unread" data-hotkey="g n">
+          <span class="mail-status unread"></span>
+          <span class="octicon octicon-inbox"></span>
+</a>  </span>
+
+  </li>
+
+  <li class="header-nav-item dropdown js-menu-container">
+    <a class="header-nav-link tooltipped tooltipped-s js-menu-target" href="https://devtopia.esri.com/new" aria-label="Create new..." data-ga-click="Header, create new, icon:add">
+      <span class="octicon octicon-plus left"></span>
+      <span class="dropdown-caret"></span>
+    </a>
+
+    <div class="dropdown-menu-content js-menu-content">
+      <ul class="dropdown-menu dropdown-menu-sw">
+        
+<a class="dropdown-item" href="https://devtopia.esri.com/new" data-ga-click="Header, create new repository">
+  New repository
+</a>
+
+
+  <a class="dropdown-item" href="https://devtopia.esri.com/organizations/new" data-ga-click="Header, create new organization">
+    New organization
+  </a>
+
+
+
+  <div class="dropdown-divider"></div>
+  <div class="dropdown-header">
+    <span title="yann6817/arcgis-api-js-worker-drawing">This repository</span>
+  </div>
+    <a class="dropdown-item" href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/issues/new" data-ga-click="Header, create new issue">
+      New issue
+    </a>
+    <a class="dropdown-item" href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/settings/collaboration" data-ga-click="Header, create new collaborator">
+      New collaborator
+    </a>
+
+      </ul>
+    </div>
+  </li>
+
+  <li class="header-nav-item dropdown js-menu-container">
+    <a class="header-nav-link name tooltipped tooltipped-s js-menu-target" href="https://devtopia.esri.com/yann6817" aria-label="View profile and more" data-ga-click="Header, show menu, icon:avatar">
+      <img alt="@yann6817" class="avatar" height="20" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/189" width="20">
+      <span class="dropdown-caret"></span>
+    </a>
+
+    <div class="dropdown-menu-content js-menu-content">
+      <div class="dropdown-menu dropdown-menu-sw">
+        <div class="dropdown-header header-nav-current-user css-truncate">
+          Signed in as <strong class="css-truncate-target">yann6817</strong>
+        </div>
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" href="https://devtopia.esri.com/yann6817" data-ga-click="Header, go to profile, text:your profile">
+          Your profile
+        </a>
+        <a class="dropdown-item" href="https://devtopia.esri.com/stars" data-ga-click="Header, go to starred repos, text:your stars">
+          Your stars
+        </a>
+        <a class="dropdown-item" href="https://devtopia.esri.com/explore" data-ga-click="Header, go to explore, text:explore">
+          Explore
+        </a>
+        <a class="dropdown-item" href="https://help.github.com/enterprise/2.3/user" data-ga-click="Header, go to help, text:help">
+          Help
+        </a>
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" href="https://devtopia.esri.com/settings/profile" data-ga-click="Header, go to settings, icon:settings">
+          Settings
+        </a>
+
+        <form accept-charset="UTF-8" action="https://devtopia.esri.com/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="rM/rB0Eb77n2z1Yve2Nt2v9dz63QovvC8hcB89Zw1rW/87c7yxsjEMxNR5mWunmRtD0zw5p2HLc/VbNFLI831w=="></div>
+          <button class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
+            Sign out
+          </button>
+</form>      </div>
+    </div>
+  </li>
+</ul>
+
+
+    
+  </div>
+</div>
+
+        
+
+        
+
+
+      <div id="start-of-content" class="accessibility-aid"></div>
+          <div class="site" itemscope="" itemtype="http://schema.org/WebPage">
+    <div id="js-flash-container">
+      
+    </div>
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+      <div class="container">
+
+        
+<ul class="pagehead-actions">
+
+  <li>
+      <form accept-charset="UTF-8" action="https://devtopia.esri.com/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="lAtcSz6/21n9tyuy8+SVd3fO+HqXm9Pc2KhlTAkMXEwqOOT2ZgB7urZMoTu2OZckgIr1KHgAotc09fxVeorz8g=="></div>    <input id="repository_id" name="repository_id" type="hidden" value="1714">
+
+      <div class="select-menu js-menu-container js-select-menu">
+        <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/subscription" class="btn btn-sm btn-with-count select-menu-button js-menu-target" role="button" tabindex="0" aria-haspopup="true" data-ga-click="Repository, click Watch settings, action:blob#edit">
+          <span class="js-select-button">
+            <span class="octicon octicon-eye"></span>
+            Unwatch
+          </span>
+        </a>
+        <a class="social-count js-social-count" href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/watchers">
+          1
+        </a>
+
+        <div class="select-menu-modal-holder">
+          <div class="select-menu-modal subscription-menu-modal js-menu-content" aria-hidden="true">
+            <div class="select-menu-header">
+              <span class="select-menu-title">Notifications</span>
+              <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+            </div>
+
+            <div class="select-menu-list js-navigation-container" role="menu">
+
+              <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input id="do_included" name="do" type="radio" value="included">
+                  <span class="select-menu-item-heading">Not watching</span>
+                  <span class="description">Be notified when participating or @mentioned.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-eye"></span>
+                    Watch
+                  </span>
+                </div>
+              </div>
+
+              <div class="select-menu-item js-navigation-item selected" role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input checked="checked" id="do_subscribed" name="do" type="radio" value="subscribed">
+                  <span class="select-menu-item-heading">Watching</span>
+                  <span class="description">Be notified of all conversations.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-eye"></span>
+                    Unwatch
+                  </span>
+                </div>
+              </div>
+
+              <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input id="do_ignore" name="do" type="radio" value="ignore">
+                  <span class="select-menu-item-heading">Ignoring</span>
+                  <span class="description">Never be notified.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-mute"></span>
+                    Stop ignoring
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+</form>
+  </li>
+
+  <li>
+    
+  <div class="js-toggler-container js-social-container starring-container ">
+
+    <form accept-charset="UTF-8" action="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/unstar" class="js-toggler-form starred js-unstar-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="2HdtGgcP/Et7pI8HgdOBxhDcONYskY7B2eHhRIEatuWD7dzlVdYxiOG95DUSkaPEz8vfQ11kw2iOQCmB74NeFA=="></div>
+      <button class="btn btn-sm btn-with-count js-toggler-target" aria-label="Unstar this repository" title="Unstar yann6817/arcgis-api-js-worker-drawing" data-ga-click="Repository, click unstar button, action:blob#edit; text:Unstar">
+        <span class="octicon octicon-star"></span>
+        Unstar
+      </button>
+        <a class="social-count js-social-count" href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/stargazers">
+          0
+        </a>
+</form>
+    <form accept-charset="UTF-8" action="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/star" class="js-toggler-form unstarred js-star-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="DWqwgrfORIRDhkbWRnKUjnd5tCHrBGYvNAJ2FEpRXOz3we/qIqABwaSigdwOGLaZR2fZ6I6t9OgIUQvJQJIxXQ=="></div>
+      <button class="btn btn-sm btn-with-count js-toggler-target" aria-label="Star this repository" title="Star yann6817/arcgis-api-js-worker-drawing" data-ga-click="Repository, click star button, action:blob#edit; text:Star">
+        <span class="octicon octicon-star"></span>
+        Star
+      </button>
+        <a class="social-count js-social-count" href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/stargazers">
+          0
+        </a>
+</form>  </div>
+
+  </li>
+
+        <li>
+          <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#fork-destination-box" class="btn btn-sm btn-with-count" title="Fork your own copy of yann6817/arcgis-api-js-worker-drawing to your account" aria-label="Fork your own copy of yann6817/arcgis-api-js-worker-drawing to your account" rel="facebox" data-ga-click="Repository, show fork modal, action:blob#edit; text:Fork">
+            <span class="octicon octicon-repo-forked"></span>
+            Fork
+          </a>
+          <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/network" class="social-count">0</a>
+
+          <div id="fork-destination-box" style="display: none;">
+            <h2 class="facebox-header">Where should we fork this repository?</h2>
+            <include-fragment src="" class="js-fork-select-fragment fork-select-fragment" data-url="/yann6817/arcgis-api-js-worker-drawing/fork?fragment=1">
+              <img alt="Loading" height="64" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-128-338974454bb5c32803e82f601beb051d373744b024fe8742a76009700fd7e033.gif" width="64">
+            </include-fragment>
+          </div>
+        </li>
+
+</ul>
+
+        <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+          <span class="mega-octicon octicon-repo"></span>
+          <span class="author"><a href="https://devtopia.esri.com/yann6817" class="url fn" itemprop="url" rel="author"><span itemprop="title">yann6817</span></a></span><!--
+       --><span class="path-divider">/</span><!--
+       --><strong><a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing" data-pjax="#js-repo-pjax-container">arcgis-api-js-worker-drawing</a></strong>
+
+          <span class="page-context-loader">
+            <img alt="" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+          </span>
+
+        </h1>
+      </div><!-- /.container -->
+    </div><!-- /.repohead -->
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline">
+        <div class="repository-sidebar clearfix">
+            
+<nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders" role="navigation" data-pjax="#js-repo-pjax-container" data-issue-count-url="/yann6817/arcgis-api-js-worker-drawing/issues/counts">
+  <ul class="sunken-menu-group">
+    <li class="tooltipped tooltipped-w" aria-label="Code">
+      <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /yann6817/arcgis-api-js-worker-drawing">
+        <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+        <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Issues">
+        <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /yann6817/arcgis-api-js-worker-drawing/issues">
+          <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+          <span class="js-issue-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>      </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Pull requests">
+      <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/pulls" aria-label="Pull requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /yann6817/arcgis-api-js-worker-drawing/pulls">
+          <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull requests</span>
+          <span class="js-pull-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Wiki">
+        <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/wiki" aria-label="Wiki" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g w" data-selected-links="repo_wiki /yann6817/arcgis-api-js-worker-drawing/wiki">
+          <span class="octicon octicon-book"></span> <span class="full-word">Wiki</span>
+          <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>      </li>
+  </ul>
+  <div class="sunken-menu-separator"></div>
+  <ul class="sunken-menu-group">
+
+    <li class="tooltipped tooltipped-w" aria-label="Pulse">
+      <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /yann6817/arcgis-api-js-worker-drawing/pulse">
+        <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+        <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Graphs">
+      <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /yann6817/arcgis-api-js-worker-drawing/graphs">
+        <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+        <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+  </ul>
+
+
+    <div class="sunken-menu-separator"></div>
+    <ul class="sunken-menu-group">
+      <li class="tooltipped tooltipped-w" aria-label="Settings">
+        <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/settings" aria-label="Settings" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_settings /yann6817/arcgis-api-js-worker-drawing/settings">
+          <span class="octicon octicon-tools"></span> <span class="full-word">Settings</span>
+          <img alt="" class="mini-loader" height="16" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>      </li>
+    </ul>
+</nav>
+
+              <div class="only-with-full-nav">
+                  
+<div class="js-clone-url clone-url open" data-protocol-type="http">
+  <h3><span class="text-emphasized">HTTPS</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing.git" readonly="readonly" aria-label="HTTPS clone URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="js-clone-url clone-url " data-protocol-type="ssh">
+  <h3><span class="text-emphasized">SSH</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="git@devtopia.esri.com:yann6817/arcgis-api-js-worker-drawing.git" readonly="readonly" aria-label="SSH clone URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="js-clone-url clone-url " data-protocol-type="subversion">
+  <h3><span class="text-emphasized">Subversion</span> checkout URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing" readonly="readonly" aria-label="Subversion checkout URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+
+<div class="clone-options">You can clone with
+  <form accept-charset="UTF-8" action="https://devtopia.esri.com/users/set_protocol?protocol_selector=http&protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="hJPKMUQN/b9KLdfumdTETDVk9Vlgh+bOcuXIVIW2Ia7l/xbuG+mWOYBRblRfJjlZ8+cGWfwHIYNxGDz+uMC8EQ=="></div><button class="btn-link js-clone-selector" data-protocol="http" type="submit">HTTPS</button></form>, <form accept-charset="UTF-8" action="https://devtopia.esri.com/users/set_protocol?protocol_selector=ssh&protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="BjJ+aS27if+Lj8K7lytlA3ISI/HXsKi4xdtdiqOLmEZuzWBRe1UBC8y1xGb8jR47gaHeE/VeLUfQ4Mi5jLYJLQ=="></div><button class="btn-link js-clone-selector" data-protocol="ssh" type="submit">SSH</button></form>, or <form accept-charset="UTF-8" action="https://devtopia.esri.com/users/set_protocol?protocol_selector=subversion&protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="X6ngdWy1k+TzRD3qR9lbFMn4fArPmHwcIogzsb7fIVL2wz2hWuJ9/SLxBTTzyl3B8n+cpuWLcW8rJj7xfxrJpA=="></div><button class="btn-link js-clone-selector" data-protocol="subversion" type="submit">Subversion</button></form>.
+  <a href="https://help.github.com/enterprise/2.3/user/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</div>
+
+  <a href="https://mac.github.com/" class="btn btn-sm sidebar-button" title="Save yann6817/arcgis-api-js-worker-drawing to your computer and use it in GitHub Desktop." aria-label="Save yann6817/arcgis-api-js-worker-drawing to your computer and use it in GitHub Desktop.">
+    <span class="octicon octicon-device-desktop"></span>
+    Clone in Desktop
+  </a>
+
+
+
+                <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/archive/master.zip" class="btn btn-sm sidebar-button" aria-label="Download the contents of yann6817/arcgis-api-js-worker-drawing as a zip file" title="Download the contents of yann6817/arcgis-api-js-worker-drawing as a zip file" rel="nofollow">
+                  <span class="octicon octicon-cloud-download"></span>
+                  Download ZIP
+                </a>
+              </div>
+        </div><!-- /.repository-sidebar -->
+
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container="">
+
+          
+
+
+
+<div class="file-box">
+  <form accept-charset="UTF-8" action="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/tree-save/master/tiled-worker-layer.html" class="js-blob-form" data-github-confirm-unload="Your edits will be lost." id="new_blob" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="/9yYo9t4ur6itigscilGp0cqtbDF2vLtFnCZDwF4/aNYYBOlt5tAZrdMD+/9n77vvJcOJ7qilH0nH4u/Vk2egg=="></div>
+    
+<div class="breadcrumb js-zeroclipboard-container">
+    <div class="editor-gitignore-template js-gitignore-template ">
+      Want to use a <code>.gitignore</code> template?
+      <span class="select-menu js-menu-container js-select-menu">
+  <span class="btn btn-sm select-menu-button js-menu-target" aria-haspopup="true" role="button">
+    <i>Choose .gitignore:</i>
+    <span class="js-select-button">None</span>
+  </span>
+
+  <div class="select-menu-modal-holder select-menu-git-ignore js-menu-content js-navigation-container" aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">.gitignore</span>
+        <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+      </div>
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" id="context-ignore-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter ignores…" aria-label="Choose .gitignore type">
+        </div>
+      </div>
+
+      <div class="select-menu-list" role="menu">
+        <div data-filterable-for="context-ignore-filter-field">
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Actionscript" id="gitignore-actionscript_Actionscript" name="gitignore-actionscript" type="radio" value="Actionscript">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Actionscript</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Ada" id="gitignore-ada_Ada" name="gitignore-ada" type="radio" value="Ada">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Ada</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Agda" id="gitignore-agda_Agda" name="gitignore-agda" type="radio" value="Agda">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Agda</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Android" id="gitignore-android_Android" name="gitignore-android" type="radio" value="Android">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Android</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/AppEngine" id="gitignore-appengine_AppEngine" name="gitignore-appengine" type="radio" value="AppEngine">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">AppEngine</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/AppceleratorTitanium" id="gitignore-appceleratortitanium_AppceleratorTitanium" name="gitignore-appceleratortitanium" type="radio" value="AppceleratorTitanium">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">AppceleratorTitanium</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ArchLinuxPackages" id="gitignore-archlinuxpackages_ArchLinuxPackages" name="gitignore-archlinuxpackages" type="radio" value="ArchLinuxPackages">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ArchLinuxPackages</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Autotools" id="gitignore-autotools_Autotools" name="gitignore-autotools" type="radio" value="Autotools">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Autotools</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Bancha" id="gitignore-bancha_Bancha" name="gitignore-bancha" type="radio" value="Bancha">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Bancha</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/C" id="gitignore-c_C" name="gitignore-c" type="radio" value="C">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">C</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/C++" id="gitignore-c___C__" name="gitignore-c++" type="radio" value="C++">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">C++</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CFWheels" id="gitignore-cfwheels_CFWheels" name="gitignore-cfwheels" type="radio" value="CFWheels">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CFWheels</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CMake" id="gitignore-cmake_CMake" name="gitignore-cmake" type="radio" value="CMake">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CMake</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CUDA" id="gitignore-cuda_CUDA" name="gitignore-cuda" type="radio" value="CUDA">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CUDA</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CakePHP" id="gitignore-cakephp_CakePHP" name="gitignore-cakephp" type="radio" value="CakePHP">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CakePHP</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ChefCookbook" id="gitignore-chefcookbook_ChefCookbook" name="gitignore-chefcookbook" type="radio" value="ChefCookbook">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ChefCookbook</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Clojure" id="gitignore-clojure_Clojure" name="gitignore-clojure" type="radio" value="Clojure">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Clojure</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CodeIgniter" id="gitignore-codeigniter_CodeIgniter" name="gitignore-codeigniter" type="radio" value="CodeIgniter">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CodeIgniter</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CommonLisp" id="gitignore-commonlisp_CommonLisp" name="gitignore-commonlisp" type="radio" value="CommonLisp">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CommonLisp</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Composer" id="gitignore-composer_Composer" name="gitignore-composer" type="radio" value="Composer">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Composer</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Concrete5" id="gitignore-concrete5_Concrete5" name="gitignore-concrete5" type="radio" value="Concrete5">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Concrete5</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Coq" id="gitignore-coq_Coq" name="gitignore-coq" type="radio" value="Coq">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Coq</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/CraftCMS" id="gitignore-craftcms_CraftCMS" name="gitignore-craftcms" type="radio" value="CraftCMS">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">CraftCMS</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/DM" id="gitignore-dm_DM" name="gitignore-dm" type="radio" value="DM">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">DM</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Dart" id="gitignore-dart_Dart" name="gitignore-dart" type="radio" value="Dart">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Dart</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Delphi" id="gitignore-delphi_Delphi" name="gitignore-delphi" type="radio" value="Delphi">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Delphi</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Drupal" id="gitignore-drupal_Drupal" name="gitignore-drupal" type="radio" value="Drupal">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Drupal</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/EPiServer" id="gitignore-episerver_EPiServer" name="gitignore-episerver" type="radio" value="EPiServer">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">EPiServer</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Eagle" id="gitignore-eagle_Eagle" name="gitignore-eagle" type="radio" value="Eagle">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Eagle</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Elisp" id="gitignore-elisp_Elisp" name="gitignore-elisp" type="radio" value="Elisp">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Elisp</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Elixir" id="gitignore-elixir_Elixir" name="gitignore-elixir" type="radio" value="Elixir">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Elixir</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Erlang" id="gitignore-erlang_Erlang" name="gitignore-erlang" type="radio" value="Erlang">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Erlang</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ExpressionEngine" id="gitignore-expressionengine_ExpressionEngine" name="gitignore-expressionengine" type="radio" value="ExpressionEngine">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ExpressionEngine</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ExtJS-MVC" id="gitignore-extjs-mvc_ExtJS-MVC" name="gitignore-extjs-mvc" type="radio" value="ExtJS-MVC">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ExtJS-MVC</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ExtJs" id="gitignore-extjs_ExtJs" name="gitignore-extjs" type="radio" value="ExtJs">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ExtJs</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Fancy" id="gitignore-fancy_Fancy" name="gitignore-fancy" type="radio" value="Fancy">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Fancy</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Finale" id="gitignore-finale_Finale" name="gitignore-finale" type="radio" value="Finale">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Finale</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ForceDotCom" id="gitignore-forcedotcom_ForceDotCom" name="gitignore-forcedotcom" type="radio" value="ForceDotCom">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ForceDotCom</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Fortran" id="gitignore-fortran_Fortran" name="gitignore-fortran" type="radio" value="Fortran">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Fortran</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/FuelPHP" id="gitignore-fuelphp_FuelPHP" name="gitignore-fuelphp" type="radio" value="FuelPHP">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">FuelPHP</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/GWT" id="gitignore-gwt_GWT" name="gitignore-gwt" type="radio" value="GWT">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">GWT</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/GitBook" id="gitignore-gitbook_GitBook" name="gitignore-gitbook" type="radio" value="GitBook">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">GitBook</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Go" id="gitignore-go_Go" name="gitignore-go" type="radio" value="Go">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Go</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Gradle" id="gitignore-gradle_Gradle" name="gitignore-gradle" type="radio" value="Gradle">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Gradle</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Grails" id="gitignore-grails_Grails" name="gitignore-grails" type="radio" value="Grails">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Grails</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Haskell" id="gitignore-haskell_Haskell" name="gitignore-haskell" type="radio" value="Haskell">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Haskell</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/IGORPro" id="gitignore-igorpro_IGORPro" name="gitignore-igorpro" type="radio" value="IGORPro">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">IGORPro</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Idris" id="gitignore-idris_Idris" name="gitignore-idris" type="radio" value="Idris">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Idris</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Java" id="gitignore-java_Java" name="gitignore-java" type="radio" value="Java">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Java</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Jboss" id="gitignore-jboss_Jboss" name="gitignore-jboss" type="radio" value="Jboss">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Jboss</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Jekyll" id="gitignore-jekyll_Jekyll" name="gitignore-jekyll" type="radio" value="Jekyll">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Jekyll</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Joomla" id="gitignore-joomla_Joomla" name="gitignore-joomla" type="radio" value="Joomla">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Joomla</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Jython" id="gitignore-jython_Jython" name="gitignore-jython" type="radio" value="Jython">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Jython</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Kohana" id="gitignore-kohana_Kohana" name="gitignore-kohana" type="radio" value="Kohana">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Kohana</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/LabVIEW" id="gitignore-labview_LabVIEW" name="gitignore-labview" type="radio" value="LabVIEW">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">LabVIEW</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Laravel" id="gitignore-laravel_Laravel" name="gitignore-laravel" type="radio" value="Laravel">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Laravel</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Leiningen" id="gitignore-leiningen_Leiningen" name="gitignore-leiningen" type="radio" value="Leiningen">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Leiningen</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/LemonStand" id="gitignore-lemonstand_LemonStand" name="gitignore-lemonstand" type="radio" value="LemonStand">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">LemonStand</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Lilypond" id="gitignore-lilypond_Lilypond" name="gitignore-lilypond" type="radio" value="Lilypond">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Lilypond</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Lithium" id="gitignore-lithium_Lithium" name="gitignore-lithium" type="radio" value="Lithium">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Lithium</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Lua" id="gitignore-lua_Lua" name="gitignore-lua" type="radio" value="Lua">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Lua</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Magento" id="gitignore-magento_Magento" name="gitignore-magento" type="radio" value="Magento">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Magento</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Maven" id="gitignore-maven_Maven" name="gitignore-maven" type="radio" value="Maven">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Maven</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Mercury" id="gitignore-mercury_Mercury" name="gitignore-mercury" type="radio" value="Mercury">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Mercury</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/MetaProgrammingSystem" id="gitignore-metaprogrammingsystem_MetaProgrammingSystem" name="gitignore-metaprogrammingsystem" type="radio" value="MetaProgrammingSystem">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">MetaProgrammingSystem</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Meteor" id="gitignore-meteor_Meteor" name="gitignore-meteor" type="radio" value="Meteor">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Meteor</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Nim" id="gitignore-nim_Nim" name="gitignore-nim" type="radio" value="Nim">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Nim</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Node" id="gitignore-node_Node" name="gitignore-node" type="radio" value="Node">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Node</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/OCaml" id="gitignore-ocaml_OCaml" name="gitignore-ocaml" type="radio" value="OCaml">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">OCaml</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Objective-C" id="gitignore-objective-c_Objective-C" name="gitignore-objective-c" type="radio" value="Objective-C">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Objective-C</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Opa" id="gitignore-opa_Opa" name="gitignore-opa" type="radio" value="Opa">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Opa</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/OracleForms" id="gitignore-oracleforms_OracleForms" name="gitignore-oracleforms" type="radio" value="OracleForms">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">OracleForms</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Packer" id="gitignore-packer_Packer" name="gitignore-packer" type="radio" value="Packer">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Packer</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Perl" id="gitignore-perl_Perl" name="gitignore-perl" type="radio" value="Perl">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Perl</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Phalcon" id="gitignore-phalcon_Phalcon" name="gitignore-phalcon" type="radio" value="Phalcon">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Phalcon</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/PlayFramework" id="gitignore-playframework_PlayFramework" name="gitignore-playframework" type="radio" value="PlayFramework">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">PlayFramework</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Plone" id="gitignore-plone_Plone" name="gitignore-plone" type="radio" value="Plone">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Plone</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Prestashop" id="gitignore-prestashop_Prestashop" name="gitignore-prestashop" type="radio" value="Prestashop">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Prestashop</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Processing" id="gitignore-processing_Processing" name="gitignore-processing" type="radio" value="Processing">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Processing</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Python" id="gitignore-python_Python" name="gitignore-python" type="radio" value="Python">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Python</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Qooxdoo" id="gitignore-qooxdoo_Qooxdoo" name="gitignore-qooxdoo" type="radio" value="Qooxdoo">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Qooxdoo</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Qt" id="gitignore-qt_Qt" name="gitignore-qt" type="radio" value="Qt">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Qt</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/R" id="gitignore-r_R" name="gitignore-r" type="radio" value="R">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">R</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ROS" id="gitignore-ros_ROS" name="gitignore-ros" type="radio" value="ROS">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ROS</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Rails" id="gitignore-rails_Rails" name="gitignore-rails" type="radio" value="Rails">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Rails</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/RhodesRhomobile" id="gitignore-rhodesrhomobile_RhodesRhomobile" name="gitignore-rhodesrhomobile" type="radio" value="RhodesRhomobile">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">RhodesRhomobile</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Ruby" id="gitignore-ruby_Ruby" name="gitignore-ruby" type="radio" value="Ruby">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Ruby</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Rust" id="gitignore-rust_Rust" name="gitignore-rust" type="radio" value="Rust">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Rust</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/SCons" id="gitignore-scons_SCons" name="gitignore-scons" type="radio" value="SCons">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">SCons</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Sass" id="gitignore-sass_Sass" name="gitignore-sass" type="radio" value="Sass">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Sass</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Scala" id="gitignore-scala_Scala" name="gitignore-scala" type="radio" value="Scala">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Scala</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Scrivener" id="gitignore-scrivener_Scrivener" name="gitignore-scrivener" type="radio" value="Scrivener">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Scrivener</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Sdcc" id="gitignore-sdcc_Sdcc" name="gitignore-sdcc" type="radio" value="Sdcc">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Sdcc</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/SeamGen" id="gitignore-seamgen_SeamGen" name="gitignore-seamgen" type="radio" value="SeamGen">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">SeamGen</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/SketchUp" id="gitignore-sketchup_SketchUp" name="gitignore-sketchup" type="radio" value="SketchUp">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">SketchUp</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/SugarCRM" id="gitignore-sugarcrm_SugarCRM" name="gitignore-sugarcrm" type="radio" value="SugarCRM">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">SugarCRM</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Swift" id="gitignore-swift_Swift" name="gitignore-swift" type="radio" value="Swift">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Swift</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Symfony" id="gitignore-symfony_Symfony" name="gitignore-symfony" type="radio" value="Symfony">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Symfony</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/SymphonyCMS" id="gitignore-symphonycms_SymphonyCMS" name="gitignore-symphonycms" type="radio" value="SymphonyCMS">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">SymphonyCMS</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Target3001" id="gitignore-target3001_Target3001" name="gitignore-target3001" type="radio" value="Target3001">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Target3001</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Tasm" id="gitignore-tasm_Tasm" name="gitignore-tasm" type="radio" value="Tasm">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Tasm</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/TeX" id="gitignore-tex_TeX" name="gitignore-tex" type="radio" value="TeX">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">TeX</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Textpattern" id="gitignore-textpattern_Textpattern" name="gitignore-textpattern" type="radio" value="Textpattern">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Textpattern</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/TurboGears2" id="gitignore-turbogears2_TurboGears2" name="gitignore-turbogears2" type="radio" value="TurboGears2">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">TurboGears2</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Typo3" id="gitignore-typo3_Typo3" name="gitignore-typo3" type="radio" value="Typo3">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Typo3</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Umbraco" id="gitignore-umbraco_Umbraco" name="gitignore-umbraco" type="radio" value="Umbraco">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Umbraco</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Unity" id="gitignore-unity_Unity" name="gitignore-unity" type="radio" value="Unity">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Unity</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/VVVV" id="gitignore-vvvv_VVVV" name="gitignore-vvvv" type="radio" value="VVVV">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">VVVV</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/VisualStudio" id="gitignore-visualstudio_VisualStudio" name="gitignore-visualstudio" type="radio" value="VisualStudio">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">VisualStudio</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Waf" id="gitignore-waf_Waf" name="gitignore-waf" type="radio" value="Waf">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Waf</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/WordPress" id="gitignore-wordpress_WordPress" name="gitignore-wordpress" type="radio" value="WordPress">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">WordPress</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Xojo" id="gitignore-xojo_Xojo" name="gitignore-xojo" type="radio" value="Xojo">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Xojo</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Yeoman" id="gitignore-yeoman_Yeoman" name="gitignore-yeoman" type="radio" value="Yeoman">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Yeoman</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Yii" id="gitignore-yii_Yii" name="gitignore-yii" type="radio" value="Yii">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Yii</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/ZendFramework" id="gitignore-zendframework_ZendFramework" name="gitignore-zendframework" type="radio" value="ZendFramework">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">ZendFramework</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/Zephir" id="gitignore-zephir_Zephir" name="gitignore-zephir" type="radio" value="Zephir">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">Zephir</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/gcov" id="gitignore-gcov_gcov" name="gitignore-gcov" type="radio" value="gcov">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">gcov</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/nanoc" id="gitignore-nanoc_nanoc" name="gitignore-nanoc" type="radio" value="nanoc">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">nanoc</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/opencart" id="gitignore-opencart_opencart" name="gitignore-opencart" type="radio" value="opencart">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">opencart</div>
+            </div>
+            <div class="select-menu-item js-navigation-item" role="menuitem">
+              <input data-template-url="https://devtopia.esri.com/site/gitignore/stella" id="gitignore-stella_stella" name="gitignore-stella" type="radio" value="stella">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <div class="select-menu-item-text js-select-button-text">stella</div>
+            </div>
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+    </div>
+  </div>
+</span>
+
+    </div>
+
+    <span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing" class="" data-branch="master" data-pjax="true" itemscope="url"><span itemprop="title">arcgis-api-js-worker-drawing</span></a></span></span><span class="separator">/</span>
+    <input type="text" class="js-blob-filename js-breadcrumb-nav" name="filename" value="tiled-worker-layer.html" placeholder="Name your file…">
+    <button aria-label="Copy file path to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    <span class="editor-abort">or <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/blob/master/tiled-worker-layer.html">cancel</a></span>
+    <input type="hidden" name="new_filename" class="js-new-filename-field js-zeroclipboard-target" value="tiled-worker-layer.html" data-default-value="tiled-worker-layer.html">
+    <div class="hidden">
+      <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="js-crumb-template"><a href="" data-branch="" data-pjax="true" itemscope="url"><span itemprop="title">REPLACEME</span></a></span>
+      <span class="separator js-crumb-separator">/</span>
+    </div>
+</div>
+
+<input type="hidden" name="commit" class="js-commit-oid" value="c9adfe8cb1c32e4072f71950fa4f551d21548c34" data-default-value="c9adfe8cb1c32e4072f71950fa4f551d21548c34">
+  <input type="hidden" name="same_repo" value="1">
+
+<input type="hidden" name="pr" value="">
+
+
+
+<div class="file js-code-editor container-preview show-code" data-github-confirm-unload="false">
+  <div class="js-file-header file-header">
+      <div class="file-actions">
+        <select class="js-code-indent-mode">
+          <optgroup label="Indent mode">
+            <option value="space" selected="selected">Spaces</option>
+<option value="tab">Tabs</option>
+          </optgroup>
+        </select>
+
+        <select class="js-code-indent-width">
+          <optgroup label="Indent size">
+            <option value="2" selected="selected">2</option>
+<option value="4">4</option>
+<option value="8">8</option>
+          </optgroup>
+        </select>
+
+        <select class="js-code-wrap-mode">
+          <optgroup label="Line wrap mode">
+            <option value="off" selected="selected">No wrap</option>
+<option value="on">Soft wrap</option>
+          </optgroup>
+        </select>
+
+        
+<a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#fullscreen" class="enable-fullscreen js-enable-fullscreen tooltipped-e
+  octicon-btn tooltipped" aria-label="Edit in fullscreen">
+  <span class="octicon octicon-screen-full"></span>
+  
+</a>
+
+      </div>
+
+        <nav class="tabnav-tabs js-blob-edit-actions">
+          <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#" class="code selected tabnav-tab">
+            <span class="octicon octicon-code"></span>
+            Edit file
+          </a>
+          <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#" class="preview tabnav-tab" data-preview-url="/yann6817/arcgis-api-js-worker-drawing/preview/master/tiled-worker-layer.html">
+            <span class="octicon octicon-eye"></span>
+            Preview changes
+          </a>
+        </nav>
+  </div>
+
+  <input type="hidden" name="content_changed" class="js-blob-contents-changed" value="true" data-default-value="">
+
+
+  <div class="commit-create">
+    <textarea id="blob_contents_tiled-worker-layer-html" class="file-editor-textarea js-blob-contents js-code-textarea" rows="35" name="value" data-filename="tiled-worker-layer.html" data-language="HTML" data-ace-mode="html" data-allow-unchanged="" placeholder="Enter file contents here" spellcheck="false" autofocus="" style="display: none;">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;
+    &lt;meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/&gt;
+    &lt;title&gt;Simple Map&lt;/title&gt;
+    &lt;link rel="stylesheet" href="//js.arcgis.com/3.10/js/esri/css/esri.css"&gt;
+    &lt;style&gt;
+      html, body, #map {
+        height: 100%;
+        width:100%;
+        margin: 0;
+        background-color: #000000;
+      }
+      #map {
+        position: absolute;
+      }
+    &lt;/style&gt;
+    &lt;script&gt;
+      var dojoConfig = {
+        paths: {
+          local: location.href.replace(/[^\/]+$/,'') + "js"
+        }
+      };
+    &lt;/script&gt;
+    &lt;script src="//js.arcgis.com/3.10/"&gt;&lt;/script&gt;
+    &lt;script&gt;
+      var map;
+      require([
+        "esri/map", "local/TiledWorkerLayer", "local/CanvasWorkerLayer",
+        "esri/renderers/UniqueValueRenderer", "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleMarkerSymbol",
+        "esri/InfoTemplate",
+        "dojo/_base/array", "dojo/dom", "dojo/on", "esri/Color", "esri/dijit/Legend", "dojo/domReady!"
+      ], function(
+        Map,
+        TiledWorkerLayer, CanvasWorkerLayer,
+        UniqueValueRenderer, SimpleFillSymbol, SimpleLineSymbol, SimpleMarkerSymbol,
+        InfoTemplate, array, dom, on, Color, Legend
+      ) {
+        esri.config.defaults.map.basemaps.darkgray = {
+          baseMapLayers: [
+            { url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Base_Beta/MapServer" },
+            { url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Dark_Gray_Reference_Beta/MapServer", isReference: true }
+          ]
+        };
+      
+        esri.config.defaults.io.corsEnabledServers.push("ec2-75-101-155-202.compute-1.amazonaws.com:6080");
+      
+        map = new Map("map", {
+          // basemap: "darkgray",
+          center: [-100,40],
+          zoom: 5
+        });
+        
+        var fields = ["M163_07","M172_07","M188_07","M193_07","M217_07","COUNTY","STATE","AREA","M086_07"];
+
+        var renderer = new UniqueValueRenderer(createSymbol("#d9d9d9"), function(graphic){
+          var maxField = "Other";
+          var max = 0;
+          array.forEach(fields, function(field){
+            if (graphic.attributes[field] &gt; max) {
+              maxField = field;
+              max = graphic.attributes[field];
+            };
+          });
+          return maxField;
+        });
+        renderer.addValue({ value: "M217_07", symbol: createSymbol("#fd7f6f"), label: "Vegetables, acres harvested for sale." });
+        renderer.addValue({ value: "M188_07", symbol: createSymbol("#b2e061"), label: "Upland cotton, harvested acres." });
+        renderer.addValue({ value: "M172_07", symbol: createSymbol("#bd7ebe"), label: "All wheat for grain, harvested acres." });
+        renderer.addValue({ value: "M193_07", symbol: createSymbol("#7eb0d5"), label: "Soybeans for beans, harvested acres." });
+        renderer.addValue({ value: "M163_07", symbol: createSymbol("#ffb55a"), label: "Corn for grain, harvested acres." });
+        
+        renderer.getSymbol = function(graphic) {
+          var info = this.getUniqueValueInfo(graphic);
+          var symbol = (info &amp;&amp; info.symbol) || this.defaultSymbol;
+          symbol = cloneSymbol(symbol, graphic.attributes['M086_07']/100);
+          return symbol;
+        };
+        
+        layer = new TiledWorkerLayer("./data/crops_counties", {
+          renderer: renderer,
+          outFields: fields
+        });
+        
+        map.addLayer(layer);
+        
+        on(dom.byId("applyFilterButton"), "click", function() {
+          if (!layer.rasterFunction) {
+            layer.rasterFunction = {
+              url: "http://ec2-75-101-155-202.compute-1.amazonaws.com:6080/arcgis/rest/services/LandCover2001/ImageServer",
+              value: 82 // Cultivated crops
+            };
+          }
+          else {
+            layer.rasterFunction = null;
+          }
+          layer.refresh();
+        });
+        
+        function cloneSymbol(symbol, newColorAlpha) {
+          return new SimpleFillSymbol(symbol.style, symbol.outline, new Color([symbol.color.r, symbol.color.g, symbol.color.b, newColorAlpha]));
+        }
+        
+        function createSymbol(color){
+          return new SimpleFillSymbol().setColor(new Color(color)).setOutline(new SimpleLineSymbol().setColor(new Color([28,28,28,0.5])).setWidth(0.5));
+        };
+        
+      });
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body class="claro"&gt;
+    &lt;div id="map"&gt;&lt;/div&gt;
+    &lt;button id="applyFilterButton" style="position: absolute; top: 20px; right: 20px; width: 200px; height: 30px;"&gt;Toggle filter&lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</textarea><div class="ace_editor ace-github-light ace_focus" style="height: 490px; width: 100%;"><textarea class="ace_text-input" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="opacity: 0; height: 18px; width: 6.59781px; left: 209.152px; top: 109.5px;"></textarea><div class="ace_gutter" style="height: 490px;"><div class="ace_layer ace_gutter-layer ace_folding-enabled" style="margin-top: -16.5px; height: 526px; width: 53px;"><div class="ace_gutter-cell " style="height: 18px;">85</div><div class="ace_gutter-cell " style="height: 18px;">86</div><div class="ace_gutter-cell " style="height: 18px;">87</div><div class="ace_gutter-cell " style="height: 18px;">88<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">89<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">90<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">91</div><div class="ace_gutter-cell " style="height: 18px;">92</div><div class="ace_gutter-cell " style="height: 18px;">93</div><div class="ace_gutter-cell " style="height: 18px;">94</div><div class="ace_gutter-cell " style="height: 18px;">95</div><div class="ace_gutter-cell " style="height: 18px;">96<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">97</div><div class="ace_gutter-cell " style="height: 18px;">98</div><div class="ace_gutter-cell " style="height: 18px;">99</div><div class="ace_gutter-cell " style="height: 18px;">100</div><div class="ace_gutter-cell " style="height: 18px;">101</div><div class="ace_gutter-cell " style="height: 18px;">102<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">103</div><div class="ace_gutter-cell " style="height: 18px;">104</div><div class="ace_gutter-cell " style="height: 18px;">105</div><div class="ace_gutter-cell " style="height: 18px;">106<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">107</div><div class="ace_gutter-cell " style="height: 18px;">108</div><div class="ace_gutter-cell " style="height: 18px;">109</div><div class="ace_gutter-cell " style="height: 18px;">110</div><div class="ace_gutter-cell " style="height: 18px;">111</div><div class="ace_gutter-cell " style="height: 18px;">112</div><div class="ace_gutter-cell " style="height: 18px;">113<span class="ace_fold-widget ace_start ace_open" style="height: 18px;"></span></div><div class="ace_gutter-cell " style="height: 18px;">114</div></div><div class="ace_gutter-active-line" style="top: 109.5px; height: 18px;"></div></div><div class="ace_scroller" style="left: 54px; right: 0px; bottom: 0px;"><div class="ace_content" style="margin-top: -16.5px; width: 1023px; height: 526px; margin-left: 0px;"><div class="ace_layer ace_print-margin-layer"><div class="ace_print-margin" style="left: 537.825px; visibility: hidden;"></div></div><div class="ace_layer ace_marker-layer"><div class="ace_active-line" style="height:18px;top:126px;left:0;right:0;"></div></div><div class="ace_layer ace_text-layer" style="padding: 0px 10px;"><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  </div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">map</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">addLayer</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">layer</span><span class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  </div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">on</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">dom</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">byId</span><span class="ace_paren ace_lparen">(</span><span class="ace_string">"applyFilterButton"</span><span class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_string">"click"</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_storage ace_type">function</span><span class="ace_paren ace_lparen">(</span><span class="ace_paren ace_rparen">)</span> <span class="ace_paren ace_lparen">{</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_keyword">if</span> <span class="ace_paren ace_lparen">(</span><span class="ace_keyword ace_operator">!</span><span class="ace_identifier">layer</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">rasterFunction</span><span class="ace_paren ace_rparen">)</span> <span class="ace_paren ace_lparen">{</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">layer</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">rasterFunction</span> <span class="ace_keyword ace_operator">=</span> <span class="ace_paren ace_lparen">{</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_comment">// url: "http://ec2-75-101-155-202.compute-1.amazonaws.com:6080/arcgis/rest/services/LandCover2001/ImageServer",</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">url</span><span class="ace_punctuation ace_operator">:</span> <span class="ace_string">"http://107.181.94.20/arcgis/rest/services/UMD_IGBP/UMD_IGBP_LC/ImageServer"</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">value</span><span class="ace_punctuation ace_operator">:</span> <span class="ace_constant ace_numeric">82</span> <span class="ace_comment">// Cultivated crops</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">}</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">}</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_keyword">else</span> <span class="ace_paren ace_lparen">{</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">layer</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">rasterFunction</span> <span class="ace_keyword ace_operator">=</span> <span class="ace_constant ace_language">null</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">}</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_identifier">layer</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">refresh</span><span class="ace_paren ace_lparen">(</span><span class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">})</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  </div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_storage ace_type">function</span> <span class="ace_entity ace_name ace_function">cloneSymbol</span><span class="ace_paren ace_lparen">(</span><span class="ace_variable ace_parameter">symbol</span><span class="ace_punctuation ace_operator">, </span><span class="ace_variable ace_parameter">newColorAlpha</span><span class="ace_paren ace_rparen">)</span> <span class="ace_paren ace_lparen">{</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_keyword">return</span> <span class="ace_keyword">new</span> <span class="ace_identifier">SimpleFillSymbol</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">symbol</span><span class="ace_punctuation ace_operator">.</span><span class="ace_support ace_constant">style</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_identifier">symbol</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">outline</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_keyword">new</span> <span class="ace_identifier">Color</span><span class="ace_paren ace_lparen">([</span><span class="ace_identifier">symbol</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">color</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">r</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_identifier">symbol</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">color</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">g</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_identifier">symbol</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">color</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">b</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_identifier">newColorAlpha</span><span class="ace_paren ace_rparen">]))</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">}</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  </div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_storage ace_type">function</span> <span class="ace_entity ace_name ace_function">createSymbol</span><span class="ace_paren ace_lparen">(</span><span class="ace_variable ace_parameter">color</span><span class="ace_paren ace_rparen">)</span><span class="ace_paren ace_lparen">{</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_keyword">return</span> <span class="ace_keyword">new</span> <span class="ace_identifier">SimpleFillSymbol</span><span class="ace_paren ace_lparen">(</span><span class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">setColor</span><span class="ace_paren ace_lparen">(</span><span class="ace_keyword">new</span> <span class="ace_identifier">Color</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">color</span><span class="ace_paren ace_rparen">))</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">setOutline</span><span class="ace_paren ace_lparen">(</span><span class="ace_keyword">new</span> <span class="ace_identifier">SimpleLineSymbol</span><span class="ace_paren ace_lparen">(</span><span class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">setColor</span><span class="ace_paren ace_lparen">(</span><span class="ace_keyword">new</span> <span class="ace_identifier">Color</span><span class="ace_paren ace_lparen">([</span><span class="ace_constant ace_numeric">28</span><span class="ace_punctuation ace_operator">,</span><span class="ace_constant ace_numeric">28</span><span class="ace_punctuation ace_operator">,</span><span class="ace_constant ace_numeric">28</span><span class="ace_punctuation ace_operator">,</span><span class="ace_constant ace_numeric">0.5</span><span class="ace_paren ace_rparen">]))</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">setWidth</span><span class="ace_paren ace_lparen">(</span><span class="ace_constant ace_numeric">0.5</span><span class="ace_paren ace_rparen">))</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">}</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  </div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span><span class="ace_indent-guide">  </span>  <span class="ace_paren ace_rparen">})</span><span class="ace_punctuation ace_operator">;</span></div><div class="ace_line" style="height:18px"><span class="ace_indent-guide">  </span>  <span class="ace_meta ace_tag ace_punctuation ace_end-tag-open ace_xml">&lt;/</span><span class="ace_meta ace_tag ace_script ace_tag-name ace_xml">script</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div><div class="ace_line" style="height:18px"><span class="ace_text ace_xml">  </span><span class="ace_meta ace_tag ace_punctuation ace_end-tag-open ace_xml">&lt;/</span><span class="ace_meta ace_tag ace_tag-name ace_xml">head</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div><div class="ace_line" style="height:18px"><span class="ace_text ace_xml">  </span><span class="ace_meta ace_tag ace_punctuation ace_tag-open ace_xml">&lt;</span><span class="ace_meta ace_tag ace_tag-name ace_xml">body</span><span class="ace_text ace_tag-whitespace ace_xml"> </span><span class="ace_entity ace_other ace_attribute-name ace_xml">class</span><span class="ace_keyword ace_operator ace_attribute-equals ace_xml">=</span><span class="ace_string ace_attribute-value ace_xml">"claro"</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div></div><div class="ace_layer ace_marker-layer"></div><div class="ace_layer ace_cursor-layer"><div class="ace_cursor" style="left: 155.152px; top: 126px; width: 6.59781px; height: 18px;"></div></div></div></div><div class="ace_scrollbar ace_scrollbar-v" style="width: 20px; bottom: 0px;"><div class="ace_scrollbar-inner" style="width: 20px; height: 2134px;"></div></div><div class="ace_scrollbar ace_scrollbar-h" style="height: 20px; left: 54px; right: 0px;"><div class="ace_scrollbar-inner" style="height: 20px; width: 1023px;"></div></div><div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; overflow: hidden;"><div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; overflow: visible;"></div><div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; overflow: visible;">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></div></div>
+  </div>
+  <div class="loading-preview-msg"><p class="preview-msg text-muted">Loading preview…</p></div>
+  <div class="no-changes-preview-msg"><p class="preview-msg text-muted">No changes to display.</p></div>
+  <div class="error-preview-msg"><p class="preview-msg text-muted">Unable to load this preview, sorry.</p></div>
+  <div class="js-commit-preview commit-preview">
+  </div>
+</div>
+
+
+
+<div class="file-commit-form js-file-commit-form">
+  <img alt="@yann6817" class="commit-form-avatar" height="48" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/189(1)" width="48">
+
+  <div class="commit-form">
+    <h3 class="file-commit-form-heading">Commit changes</h3>
+
+    <div class="too-long-message">
+      <span class="octicon octicon-light-bulb"></span>
+      <strong>ProTip!</strong> Great commit summaries are 50 characters or less. Place extra information in the extended description.
+    </div>
+
+    <label for="commit-summary-input" class="hidden">
+      Commit summary
+    </label>
+    <input id="commit-summary-input" type="text" class="input-block input-contrast js-new-blob-commit-summary" placeholder="Update tiled-worker-layer.html" name="message" value="">
+    <input type="hidden" class="js-commit-message-fallback" name="placeholder_message" value="Update tiled-worker-layer.html" data-default-value="Update tiled-worker-layer.html">
+
+    <label for="commit-description-textarea" class="hidden">
+      Optional extended description
+    </label>
+    <textarea id="commit-description-textarea" name="description" class="input-block input-contrast commit-message js-new-blob-commit-description" placeholder="Add an optional extended description..."></textarea>
+
+      <div class="quick-pull-choice js-quick-pull-choice ">
+        <dl class="form">
+          <dd>
+            <div class="form-checkbox">
+              <label>
+                <input type="radio" class="js-quick-pull-choice-option" name="commit-choice" value="direct" checked="checked">
+                <span class="text-muted octicon octicon-git-commit"></span>
+                Commit directly to the <strong class="branch-name">master</strong> branch
+              </label>
+            </div>
+            <div class="form-checkbox">
+              <label>
+                <input type="radio" class="js-quick-pull-choice-option" name="commit-choice" value="quick-pull">
+                <span class="text-muted octicon octicon-git-pull-request"></span>
+                Create a <strong>new branch</strong> for this commit and start a pull request.
+                <a href="https://help.github.com/enterprise/2.3/user/articles/using-pull-requests" target="_blank">
+                  Learn more about pull requests.
+                </a>
+              </label>
+            </div>
+          </dd>
+        </dl>
+
+        <div class="quick-pull-branch-name">
+          <div class="new-branch-name-input">
+            <span class="octicon octicon-git-branch quick-pull-new-branch-icon"></span>
+            <input type="text" value="yann6817-patch-1" class="input-contrast js-quick-pull-new-branch-name" placeholder="New branch name…" data-generated-branch="yann6817-patch-1" data-check-url="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/ref_check">
+            <span class="quick-pull-normalization-info js-quick-pull-normalization-info"></span>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" name="target_branch" class="js-quick-pull-target-branch" value="master" data-default-value="master">
+      <input type="hidden" name="quick_pull" class="js-quick-pull-choice-value" value="" data-default-value="">
+
+  </div>
+
+  <button type="submit" class="btn btn-primary js-blob-submit" id="submit-file" data-edit-text="Commit changes" data-pull-text="Propose file change">
+    Commit changes
+  </button>
+
+  <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/blob/master/tiled-worker-layer.html" class="btn btn-danger">Cancel</a>
+
+</div>
+
+</form></div>
+
+        </div>
+
+      </div><!-- /.repo-container -->
+      <div class="modal-backdrop"></div>
+    </div><!-- /.container -->
+  </div><!-- /.site -->
+
+
+    </div><!-- /.wrapper -->
+
+      <div class="container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links right">
+      <li><a href="https://developer.github.com/enterprise/2.3" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li><a href="https://training.github.com/" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li><a href="https://shop.github.com/" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li><a href="https://github.com/blog">Blog</a></li>
+        <li><a href="https://github.com/about">About</a></li>
+
+    </ul>
+
+    <a href="https://devtopia.esri.com/" aria-label="Homepage">
+      <span class="mega-octicon octicon-mark-github" title="GitHub Enterprise Version 2.3.1"></span>
+</a>
+    <ul class="site-footer-links">
+      <li>© 2015 <span title="0.19020s from devtopia-esri-com">GitHub</span>, Inc.</li>
+        <li><a href="https://help.github.com/enterprise/2.3/user">Help</a></li>
+        <li><a href="mailto:devtopia_admin@esri.com">Support</a></li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="fullscreen-overlay js-fullscreen-overlay" id="fullscreen_overlay">
+  <div class="fullscreen-container js-suggester-container">
+    <div class="textarea-wrap">
+      <textarea name="fullscreen-contents" id="fullscreen-contents" class="fullscreen-contents js-fullscreen-contents" placeholder=""></textarea>
+      <div class="suggester-container">
+        <div class="suggester fullscreen-suggester js-suggester js-navigation-container"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fullscreen-sidebar">
+    <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#" class="exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w" aria-label="Exit Zen Mode">
+      <span class="mega-octicon octicon-screen-normal"></span>
+    </a>
+    <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#" class="theme-switcher js-theme-switcher tooltipped tooltipped-w" aria-label="Switch themes">
+      <span class="octicon octicon-color-mode"></span>
+    </a>
+  </div>
+</div>
+
+
+
+    
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <a href="https://devtopia.esri.com/yann6817/arcgis-api-js-worker-drawing/edit/master/tiled-worker-layer.html#" class="octicon octicon-x flash-close js-ajax-error-dismiss" aria-label="Dismiss error"></a>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/frameworks-808fcfcd63c9ecba3e84453f540cb1cbafde48c6b30c1d51ebd4e67e88ff66bd.js"></script>
+      <script async="async" crossorigin="anonymous" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/index-539752eb392ed8b1885cada19d7e07e9f836e46c3a558819256f39c3d4aa52b1.js"></script>
+      
+        <script crossorigin="anonymous" src="./Editing arcgis-api-js-worker-drawing_tiled-worker-layer.html at master · yann6817_arcgis-api-js-worker-drawing_files/index-be85caa27bcc732fffb336f2eefdca9509c521e8d457f313afb11c806c7bf854.js"></script>
+
+  
+
+
+    <div class="facebox" id="facebox" style="display:none;">       <div class="facebox-popup">         <div class="facebox-content">         </div>         <button type="button" class="facebox-close js-facebox-close" aria-label="Close modal">           <span class="octicon octicon-remove-close"></span>         </button>       </div>     </div></body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Basemap 2D custom</title>
+    
+    <link href="//js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
+    
+    <style>
+      html, body {
+        margin:0;
+        padding:0;
+      }
+	</style>
+
+    <script src="//js.arcgis.com/4.0beta1/"></script>
+    
+    <script type="text/javascript">
+      
+      var map, view;
+      
+      require([
+        'esri/config',
+        'esri/Map',
+        'esri/Basemap',
+
+        'esri/layers/WebTiledLayer',
+        'esri/layers/ArcGISElevationLayer',
+
+        'esri/views/MapView',
+        
+        'dojo/domReady!'
+      ], function(
+        esriConfig, Map, Basemap,
+        WebTiledLayer, ArcGISElevationLayer,
+        MapView
+      ) {
+
+        // CORS
+        esriConfig.request.corsEnabledServers.push(
+          'a.tile.stamen.com',
+          'b.tile.stamen.com',
+          'c.tile.stamen.com',
+          'd.tile.stamen.com'
+        );
+        var subDomains = ['a','b','c','d'];
+
+        // Global elevation
+        var elevationLayer = new ArcGISElevationLayer({
+          id: 'world-elevation',
+          url: '//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer'
+        });
+
+        // Stamen copyright
+        var stamenCopyright =  [
+          'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, ',
+          'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
+          'Data by <a href="http://openstreetmap.org/">OpenStreetMap</a>, ',
+          'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+        ].join('');
+        
+        // base layer
+        var tonerBackgroundLayer = new WebTiledLayer({
+          urlTemplate: 'http://${subDomain}.tile.stamen.com/toner-background/${level}/${col}/${row}.png',
+          subDomains: subDomains,
+          copyright: stamenCopyright
+        });
+        
+        // reference layer
+        var tonerLabelsLayer = new WebTiledLayer({
+          urlTemplate: 'http://${subDomain}.tile.stamen.com/toner-labels/${level}/${col}/${row}.png',
+          subDomains: subDomains,
+          copyright: stamenCopyright
+        });
+
+        // Toner Basemap
+        var tonerBasemap = new Basemap({
+          title: "Toner",
+          baseLayers: [tonerBackgroundLayer],
+          referenceLayers: [tonerLabelsLayer],
+          elevationLayers: [elevationLayer]
+        });
+
+        // Map
+        map = new Map({
+          basemap: tonerBasemap
+        });
+        view = new MapView({
+          map: map,
+          container: 'viewDiv'
+        });
+
+
+        ///////////////////////////////////////////////////////
+
+        window.toggleBasemap = function() {
+          // Toner Basemap
+          var terrainBasemap = new Basemap({
+            title: "Terrain",
+            baseLayers: [
+              new WebTiledLayer({
+                urlTemplate: 'http://${subDomain}.tile.stamen.com/terrain/${level}/${col}/${row}.png',
+                subDomains: subDomains,
+                copyright: stamenCopyright
+              })
+            ],
+            elevationLayers: [elevationLayer]
+          });
+
+          map.basemap = terrainBasemap;
+        }
+
+      });
+      
+    </script>
+  </head>
+  
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+  
+</html>

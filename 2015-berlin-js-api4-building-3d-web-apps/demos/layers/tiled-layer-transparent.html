@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 beta2 - Tiled layer transparent</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+
+  <style>
+    #viewContainer {
+      top: 75px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      position: absolute;
+    }
+  </style>
+
+  <script type="text/javascript">
+  var map, view, layer;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/ArcGISTiledLayer",
+
+      "commons/init",
+
+      "dojo/domReady!"
+    ], function(
+      Map, SceneView, ArcGISTiledLayer
+    ) {
+      var url = "http://tiles.arcgis.com/tiles/IEuSomXfi6iB7a25/arcgis/rest/services/New_York_City_1836/MapServer";
+      
+      layer = new ArcGISTiledLayer({ url: url });
+
+      map = new Map({
+        basemap: "topo",
+
+        // Initialize with an array of layers,
+        // alternatively use map.add(layer)
+        layers: [ layer ]
+      });
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        extent: {
+          xmin: -74.03, ymin: 40.77,
+          xmax: -73.83, ymax: 40.88
+        }
+      });
+    });
+
+    function toggleTransparent(event) {
+      layer.opacity = event.target.checked ? 0.5 : 1;
+    }
+
+    function toggleVisible(event) {
+      layer.visible = event.target.checked;
+    }
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewContainer">
+      <div id="viewDiv">
+        <div id="code" class="code top right shadowed" style="height: auto; max-width: 600px; overflow: auto; max-height: 80%">
+          <textarea id="codemirror">
+var url = "http://tiles.arcgis.com/tiles/IEuSomXfi6iB7a25/arcgis/rest/services/New_York_City_1836/MapServer";
+
+var layer = new ArcGISTiledLayer({ url: url });
+
+var map = new Map({
+  basemap: "topo",
+
+  // Initialize with an array of layers,
+  // alternatively use map.add(layer)
+  layers: [ layer ]
+});
+
+var view = new SceneView({
+  container: "viewDiv",
+  map: map,
+  extent: {
+    xmin: -74.03, ymin: 40.77,
+    xmax: -73.83, ymax: 40.88
+  }
+});
+
+function toggleTransparent(event) {
+  layer.opacity = event.target.checked ? 0.5 : 1;
+}
+
+function toggleVisible(event) {
+  layer.visible = event.target.checked;
+}
+          </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0 beta2</span>
+        </div>
+        <div class="main">
+          <span class="title">Tiled layer transparent</span>
+        </div>
+        <div class="actionBar">
+          <label class="topcoat-checkbox">
+            <input type="checkbox" onchange="toggleVisible(event)" checked>
+            <div class="topcoat-checkbox__checkmark"></div>
+            Visible
+          </label>
+          <label class="topcoat-checkbox">
+            <input type="checkbox" onchange="toggleTransparent(event)">
+            <div class="topcoat-checkbox__checkmark"></div>
+            Transparent
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

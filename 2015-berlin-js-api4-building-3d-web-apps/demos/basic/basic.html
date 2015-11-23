@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 beta2 - Basic 3D map</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+
+  <script type="text/javascript">
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "commons/init",
+      "dojo/domReady!"
+    ], function(Map, SceneView) {
+
+      map = new Map({
+        basemap: "hybrid"
+      });
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        center: [0, 55],
+        scale: 88320687,
+        padding: {
+          top: 85
+        }
+      });
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code top right shadowed" style="height: auto">
+        <textarea id="codemirror">
+var map = new Map({
+  basemap: "hybrid"
+});
+
+var view = new SceneView({
+  container: "viewDiv",
+  map: map,
+  center: [0, 55],
+  scale: 88320687
+});
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0 beta2</span>
+        </div>
+        <div class="main">
+          <span class="title">Basic 3D map</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

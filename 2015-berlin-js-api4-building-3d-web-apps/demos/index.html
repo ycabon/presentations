@@ -14,14 +14,76 @@
       margin-top: 50px;
       padding: 24px;
     }
+
+    a, a:visited {
+      color: #666;
+    }
+
+    #demos {
+      display: flex;
+      justify-content: center;
+    }
+
+    #demos table {
+      width: 50%;
+      text-align: center;
+      border-spacing: 12px 24px;
+    }
+
+    #demos img {
+      border: 6px solid white;
+      box-shadow: 0px 0px 6px #666;
+      margin-bottom: 6px;
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body class="light">
   <div class="application">
     <div class="viewDiv">
-      <h1>Demos</h1>
-      <ul>
-      </ul>
+      <div id="demos">
+        <table>
+          <tr>
+            <td>
+              <a href="basic/basic.html"><img src="./images/basic.png"></a><br>
+              <a href="basic/basic.html">Basic 3D map</a></td>
+            <td>
+              <a href="elevation/elevation.html"><img src="./images/elevation.png"></a><br>
+              <a href="elevation/elevation.html">Elevation</a>
+            </td>
+            <td>
+              <a href="environment/environment.html"><img src="./images/environment.png"></a><br>
+              <a href="environment/environment.html">Environment</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="layers/feature-layer.html"><img src="./images/feature-layer.png"></a><br>
+              <a href="layers/feature-layer.html">Feature layer</a></td>
+            <td>
+              <a href="layers/tiled-layer.html"><img src="./images/tiled-layer.png"></a><br>
+              <a href="layers/tiled-layer.html">Tiled layer</a>
+            </td>
+            <td>
+              <a href="layers/tiled-layer-transparent.html"><img src="./images/tiled-layer-transparent.png"></a><br>
+              <a href="layers/tiled-layer-transparent.html">Tiled layer transparent</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="navigation/navigation.html"><img src="./images/navigation.png"></a><br>
+              <a href="navigation/navigation.html">Navigation</a></td>
+            <td>
+              <a href="symbology/symbology.html"><img src="./images/symbology.png"></a><br>
+              <a href="symbology/symbology.html">3D symbology</a>
+            </td>
+            <td>
+              <a href="webscene/webscene.html"><img src="./images/webscene.png"></a><br>
+              <a href="webscene/webscene.html">Webscene loading</a>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
     <div class="applicationBar bluesky">
       <div class="content">

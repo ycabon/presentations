@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 beta2 - 3D symbology</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+
+  <script type="text/javascript">
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/FeatureLayer",
+      "esri/renderers/SimpleRenderer",
+      "esri/symbols/PolygonSymbol3D",
+      "esri/symbols/LineSymbol3DLayer",
+      "esri/symbols/FillSymbol3DLayer",
+      "esri/symbols/ObjectSymbol3DLayer",
+
+      "commons/init",
+
+      "dojo/domReady!"
+    ], function(
+      Map, SceneView, FeatureLayer,
+      SimpleRenderer,
+      PolygonSymbol3D, LineSymbol3DLayer, FillSymbol3DLayer, ObjectSymbol3DLayer
+    ) {
+      map = new Map({
+        basemap: "hybrid"
+      });
+
+      var renderer = new SimpleRenderer(new PolygonSymbol3D({
+        symbolLayers: [
+          new FillSymbol3DLayer({
+            material: {
+              color: [255, 0, 0, 0.5]
+            }
+          }),
+
+          new LineSymbol3DLayer({
+            material: {
+              color: [255, 255, 255]
+            },
+
+            size: 5
+          }),
+
+          new ObjectSymbol3DLayer({
+            resource: {
+              primitive: "cylinder"
+            },
+
+            material: {
+              color: [0, 0, 255, 0.5]
+            },
+
+            width: 80000,
+            height: 500000
+          })
+        ]
+      }));
+
+      var layer = new FeatureLayer({
+        url: "http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0",
+        mode: FeatureLayer.MODE_SNAPSHOT,
+        renderer: renderer
+      });
+
+      map.add(layer);
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+
+        camera: {
+          position: [ -88.18, 18.85, 6255908 ],
+          heading: 348,
+          tilt: 20
+        },
+
+        padding: {
+          top: 85
+        }
+      });
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code top right shadowed" style="height: auto; max-width: 600px; overflow: auto; max-height: 80%">
+        <textarea id="codemirror">
+var map = new Map({
+  basemap: "hybrid"
+});
+
+var renderer = new SimpleRenderer(new PolygonSymbol3D({
+  symbolLayers: [
+    new FillSymbol3DLayer({
+      material: {
+        color: [255, 0, 0, 0.5]
+      }
+    }),
+
+    new LineSymbol3DLayer({
+      material: {
+        color: [255, 255, 255]
+      },
+
+      size: 5
+    }),
+
+    new ObjectSymbol3DLayer({
+      resource: {
+        primitive: "cylinder"
+      },
+
+      material: {
+        color: [0, 0, 255, 0.5]
+      },
+
+      width: 80000,
+      height: 500000
+    })
+  ]
+}));
+
+var layer = new FeatureLayer({
+  url: "http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0",
+  mode: FeatureLayer.MODE_SNAPSHOT,
+  renderer: renderer
+});
+
+map.add(layer);
+
+var view = new SceneView({
+  container: "viewDiv",
+  map: map,
+
+  camera: {
+    position: [ -88.18, 18.85, 6255908 ],
+    heading: 348,
+    tilt: 20
+  }
+});
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0 beta2</span>
+        </div>
+        <div class="main">
+          <span class="title">3D symbology</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

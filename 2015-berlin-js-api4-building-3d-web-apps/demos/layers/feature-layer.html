@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 beta2 - Feature layer</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+
+  <style>
+    #viewContainer {
+      top: 75px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      position: absolute;
+    }
+  </style>
+
+  <script type="text/javascript">
+  var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/FeatureLayer",
+
+      "commons/init",
+
+      "dojo/domReady!"
+    ], function(
+      Map, SceneView, FeatureLayer
+    ) {
+      map = new Map({
+        basemap: "hybrid"
+      });
+
+      var layer = new FeatureLayer({
+        url: "http://services.arcgis.com/nzS0F0zdNLvs7nc8/ArcGIS/rest/services/05_HurricaneAndrew_1992/FeatureServer/0",
+        mode: FeatureLayer.MODE_SNAPSHOT
+      });
+
+      map.add(layer);
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        camera: {
+          position: [ -45.23, -1.08, 6270495 ],
+          heading: 335,
+          tilt: 20
+        }
+      });
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewContainer">
+      <div id="viewDiv">
+        <div id="code" class="code top right shadowed" style="height: auto; max-width: 600px; overflow: auto; max-height: 80%">
+          <textarea id="codemirror">
+var map = new Map({
+  basemap: "hybrid"
+});
+
+var layer = new FeatureLayer({
+  url: "http://services.arcgis.com/nzS0F0zdNLvs7nc8/ArcGIS/rest/services/05_HurricaneAndrew_1992/FeatureServer/0",
+  mode: FeatureLayer.MODE_SNAPSHOT
+});
+
+map.add(layer);
+
+var view = new SceneView({
+  container: "viewDiv",
+  map: map,
+  camera: {
+    position: [ -45.23, -1.08, 6270495 ],
+    heading: 335,
+    tilt: 20
+  }
+});
+          </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0 beta2</span>
+        </div>
+        <div class="main">
+          <span class="title">Feature layer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

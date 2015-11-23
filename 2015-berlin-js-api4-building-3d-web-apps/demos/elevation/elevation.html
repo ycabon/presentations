@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 beta2 - Elevation</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.0beta2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.0beta2/"></script>
+
+  <script type="text/javascript">
+    var map, view, elevationLayer;
+    
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/ArcGISElevationLayer",
+      "commons/init",
+      "dojo/domReady!"
+    ], function(Map, SceneView, ArcGISElevationLayer) {
+
+      map = new Map({
+        basemap: "streets"
+      });
+
+      elevationLayer = new ArcGISElevationLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/OsoLandslide/OsoLandslide_After_3DTerrain/ImageServer",
+        visible: false
+      });
+
+      map.add(elevationLayer);
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        camera: {
+          position: [-121.81, 48.27, 890],
+          heading: 300,
+          tilt: 78
+        },
+        padding: {
+          top: 85
+        }
+      });
+    });
+
+    function toggleElevation(ev) {
+      elevationLayer.visible = ev.target.checked;
+    }
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code top right shadowed" style="height: auto; max-width: 600px; overflow: auto">
+        <textarea id="codemirror">
+var map = new Map({
+  basemap: "streets"
+});
+
+var elevationLayer = new ArcGISElevationLayer({
+  url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/OsoLandslide/OsoLandslide_After_3DTerrain/ImageServer",
+  visible: false
+});
+
+map.add(elevationLayer);
+
+var view = new SceneView({
+  container: "viewDiv",
+  map: map,
+  camera: {
+    position: [-121.81, 48.27, 890],
+    heading: 300,
+    tilt: 78
+  }
+});
+
+function toggleElevation(ev) {
+  elevationLayer.visible = ev.target.checked;
+}
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0 beta2</span>
+        </div>
+        <div class="main">
+          <span class="title">Elevation</span>
+        </div>
+        <div class="actionBar">
+          <label class="topcoat-checkbox">
+            <input type="checkbox" onchange="toggleElevation(event)">
+            <div class="topcoat-checkbox__checkmark"></div>
+            Use elevation data from after landslide
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

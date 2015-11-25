@@ -445,7 +445,7 @@ In a single page application, get a feature from a FeatureLayer from a WebMap wi
       });
     })
     .then(function(result) {
-      dsiplayDetails(result.features[0]);
+      displayDetails(result.features[0]);
     })
     .otherwise(function(error) {
       console.error(error);

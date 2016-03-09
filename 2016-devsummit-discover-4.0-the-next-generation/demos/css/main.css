@@ -1,0 +1,72 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.esri-widget, .esri-widget-button, .esri-attribution-sources, .esri-attribution-powered-by, .esri-attribution-link {
+  color: #DD8888;
+  background-color: #000000;
+}
+
+.esri-widget-button {
+  color: #DD8888;
+  background-color: #000000;
+}
+.esri-widget-button:hover {
+   background-color: #454545;
+}
+
+/*search widget*/
+.esri-widget .esri-menu {
+    background-color: #000000;
+}
+.esri-widget .esri-menu li:hover,
+.esri-widget .esri-menu li:focus {
+    background-color: #454545;
+}
+.esri-widget .esri-menu li:active {
+    background-color: #454545;
+}
+.esri-widget .esri-menu li.active {
+    background-color: #454545;
+}
+.esri-widget .esri-header {
+    background-color: #000000;
+}
+/*popups*/
+.esri-popup .esri-background {
+    background-color: #000000;
+}
+
+.esri-popup .esri-button,
+.esri-popup .esri-page-text {
+    color: #DD8888;
+}
+
+.esri-popup .esri-button,
+.esri-popup .esri-page-text > a:hover {
+    color: #DD8888;
+}
+
+.esri-legend-service {
+  padding: 5px;
+}
+
+.esri-zoom-box-overlay {
+  cursor: crosshair;
+}
+
+.esri-zoom-box-overlay-background {
+  fill: rgba(0, 0, 0, 0.75);
+}
+
+.esri-zoom-box-outline {
+  fill: transparent;
+  stroke: #DD8888;
+  stroke-dasharray: 1,1;
+  stroke-width: 2px;
+}

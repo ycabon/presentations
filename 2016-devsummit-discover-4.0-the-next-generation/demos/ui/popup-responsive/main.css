@@ -1,0 +1,33 @@
+html,
+body {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.view-portrait {
+  position: absolute;
+  padding: 0;
+  height: 568px;
+  width: 320px;
+  top: 50%;
+  left: 50%;
+  margin-left: -160px;
+  margin-top: -284px;
+}
+
+.view-landscape {
+  position: absolute;
+  padding: 0;
+  height: 320px;
+  width: 568px;
+  top: 50%;
+  left: 50%;
+  margin-left: -284px;
+  margin-top: -160px;
+}
+
+.esri-widget {
+  background: #fff;
+}

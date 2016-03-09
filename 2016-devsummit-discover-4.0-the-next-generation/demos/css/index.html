@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Style UI to match Map</title>
+
+  <link rel="stylesheet" href="https://jsqa.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="../commons/css/style-rene.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <script src="../commons/libs/codemirror/codemirror.js"></script>
+  <script src="../commons/libs/codemirror/mode/css/css.js"></script>
+  <script src="https://jsqa.arcgis.com/4.0/"></script>
+</head>
+
+<body class="dark">
+  <div class="application">
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Style UI to match Map</span>
+        </div>
+      </div>
+      <button class="showcode ui-button">code</button>
+    </div>
+    <div id="viewDiv">
+      <div id="code" class="code manual left shadowed" style="width: 500px;">
+        <textarea id="codemirror">
+.esri-widget, .esri-widget-button, .esri-attribution {
+  color: #DD8888;
+  background-color: #000000;
+}
+.esri-widget-button:hover {
+   background-color: #454545;
+}
+/*search widget*/
+.esri-widget .esri-menu {
+    background-color: #000000;
+}
+.esri-widget .esri-menu li:hover,
+.esri-widget .esri-menu li:focus {
+    background-color: #454545;
+}
+.esri-widget .esri-menu li:active {
+    background-color: #454545;
+}
+.esri-widget .esri-menu li.active {
+    background-color: #454545;
+}
+.esri-widget .esri-header {
+    background-color: #000000;
+}
+/*popups*/
+...
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    var theme = document.body.classList.contains("dark") ? "dark" : "light";
+    var codemirrorDiv = document.getElementById('codemirror');
+    if (codemirrorDiv) {
+      window.editor = CodeMirror.fromTextArea(codemirrorDiv, {
+        lineNumbers: true,
+        mode: 'css',
+        scrollbarStyle: 'null',
+        theme: theme === 'dark' ? 'monokai' : 'default'
+      });
+    }
+    var btn = document.querySelector(".showcode");
+    btn.addEventListener("click", function(event) {
+      document.querySelector(".manual").classList.toggle("visible");
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.esri-widget, .esri-widget-button, .esri-attribution-sources, .esri-attribution-powered-by, .esri-attribution-link {
+  color: #FDB927;
+  background-color: #552582;
+}
+
+.esri-widget-button:hover {
+    background-color: #3b195b;
+}
+
+.esri-action:hover {
+  color: #FDB927 !important;
+  opacity: 0.75;
+}
+
+.esri-widget {
+  -webkit-box-shadow: 0 1px 4px rgb(253, 185, 39);
+  box-shadow: 0 1px 4px rgb(253, 185, 39);
+}
+
+/*search widget*/
+.esri-widget .esri-menu {
+    background-color: #552582;
+}
+.esri-widget .esri-menu li:hover,
+.esri-widget .esri-menu li:focus {
+    background-color: #3b195b;
+}
+.esri-widget .esri-menu li:active {
+    background-color: #3b195b;
+}
+.esri-widget .esri-menu li.active {
+    background-color: ##3b195b;
+}
+.esri-widget .esri-header {
+    background-color: #552582;
+}
+/*popups*/
+.esri-popup .esri-background {
+    background-color: #552582;
+}
+
+.esri-popup .esri-button,
+.esri-popup .esri-page-text {
+    color: #FDB927;
+}
+
+.esri-popup .esri-button,
+.esri-popup .esri-page-text > a:hover {
+    color: #FDB927;
+}
+
+.esri-popup .esri-popup-shadow {
+  -webkit-box-shadow: 0 1px 4px rgb(253, 185, 39);
+  box-shadow: 0 1px 4px rgb(253, 185, 39);
+}
+
+.lakers-logo {
+  background-image: url("lakers.png");
+  width: 16px;
+  height: 16px;
+}

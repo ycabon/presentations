@@ -13,8 +13,8 @@ Yann Cabon & René Rubalcava
 - Overview
 - Coding patterns
 - Map and View Architecture
-- Features
 - UI and Widgets
+- Features
 
 ---
 
@@ -174,7 +174,7 @@ function(
     extent: {
       xmin: -180, xmax: 180,
       ymin: -80, ymax: -80,
-      spatialReference: { wkid: 4326 }
+      spatialReference: 4326
     }
   });
 });
@@ -470,6 +470,96 @@ var point = collection.getItemAt(0);
     });
 ```
 - or [`View.allLayerViews`](/javascript/4/api-reference/esri-views-View.html#allLayerViews) 
+
+---
+
+<!-- .slide: data-background="template/bg-2.png" -->
+
+# Widgets and UI
+
+---
+
+## Widgets
+
+- [Out of the box widgets at 4.0](demos/widgets/all-widgets.html):
+ - Zoom
+ - Attribution
+ - Compass
+ - Home
+ - Locate
+ - Search
+ - Legend
+ - Popup
+   - [dockable](/javascript/4/sample-code/popup-docking/live/index.html)
+   - [custom actions](demos/widgets/popup/custom-actions.html)
+- New design and user experience
+
+---
+
+## Widgets
+
+- Extensibility through:
+ - [CSS](demos/css/index.html), [matching vectortiles](demos/css-vectortiles/index.html)
+ - SASS
+ - View Model
+
+---
+
+## Widgets - View Model
+
+- New architecture
+- Logic of the widget separated from the representation
+- View implementations made in dijit/Accessor
+- Views' source code available in the [SDK](/javascript/4/api-reference/widgets/zoom/index.html)
+- View's can be rewritten in [any framework](demos/widgets/framework/index.html)
+- ViewModels can be combined to create [Frankenwidgets](demos/widgets/frankenwidget/index.html)
+
+---
+
+## UI
+
+- Managed overlay to place widgets over the view.
+- Well known widgets can be directly added or removed from the view
+- [Provides responsive information](demos/ui/responsive.html), [plenary demo](demos/ui/popup-responsive/index.html)
+
+```js
+var view = new MapView({
+
+  ui: {
+
+    padding: {
+      top: 16,
+      left: 16,
+      right: 16,
+      bottom: 16
+    },
+
+    components: ["zoom", "compass", "attribution"]
+
+  }
+
+});
+```
+
+---
+
+## UI
+
+- API to add widgets or any DOM element to the 4 corners of the view
+
+```js
+var view = new MapView({
+  //...
+});
+
+var legend = new Legend({
+  //...
+});
+
+view.ui.add(legend, "top-left");
+```
+
+- [plenary demo](demos/widgets/all-widgets.html)
 
 ---
 
@@ -783,113 +873,30 @@ slides.forEach(function(slide) {
 - `local` scenes are best for projected data and underground display
 
 ```js
-var scene = new WebScene({
+var view = new SceneView({
+  
+  viewingMode: 'local',
 
-  initialViewProperties: {
-    viewingMode: 'local'
+  clippingArea: {
+    xmin: ...
+    ymin: ...
+    xmin: ...
+    ymin: ...
+    spatialReference: ...
   },
 
-  basemap: 'topo',
+  map: new WebScene({
+    basemap: 'topo',
 
-  layers: [
-    ...
-  ]
+    layers: [
+      ...
+    ]
+  })
 });
 
 ```
 
 - [demo](demos/platform/webscene-local.html)
-
-
----
-
-<!-- .slide: data-background="template/bg-2.png" -->
-
-# Widgets and UI
-
----
-
-## Widgets
-
-- [Out of the box widgets at 4.0](demos/widgets/all-widgets.html):
- - Zoom
- - Attribution
- - Compass
- - Home
- - Locate
- - Search
- - Legend
- - Popup
-   - [dockable](/javascript/4/sample-code/popup-docking/live/index.html)
-   - [custom actions](demos/widgets/popup/custom-actions.html)
-- New design and user experience
-
----
-
-## Widgets
-
-- Extensibility through:
- - [CSS](demos/css/index.html), [matching vectortiles](demos/css-vectortiles/index.html)
- - SASS
- - View Model
-
----
-
-## Widgets - View Model
-
-- New architecture
-- Logic of the widget separated from the representation
-- View implementations made in dijit/Accessor
-- Views' source code available in the [SDK](/javascript/4/api-reference/widgets/zoom/index.html)
-- View's can be rewritten in [any framework](demos/widgets/framework/index.html)
-- ViewModels can be combined to create [Frankenwidgets](demos/widgets/frankenwidget/index.html)
-
----
-
-## UI
-
-- Managed overlay to place widgets over the view.
-- Well known widgets can be directly added or removed from the view
-- [Provides responsive information](demos/ui/responsive.html), [plenary demo](demos/ui/popup-responsive/index.html)
-
-```js
-var view = new MapView({
-
-  ui: {
-
-    padding: {
-      top: 16,
-      left: 16,
-      right: 16,
-      bottom: 16
-    },
-
-    components: ["zoom", "compass", "attribution"]
-
-  }
-
-});
-```
-
----
-
-## UI
-
-- API to add widgets or any DOM element to the 4 corners of the view
-
-```js
-var view = new MapView({
-  //...
-});
-
-var legend = new Legend({
-  //...
-});
-
-view.ui.add(legend, "top-left");
-```
-
-- [plenary demo](demos/widgets/all-widgets.html)
 
 ---
 

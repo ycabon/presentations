@@ -1,12 +1,14 @@
-<!-- .slide: data-background="template/title.png" -->
+<!-- .slide: class="title" -->
 
-## ArcGIS API for Javascript
+## ArcGIS API for JavaScript
 ## Discover 4.0 - the Next Generation
 Yann Cabon & René Rubalcava
 
+[![octocat](template/octocat.png)](https://github.com/ycabon/presentations/tree/gh-pages/2016-devsummit-discover-4.0-the-next-generation)
+
 ---
 
-<!-- .slide: data-background="template/bg-3.png" -->
+<!-- .slide: class="agenda" -->
 
 ## Agenda
 
@@ -18,7 +20,7 @@ Yann Cabon & René Rubalcava
 
 ---
 
-<!-- .slide: data-background="template/bg-2.png" -->
+<!-- .slide: class="section" -->
 
 # Overview
 
@@ -28,8 +30,8 @@ Yann Cabon & René Rubalcava
 
 - project started late 2013
 - introduction of 3D and WebScene
-- new [WebScene Viewer](http://www.arcgis.com/home/webscene/viewer.html) built with new API
-- new [SDK](/javascript/4/) rebuilt from scratch
+- new [WebScene Viewer](//www.arcgis.com/home/webscene/viewer.html) built with new API
+- new [SDK](//developers.arcgis.com/javascript/) rebuilt from scratch
 
 ---
 
@@ -37,7 +39,7 @@ Yann Cabon & René Rubalcava
 
 - New Portal API
 - Better integration of `WebMap`
- - place the intelligence of the [arcgis.com map viewer](http://www.arcgis.com/home/webmap/viewer.html) in the API
+ - place the intelligence of the [arcgis.com map viewer](//www.arcgis.com/home/webmap/viewer.html) in the API
  - addition of missing components like `GroupLayer`
  - switching spatial reference
 - APIs and Widgets redesign
@@ -54,7 +56,7 @@ Yann Cabon & René Rubalcava
 
 ---
 
-<!-- .slide: data-background="template/bg-2.png" -->
+<!-- .slide: class="section" -->
 
 # Coding patterns
 
@@ -374,7 +376,7 @@ var point = collection.getItemAt(0);
 
 ---
 
-<!-- .slide: data-background="template/bg-2.png" -->
+<!-- .slide: class="section" -->
 
 # Map and View architecture
 
@@ -473,7 +475,7 @@ var point = collection.getItemAt(0);
 
 ---
 
-<!-- .slide: data-background="template/bg-2.png" -->
+<!-- .slide: class="section" -->
 
 # Widgets and UI
 
@@ -563,7 +565,7 @@ view.ui.add(legend, "top-left");
 
 ---
 
-<!-- .slide: data-background="template/bg-2.png" -->
+<!-- .slide: class="section" -->
 
 # Features
 
@@ -900,7 +902,7 @@ var view = new SceneView({
 
 ---
 
-<!-- .slide: data-background="template/bg-4.png" -->
+<!-- .slide: class="questions centered" -->
 
 # Questions
   
@@ -913,4 +915,4 @@ rrubalcava@esri.com
 ---
 
 
-<!-- .slide: data-background="template/end.png" -->
+<!-- .slide: class="end" -->

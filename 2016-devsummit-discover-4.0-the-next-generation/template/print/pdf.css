@@ -1,0 +1,36 @@
+
+.reveal code {
+  font-family: monospace !important;
+}
+
+.reveal pre {
+  font-family: monospace !important;
+}
+
+.reveal pre code {
+  font-family: monospace !important;
+}
+
+.reveal .slide-background {
+  background: url(background.png);
+}
+
+.reveal .slide-background.title {
+  background: url(title.png);
+}
+
+.reveal .slide-background.agenda {
+  background: url(agenda.png);
+}
+
+.reveal .slide-background.section {
+  background: url(section.png);
+}
+
+.reveal .slide-background.questions {
+  background: url(questions.png);
+}
+
+.reveal .slide-background.end {
+  background: url(end.png);
+}

@@ -10,8 +10,36 @@ section.has-light-background, section.has-light-background h1, section.has-light
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
+
+
+.reveal .slide-background {
+  background-image: url(background.png);
+}
+
+.reveal .slide-background.title {
+  background-image: url(title.png);
+}
+
+.reveal .slide-background.agenda {
+  background-image: url(agenda.png);
+}
+
+.reveal .slide-background.section {
+  background-image: url(section.png);
+}
+
+.reveal .slide-background.questions {
+  background-image: url(questions.png);
+}
+
+.reveal .slide-background.end {
+  background-image: url(end.png);
+}
+
+
+
 body {
-  background: url(bg-7.png);
+  background: rgb(27, 27, 27);
 }
 
 .reveal {

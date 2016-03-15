@@ -22,11 +22,21 @@
 
 		<!-- Printing and PDF exports -->
 		<script>
+		  var importCSS = function(url) {
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+			link.href = url;
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		  }
+
+		  if (window.location.search.match( /print-pdf/gi )) {
+		    importCSS('../reveal.js/css/print/pdf.css');
+		    importCSS('./template/print/pdf.css');
+		  }
+		  else {
+		    importCSS('../reveal.js/css/print/paper.css');
+		  }
 		</script>
 
 		<!--[if lt IE 9]>

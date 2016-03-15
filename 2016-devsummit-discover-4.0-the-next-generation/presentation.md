@@ -887,13 +887,7 @@ var view = new SceneView({
     spatialReference: ...
   },
 
-  map: new WebScene({
-    basemap: 'topo',
-
-    layers: [
-      ...
-    ]
-  })
+  map: new WebScene(...)
 });
 
 ```

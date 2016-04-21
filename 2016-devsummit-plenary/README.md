@@ -1,26 +1,23 @@
 ### Fundamentals
-- [TODO consistancy](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-1-fundamentals/consistency.html)
-- [TODO separation of concerns]()
-- [TODO multiple views]()
+- [New Patterns](https://ycabon.github.io/presentations/2016-devsummit-plenary/1-fundamentals/new-patterns.html)
+- [Multiple views](https://ycabon.github.io/presentations/2016-devsummit-plenary/1-fundamentals/multiple-views.html)
+
+### SceneView
+- [Simple Scene](https://ycabon.github.io/presentations/2016-devsummit-plenary/2-sceneview/sceneview.html)
+- [Local Mode](https://ycabon.github.io/presentations/2016-devsummit-plenary/2-sceneview/local-mode.html)
+- [Environment](https://ycabon.github.io/presentations/2016-devsummit-plenary/2-sceneview/environement.html)
+- [Navigation](https://ycabon.github.io/presentations/2016-devsummit-plenary/2-sceneview/navigation.html)
 
 ### Map and Layers
-- [Basemap](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-2-map-layers/basemap.html)
-- [GroupLayers](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-2-map-layers/group-layer.html)
+- [Basemap](https://ycabon.github.io/presentations/2016-devsummit-plenary/3-map-layers/basemap.html)
+- [GroupLayer](https://ycabon.github.io/presentations/2016-devsummit-plenary/3-map-layers/group-layer.html)
+- [ImageryLayer](https://ycabon.github.io/presentations/2016-devsummit-plenary/3-map-layers/image-layer.html)
 
 ### Visualization
-- [Trees](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-3-visualization/2d-3d-trees.html)
-- [TODO Thematic Trees](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-3-visualization/3d-thematic-trees_warren_uv.html)
-- [Cones](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-3-visualization/3d-cones.html)
-- [Submarine Cables](http://maps.esri.com/rc/cable/index.html)
-- [Image Layer](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-3-visualization/3d-image-layer.html)
-
-### 3D
-- [Environment](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-3-visualization/3d-environment.html)
-- [TODO Animation](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-3-visualization/3d-environment.html)
-- [Multiple Views](http://maps.esri.com/rc/simulator/index.html)
-- [Surface Analysis](http://maps.esri.com/AGSJS_Demos/templates/3D/SurfaceAnalysis/index.html)
+- [Trees 2D](https://ycabon.github.io/presentations/2016-devsummit-plenary/4-visualization/trees-2d.html)
+- [Trees 3D](https://ycabon.github.io/presentations/2016-devsummit-plenary/4-visualization/trees-3d.html)
+- [Realistic Trees](https://ycabon.github.io/presentations/2016-devsummit-plenary/4-visualization/realistic-trees-3d.html)
 
 ### Platform
-- [WebScene](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-4-platform/slides.html)
-- [Local WebScene](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-4-platform/local.html)
-- [TODO WebMap](https://devtopia.esri.com/pages/yann6817/presentations-internal/2016-devsummit-plenary/4.0-4-platform/local.html)
+- [WebMap](https://ycabon.github.io/presentations/2016-devsummit-plenary/5-platform/webmap.html)
+- [WebScene](https://ycabon.github.io/presentations/2016-devsummit-plenary/5-platform/webscene.html)

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Image Layer</title>
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="//cabon.esri.com/arcgis-js-api-4/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="//cabon.esri.com/arcgis-js-api-4/dojox/form/resources/RangeSlider.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsdev.arcgis.com/4.0/"></script>
+
+  <script id="2d-vertex-shader" type="x-shader/x-vertex">
+    // from Microsoft example. you actually only need a very simple/basic vertex shader
+    // outgoing coordinate
+    varying vec2 v_texCoord;
+
+    // incoming coordinate (point)
+    attribute vec2 a_texCoord;
+
+    // maximum number of changes to grid
+    #define MAXPOINTS 10
+
+    uniform vec2 p1[MAXPOINTS];    // Where the drag started
+    uniform vec2 p2[MAXPOINTS];    // Where the drag ended
+
+    void main() {
+      v_texCoord = a_texCoord;
+
+      // Set up position variable with current coordinate normalized from 0 - 1 to -1 to 1 range
+      vec2 position = a_texCoord * 2.0 - 1.0;
+
+      for (int i = 0; i < MAXPOINTS; i++) {
+
+         // Calculate the distance between two start and end of mouse drag for each of the drags
+        float dragdistance = distance(p1[i], p2[i]);
+
+        // Calculate the distance between the start of the mouse drag and the last position
+        float mydistance = distance(p1[i], position);
+
+        if (mydistance < dragdistance) {
+          // only affect vertices within 4 x the drag distance (
+          vec2 maxdistort = (p2[i] - p1[i]) / 4.0;
+          float normalizeddistance = mydistance / dragdistance;
+          float normalizedimpact = (cos(normalizeddistance*3.14159265359)+1.0)/2.0;
+          position += (maxdistort * normalizedimpact);
+        }
+      }
+
+      // gl_Position always specifies where to render this vector
+      //if (abs(position.s) < 0.5) {
+      gl_Position = vec4(position, 0.0, 1.0);     // x,y,z,
+      //}
+    }
+  </script>
+  <script id="2d-fragment-shader-viewshed" type="x-shader/x-fragment">
+    precision mediump float;
+
+    // uniform to use for texture
+    uniform sampler2D u_image;
+
+    // Output of the vertex shader
+    varying vec2 v_texCoord;
+
+    //uniform to use for screen pixel resolution, 0-1
+    uniform vec2 u_resolution;
+
+    //uniform to use for actual cell size (map)
+    uniform vec2 u_cellSize;
+
+    //uniform z observer Hight
+    uniform float u_observerHight;
+
+    //uniform observer
+    uniform vec2 u_observer;
+
+    //uniform
+    uniform bool u_floatTexture;
+
+    //help docs (exist as early as 9.3)
+    //http://resources.arcgis.com/en/help/main/10.2/index.html#/How_Aspect_works/009z000000vp000000/
+    //http://resources.arcgis.com/en/help/main/10.2/index.html#//009z000000z2000000
+    //http://resources.arcgis.com/en/help/main/10.2/index.html#/How_Slope_works/009z000000vz000000/
+    void main() {
+      vec2 currentCoord = v_texCoord + u_resolution* vec2(0, 0);
+      vec2 tempCoord = u_observer;
+      vec4 vo = texture2D(u_image, u_observer);
+      vec4 ve = texture2D(u_image, u_observer);
+      bool visible = false;
+      float a = 0.0;
+      float b = 0.0;
+      float deltax = 0.0;
+      float deltay = 0.0;
+      int maxLoops = 0;
+      deltax = abs((currentCoord.s - u_observer.s)/u_resolution.s);
+      deltay = abs((currentCoord.t - u_observer.t)/u_resolution.t);
+      maxLoops = int(deltax) < int(deltay)? int(deltay): int(deltax);
+      deltax = (currentCoord.s - u_observer.s) / float(maxLoops);
+      deltay = (currentCoord.t - u_observer.t) / float(maxLoops);
+
+      //maxLoops = 200;
+      float sight = vo.r+u_observerHight;//
+      //if (currentCoord.s < u_observer.s){
+      //visible = true;
+      //}
+      tempCoord = u_observer + u_resolution*vec2(0,0);
+      ve = texture2D(u_image, currentCoord);
+      //if (ve.r < vo.r){
+      //visible = false;
+      //}
+      //coord range 0-1; 0,0 is lowerleft
+
+      //if (currentCoord.y < u_observer.y){
+      //visible = false;
+      //}
+
+      for (int i = 1; i < 2000; i++) {
+        if (maxLoops < i) {
+          break;
+        }
+        tempCoord = u_observer + u_resolution*vec2 (int(deltax * float (i)/u_resolution.s), int(deltay * float (i)/u_resolution.t));
+        ve = texture2D(u_image, tempCoord);
+
+        b = (ve.r - sight) / float(i);
+        if (a == 0.0) {
+          a=b;
+          visible = true;
+        }
+        else {
+          a = a < b ? b : a;
+          visible = (sight + a * float(i)) <= ve.r;
+          //visible = ve.r < sight;//2000.0;
+        }
+
+        //if (!visible) {
+        //  break;
+        //}
+      }
+
+      //2050 - 2080
+
+      if (visible) {
+        // gl_FragColor = vec4(1.0, 0.33, 0.33, 1.0);
+        gl_FragColor = vec4(0.07, 0.73, 0.73, 1.0);
+      }
+      else {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+      }
+    }
+  </script>
+
+    <script>
+        var map, view, imageLayer;
+        var filter;
+        var timer, working, mouseCoords;
+        var slopeRange = 90;
+        
+        require([
+          "esri/Map",
+
+          "esri/views/MapView", 
+
+          "esri/layers/ArcGISTiledLayer",
+          "esri/layers/ArcGISImageLayer",
+
+          "esri/symbols/SimpleMarkerSymbol",
+          
+          "local/ViewshedPixelFilter",
+
+          "esri/identity/IdentityManager",
+          
+          "commons/init"
+        ],
+        function (
+          Map, MapView,
+          ArcGISTiledLayer, ArcGISImageLayer,
+          SimpleMarkerSymbol,
+          ViewshedPixelFilter
+        ) {
+
+          
+
+          filter = new ViewshedPixelFilter({
+            observerHeight: 1.75,
+            viewPoint: {
+              s: 0.4375,
+              t: 0.45
+            },
+          });
+
+          imageLayer = new ArcGISImageLayer({
+            url: "http://wju.esri.com:6080/arcgis/rest/services/demo/CaliforniaDEM/ImageServer",
+            // url: "//elevation.arcgis.com/arcgis/rest/services/WorldElevation/Terrain/ImageServer",
+            pixelFilter: filter.viewshed,
+            drawMode: false,
+            drawType: "experimental-webgl"
+          });
+
+          map = new Map({
+            basemap: "dark-gray",
+            layers: [
+              new ArcGISTiledLayer({
+                url: "//services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer",
+                blendMode: "multiply"
+              }),
+              imageLayer
+            ]
+          });
+
+          view = new MapView({
+            container: "viewDiv",
+
+            map: map,
+            
+            //palm springs
+            extent: {
+              xmin: -13007241.866862752,
+              ymin: 3987288.0975016835,
+              xmax: -12936843.3638122,
+              ymax: 4023137.0637673824, 
+              spatialReference: {
+                wkid: 3857
+              }
+            }
+          });
+
+          filter.layer = imageLayer;
+          filter.view = view;
+          view.whenLayerView(imageLayer).then(function(view) {
+            filter.layerView = view;
+          });
+
+          view.on("click", function(event) {
+            mouseCoords = event.mapPoint;
+            if (!timer) {
+              timer = requestAnimationFrame(refresh);
+            }
+          });
+
+          var refresh = function() {
+            timer = null;
+
+            var extent = view.extent;
+
+            view.graphics.clear();
+            view.graphics.add({
+              geometry: mouseCoords,
+              symbol: new SimpleMarkerSymbol({
+                color: "dodgerblue",
+                outline: {
+                  color: "white",
+                  width: 2
+                }
+              })
+            });
+
+            //filter.viewPoint = { s: evt.layerX / map.width, t: 1 - evt.layerY / map.height };                
+            //filter.radius = Infinity;
+            filter.viewPoint = {
+              s: ((mouseCoords.x - extent.xmin) / (extent.xmax - extent.xmin)),
+              t: ((mouseCoords.y - extent.ymin) / (extent.ymax - extent.ymin)),
+              pos: mouseCoords
+            };
+
+            filter.refresh();
+          }
+
+          var removeListeners = function(event) {
+            var body = document.body;
+            working = false;
+            body.removeEventListener("mouseup", removeListeners, true);
+            body.removeEventListener("mousemove", schedule, true);
+          };
+
+          view.container.addEventListener("mousedown", function(event) {
+            working = event.altKey;
+            if (working) {
+              var body = document.body;
+              body.addEventListener("mouseup", removeListeners, true);
+              body.addEventListener("mousemove", schedule, true);
+            }
+            schedule(event);
+          }, true);
+
+          var schedule = function(event) {
+            if (working) {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              mouseCoords = view.toMap(event.pageX, event.pageY, mouseCoords);
+              if (!timer) {
+                timer = requestAnimationFrame(refresh);
+              }
+            }
+          };
+
+          view.watch("stationary", function(value) {
+            if (!value) {
+              view.graphics.clear();
+              filter.viewPoint = null;
+              filter.refresh();
+            }
+          })
+
+        });
+
+    </script>
+</head>
+
+<body class="dark">
+  <div class="application">
+    <div id="viewDiv" class="view"></div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Image Layer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

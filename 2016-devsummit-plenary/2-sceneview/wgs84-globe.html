@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>4.0 - New Patterns</title>
+
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <script src="../commons/dojo-config.js"></script>
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/esri/css/main.css">
+  <script src="//jsdev.arcgis.com/4.0/"></script>
+
+  <script>
+    require([      
+      "esri/Map",
+      
+      "esri/layers/ArcGISTiledLayer",
+      
+      "esri/views/SceneView",
+
+      'commons/init',
+      "dojo/domReady!"
+    ], function(
+      Map,
+      ArcGISTiledLayer,
+      SceneView
+    ) {
+
+      var map = new Map({
+        layers: [
+          new ArcGISTiledLayer({
+            url: '//services.arcgisonline.com/arcgis/rest/services/ESRI_StreetMap_World_2D/MapServer'
+          }),
+          new ArcGISTiledLayer({
+            url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/europe/MapServer'
+          }),
+//           new ArcGISTiledLayer({
+//             url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/northamerica_gmna/MapServer'
+//           }),
+//           new ArcGISTiledLayer({
+//             url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/asiapacific/MapServer'
+//           }),
+//           new ArcGISTiledLayer({
+//             url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/arctic/MapServer'
+//           }),
+//           new ArcGISTiledLayer({
+//             url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/africa/MapServer'
+//           }),
+//           new ArcGISTiledLayer({
+//             url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/southamerica/MapServer'
+//           }),
+//           new ArcGISTiledLayer({
+//             url: '//certmapper.cr.usgs.gov/arcgis/rest/services/geology/southasia/MapServer'
+//           })
+        ],
+        ground: {}
+      });
+
+      view = new SceneView({
+        map: map,
+        container: "viewDiv",
+
+        camera: {
+          position: {
+            x: 5.4032542069280876,
+            y: 30.313674475004323,
+            z: 2302962.2622350696,
+            spatialReference: 4326
+          },
+          heading: 356.94197485615734,
+          tilt: 31.505630087604093
+        },
+
+        padding: {
+          top: 84
+        }
+      });
+
+    });
+  </script>
+</head>
+
+<body class="dark">
+  <div class="application">
+    <div id="viewDiv">
+    </div>
+    <div class="applicationBar bluesky" style="">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">WGS84 Globe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

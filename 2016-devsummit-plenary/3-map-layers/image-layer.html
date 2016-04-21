@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Image Layer</title>
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/dojox/form/resources/RangeSlider.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsdev.arcgis.com/4.0/"></script>
+
+  <style>
+    .shadow {
+      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 8px;
+    }
+    #footer {
+      width: 25%;
+      margin: 0 auto;
+      padding: 15px;
+      position: absolute;
+      bottom: 40px;
+      left: 20px;
+      z-index: 30;
+      color: white;
+    }
+  </style>
+
+  <script type="text/javascript">
+    require([
+      "esri/Map",
+
+      "esri/views/SceneView",
+
+      "esri/layers/ArcGISImageLayer",
+      "esri/layers/support/RasterFunction",
+
+      "dijit/registry",
+      "dojo/parser",
+
+      "dijit/form/HorizontalSlider", 
+      "dojox/form/RangeSlider", 
+      "dijit/form/HorizontalRule", 
+      
+      'commons/init',
+
+      "dojo/domReady!"
+    ],
+    function(
+      Map,
+      SceneView,
+      ArcGISImageLayer, RasterFunction,
+      registry, parser
+    ) {
+
+      /******************************************
+       * Set the rendering rule to the 
+       * "None" raster function. This will allow
+       * us to gain access to the temperature 
+       * value assigned to each pixel
+       *****************************************/
+
+      var rf = new RasterFunction({
+        functionName: "None"
+      });
+
+      /**********************************************************
+       * The PixelFilter. This function is used to color the 
+       * pixels. By default, each pixel has one band containing
+       * a temperature value. Without the pixelFilter
+       * the layer would render in a grayscale. We will
+       * replace the single band with three bands - red,
+       * green, and blue to give color to the layer. This 
+       * will overwrite the original temperature value. See
+       * the getTemp() function for converting the RGB values
+       * back to the original temperature value.
+       *********************************************************/
+
+      function colorize(pixelData) {
+        if (pixelData === null || pixelData.pixelBlock === null ||
+          pixelData.pixelBlock.pixels === null) {
+          return;
+        }
+
+        //The pixelBlock stores the values of all pixels visible in the view    
+        var pixelBlock = pixelData.pixelBlock;
+
+        //Get the min and max values of the data in the current view    
+        var minValue = pixelBlock.statistics[0].minValue;
+        var maxValue = pixelBlock.statistics[0].maxValue;
+
+        //The mask is an array that determines which pixels are visible to the client      
+        var mask = pixelBlock.mask;
+
+        //The pixels visible in the view    
+        var pixels = pixelBlock.pixels;
+
+        //The number of pixels in the pixelBlock    
+        var numPixels = pixelBlock.width * pixelBlock.height;
+
+        //Calculate the factor by which to determine the red and blue 
+        //values in the colorized version of the layer
+        var factor = 255.0 / (maxValue - minValue);
+
+        //Get the pixels containing temperature values in the only band of the data    
+        var band1 = pixels[0];
+
+        //Create empty arrays for each of the RGB bands to set on the pixelBlock    
+        var rBand = [];
+        var gBand = [];
+        var bBand = [];
+
+        //Loop through all the pixels in the view    
+        for (i = 0; i < numPixels; i++) {
+          //Get the pixel value (the temperature) recorded at the pixel location   
+          var tempValue = band1[i];
+
+          // Update the mask
+          mask[i] = tempValue >= currentMin && tempValue <= currentMax ? 1 : 0;
+          
+          //Calculate the red value based on the factor   
+          var red = (tempValue - minValue) * factor;
+
+          //Sets a color between blue (coldest) and red (warmest) in each band
+          rBand[i] = red;
+          gBand[i] = 0;
+          bBand[i] = 255 - red;
+        }
+
+        //Set the new pixel values on the pixelBlock    
+        pixelData.pixelBlock.pixels = [rBand, gBand, bBand];
+        pixelData.pixelBlock.pixelType = "U8"; //U8 is used for color
+
+        //returns the data to the layer
+        return pixelData;
+      }
+
+      /********************
+       * Create image layer
+       ********************/
+
+      layer = new ArcGISImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/ScientificData/SeaTemperature/ImageServer",
+        renderingRule: rf,
+        pixelFilter: colorize
+      });
+
+
+      /**************************
+       * Add image layer to map
+       *************************/
+
+      var map = new Map({
+        basemap: "dark-gray",
+        layers: [layer]
+      });
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        padding: {
+          top: 80
+        },
+        camera: {
+          position: {
+            x: -4078905.749932535,
+            y: 4880721.463347032,
+            z: 12476383.626009598,
+            spatialReference: 102100
+          }
+        }
+      });
+
+      view.on("click", function(result) {
+        view.hitTest(result.screenPoint.x, result.screenPoint.y)
+          .then(function(result) {
+            console.log(result);
+          });
+      });
+
+      /**************************
+       * UI
+       *************************/
+
+      function debounce(fn, delay) {
+        var timer = null;
+        return function () {
+          var context = this, args = arguments;
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            fn.apply(context, args);
+          }, delay);
+        };
+      }
+      
+      parser.parse();
+      var currentMin = -2;
+      var currentMax = 32;
+      //set up slider
+      var slider = registry.byId("pixelSlider");     
+      var sliderMin = currentMin;  //min sea surface temp of -3 deg C
+      var sliderMax = currentMax;  //max sea surface temp of 37 deg C
+      slider.minimum = sliderMin;
+      slider.maximum = sliderMax;
+      slider.value = [sliderMin, sliderMax];
+
+      // hook up slider events
+      slider.on("mouseup", setPixelFilter);
+      // slider.on("change", debounce(setPixelFilter, 50));
+
+      //Redraw raster layer and dynamically change text on slider move
+      function setPixelFilter() {
+        var val = slider.get("value");
+        var min = Math.floor(val[0]);
+        var max = Math.floor(val[1]);
+        if (currentMax !== min || currentMin !== max) {
+          currentMin = min;
+          currentMax = max;
+          layer.redraw();
+        }
+      }
+
+    });
+  </script>
+</head>
+
+<body class="dark claro">
+  <div class="application">
+    <div id="viewDiv" class="view">
+      <div id="footer" class="shadow">   
+        <span>Sea Surface Temperature (°C) on April 7, 2014</span><br><br>
+        <div id='pixelVal'></div>
+        <div id="pixelSlider" data-dojo-type="dojox/form/HorizontalRangeSlider" data-dojo-props="showButtons:'false', intermediateChanges:'false', slideDuration:'0'">
+          <div data-dojo-type="dijit/form/HorizontalRule" data-dojo-props='container:"bottomDecoration", count:2, style:{height:"5px"}'></div>
+        </div>
+      </div>
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Image Layer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

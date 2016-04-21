@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 beta2 - Local Webscene</title>
+
+  <link rel="stylesheet" href="//jsqa.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsqa.arcgis.com/4.0/"></script>
+
+  <style>
+      #layersWidgetDivWrapper {
+        background: white;
+        padding: 20px;
+      }
+      #layersWidgetDiv {
+        width: 250px;
+      }
+  </style>
+
+  <script type="text/javascript">
+
+    require([
+      'esri/views/SceneView',
+      'esri/WebScene',
+
+      'widgets/LayerWidget/LayerWidget',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      SceneView, WebScene,
+      LayerWidget
+    ) {
+
+      // Load a webscene with its item id
+      var scene = new WebScene({
+        basemap: "streets",
+        portalItem: {
+          id: '51c67be4a5ea4da6948a40210ddfab1a'
+        }
+      });
+
+      // search all layers to modify the visibilityMode of the layers for demo purpose
+      scene.then(function() {
+        scene.allLayers.forEach(function(layer) {
+          layer.listMode = "show";
+          if (layer.title ===  "Development Scenario A") {
+            layer.visibilityMode = "exclusive";
+          }
+          else {
+            layer.visibilityMode = "independent";
+          }
+        })
+      });
+
+      var view = new SceneView({
+        map: scene,
+        container: 'viewDiv',
+        padding: {
+          left: 0,
+          top: 80
+        }
+      });
+
+      new LayerWidget({
+        view: view
+      }, "layersWidgetDiv"),
+      view.ui.add(
+        "layersWidgetDivWrapper",
+        "top-right"
+      );
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="layersWidgetDivWrapper" class="shadowed">
+        <div id="layersWidgetDiv"></div>
+      </div>
+      <div id="code" class="code bottom left shadowed" style="height: auto">
+        <textarea id="codemirror">
+
+var scenarioA = new GroupLayer({
+  title: "Development Scenario A",
+
+  // possible values: exclusive or independent  
+  visibilityMode: "exclusive",
+
+  layers: [
+    new SceneLayer({
+      title: "Dev A Buildings"
+    }),
+    new SceneLayer(...),
+    new SceneLayer(...)
+  ]
+});
+
+scene.add(scenarioA)
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">GroupLayer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

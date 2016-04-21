@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Data Layer in 3D</title>
+
+  <link rel="stylesheet" href="//jsqa.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsqa.arcgis.com/4.0/"></script>
+
+  <script type="text/javascript">
+
+  require([
+    'esri/Map',
+    'esri/Camera',
+
+    'esri/views/SceneView',
+
+    'esri/layers/FeatureLayer',
+
+    'esri/renderers/UniqueValueRenderer',
+
+    'esri/symbols/PointSymbol3D',
+    'esri/symbols/ObjectSymbol3DLayer',
+
+    'dojo/domReady!'
+  ],
+  function(
+    Map, Camera,
+    SceneView,
+    FeatureLayer,
+    UniqueValueRenderer,
+    PointSymbol3D, ObjectSymbol3DLayer
+  ) {
+    
+    var visualVariables = [
+      {
+        type: 'sizeInfo',
+        axis: 'width',
+        field: 'Width_NS',
+        valueUnit: 'feet'
+      }, {
+        type: 'sizeInfo',
+        axis: 'depth',
+        field: 'Width_EW',
+        valueUnit: 'feet'
+      }, {
+        type: 'sizeInfo',
+        field: 'Height',
+        valueUnit: 'feet',
+        axis: 'height'
+      }
+    ];
+
+    function createRealisticSymbol(species) {
+      return objectSymbol('RealisticTrees', species);
+    }
+
+    function createThematicSymbol(species) {
+      return objectSymbol('ThematicTrees', species);
+    }
+
+    function objectSymbol(style, species) {
+      style = style || 'ThematicTrees';
+      return new PointSymbol3D(new ObjectSymbol3DLayer({
+        width: 10,
+        resource: {
+          href: '//static.arcgis.com/arcgis/styleItems/' + style + '/web/resource/' + species + '.json'
+        }
+      }));
+    }
+
+    var createSymbol = createRealisticSymbol;
+
+    var renderer = new UniqueValueRenderer({
+      field: 'Sci_Name',
+      defaultSymbol: createSymbol('Other'),
+      visualVariables: visualVariables,
+      uniqueValueInfos: [
+        { 
+          value: 'Cornus florida', 
+          symbol: createSymbol('FremontodendronCalifornicum')
+        },
+        { 
+          value: 'Tsuga canadensis', 
+          symbol: createSymbol('ChilopsisLinearis')
+        },
+        { 
+          value: 'Picea abies', 
+          symbol: createSymbol('AcerPlatanoides')
+        },
+        { 
+          value: 'Quercus alba', 
+          symbol: createSymbol('QuercusRubra')
+        },
+        { 
+          value: 'Pinus strobus', 
+          symbol: createSymbol('PinusContorta')
+        },
+        { 
+          value: 'Acer rubrum', 
+          symbol: createSymbol('AcerPlatanoides')
+        },
+        { 
+          value: 'Prunus serotina', 
+          symbol: createSymbol('PrunusArmeniaca')
+        }
+      ]
+    });
+
+    view = new SceneView({
+      container: 'viewDiv',
+      map: new Map({
+        basemap: 'streets',
+        ground: {
+          layers: []
+        },
+        layers: [
+          new FeatureLayer({
+            url: '//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Warren_College_Trees/FeatureServer/0',
+            renderer: renderer,
+            outFields: ["*"],
+            popupTemplate: {
+              title: "{Cmn_Name}",
+              content: "<i>{Sci_Name}</i><br>" + 
+              "This tree is in {Condition} condition and is {Height} feet in height."
+            }
+          })
+        ]
+      }),
+      popup: {
+        dockEnabled: true,
+        dockOptions: {
+          breakpoint: false,
+          position: "left",
+          buttonEnabled: false
+        }
+      },
+      camera: {
+        position: {
+          x: -9177164.725831497,
+          y: 4247040.791873459,
+          z: 78.75368721131235,
+          spatialReference: 102100
+        },
+        heading: 329.17707942235694,
+        tilt: 70.25480650126569
+      },
+      environment: {
+        lighting: {
+          directShadowsEnabled: true
+        }
+      },
+      padding: {
+        top: 80
+      }
+    });
+
+  });
+  </script>
+</head>
+
+<body class="light">
+  <div class="application">
+    <div id="viewDiv" class="view">
+      <div class="code manual right top bottom shadowed">
+<textarea class="codemirror">
+var renderer = new UniqueValueRenderer({
+  field: "Sci_Name",
+  defaultSymbol: createSymbol('Other'),
+  visualVariables: visualVariables,
+  uniqueValueInfos: [
+    { 
+      value: "Cornus florida", 
+      symbol: createSymbol('FremontodendronCalifornicum')
+    },
+    { 
+      value: "Tsuga canadensis", 
+      symbol: createSymbol('ChilopsisLinearis')
+    },
+    { 
+      value: "Picea abies", 
+      symbol: createSymbol('AcerPlatanoides')
+    },
+    { 
+      value: "Quercus alba", 
+      symbol: createSymbol('QuercusRubra')
+    },
+    { 
+      value: "Pinus strobus", 
+      symbol: createSymbol('PinusContorta')
+    },
+    { 
+      value: "Acer rubrum", 
+      symbol: createSymbol('AcerPlatanoides')
+    },
+    { 
+      value: "Prunus serotina", 
+      symbol: createSymbol('PrunusArmeniaca')
+    }
+  ]
+});</textarea>
+      </div>
+    </div>
+    <div class="applicationBar orange">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Data Layer in 3D</span>
+        </div>
+        <div class="actionBar">
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

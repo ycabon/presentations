@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Trees</title>
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsdev.arcgis.com/4.0/"></script>
+
+  <script type="text/javascript">
+
+    require([
+      'esri/Map',
+
+      'esri/views/SceneView',
+      'esri/views/MapView',
+
+      'esri/layers/FeatureLayer',
+
+      'esri/renderers/SimpleRenderer',
+
+      'esri/symbols/SimpleMarkerSymbol',
+      'esri/symbols/PointSymbol3D',
+      'esri/symbols/ObjectSymbol3DLayer',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      Map,
+      SceneView, MapView,
+      FeatureLayer,
+      SimpleRenderer,
+      SimpleMarkerSymbol, PointSymbol3D, ObjectSymbol3DLayer
+    ) {
+
+      /////////////////////////////////////////
+      //
+      //              MAP
+      //
+      /////////////////////////////////////////
+
+      var map = new Map({
+        basemap: "streets"
+      });
+
+      mapView = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-82.44136, 35.61242],
+        popup: {
+          dockEnabled: true,
+          dockOptions: {
+            breakpoint: false,
+            position: "left",
+            buttonEnabled: false
+          }
+        },
+        zoom: 17,
+        ui: {
+          padding: {
+            top: 95
+          },
+          components: ["zoom", "attribution"]
+        }
+      });
+
+      mapView.then(function() {
+        map.basemap.baseLayers.getItemAt(0).opacity = 0.5;
+      });
+
+      var renderer = new SimpleRenderer({
+        symbol: new SimpleMarkerSymbol({
+
+          outline: {
+            color: 'gray'
+          }
+        }),
+        visualVariables: [{
+          type: "sizeInfo",
+          field: "Width_EW",
+          valueUnit: "feet",
+          valueRepresentation: "diameter"
+        }, {
+          type: "colorInfo",
+          field: "C_Storage",  //Carbon storage
+          minDataValue: 0,
+          maxDataValue: 8000,
+          colors: ["#f7fcb9", "#31a354"]
+        }]
+      });
+
+      // Carbon storage of trees in Warren Wilson College.
+      var featureLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
+        renderer: renderer,
+        outFields: ["*"],
+        popupTemplate: {
+          title: "{Cmn_Name}",
+          content: "<i>{Sci_Name}</i><br>" + 
+          "This tree is in {Condition} condition and is {Height} feet in height."
+        }
+      });
+
+      map.add(featureLayer);
+
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv" class="view">
+      <div class="code manual right top bottom shadowed">
+<textarea class="codemirror">
+var symbol = new SimpleMarkerSymbol();
+
+var sizeInfo = {
+type: "sizeInfo",
+  field: "Width_EW",
+  valueUnit: "feet",
+  valueRepresentation: "diameter"
+};
+
+//color based on carbon storage
+var colorInfo = {
+  type: "colorInfo",
+  field: "C_Storage",
+  minDataValue: 0,
+  maxDataValue: 8000,
+  colors: ["#f7fcb9", "#31a354"]
+};
+
+var renderer = new SimpleRenderer({  
+  symbol: symbol,
+  visualVariables: [
+    sizeInfo, colorInfo
+  ]  
+});</textarea>
+        </div>
+      </div
+    </div>
+    <div class="applicationBar orange">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Data Layer in 2D</span>
+        </div>
+        <div class="actionBar">
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

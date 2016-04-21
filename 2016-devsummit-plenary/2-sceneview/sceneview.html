@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>4.0 - New Coding Patterns</title>
+
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <script src="../commons/dojo-config.js"></script>
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/esri/css/main.css">
+  <script src="//jsdev.arcgis.com/4.0/"></script>
+
+  <script>
+    require([
+      "esri/Map",
+      
+      "esri/core/Collection",
+      "esri/Graphic",
+      
+      "esri/views/SceneView",
+
+      "esri/geometry/Point",
+
+      "esri/symbols/SimpleMarkerSymbol",
+
+      'commons/init',
+      "dojo/domReady!"
+    ], function(
+      Map, Collection, Graphic,
+      SceneView,
+      Point,
+      SimpleMarkerSymbol
+    ) {
+
+      var map = new Map({
+        basemap: 'national-geographic'
+      });
+
+      var geometry = new Point({
+        x: -11131949,
+        y: 4865942,
+        spatialReference: 102100
+      })
+
+      var symbol = new SimpleMarkerSymbol({
+        style: 'diamond',
+        color: '#F00',
+        size: 30,
+
+        outline: {
+          color: 'white',
+          width: 4
+        }
+      });
+
+      var graphic = new Graphic({
+        geometry: geometry,
+        symbol: symbol
+      });
+
+      view = new SceneView({
+        map: map,
+        container: "viewDiv",
+        camera: {
+          position: {
+            longitude: -100,
+            y: 21,
+            z: 5976094
+          },
+          heading: 0,
+          tilt: 21
+        },
+        ui: {
+          padding: {
+            top: 95
+          }
+        }
+      });
+
+      view.then(function() {
+        view.graphics.add(graphic);
+      })
+
+    });
+  </script>
+</head>
+
+<body class="light">
+  <div id="code" class="code visible" style="top: 0; bottom: 0px; right: 0; width: 45%;">
+    <textarea id="codemirror">
+
+  // create the SceneView to display the map
+  var view = new SceneView({
+    map: map,
+    container: "viewDiv",
+
+    // autocast to a camera
+    camera: {
+      
+      // autocast to a point
+      position: {
+        longitude: -100,
+        latitude: 21,
+        altitude: 5976094
+      },
+      heading: 0,
+      tilt: 21
+    },
+
+    graphics: [
+      graphic
+    ]
+  });
+  
+
+
+    </textarea>
+  </div>
+  <div class="application" style="position: relative; left: 0; top: 0; bottom: 0; width: 55%;">
+    <div id="viewDiv">
+    </div>
+    <div class="applicationBar bluesky" style="">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">SceneView</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

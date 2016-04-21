@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Data Layer in 3D</title>
+
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsdev.arcgis.com/4.0/"></script>
+
+  <script type="text/javascript">
+
+    require([
+      'esri/Map',
+
+      'esri/views/SceneView',
+      'esri/views/MapView',
+
+      'esri/layers/FeatureLayer',
+
+      'esri/renderers/SimpleRenderer',
+
+      'esri/symbols/SimpleMarkerSymbol',
+      'esri/symbols/PointSymbol3D',
+      'esri/symbols/ObjectSymbol3DLayer',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      Map,
+      SceneView, MapView,
+      FeatureLayer,
+      SimpleRenderer,
+      SimpleMarkerSymbol, PointSymbol3D, ObjectSymbol3DLayer
+    ) {
+
+      var trunkRenderer = new SimpleRenderer({
+        symbol: new PointSymbol3D({
+          symbolLayers: [new ObjectSymbol3DLayer({
+            material: { color: "brown" },
+            resource: { primitive: "cylinder" }
+          })]
+        }),
+        visualVariables: [
+          {
+            type: "sizeInfo",
+            axis: "height",
+            field: "Height",
+            valueUnit: "feet"
+          }, {
+            type: "sizeInfo",
+            axis: "widthAndDepth",
+            field: "DBH1",
+            valueUnit: "inches"
+          }
+        ]
+      });
+    
+      var trunkLyr = new FeatureLayer({
+         url: "//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
+         renderer: trunkRenderer,
+         outFields: ["*"],
+         elevationInfo: {
+           mode: "onTheGround"
+         },
+         definitionExpression: "Height >= 14 AND Height <= 40"
+      });
+    
+      var crownRenderer = new SimpleRenderer({
+        symbol: new PointSymbol3D({
+          symbolLayers: [new ObjectSymbol3DLayer({
+            material: { color: "green" },
+            resource: { primitive: "sphere" }
+          })]
+        }),
+        visualVariables: [
+          {
+            type: "sizeInfo",
+            axis: "height",
+            field: "Crown_Height",
+            valueUnit: "feet"
+          }, {
+            type: "sizeInfo",
+            axis: "width",
+            field: "Width_EW",
+            valueUnit: "feet"
+          }, {
+            type: "sizeInfo",
+            axis: "depth",
+            field: "Width_NS",
+            valueUnit: "feet"
+          }, {
+            type: "colorInfo",
+            field: "C_Storage",  //Carbon storage
+            minDataValue: 0,
+            maxDataValue: 800,
+            colors: ["#f7fcb9", "#31a354"]
+          }
+        ]
+      });
+
+      var crownLyr = new FeatureLayer({
+        url: "//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
+        renderer: crownRenderer,
+        outFields: ["*"],
+        elevationInfo: {
+          mode: "relativeToGround",
+          offset: 6.5
+        },
+        definitionExpression: "Height >= 14 AND Height <= 40",
+        popupTemplate: {
+          title: "{Cmn_Name}",
+          content: "<i>{Sci_Name}</i><br>" + 
+          "This tree is in {Condition} condition and is {Height} feet in height."
+        }
+      });
+
+      sceneView = new SceneView({
+        container: "viewDiv",
+        map: new Map({
+          basemap: "topo",
+          layers: [trunkLyr, crownLyr]
+        }),
+        camera: {
+          position: {
+            x: -9177370.92,
+            y: 4247017.48,
+            z: 726.01,
+            spatialReference: 102100
+          },
+          heading: 8.05,
+          tilt: 71
+        },
+        popup: {
+          dockEnabled: true,
+          dockOptions: {
+            breakpoint: false,
+            position: "left",
+            buttonEnabled: false
+          }
+        },
+        padding: {
+          left: 0,
+          top: 80
+        }
+      });
+
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv" class="view">
+      <div class="code manual right top bottom shadowed">
+<textarea class="codemirror">
+var symbol = new PointSymbol3D({
+  symbolLayers: [
+    new ObjectSymbol3DLayer({
+      material: {
+        color: "green"
+      },
+      resource: {
+        primitive: "sphere"
+      }
+    })
+  ]
+});
+
+var heightSizeInfo = {
+  type: "sizeInfo",
+  axis: "height",
+  field: "Crown_Height",
+  valueUnit: "feet"
+};
+
+var widthSizeInfo = {
+  type: "sizeInfo",
+  axis: "width",
+  field: "Width_EW",
+  valueUnit: "feet"
+};
+
+var depthSizeInfo = {
+  type: "sizeInfo",
+  axis: "depth",
+  field: "Width_NS",
+  valueUnit: "feet"
+};
+
+//color based on carbon storage
+var colorInfo = {
+  type: "colorInfo",
+  field: "C_Storage", 
+  minDataValue: 0,
+  maxDataValue: 800,
+  colors: ["#f7fcb9", "#31a354"]
+};
+
+var crownRenderer = new SimpleRenderer({  
+  symbol: symbol,
+  visualVariables: [
+    heightSizeInfo,
+    widthSizeInfo,
+    depthSizeInfo,
+    colorInfo
+  ]
+});</textarea>
+      </div>
+    </div>
+    <div class="applicationBar orange">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Data Layer in 3D</span>
+        </div>
+        <div class="actionBar">
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

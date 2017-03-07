@@ -1,0 +1,22 @@
+{
+  "name": "react",
+  "description": "",
+  "main": "dojoConfig.js",
+  "authors": [
+    "rene rubalcava <rrubalcava@esri.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "react": "~0.14.3"
+  }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>MapImageLayer - Renderers</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+      #alaskaViewDiv {
+        position: absolute;
+        width: 400px;
+        height: 300px;
+        bottom: 16px;
+        border-top: 10px solid rgba(255, 255, 255, 0.65);
+        border-right: 10px solid rgba(255, 255, 255, 0.65);
+        transition: all 250ms ease;
+      }
+      #hawaiiViewDiv {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        bottom: 326px;
+        border-top: 10px solid rgba(255, 255, 255, 0.65);
+        border-right: 10px solid rgba(255, 255, 255, 0.65);
+        transition: all 250ms ease;
+      }
+
+      #hawaiiViewDiv.hide, #alaskaViewDiv.hide {
+        transform: translate(-416px);
+      }
+  </style>
+
+  <script>
+    var map, view;
+
+
+    require([
+      'esri/Map',
+
+      'esri/layers/TileLayer',
+      'esri/layers/MapImageLayer',
+      
+      'esri/renderers/SimpleRenderer',
+      
+      'esri/symbols/SimpleFillSymbol',
+
+      'esri/views/MapView',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      Map,
+      TileLayer, MapImageLayer,
+      SimpleRenderer,
+      SimpleFillSymbol,
+      MapView
+    ) {
+
+      var albersBasemap = {
+        baseLayers: [
+          new TileLayer("//tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Dark_Gray_Albers_North_America_Base/MapServer")
+        ],
+        referenceLayers: [
+          new TileLayer("//tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Dark_Gray_Albers_North_America_Reference/MapServer")
+        ]
+      }
+
+      map = new Map({
+        basemap: albersBasemap,
+        layers: [
+          new MapImageLayer({
+            url: "//services.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Tapestry/MapServer",
+            imageFormat: "png32"
+          })
+        ]
+      });
+
+      contiguousView = new MapView({
+        map: map,
+        container: 'viewDiv',
+        ui: {
+          padding: {
+            top: 95
+          },
+          components: ["zoom", "attribution"]
+        },
+        center: {
+          x: -964003.4166071543,
+          y: 189032.23644144324,
+          spatialReference: 102003
+        },
+        scale: 18489297.737236
+      });
+      contiguousView.then(function() { 
+        contiguousView.constraints = {
+          minZoom: 5
+        };
+      });
+
+      alaskaView = new MapView({
+        map: map,
+        container: 'alaskaViewDiv',
+        ui: {
+          components: []
+        },
+        center: {
+          x: -3607373.8309120988,
+          y: 3808680.598443525,
+          spatialReference: 102003
+        },
+        rotation: 333.60955192008873,
+        scale: 36978595.474472
+      });
+
+      hawaiiView = new MapView({
+        map: map,
+        container: 'hawaiiViewDiv',
+        ui: {
+          components: []
+        },
+        center: {
+          x: -6129704.194491434,
+          y: 207004.3452737104,
+          spatialReference: 102003
+        },
+        scale: 9244648.868618,
+        rotation: 324
+      });
+
+      contiguousView.watch("scale", function(value, oldValue) {
+        if (oldValue >= 18489297.737236 && value < 18489297.737236) {
+          alaskaView.container.classList.add("hide");
+          hawaiiView.container.classList.add("hide");
+        }
+        else if (oldValue < 18489297.737236 && value >= 18489297.737236) {
+          alaskaView.container.classList.remove("hide");
+          hawaiiView.container.classList.remove("hide");
+        }
+      });
+
+    });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="alaskaViewDiv" class="view"></div>
+      <div id="hawaiiViewDiv" class="view"></div>
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+  map = new Map({
+    basemap: albersBasemap,
+    layers: [
+      new MapImageLayer({
+        url: "..."
+      })
+    ]
+  });
+
+  contiguousView = new MapView({...});
+
+  alaskaView = new MapView({...});
+
+  hawaiiView = new MapView({...});
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Multiple Views</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.3 - Basemap</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <script type="text/javascript">
+
+    require([
+      'esri/Map',
+
+      'esri/Basemap',
+
+      'esri/layers/TileLayer',
+
+      'esri/views/MapView',
+
+      'esri/widgets/BasemapToggle',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      Map,
+      Basemap,
+      TileLayer,
+      MapView,
+      BasemapToggle
+    ) {
+
+      // Load a webscene with its item id
+      var map = new Map({
+        basemap: {
+          thumbnailUrl: "./arctic-ocean-thumbnail.png",
+          baseLayers: [
+            new TileLayer({
+              id: "arctic-base",
+              url: "//services.arcgisonline.com/arcgis/rest/services/Polar/Arctic_Ocean_Base/MapServer"
+            })
+          ],
+          referenceLayers: [
+            new TileLayer({
+              id: "arctic-reference",
+              url: "//services.arcgisonline.com/arcgis/rest/services/Polar/Arctic_Ocean_Reference/MapServer"
+            })
+          ]
+        }
+      });
+
+      view = new MapView({
+        map: map,
+        container: 'viewDiv',
+        zoom: 5,
+        center: {
+          x: 2091486.4866185836,
+          y: 2638856.9038444506,
+          spatialReference: {
+            wkid: 5936
+          }
+        },
+        ui: {
+          padding: {
+            top: 95
+          },
+          components: ["zoom", "attribution"]
+        }
+      });
+
+      view.ui.add(new BasemapToggle({
+        viewModel: {
+          view: view,
+          secondaryBasemap: new Basemap({
+            thumbnailUrl: "./arctic-imagery-thumbnail.png",
+            baseLayers: [
+              new TileLayer({
+                id: "arctic-imagery",
+                url: "//services.arcgisonline.com/arcgis/rest/services/Polar/Arctic_Imagery/MapServer"
+              })
+            ],
+            referenceLayers: [
+              new TileLayer({
+                id: "arctic-reference",
+                url: "//services.arcgisonline.com/arcgis/rest/services/Polar/Arctic_Ocean_Reference/MapServer"
+              })
+            ]
+          })
+        }
+      }), "top-right")
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code manual bottom left shadowed" style="height: auto">
+        <textarea id="codemirror">
+var baseURL = "...";
+var referenceURL = "...";
+
+var basemap = new Basemap({
+  thumbnailUrl: "./arctic-ocean-thumbnail.png", 
+
+  baseLayers: [
+    new TileLayer({
+      id: "arctic-base",
+      url: baseURL
+    })
+  ],
+  referenceLayers: [
+    new TileLayer({
+      id: "arctic-reference",
+      url: referenceURL
+    })
+  ]
+});
+
+map.basemap = basemap;
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar blueocean">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Basemap</span>
+        </div>
+        <div class="actionBar">
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>MapImageLayer - Table Join</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+  require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/MapImageLayer",
+        "esri/renderers/ClassBreaksRenderer",
+        "esri/symbols/SimpleLineSymbol",
+        "esri/symbols/SimpleFillSymbol",
+        "dojo/domReady!"
+      ],
+      function(
+        Map, MapView, MapImageLayer, ClassBreaksRenderer,
+        SimpleLineSymbol, SimpleFillSymbol
+      ) {
+
+        // helper function to create a symbol
+        function createSymbol(color) {
+          return new SimpleFillSymbol({
+            color: color,
+            outline: {
+              width: 0.5,
+              color: [255, 255, 255, 0.4]
+            },
+            style: "solid"
+          })
+        }
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing US state boundary geometries. A sublayer is added to
+         * the layer with a dynamic data layer source. The dynamic layer
+         * is created by joining a table with demographic attributes to an
+         * existing map service layer with geometries (states).
+         *
+         * The data exist in a registered workspace in the map service.
+         *****************************************************************/
+
+        var layer = new MapImageLayer({
+          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+          sublayers: [{
+            title: "Norwegian Ancestry",
+            id: 0,
+            opacity: 0.75,
+            source: {
+              // indicates the source of the sublayer is a dynamic data layer
+              type: "data-layer",
+              // this object defines the data source of the layer
+              // in this case it's a joined table
+              dataSource: {
+                type: "join-table",
+                // for joined tables you need to define a left table source
+                // and a right table source. In this case, the left table
+                // is the map layer containing feature geometries. The ID
+                // is the layer ID of the sublayer in the service.
+                leftTableSource: {
+                  type: "map-layer",
+                  mapLayerId: 3
+                },
+                // The right table source is another data layer object.
+                // In this case it is a plain table that resides in the
+                // workspace. Simply indicate the ID of the workspace and
+                // the name of the table
+                rightTableSource: {
+                  type: "data-layer",
+                  dataSource: {
+                    type: "table",
+                    workspaceId: "CensusFileGDBWorkspaceID",
+                    dataSourceName: "ancestry"
+                  }
+                },
+                // For the joint to be complete, you must indicate the
+                // primary key and the foreign key to match the table
+                // records from each respective source. In this case
+                // we will match table records with the state name.
+                // So we must indicate the field in each table containing
+                // the state name.
+                leftTableKey: "STATE_NAME",
+                rightTableKey: "State",
+                // Indicates the join type. In this case all records from
+                // the map layer are retained even if they don't have
+                // matching records in the ancestry table.
+                joinType: "left-outer-join"
+              }
+            },
+            popupTemplate: {
+              title: "{states.STATE_NAME}",
+              content: [{
+                type: "fields",
+                fieldInfos: [{
+                  fieldName: "states.POP2007",
+                  label: "Total population",
+                  visible: true,
+                  format: {
+                    digitSeparator: true,
+                    places: 0
+                  }
+                }, {
+                  fieldName: "ancestry.Norwegian",
+                  label: "Norwegian population",
+                  visible: true,
+                  format: {
+                    digitSeparator: true,
+                    places: 0
+                  }
+                }]
+              }]
+            }
+          }]
+        });
+
+        /*****************************************************************
+         * Create a renderer for the dynamic layer. Note the field names
+         * must be prefixed by the table name for the renderer to read
+         * field values. In this sample we are visualizing the number of
+         * people with Norwegian ancestry (from the ancestry table) and
+         * normalizing by the total population (from the states map layer).
+         *****************************************************************/
+
+        var renderer = new ClassBreaksRenderer({
+          field: "ancestry.Norwegian",
+          normalizationField: "states.POP2007",
+          normalizationType: "field",
+          classBreakInfos: [{
+            minValue: 0,
+            maxValue: 0.0126,
+            symbol: createSymbol("#f8e3c2")
+          }, {
+            minValue: 0.0126,
+            maxValue: 0.026,
+            symbol: createSymbol("#e5998c")
+          }, {
+            minValue: 0.026,
+            maxValue: 0.15,
+            symbol: createSymbol("#d86868")
+          }, {
+            minValue: 0.15,
+            maxValue: 0.50,
+            symbol: createSymbol("#9b3557")
+          }]
+        });
+
+        // Get the sublayer to apply the renderer to
+        var norwegianSublayer = layer.sublayers.find(function(sublayer) {
+          return sublayer.title === "Norwegian Ancestry";
+        });
+        // set the renderer on the sublayer
+        norwegianSublayer.renderer = renderer;
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+
+        var map = new Map({
+          basemap: "hybrid",
+          layers: [layer]
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 5,
+          center: [-101.088, 40.969],
+          padding: {
+            top: 80,
+            right: 600
+          }
+        });
+
+      });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var layer = new MapImageLayer({
+  url: URL,
+  sublayers: [{
+    ...
+    source: {
+      // indicates the source of the sublayer is a dynamic data layer
+      type: "data-layer",
+      dataSource: {
+        type: "join-table",
+        leftTableSource: {
+          type: "map-layer",
+          mapLayerId: 3
+        },
+        rightTableSource: {
+          type: "data-layer",
+          dataSource: {
+            type: "table",
+            workspaceId: "CensusFileGDBWorkspaceID",
+            dataSourceName: "ancestry"
+          }
+        },
+        leftTableKey: "STATE_NAME",
+        rightTableKey: "State",
+        joinType: "left-outer-join"
+      }
+    }
+  }]
+});
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">MapImageLayer - Table Join</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

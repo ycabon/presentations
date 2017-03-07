@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Frameworks</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../../commons/css/style.css">
+  <link rel="stylesheet" href="../../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../../commons/libs/codemirror/monokai.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="../../commons/libs/codemirror/codemirror.js"></script>
+  <script src="../../commons/libs/codemirror/mode/javascript/javascript.js"></script>
+  <script src="../../commons/libs/codemirror/mode/jsx/jsx.js"></script>
+
+  <script src="dojoConfig.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+
+  </style>
+
+  <script>
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    
+      <div id="viewContainer" class="view-landscape">
+        <div id="viewDiv" ></div>
+      </div>
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+view.ui.add(leftNode, 'bottom-left');
+view.ui.add(rightNode, 'bottom-right');
+
+ReactDOM.render(
+  <Zoom view={view}/>,
+  leftNode
+);
+
+ReactDOM.render(
+  <Compass view={view}/>,
+  rightNode
+);
+        </textarea>
+      </div>
+    <div class="applicationBar green">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Frameworks</span>
+        </div>
+      </div>
+    <button id="switchView" class="ui-button">toggle</button>
+    </div>
+  </div>
+  <script src="../../commons/codestuff.js"></script>
+</body>
+</html>

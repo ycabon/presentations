@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Enhanced Widget Experience</title>
+
+  <link rel="stylesheet" href="https://jsqa.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="../commons/css/style-rene.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <script src="../commons/libs/codemirror/codemirror.js"></script>
+  <script src="../commons/libs/codemirror/mode/javascript/javascript.js"></script>
+  <script src="https://jsqa.arcgis.com/4.0/"></script>
+</head>
+
+<body class="dark">
+  <div class="application">
+    <div class="applicationBar blue">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Enhanced Widget Experience</span>
+        </div>
+      </div>
+      <button class="showcode ui-button">code</button>
+    </div>
+    <div id="viewDiv">
+      <div id="code" class="code manual left shadowed" style="width: 700px;">
+        <textarea id="codemirror">
+var view = new MapView({
+  ...
+  ui: {
+    components: ["zoom", "compass", "attribution"]
+  }
+});
+view.then(function() {
+  view.ui.add(legend, "bottom-left");
+  view.ui.add(searchWidget, "top-right");
+  view.ui.add(homeWidget, "top-left");
+  view.ui.add(locateWidget, "top-left");
+});
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <script src="../commons/codestuff.js"></script>
+  <script src="main.js"></script>
+  <script>
+    var btn = document.querySelector(".showcode");
+    btn.addEventListener("click", function(event) {
+      document.querySelector(".esri-ui-inner-container").classList.toggle("highlight-ui");
+    });
+    [3,4,5,8,9,10,11].map(window.highlightLine);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <title>Simple Map</title>
+    <link rel="stylesheet" href="https://jsqa.arcgis.com/4.0/esri/css/main.css">
+    <link rel="stylesheet" href="../../commons/css/style-rene.css">
+    <link rel="stylesheet" href="../../commons/libs/codemirror/codemirror.css">
+    <link rel="stylesheet" href="../../commons/libs/codemirror/monokai.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="../../commons/libs/codemirror/codemirror.js"></script>
+    <script src="../../commons/libs/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../../commons/libs/codemirror/mode/jsx/jsx.js"></script>
+    <script src="dojoConfig.js"></script>
+    <script src="https://jsqa.arcgis.com/4.0/"></script>
+  </head>
+
+<body class="light">
+  <div class="application">
+    <div class="applicationBar orange">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">View Models - Custom Components</span>
+        </div>
+      </div>
+      <button class="showcode ui-button">code</button>
+    </div>
+    <div id="viewDiv">
+      <div id="code" class="code manual right shadowed" style="width: 750px;height:600px;">
+        <textarea id="codemirror">
+render() {
+  // compose your custom components
+  return (
+    <div className={btnstyle}>
+      <div className={maxstate} onClick={this.zoomIn}>
+        <div className="center">
+          <i className="material-icons">add</i>
+        </div>
+      </div>
+      // Custom Locate view
+      <Locate view={this.props.view}/>
+      // Custom Compass view
+      <Compass view={this.props.view}/>
+      // Custom Home view
+      <Home view={this.props.view}/>
+      <div className={minstate} onClick={this.zoomOut}>
+        <div className="center">
+          <i className="material-icons">remove</i>
+        </div>
+      </div>
+    </div>
+  );
+}
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <script src="../../commons/codestuff.js"></script>
+  <script>
+    [5,11,13,15,16].map(highlightLine);
+  </script>
+  </body>
+</html>

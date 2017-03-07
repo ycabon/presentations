@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - WebMap</title>
+
+  <style>
+    .esri-chart {
+      width: 200px;
+      height: 200px !important;
+      margin-left: 40px;
+    }
+  </style>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.2/"></script>
+
+
+  <script type="text/javascript">
+
+    require([
+      'esri/WebMap',
+
+      'esri/layers/Layer',
+
+      'esri/geometry/Extent',
+      'esri/geometry/geometryEngine',
+
+      'esri/symbols/SimpleLineSymbol',
+
+      'esri/views/MapView',
+
+      'esri/widgets/Widget',
+      'dijit/_TemplatedMixin',
+
+      'dojox/charting/SimpleTheme',
+      'dojox/charting/themes/common',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      WebMap,
+      Layer,
+      Extent, geometryEngine,
+      SimpleLineSymbol,
+      MapView,
+      Widget, TemplatedMixin,
+      SimpleTheme
+    ) {
+
+      var Bookmark = Widget.createSubclass([TemplatedMixin], {
+        baseClass: 'esri-bookmark',
+
+        templateString:
+          '<div>' +
+            '<figure>' +
+              '<div data-dojo-attach-point="viewDiv" style="pointer-events: none; width: 112px; height: 61px;"></div>' +
+              '<figcaption data-dojo-attach-point="title"></figcaption>' +
+            '</figure>' +
+          '</div>',
+
+        buildRendering: function() {
+          this.inherited(arguments);
+          this.view = new MapView({
+            container: this.viewDiv,
+            ui: {
+              components: null
+            }
+          });
+        },
+
+        _mapSetter: function(value) {
+          this.view.map = value;
+          this._set("map", value);
+        },
+
+        _bookmarkSetter: function(value){
+          this.title.innerHTML = value.name;
+          this.view.extent = value.extent;
+          this._set("bookmark", value);
+        }
+
+      });
+
+      // Load a webscene with its item id
+      webmap = new WebMap({
+        portalItem: {
+          id: 'ecf916da99894c5ab9eb39d3daefdaed'
+        }
+      });
+
+      webmap.load()
+        .then(function() {
+          return webmap.basemap.load();
+        })
+        .then(function() {
+          return webmap.basemap.baseLayers.getItemAt(0).load();
+        })
+        .then(function() {
+          layer = webmap.allLayers.find(function(layer) {
+            return layer.title === "World Hillshade";
+          });
+          if (layer) {
+            layer.blendMode = "multiply";
+          }
+          view.map = webmap;
+        })
+        .then(function() {
+          var bookmarks = webmap.bookmarks;
+          var div = document.getElementById("bookmarksDiv");
+          bookmarks.forEach(
+            function(bookmark) {
+              var thumb = new Bookmark({
+                map: webmap,
+                bookmark: bookmark
+              });
+              thumb.on('click', function() {
+                // apply the slide on the view
+                view.goTo({
+                  target: new Extent(bookmark.extent)
+                });
+              });
+              div.appendChild(thumb.domNode);
+            }
+          );
+        });
+
+      view = new MapView({
+        container: 'viewDiv',
+        padding: {
+          top: 80
+        },
+        popup: {
+          dockEnabled: true,
+          dockOptions: {
+            position: "left",
+            breakpoint: false,
+            buttonEnabled: false
+          }
+        }
+      });
+
+      view._graphicsView.hitTest = null;
+
+      var outline = new SimpleLineSymbol({
+        color: 'yellow',
+        width: 3
+      });
+      view.watch("popup.viewModel.selectedFeature", function(value) {
+        view.graphics.removeAll();
+        if (value) {
+          var g = value.clone();
+          g.symbol = outline;
+          view.graphics.add(g);
+        }
+      });
+
+      window.addlayer = function() {
+        Layer.fromPortalItem({
+          portalItem: {
+            id: '5139bb0d4a314813b9737f1024b20448'
+          }
+        })
+        .then(function(layer) {
+          return layer.load();
+        })
+        .then(function(layer) {
+          var colorInfo;
+          layer.renderer.visualVariables.some(function(variable) {
+            if (variable.type === "colorInfo") {
+              colorInfo = variable;
+              return true;
+            }
+            return false;
+          });
+          if (colorInfo) {
+            define("dojox/charting/themes/charting-theme", ["local/createChartTheme"], function(createChartTheme) { return createChartTheme(colorInfo); });
+            layer.popupTemplate.content[1].mediaInfos[0].value.theme = "charting-theme";
+          }
+          webmap.add(layer);
+        });
+      }
+
+      view.ui.add(document.getElementById("bookmarksDiv"), "bottom-left");
+    });
+  </script>
+</head>
+<body class="light calcite" style="overflow: hidden">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="bookmarksDiv" class="esri-slides shadowed"></div>
+      <div id="code" class="code manual top right shadowed" style="height: auto">
+        <textarea id="codemirror">
+// Load a webscene with its item id
+webmap = new WebMap({
+  portalItem: {
+    id: 'ecf916da99894c5ab9eb39d3daefdaed'
+  }
+});
+
+// Add layer from item
+Layer.fromPortalItem({
+  portalItem: {
+    id: '5139bb0d4a314813b9737f1024b20448'
+  }
+})
+.then(function(layer) {
+  webmap.add(layer);
+})
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">WebMap</span>
+        </div>
+        <div class="actionBar">
+          <div class="button" onclick="addlayer()">
+            <span>Add Layer from portal item</span>
+          </div>
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Basemap 2D</title>
+    
+    <link href="//js.arcgis.com/4.2/esri/css/main.css" rel="stylesheet" type="text/css">
+    
+    <style>
+      html, body {
+        margin:0;
+        padding:0;
+        width: 100%;
+        height: 100%;
+      }
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+      }
+	</style>
+
+    <script src="//js.arcgis.com/4.2/"></script>
+    
+    <script type="text/javascript">
+      
+      require([
+        'esri/Map',
+
+        'esri/views/MapView',
+
+        'dojo/domReady!'
+      ], function(
+        Map,
+        MapView
+      ) {
+
+        map = new Map({
+          basemap: 'topo'
+        });
+
+        var view = new MapView({
+          container: 'viewDiv',
+          map: map,
+          zoom: 4
+        });
+
+      });
+      
+    </script>
+  </head>
+  
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+  
+</html>

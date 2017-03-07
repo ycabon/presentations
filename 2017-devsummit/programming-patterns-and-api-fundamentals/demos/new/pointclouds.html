@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>PointCloudLayer</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/PointCloudLayer"
+    ], function(
+      Map,
+      SceneView,
+      PointCloudLayer
+    ) {
+      var pointCloudLayer = new PointCloudLayer({
+        url: "http://tilesdevext.arcgis.com/tiles/LkFyxb9zDq7vAOAm/arcgis/rest/services/test_sonoma8/SceneServer"
+      });
+
+      map = new Map({
+        basemap: "streets",
+        ground: "world-elevation",
+        layers: [pointCloudLayer]
+      });
+
+      view = new SceneView({
+        map: map,
+        container: "viewDiv",
+        padding: {
+          top: 80
+        }
+      });
+
+      view.then(function() {
+        return pointCloudLayer
+      })
+      .then(function() {
+        view.goTo(pointCloudLayer.fullExtent);
+      });
+
+    });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var pointCloudLayer = new PointCloudLayer({
+  url: pointCloudSceneServiceUrl
+});
+var map = new Map({
+  basemap: "streets",
+  ground: "world-elevation",
+  layers: [pointCloudLayer]
+});
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">PointCloudLayer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

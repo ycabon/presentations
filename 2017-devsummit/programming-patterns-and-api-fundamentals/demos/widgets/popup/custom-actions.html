@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>New Popup - custom actions</title>
+
+    <link rel="stylesheet" href="https://jsqa.arcgis.com/4.0/esri/css/main.css">
+    <link rel="stylesheet" href="../../commons/css/style-rene.css">
+    <link rel="stylesheet" href="../../commons/libs/codemirror/codemirror.css">
+    <link rel="stylesheet" href="../../commons/libs/codemirror/monokai.css">
+    <script src="../../commons/libs/codemirror/codemirror.js"></script>
+    <script src="../../commons/libs/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../../commons/libs/codemirror/mode/jsx/jsx.js"></script>
+    <script src="https://jsqa.arcgis.com/4.0/"></script>
+
+  <script type="text/javascript">
+    var map, view, featureLayer;
+
+    require([
+        'esri/Map',
+        'esri/views/MapView',
+
+        'esri/layers/FeatureLayer',
+
+        'esri/renderers/SimpleRenderer',
+        'esri/symbols/SimpleMarkerSymbol',
+
+        'dojo/domReady!'
+      ],
+      function (
+        Map, MapView,
+        FeatureLayer,
+        SimpleRenderer, SimpleMarkerSymbol
+      ) {
+
+        map = new Map({
+          basemap: 'streets'
+        });
+
+        view = new MapView({
+          container: 'viewDiv',
+          map: map,
+          center: [-82.442, 35.613],
+          zoom: 17,
+          padding: {
+            top: 80
+          }
+        });
+        var sizeInfo = {
+          field:"GroundArea",
+          valueUnit:"feet",
+          valueRepresentation:"area"
+        }
+        var renderer = new SimpleRenderer({
+          symbol: new SimpleMarkerSymbol({
+            color: '#5C5',
+            outline: {
+              width: 0,
+              color: 'white'
+            }
+          }),
+          visualVariables: [
+          {
+            type: 'sizeInfo',
+            field:"GroundArea",
+            valueUnit:"feet",
+            valueRepresentation:"area"
+          },
+          {
+            type: 'opacityInfo',
+            field: 'C_Storage',
+            stops: [
+              {value: 0, opacity: 0.25},
+              {value: 13228, opacity: 1}
+            ]
+          }
+        ]
+        });
+
+        /********************
+         * Add feature layer
+         ********************/
+
+        // Carbon storage of trees in Warren Wilson College.
+        featureLayer = new FeatureLayer({
+          url: 'https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0',
+          outFields: ['*'],
+
+          renderer: renderer,
+
+          // add a custom action
+          popupTemplate: {
+            title: '{Cmn_Name}',
+            content: '{*}',
+            actions: [{
+                id: 'tree-photos',
+                className: 'esri-icon-media',
+                title: 'Tree Photos'
+            }]
+          }
+        });
+
+        map.add(featureLayer);
+        view.then(function() {
+          var popup = view.popup;
+          popup.set('dockOptions', {
+            position: 'right'
+          });
+          popup.on('trigger-action', function (evt) {
+            if (evt.action.id === 'tree-photos') {
+              var attributes = popup.viewModel.selectedFeature.attributes;
+              window.open('https://www.flickr.com/search/?text=' + attributes.Cmn_Name + ' tree');
+
+            } else if (evt.action.id === 'zoom-out') {
+              view.animateTo({
+                center: view.center,
+                zoom: view.zoom - 2
+              });
+            }
+          });
+        });
+      });
+  </script>
+
+</head>
+
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">New Popup</span>
+        </div>
+      </div>
+      <button class="showcode ui-button">code</button>
+    </div>
+
+      <div id="code" class="code manual left shadowed" style="width: 800px;">
+        <textarea id="codemirror">
+featureLayer = new FeatureLayer({
+  ...
+  // add a custom action
+  popupTemplate: {
+    title: '{Cmn_Name}',
+    content: '{*}',
+    actions: [{
+      id: 'tree-photos',
+      className: 'esri-icon-media',
+      title: 'Tree Photos'
+    }]
+  }
+});
+view.popup.on('trigger-action', function (event) {
+  var actionId = event.action.id;
+  var feature = view.popup.viewModel.selectedFeature;
+  var attributes = feature.attributes;
+  // Search on Flickr with the name of the tree
+  if (actionId === 'tree-photos') {
+    var search = 'https://www.flickr.com/search/?text=' + attributes.Cmn_Name + ' tree';
+    window.open(search);
+  }
+});
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <script src="../../commons/codestuff.js"></script>
+  <script>
+    [7,8,9,10,11,19,20,21,22].map(highlightLine);
+  </script>
+</body>
+
+</html>

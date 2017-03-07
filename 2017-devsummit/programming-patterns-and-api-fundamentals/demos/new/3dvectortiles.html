@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>3D VectorTiles</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+    .footer {
+      position: absolute;
+      top: 77px;
+      height: 72px;
+      width: 100%;
+    }
+    
+    .basemaps {
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+    }
+    
+    .basemaps-item {
+      flex-grow: 4;
+      background-color: rgba(255, 85, 85, .5);
+      color: #FFF;
+      margin: 1px;
+      width: 50%;
+      height: 25px;
+      padding: 20px;
+      overflow: auto;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.7em;
+    }
+    
+    .basemap-active {
+      color: #fff;
+      background-color: rgba(255, 85, 85, 1);
+    }
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "dojo/on",
+      "dojo/_base/array",
+      "commons/init"
+    ], function(
+      Map,
+      SceneView,
+      on, arrayUtil
+    ) {
+      map = new Map({
+        basemap: "streets-navigation-vector",
+        ground: "world-elevation"
+      });
+      view = new SceneView({
+        map: map,
+        container: "viewDiv",
+        camera: {
+          //position: [13.36, 52.46, 2217],
+          position: [8.56, 45.56, 2217],
+          tilt: 70
+        },
+        padding: {
+          top: 152
+        }
+      });
+
+      var basemapsElement = document.querySelector(".basemaps");
+      on(basemapsElement, ".basemaps-item:click", function(event) {
+        arrayUtil.forEach(basemapsElement.querySelectorAll(".basemaps-item"), function(node) {
+          node.classList.remove("basemap-active");
+        });
+        var id = event.target.innerHTML;
+        map.basemap = id;
+        event.target.classList.toggle("basemap-active");
+      });
+
+    });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var map = new Map({
+  basemap: "streets-navigation-vector",
+  ground: "world-elevation"
+});
+...
+// At runtime, change basemap string
+map.basemap = "dark-gray-vector";
+        </textarea>
+      </div>
+
+    </div>
+  <div class="footer">
+    <div class="basemaps">
+      <div class="basemaps-item">dark-gray-vector</div>
+      <div class="basemaps-item">gray-vector</div>
+      <div class="basemaps-item">streets-vector</div>
+      <div class="basemaps-item">topo-vector</div>
+      <div class="basemaps-item">streets-night-vector</div>
+      <div class="basemaps-item">streets-navigation-vector</div>
+    </div>
+  </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">3D VectorTiles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

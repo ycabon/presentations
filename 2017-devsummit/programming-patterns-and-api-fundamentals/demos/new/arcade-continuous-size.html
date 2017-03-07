@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Arcade - Continous Size</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/renderers/smartMapping/creators/size",
+      "esri/renderers/smartMapping/statistics/histogram",
+      "esri/widgets/SizeInfoSlider",
+      "esri/widgets/Legend",
+      "dojo/on",
+      "dojo/domReady!"
+    ], function(
+      Map, MapView, FeatureLayer, sizeRendererCreator, histogram,
+      SizeInfoSlider, Legend, on
+    ) {
+
+      // Create a map and add it to a MapView
+
+      var map = new Map({
+        basemap: "gray"
+      });
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-85.050200, 33.125524],
+        zoom: 6,
+        padding: {
+          top: 80
+        }
+      });
+
+      // Create FeatureLayer instance with popupTemplate
+
+      var povLyr = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/counties_politics_poverty/FeatureServer/0",
+        outFields: ["POP_POVERTY", "TOTPOP_CY", "COUNTY", "STATE"],
+        popupTemplate: {
+          title: "{COUNTY}, {STATE}",
+          content: "{POP_POVERTY} of {TOTPOP_CY} people live below the poverty line.",
+          fieldInfos: [
+          {
+            fieldName: "POP_POVERTY",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }, {
+            fieldName: "TOTPOP_CY",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }]
+        }
+      });
+
+      // configure parameters for the size renderer generator
+      // the layer must be specified along with a field name
+      // or arcade expression. The basemap and them determine
+      // the appropriate default size scheme.
+
+      var sizeParams = {
+        layer: povLyr,
+        basemap: map.basemap,
+        valueExpression: "($feature.POP_POVERTY / $feature.TOTPOP_CY) * 100",
+        sqlExpression: "( POP_POVERTY / TOTPOP_CY ) * 100",
+        sqlWhere: "TOTPOP_CY > 0",
+        legendOptions: {
+          title: "% of people living in poverty"
+        },
+        minValue: 15
+      };
+
+      // Initialize the object containing size slider properties.
+      var sliderParams = {};
+
+      // Generate a continuous size renderer based on the
+      // statistics of the data in the provided layer
+      // and arcade expression.
+      //
+      // This resolves to an object containing several helpful
+      // properties, including size scheme, statistics,
+      // the renderer, and visual variable
+
+      sizeRendererCreator.createContinuousRenderer(sizeParams)
+        .then(function(response) {
+
+          // set generated renderer on the layer and add it to the map
+
+          povLyr.renderer = response.renderer;
+          map.add(povLyr);
+
+          // set the queried statistics and generated visual variable
+          // to the slider parameters
+
+          sliderParams.statistics = response.statistics;
+          sliderParams.sizeInfo = response.visualVariable;
+
+          // Create a legend and add it to the view's UI
+
+          var legend = new Legend({
+            view: view,
+            layerInfos: [
+            {
+              layer: povLyr,
+              title: "Poverty in the southeast U.S."
+            }]
+          });
+          view.ui.add(legend, "bottom-left");
+
+          // generate a histogram for use in the slider. Input the layer
+          // and arcade expression to generate it.
+          // You can use a field name and normalization field instead of
+          // an expression.
+
+          return histogram({
+            layer: povLyr,
+            valueExpression: sizeParams.valueExpression,
+            sqlExpression: sizeParams.sqlExpression,
+            sqlWhere: sizeParams.sqlWhere,
+            minValue: sizeParams.minValue
+          });
+
+        })
+        .then(function(histogram) {
+
+          // when the promise resolves, set the histogram in the slider parameters
+
+          sliderParams.histogram = histogram;
+
+          // input the slider parameters in the slider's constructor
+          // and add it to the view's UI
+
+          sizeSlider = new SizeInfoSlider(sliderParams, "slider");
+          view.ui.add(sizeSlider, "bottom-left");
+
+          // when the user slides the handle(s), update the renderer
+          // with the updated color visual variable object
+
+          on(sizeSlider, "handle-value-change", function(evt) {
+            updateRenderer(evt.sizeInfo);
+          });
+        })
+        .otherwise(function(err) {
+          console.log("there was an error: ", err);
+        });
+
+      // update the layer's renderer with the provided color
+      // visual variable object
+
+      function updateRenderer(sizeVV) {
+        var renderer = povLyr.renderer.clone();
+        renderer.visualVariables = [sizeVV];
+        povLyr.renderer = renderer;
+      }
+
+    });
+  </script>
+</head>
+<body class="light esri claro">
+  <div class="application">
+    
+    <div id="viewDiv">
+    <input id="slider" type="range" min="0" max="5000" value="0" />
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var params = {
+  layer: povLyr,
+  basemap: map.basemap,
+  // instead of using an expression, you can use values from a `field`
+  valueExpression: "($feature.POP_POVERTY / $feature.TOTPOP_CY) * 100",
+  sqlExpression: "( POP_POVERTY / TOTPOP_CY ) * 100",
+  sqlWhere: "TOTPOP_CY > 0",
+  legendOptions: {
+    title: "% of people living in poverty"
+  },
+  minValue: 15
+};
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar orange">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Arcade - Continuous Size</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

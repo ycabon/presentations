@@ -688,9 +688,9 @@ view.whenLayerView(fLayer)
 ## Widgets
 
 - Extensibility through:
- - [CSS](https://developers.arcgis.com/javascript/latest/sample-code/styling-simple-theme/index.html), [matching vectortiles](https://ycabon.github.io/presentations/2016-devsummit-discover-4.0-the-next-generation/demos/css-vectortiles/index.html)
- - SASS
- - View Model
+ - [CSS](demos/css/index.html), [matching vectortiles](demos/css-vectortiles/index.html)
+ - [SASS](https://github.com/Esri/jsapi-resources/blob/master/4.x/bower/dojo/SASS.md)
+ - [View Model](https://github.com/Esri/arcgis-js-api/tree/4master/widgets)
 
 ---
 
@@ -1234,18 +1234,19 @@ In a single page application, get a feature from a FeatureLayer from a WebMap wi
     });
 ```
 
-
 ---
 
-<!-- .slide: class="questions centered" -->
+<!-- .slide: class="questions" -->
 
-# Questions
-  
-@yanncabon  
-ycabon@esri.com  
-  
-@odoenet  
-rrubalcava@esri.com  
+## Questions?
+
+![Survey](images/survey-slide.png)
+
+Yann Cabon (ycabon@esri.com) ([@ycabon](https://twitter.com/ycabon))
+
+Rene Rubalcava (rrubalcava@esri.com ) ([@odoenet](https://twitter.com/odoenet))
+
+Slides: [github.com/odoe/presentations/2017-devsummit-ps-using-frameworks/](github.com/odoe/presentations/2017-devsummit-ps-using-frameworks)
 
 ---
 

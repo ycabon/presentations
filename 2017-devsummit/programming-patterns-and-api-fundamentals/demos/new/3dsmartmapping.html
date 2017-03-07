@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>3D SmartMapping</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.3/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="https://js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/FeatureLayer",
+      "esri/renderers/smartMapping/creators/univariateColorSize",
+      "esri/renderers/smartMapping/statistics/histogram",
+      "esri/widgets/UnivariateColorSizeSlider",
+      "esri/core/lang",
+      "dojo/on",
+      "dojo/domReady!"
+    ], function(
+      Map, SceneView, FeatureLayer, colorAndSizeRendererCreator, histogram,
+      UnivariateColorSizeSlider, lang, on
+    ) {
+
+      map = new Map({
+        basemap: "topo"
+      });
+
+      // The minSize and maxSize of volumetric symbols are determined
+      // based on the view/camera the data will be displayed in.
+
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        camera: {
+          tilt: 52.09457445834279,
+          heading: 355.8,
+          position: {
+            x: 1431052,
+            y: 4394025,
+            z: 922291,
+            spatialReference: {
+              wkid: 3857
+            }
+          }
+        },
+        padding: {
+          top: 80
+        }
+      });
+
+      // Create FeatureLayer instance with popupTemplate
+
+      var povLyr = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Enriched%20World%20Cities/FeatureServer/0",
+        outFields: ["CITY_NAME", "CNTRY_NAME", "POP"],
+        popupTemplate: {
+          title: "{CITY_NAME}, {CNTRY_NAME}",
+          content: "Totl population: {POP}",
+          fieldInfos: [{
+            fieldName: "POP",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }]
+        }
+      });
+
+      // configure parameters for the renderer generator.
+      // the layer must be specified along with a field name
+      // or arcade expression. The basemap and other properties determine
+      // the appropriate default color and size schemes.
+
+      var params = {
+        layer: povLyr,
+        basemap: map.basemap,
+        field: "POP",
+        view: view,
+        symbolType: "3d-volumetric",
+        minValue: 0
+      };
+
+      // Initialize the object containing slider properties.
+      var sliderParams = {};
+
+      // Generate a renderer visualizing a single variable
+      // with continuous color and size based on the
+      // statistics of the data in the provided layer
+      // and field name.
+      //
+      // This resolves to an object containing several helpful
+      // properties, including size/color schemes, statistics,
+      // the renderer, and visual variables
+
+      colorAndSizeRendererCreator.createContinuousRenderer(params)
+        .then(function(response) {
+
+          // set generated renderer on the layer and add it to the map
+
+          povLyr.renderer = response.renderer;
+          map.add(povLyr);
+
+          // set the queried statistics and generated visual variable
+          // to the slider parameters
+
+          var sizeVV = response.size.visualVariable;
+          var colorVV = response.color.visualVariable;
+
+          sliderParams.statistics = response.statistics;
+          sliderParams.visualVariables = [sizeVV, colorVV];
+
+          // generate a histogram for use in the slider. Input the layer
+          // and field name to generate it.
+          // You can also use an arcade expression instead of
+          // a field and normalization field
+
+          return histogram({
+            layer: povLyr,
+            field: params.field
+          });
+        })
+        .then(function(histogram) {
+
+          // when the promise resolves, set the histogram in the slider parameters
+          sliderParams.histogram = histogram;
+
+          // input the slider parameters in the slider's constructor
+          // and add it to the view's UI
+
+          var slider = new UnivariateColorSizeSlider(sliderParams, "slider");
+          view.ui.add(slider, "bottom-left");
+
+          // when the user slides the handle(s), update the renderer
+          // with the updated color and size visual variable objects
+
+          on(slider, "data-change", function() {
+            var renderer = povLyr.renderer.clone();
+            renderer.visualVariables = lang.clone(slider.visualVariables);
+            povLyr.renderer = renderer;
+          });
+
+        })
+        .otherwise(function(err) {
+          console.log("there was an error: ", err);
+        });
+
+    });
+  </script>
+</head>
+<body class="light esri claro">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+colorAndSizeRendererCreator.createContinuousRenderer(params)
+.then(function(response) {
+  return histogram({
+    layer: povLyr,
+    field: params.field
+  });
+})
+.then(function(histogram) {
+  var slider = new ColorAndSizeSlider(sliderParams, "slider");
+  view.ui.add(slider, "bottom-left");
+  on(slider, "data-change", function() {
+    // update renderer
+    // with slider.visualVariables
+  });
+})
+.otherwise(function(err) {
+  console.log("there was an error: ", err);
+});
+        </textarea>
+      </div>
+
+    </div>
+    <div id="slider"></div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">3D SmartMapping</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Load a Webmap</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var webmap, view;
+
+    require([
+      "dojo/on",
+      "esri/identity/OAuthInfo",
+      "esri/identity/IdentityManager",
+      "esri/WebMap",
+      "esri/views/MapView",
+      "esri/widgets/Legend",
+      "esri/widgets/LayerList",
+      "esri/renderers/smartMapping/creators/size",
+      "esri/renderers/smartMapping/statistics/histogram",
+      "esri/widgets/ColorAndSizeSlider",
+      "commons/init"
+    ], function(
+      on,
+      OAuthInfo, esriId,
+      WebMap,
+      MapView,
+      Legend, LayerList,
+      sizeRendererCreator, histogram, ColorAndSizeSlider
+    ) {
+      webmap = new WebMap({
+        portalItem: {
+          id: "02433b5d5523425683aa5fd0a401cf5f"
+        }
+      });
+      view = new MapView({
+        map: webmap,
+        container: "viewDiv",
+        padding: {
+          top: 80
+        }
+      });
+
+      view.then(function() {
+        //var layer = webmap.findLayerById("RBS_OD_BLK_2015_12_3310");
+        //console.log(layer.renderer);
+        /*
+        var params = {
+          layer: layer,
+          basemap: webmap.basemap,
+          field: "Einw",
+          view: view,
+          symbolType: "2d",
+          minValue: 0
+        };
+        var sliderParams = {};        
+        sizeRendererCreator.createContinuousRenderer(params)
+        .then(function(response) {
+          layer.renderer = response.renderer;
+          //map.add(povLyr);
+
+          var sizeVV = response.size.visualVariable;
+          var colorVV = response.color.visualVariable;
+
+          sliderParams.statistics = response.statistics;
+          sliderParams.visualVariables = [sizeVV, colorVV];
+          return histogram({
+            layer: layer,
+            field: params.field
+          });
+        })
+        .then(function(histogram) {
+          sliderParams.histogram = histogram;
+
+          var slider = new ColorAndSizeSlider(sliderParams, "slider");
+          view.ui.add(slider, "bottom-left");
+
+          on(slider, "data-change", function() {
+            var renderer = layer.renderer.clone();
+            renderer.visualVariables = lang.clone(slider.visualVariables);
+            layer.renderer = renderer;
+          });
+
+        })
+        .otherwise(function(err) {
+          console.log("there was an error: ", err);
+        });
+        /*/
+
+
+        var layerListWidget = new LayerList({
+          view: view
+        }, "layerList");
+        var legendWidget = new Legend({
+          view: view
+        });
+        view.ui.add(legendWidget, "bottom-left");
+        view.ui.add(layerListWidget, "bottom-left");
+      });
+
+    });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="layerList"></div>
+    <div id="slider"></div>
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var webmap = new WebMap({
+  portalItem: {
+    id: "5934aa9f01234659a501dc9577af02c9"
+  }
+});
+var view = new MapView({
+  map: webmap,
+  container: "viewDiv"
+});
+var layerListWidget = new LayerList({
+  view: view
+}, "layerList");
+var legendWidget = new Legend({
+  view: view
+});
+view.ui.add(legendWidget, "bottom-left");
+view.ui.add(layerListWidget, "bottom-left");
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Load a Webmap</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

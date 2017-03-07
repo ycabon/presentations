@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Webscene</title>
+
+  <link rel="stylesheet" href="//jsqa.arcgis.com/4.0/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//jsqa.arcgis.com/4.0/"></script>
+
+  <script type="text/javascript">
+
+    require([
+      'esri/WebScene',
+
+      'esri/views/SceneView',
+
+      'esri/widgets/Widget',
+      'dijit/_TemplatedMixin',
+
+      'commons/init',
+
+      'dojo/domReady!'
+    ], function(
+      WebScene, SceneView,
+      Widget, TemplatedMixin
+    ) {
+
+      var Slide = Widget.createSubclass([TemplatedMixin], {
+        baseClass: 'esri-slide',
+        thumbnailUrl: null,
+        title: "",
+        _slideSetter: function(value){
+          this.thumbnail.setAttribute("src", value.thumbnail.url);
+          this.title.innerHTML = value.title.text;
+          this._set("slide", value);
+        },
+        templateString:
+          '<div>' +
+            '<figure>' +
+              '<img data-dojo-attach-point="thumbnail" alt="" />' +
+              '<figcaption data-dojo-attach-point="title">${title}</figcaption>' +
+            '</figure>' +
+          '</div>'
+      });
+
+      // Load a webscene with its item id
+      scene = new WebScene({
+        portalItem: {
+          // id: '0614ea1f9dd043e9ba157b9c20d3c538' // Paris
+          // id: '51c67be4a5ea4da6948a40210ddfab1a' // Portland
+          id: 'fa66ab61bd3a4232930426b752e73a68' // Melbourne
+        }
+      });
+
+      // Create a slide deck when the webscene is loaded
+      scene.then(function() {
+        var slidesDiv = document.getElementById('slidesDiv');
+        // slides are part of the webscene's presentation
+        var slides = scene.presentation.slides;
+
+        // For each slide, create a clickable thumbnail
+        slides.forEach(
+          function(slide) {
+            var thumb = new Slide({
+              slide: slide
+            });
+            thumb.on('click', function() {
+              // apply the slide on the view
+              slide.applyTo(view);
+            });
+            slidesDiv.appendChild(thumb.domNode);
+          }
+        );
+      });
+
+      view = new SceneView({
+        map: scene,
+        container: 'viewDiv',
+        padding: {
+          top: 80
+        },
+        environment: {
+          lighting: {
+            ambientOcclusionEnabled: false
+          }
+        }
+      });
+
+      Object.defineProperty(view.environment.lighting, "ambientOcclusionEnabled", {
+        get: function() {
+          return false;
+        }
+      })
+
+      view.ui.add(document.getElementById("slidesDiv"), "bottom-left");
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="slidesDiv" class="esri-slides shadowed"></div>
+      <div id="code" class="code manual top right bottom shadowed" style="height: auto">
+        <textarea id="codemirror">
+// Load a webscene with its item id
+var scene = new WebScene({
+  portalItem: {
+    id: '51c67be4a5ea4da6948a40210ddfab1a'
+  }
+});
+
+// create a slide deck
+scene.then(function() {
+
+  // slides from webscene's presentation
+  var slides = scene.presentation.slides;
+
+  // create a clickable thumbnails
+  slides.forEach(function(slide) {
+    var thumb = new Slide({
+      slide: slide
+    });
+    thumb.on('click', function() {
+      // apply the slide on the view
+      slide.applyTo(view);
+    });
+    slidesDiv.appendChild(thumb.domNode);
+  });
+});
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">WebScene</span>
+        </div>
+        <div class="actionBar">
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

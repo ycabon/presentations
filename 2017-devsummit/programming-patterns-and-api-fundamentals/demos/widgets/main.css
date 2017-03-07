@@ -1,0 +1,16 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.esri-widget {
+  background-color: #fff;
+}
+
+.highlight-ui {
+  background-color: rgba(255,255,255,0.5);
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Custom Vector Tiles</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+    html,
+    body,
+    .esri-widget {
+      -webkit-box-shadow: 0 1px 4px rgb(253, 185, 39);
+      box-shadow: 0 1px 4px rgb(253, 185, 39);
+    }
+
+    .esri-popup .esri-popup-shadow {
+      -webkit-box-shadow: 0 1px 4px rgb(253, 185, 39);
+      box-shadow: 0 1px 4px rgb(253, 185, 39);
+    }
+
+    .lakers-logo {
+      background-image: url("lakers.png");
+      width: 16px;
+      height: 16px;
+    }
+
+    .esri-widget .esri-menu li:active,
+    .esri-widget .esri-menu li:hover,
+    .esri-widget .esri-menu li:focus,
+    .esri-search__clear-button .esri-widget-button:hover,
+    .esri-widget-button:hover,
+    .esri-popup .esri-action:hover,
+    .esri-popup .esri-popup-icon:hover {
+        color: #FDB927;
+        background-color: #3b195b;
+    }
+
+    .esri-popup .esri-popup-main,
+    .esri-popup__main-container,
+    .esri-popup .esri-popup-main a,
+    .esri-popup .esri-pointer .esri-pointer-direction,
+    .esri-widget .esri-header,
+    .esri-widget, .esri-widget-button,
+    .esri-widget .esri-menu,
+    .esri-popup .esri-button,
+    .esri-action,
+    .esri-popup .esri-action-text,
+    .esri-widget .esri-menu {
+        color: #FDB927;
+        background-color: #552582
+    }
+  </style>
+
+  <script>
+    var map, view;
+
+require([
+  "esri/Map",
+  "esri/layers/VectorTileLayer",
+  "esri/views/MapView",
+  "esri/widgets/Search",
+  "esri/widgets/Home",
+  "esri/widgets/Locate",
+  "esri/symbols/PictureMarkerSymbol",
+  "dojo/domReady!"
+], function (
+  Map,
+  VectorTileLayer,
+  MapView,
+  Search,
+  Home,
+  Locate,
+  PictureMarkerSymbol
+  ) {
+
+    map = new Map({
+      layers: [
+        new VectorTileLayer({
+          url: "https://www.arcgis.com/sharing/rest/content/items/dbd2dac5fe39429eb69cd657400419a4/resources/styles/root.json"
+        })
+      ]
+    });
+
+    var sym = new PictureMarkerSymbol({
+      url: "nba_lakers.png",
+      height: "36px",
+      width: "36px"
+    });
+
+    view = new MapView({
+      center: [-118.174, 34.024],
+      zoom: 14,
+      container: "viewDiv",
+      map: map,
+      ui: {
+        components: ["zoom", "compass", "attribution"]
+      },
+      padding: {
+        top: 80
+      }
+    });
+
+    var searchWidget = new Search({
+      viewModel: {
+        view: view
+      }
+    });
+    searchWidget.startup();
+
+    var homeWidget = new Home({
+      viewModel: {
+        view: view
+      }
+    });
+    homeWidget.startup();
+
+    var locateWidget = new Locate({
+      viewModel: {
+        view: view
+      }
+    });
+    locateWidget.startup();
+
+    var action = {
+      id: "go-lakers",
+      className: "lakers-logo",
+      title: "Go Lakers!"
+    };
+
+    view.then(function () {
+      view.ui.add(searchWidget, "top-right");
+      view.ui.add(homeWidget, "top-left");
+      view.ui.add(locateWidget, "top-left");
+
+      var source = searchWidget.viewModel.sources.getItemAt(0);
+      source.resultSymbol = sym;
+
+      view.popup.actions.push(action);
+
+      view.popup.on('trigger-action', function(e) {
+        if (e.action.id === "go-lakers") {
+          window.open("http://www.nba.com/lakers/");
+        }
+      });
+
+    });
+  });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+.esri-widget .esri-menu li:active,
+.esri-widget .esri-menu li:hover,
+.esri-widget .esri-menu li:focus,
+.esri-search__clear-button .esri-widget-button:hover,
+.esri-widget-button:hover,
+.esri-popup .esri-action:hover,
+.esri-popup .esri-popup-icon:hover {
+    color: #FDB927;
+    background-color: #3b195b;
+}
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Custom Vector Tiles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

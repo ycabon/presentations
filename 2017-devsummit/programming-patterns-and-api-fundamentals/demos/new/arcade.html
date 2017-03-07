@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Arcade - Renderer</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/renderers/UniqueValueRenderer",
+      "esri/symbols/SimpleFillSymbol",
+      "esri/widgets/Legend"
+    ], function(
+      Map, MapView, FeatureLayer, UniqueValueRenderer, SimpleFillSymbol,
+      Legend
+    ) {
+
+      // Arcade expression that determines the predominant political
+      // party in each feature. First, feature values are assigned
+      // to meaningful variable names and placed in an array.
+      // Then the maximum count is determined with the Max() function.
+      // That count is then compared with each variable using Decode()
+      // Once a match is found, a string for the corresponding party is
+      // returned implicitly.
+
+      var arcade = "var republican = $feature.MP06025a_B;" +
+        "var democrat = $feature.MP06024a_B;" +
+        "var independent = $feature.MP06026a_B;" +
+        "var parties = [republican, democrat, independent];" +
+        "Decode(Max(parties), republican, 'republican', democrat, 'democrat', independent, 'independent', 'n/a');";
+
+      // Add the expression to a unique value renderer and create a fill
+      // symbol for each possible value.
+
+      var renderer = new UniqueValueRenderer({
+        valueExpression: arcade,
+        valueExpressionTitle: "Counties by dominant party among registered voters",
+        uniqueValueInfos: [{
+          value: "democrat",
+          symbol: createSymbol("#00c3ff"),
+          label: "Democrat"
+        }, {
+          value: "republican",
+          symbol: createSymbol("#ff002e"),
+          label: "Republican"
+        }, {
+          value: "independent",
+          symbol: createSymbol("#faff00"),
+          label: "Independent/other party"
+        }]
+      });
+
+      // Add an Arcade expression to an opacity visual variable. Counties where
+      // the predominant party is nearly equal with the others (33%) are very
+      // transparent. Counties where the dominant party makes up at least 44%
+      // of all people registered to a party are fully opaque.
+
+      renderer.visualVariables = [{
+        type: "opacity",
+
+        // Arcade expression determining the strength of the predominant party
+        // in each feature based on the proportion of that party to all others.
+        // A simple percentage is calculated and returned for the max value.
+
+        valueExpression: "var republican = $feature.MP06025a_B;" +
+          "var democrat = $feature.MP06024a_B;" +
+          "var independent = $feature.MP06026a_B;" +
+          "var parties = [republican, democrat, independent];" +
+          "var total = Sum(parties);" +
+          "var max = Max(parties);" +
+          "return (max / total) * 100;",
+        valueExpressionTitle: "Share of registered voters comprising the dominant party",
+        stops: [
+        {
+          value: 33,
+          opacity: 0.05
+        },
+        {
+          value: 44,
+          opacity: 1.0
+        }]
+      }];
+
+      // Create FeatureLayer instance with popupTemplate
+
+      var layer = new FeatureLayer({
+        portalItem: {
+          id: "8444e275037549c1acab02d2626daaee"
+        },
+        outFields: ["MP06025a_B", "MP06024a_B", "MP06026a_B", "COUNTY",
+          "STATE", "POP18UP_CY"
+        ],
+        renderer: renderer,
+        popupTemplate: {
+          title: "{COUNTY}, {STATE}",
+          content: [{
+            type: "fields",
+            fieldInfos: [{
+              fieldName: "MP06024a_B",
+              label: "Democrat",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            }, {
+              fieldName: "MP06025a_B",
+              label: "Republican",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            }, {
+              fieldName: "MP06026a_B",
+              label: "Independent/Other",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            }, {
+              fieldName: "POP18UP_CY",
+              label: "Adult Population",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            }]
+          }]
+        }
+      });
+
+      var map = new Map({
+        basemap: "dark-gray",
+        layers: [layer]
+      });
+
+      // The minSize and maxSize of volumetric symbols are determined
+      // based on the view/camera the data will be displayed in.
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-95, 38],
+        zoom: 5,
+        padding: {
+          top: 80
+        }
+      });
+
+      var legend = new Legend({
+        view: view,
+        layerInfos: [{
+          layer: layer,
+          title: "Dominant political party by number of registered voters for each U.S. County"
+        }]
+      });
+      view.ui.add(legend, "bottom-left");
+
+      // Creates a SimpleFillSymbol based on an input color
+
+      function createSymbol(color) {
+        return new SimpleFillSymbol({
+          color: color,
+          outline: {
+            width: 0.5,
+            color: [0, 0, 0, 0.2]
+          }
+        });
+      }
+
+    });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var expression =
+  "var republican = $feature.MP06025a_B;" +
+  "var democrat = $feature.MP06024a_B;" +
+  "var independent = $feature.MP06026a_B;" +
+  "var parties = [republican, democrat, independent];" +
+  "Decode(Max(parties), republican, 'republican', democrat, 'democrat', independent, 'independent', 'n/a');";
+var renderer = new UniqueValueRenderer({
+  valueExpression: expression,
+  valueExpressionTitle: "Counties by dominant party among registered voters",
+  uniqueValueInfos: [...]
+});
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar green">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Arcade - Renderer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>MapImageLayer - Renderers</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/MapImageLayer",
+        "esri/renderers/SimpleRenderer",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/symbols/SimpleLineSymbol",
+        "esri/symbols/SimpleFillSymbol",
+        "dojo/domReady!"
+      ],
+      function(
+        Map, MapView, MapImageLayer, SimpleRenderer,
+        SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol
+      ) {
+
+        /*****************************************************************
+         * Create renderers for each sublayer: cities, highways, states
+         *****************************************************************/
+
+        var citiesRenderer = new SimpleRenderer({
+          symbol: new SimpleMarkerSymbol({
+            size: 5,
+            color: "white",
+            style: "circle",
+            outline: {
+              width: 0.5,
+              color: "orange"
+            }
+          }),
+          label: "Cities"
+        });
+
+        var statesRenderer = new SimpleRenderer({
+          symbol: new SimpleFillSymbol({
+            style: "none",
+            outline: {
+              width: 0.25,
+              color: "yellow"
+            }
+          }),
+          label: "State boundaries"
+        });
+
+        var highwaysRenderer = new SimpleRenderer({
+          symbol: new SimpleLineSymbol({
+            style: "none",
+            width: 0.5,
+            color: "white"
+          }),
+          label: "Interstate highway"
+        });
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing data about US Cities, States and Highways.
+         * Define sublayers with visibility for each layer in Map Service.
+         *****************************************************************/
+
+        var layer = new MapImageLayer({
+          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+          sublayers: [
+          {
+            id: 2,
+            renderer: statesRenderer,
+            opacity: 0.4
+          },
+          {
+            id: 1,
+            renderer: highwaysRenderer,
+            opacity: 0.8
+          },
+          {
+            id: 0,
+            renderer: citiesRenderer,
+            opacity: 0.6
+          }]
+        });
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+
+        var map = new Map({
+          basemap: "dark-gray",
+          layers: [layer]
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 6,
+          center: [-83.114, 36.921],
+          padding: {
+            top: 80
+          }
+        });
+
+      });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var citiesRenderer = new SimpleRenderer({...});
+var statesRenderer = new SimpleRenderer({...});
+var highwaysRenderer = new SimpleRenderer({...});
+var layer = new MapImageLayer({
+  url: URL,
+  sublayers: [
+  {
+    id: 2,
+    renderer: statesRenderer,
+    opacity: 0.4
+  },
+  {
+    id: 1,
+    renderer: highwaysRenderer,
+    opacity: 0.8
+  },
+  {
+    id: 0,
+    renderer: citiesRenderer,
+    opacity: 0.6
+  }]
+});
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">MapImageLayer - Renderers</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

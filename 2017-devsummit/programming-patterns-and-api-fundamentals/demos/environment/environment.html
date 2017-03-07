@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.3 - Environment</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+    .environment {
+      margin: 12px;
+    }
+
+    .environment table {
+      border-spacing: 24px 12px;
+    }
+
+    .environment td {
+      vertical-align: top;
+    }
+
+    .environment button {
+      display: block;
+      border: 1px solid #a5a8a8;
+      background: #e5e9e9;
+      border-radius: 3px;
+      box-shadow: inset 0 1px #fff;
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 6px;
+    }
+
+    .application {
+      position: relative;
+      height: 100%;
+    }
+
+    .application .drawer {
+      width: 350px;
+      left: 0;
+    }
+
+    .light .open .applicationBar {
+      box-shadow: 350px 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    #viewContainer {
+      top: 75px;
+      left: 350px;
+      right: 0px;
+      bottom: 0px;
+      position: absolute;
+    }
+  </style> 
+
+  <script type="text/javascript">
+    var map, view;
+    
+    require([
+      "dojo/dom",
+      "dojo/on",
+      "esri/Map",
+      "esri/Camera",
+      "esri/views/SceneView",
+      "esri/layers/SceneLayer",
+      "esri/core/Scheduler",
+      "commons/init",
+      "dojo/domReady!"
+    ], function(dom, on, Map, Camera, SceneView, SceneLayer, Scheduler) {
+
+      // ---------------------------------------------------------------------
+      // Setting up the map and view
+      // ---------------------------------------------------------------------
+
+      map = new Map({
+        basemap: "satellite"
+      });
+      
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+
+        camera: {
+          position: [10, 53.52, 2820],
+          tilt: 50
+        },
+
+        // Initial environment
+        environment: {
+          lighting: {
+            directShadows: true,
+            date: new Date("Sun Mar 15 2015 08:00:00 GMT+0100 (CET)")
+          }
+        }
+      });
+
+      var sceneLayer = new SceneLayer({
+        url: "http://scene.arcgis.com/arcgis/rest/services/Hosted/Building_Hamburg/SceneServer/layers/0"
+      });
+
+      map.add(sceneLayer);
+
+      // ---------------------------------------------------------------------
+      // Simple environment settings
+      // ---------------------------------------------------------------------
+
+      on(dom.byId("directShadowsCheckbox"), "change", updateDirectShadows);
+      on(dom.byId("starsCheckbox"), "change", updateStars);
+      on(dom.byId("atmosphereCheckbox"), "change", updateAtmosphere);
+
+      function updateStars(ev) {
+        if (ev.target.checked) {
+          view.environment.starsEnabled = true;
+        } else {
+          view.environment.starsEnabled = false;
+        }
+      }
+
+      function updateDirectShadows(ev) {
+        view.environment.lighting.directShadowsEnabled = !!ev.target.checked;
+      }
+
+      function updateAtmosphere(ev) {
+        if (ev.target.checked) {
+          view.environment.atmosphere.quality = "high";
+        } else {
+          view.environment.atmosphere.quality = "low";
+        }
+      }
+
+      // ---------------------------------------------------------------------
+      // Set time of day
+      // ---------------------------------------------------------------------
+
+      on(dom.byId("timeOfDaySelect"), "change", updateTimeOfDay);
+
+      // Animate towards the desired time of day
+      var updateTimeTask = null;
+
+      function updateTimeOfDay(ev) {
+        var select = ev.target;
+        var date = select.options[select.selectedIndex].value;
+
+        function tod(date) {
+          return {
+            timeInMs: date.getTime(),
+            todInS: date.getUTCHours() * 3600 +
+                    date.getUTCMinutes() * 60 +
+                    date.getUTCSeconds()
+          };
+        }
+
+        // Separate start and end date into milliseconds
+        // since epoch, and time-of-day in seconds
+        var startTod = tod(view.environment.lighting.date);
+        var endTod = tod(new Date(date));
+
+        var duration = 1000;
+
+        if (updateTimeTask) {
+          updateTimeTask.remove();
+        }
+
+        updateTimeTask = Scheduler.addFrameTask({
+          update: function(event) {
+            if (event.spendInTask > duration) {
+              // Remove the frame task when animation is finished
+              updateTimeTask.remove();
+              updateTimeTask = null;
+
+              return;
+            }
+
+            function easeInCubic(t) {
+              return t * t * t;
+            }
+
+            function easeOutCubic(t) {
+              return 1 - (1 - t) * (1 - t) * (1 - t);
+            }
+
+            function easeInOutCubic(t) {
+              if (t < 0.5) {
+                return easeInCubic(t * 2) / 2;
+              } else {
+                return (easeOutCubic(t * 2 - 1) + 1) / 2;
+              }
+            }
+
+            var f = easeInOutCubic(event.spendInTask / duration);
+
+            // Animate in terms of time-of-day
+            var timeInMs = startTod.timeInMs +
+              (endTod.timeInMs - startTod.timeInMs) * f;
+
+            var todInS = startTod.todInS +
+              (endTod.todInS - startTod.todInS) * f;
+
+            // Create the new date at the interpolated epoch
+            // time, adjusted for interpolation in time-of-day
+            var date = new Date(timeInMs);
+
+            date.setUTCHours(todInS / 3600);
+            date.setUTCMinutes((todInS % 3600) / 60);
+            date.setUTCSeconds((todInS % 3600) % 60);
+
+            view.environment.lighting.date = date;
+          }
+        });
+      }
+
+
+      // ---------------------------------------------------------------------
+      // Animate to points of interest
+      // ---------------------------------------------------------------------
+
+      on(dom.byId("poiHamburgInput"), "click", animateToPoi);
+      on(dom.byId("poiMountainsInput"), "click", animateToPoi);
+      on(dom.byId("poiNorthPoleInput"), "click", animateToPoi);
+
+      function animateToPoi(ev) {
+        var poiName = ev.target.getAttribute("data-poi-name");
+        var pois = {
+          hamburg: {
+            position: [ 10, 53.52, 2820 ],
+            heading: 0,
+            tilt: 50
+          },
+
+          mountains: {
+            position: [ 10.07, 46.39, 5433 ],
+            heading: 266,
+            tilt: 82
+          },
+
+          northPole: {
+            position: [ -41.14, 77.37, 112241 ],
+            heading: 359,
+            tilt: 179
+          }
+        };
+
+        view.animateTo(new Camera(pois[poiName]));
+      }
+    });
+
+
+  </script>
+</head>
+<body class="light">
+  <div class="application open">
+    <div id="viewContainer">
+      <div id="viewDiv">
+      </div>
+    </div>
+    <div class="applicationUI">
+      <div class="drawer">
+        <div class="environment">
+          <table>
+            <tr>
+              <td>Time of day:</td>
+              <td>
+                <select id="timeOfDaySelect">
+                  <option value="Sun Mar 15 2015 08:00:00 GMT+0100 (CET)">Morning</option>
+                  <option value="Sun Mar 15 2015 12:00:00 GMT+0100 (CET)">Noon</option>
+                  <option value="Sun Mar 15 2015 16:00:00 GMT+0100 (CET)">Afternoon</option>
+                  <option value="Sun Mar 15 2015 18:30:00 GMT+0100 (CET)">Sunset</option>
+                  <option value="Sun Mar 15 2015 19:00:00 GMT+0100 (CET)">Evening</option>
+                  <option value="Sun Mar 15 2015 23:00:00 GMT+0100 (CET)">Night</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Direct shadows:</td>
+              <td>
+                <label class="topcoat-checkbox">
+                  <input id="directShadowsCheckbox" type="checkbox" checked>
+                  <div class="topcoat-checkbox__checkmark"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Realistic atmosphere:</td>
+              <td>
+                <label class="topcoat-checkbox">
+                  <input id="atmosphereCheckbox" type="checkbox">
+                  <div class="topcoat-checkbox__checkmark"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Show stars:</td>
+              <td>
+                <label class="topcoat-checkbox">
+                  <input id="starsCheckbox" type="checkbox" checked>
+                  <div class="topcoat-checkbox__checkmark"></div>
+                  &nbsp;
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Points of interest:</td>
+              <td>
+                <button id="poiHamburgInput" data-poi-name="hamburg">Hamburg</button>
+                <button id="poiMountainsInput" data-poi-name="mountains">Mountains</button>
+                <button id="poiNorthPoleInput" data-poi-name="northPole">North pole</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="applicationBar bluesky">
+        <div class="content">
+          <div class="cartouche">
+            <span class="label">4.3</span>
+          </div>
+          <div class="main">
+            <span class="title">Environment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

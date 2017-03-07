@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Navigation</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.2/"></script>
+
+  <style>
+    #indicatorButton {
+      display: inline-block;
+      vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(100, 100, 100, 0.8);
+      border: 2px solid #ccc;
+    }
+    #buttonsDiv {
+      margin-top: 20px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/core/Scheduler",
+
+      "dojo/dom",
+      "dojo/on",
+
+      "commons/init",
+
+      "dojo/domReady!"
+    ], function(
+      Map, SceneView, Scheduler,
+      dom, on
+    ) {
+      map = new Map({
+        basemap: "hybrid"
+      });
+
+      view = new SceneView({
+        map: map,
+        container: "viewDiv",
+        camera: {
+          position: [7.654, 45.919, 5183],
+          tilt: 80
+        },
+        padding: {
+          top: 85
+        }
+      });
+
+      var rotateAntiClockwiseButton = dom.byId("rotateAntiClockwiseButton");
+      var rotateClockwiseButton = dom.byId("rotateClockwiseButton");
+      var indicatorButton = dom.byId("indicatorButton");
+      var rotateAroundButton = dom.byId("rotateAroundButton");
+
+      var rotateAroundTask = null;
+
+      on(rotateClockwiseButton, "click", function() {
+        rotateView(-1);
+      });
+
+      on(rotateAntiClockwiseButton, "click", function() {
+        rotateView(1);
+      });
+
+      on(indicatorButton, "click", tiltView);
+
+      on(rotateAroundButton, "click", rotateAround);
+
+      view.watch("camera", updateIndicator);
+
+      function rotateView(direction) {
+        var restartRotateAround = cancelRotateAround();
+
+        var heading = view.camera.heading;
+
+        // Set the heading of the view to the closest multiple of 90 degrees,
+        // depending on the direction of rotation
+        if (direction > 0) {
+          heading = Math.floor((heading + 1e-3) / 90) * 90 + 90;
+        } else {
+          heading = Math.ceil((heading - 1e-3) / 90) * 90 - 90;
+        }
+
+        view.goTo({
+          heading: heading
+        })
+        .then(function() {
+          if (restartRotateAround) {
+            rotateAround();
+          }
+        });
+      }
+
+      function tiltView() {
+        var restartRotateAround = cancelRotateAround();
+
+        // Get the camera tilt and add a small number for numerical inaccuracies
+        var tilt = view.camera.tilt + 1e-3;
+
+        // Switch between 3 levels of tilt
+        if (tilt >= 80) {
+          tilt = 0;
+        } else if (tilt >= 40) {
+          tilt = 80;
+        } else {
+          tilt = 40;
+        }
+
+        view.goTo({
+          tilt: tilt
+        })
+        .then(function() {
+          if (restartRotateAround) {
+            rotateAround();
+          }
+        });
+      }
+
+      function cancelRotateAround() {
+        if (rotateAroundTask) {
+          rotateAroundTask.remove();
+          rotateAroundTask = null;
+
+          return true;
+        }
+
+        return false;
+      }
+
+      function rotateAround() {
+        if (cancelRotateAround()) {
+          return;
+        }
+
+        var center = view.center;
+        var scale = view.scale;
+
+        rotateAroundTask = Scheduler.addFrameTask({
+          update: function() {
+            view.goTo({
+              target: center,
+              heading: view.camera.heading + 0.2,
+              scale: scale
+            }, {
+              animate: false
+            });
+          }
+        });
+      }
+
+      function updateIndicator(camera) {
+        var indicatorButton = dom.byId("indicatorButton");
+
+        var tilt = camera.tilt;
+        var heading = camera.heading;
+
+        // Update the indicator to reflect the current tilt/heading using
+        // css transforms.
+        var transform = "rotateX(" + 0.8 * tilt +
+          "deg) rotateY(0) rotateZ(" + -heading + "deg)";
+
+        indicatorButton.style.transform = transform;
+        indicatorButton.style["-webkit-transform"] = transform; //Solution for Safari
+      }
+    });
+  </script>
+</head>
+<body class="light">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code manual top right shadowed" style="bottom: 36px;">
+        <textarea id="codemirror">
+var map = new Map({
+  basemap: "hybrid"
+});
+
+var view = new SceneView({
+  map: map,
+  container: "viewDiv",
+  camera: {
+    position: [7.654, 45.919, 5183],
+    tilt: 80
+  }
+});
+
+function rotateView(direction) {
+  var heading = view.camera.heading;   
+
+  if (direction > 0) {
+    heading = heading + 90;
+  }
+  else {
+    heading = heading - 90;
+  }
+
+  view.goTo({
+    heading: heading
+  });
+}
+
+
+
+
+
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar rougerose">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Navigation</span>
+        </div>
+        <div class="actionBar">
+          <div id="buttonsDiv">
+            <button id="rotateAntiClockwiseButton" title="Rotate 90°">↻</button>
+            <button id="indicatorButton"></button>
+            <button id="rotateClockwiseButton" title="Rotate 90°">↺</button>
+            <button id="rotateAroundButton" title="Rotate around">🚁</button>
+          </div>
+          <div class="button showcode">
+            <span>code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

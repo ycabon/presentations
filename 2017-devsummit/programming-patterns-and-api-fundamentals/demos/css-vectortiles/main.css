@@ -1,0 +1,38 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+    
+.lakers-theme .esri-widget,
+.lakers-theme .esri-widget-button,
+.lakers-theme .esri-menu,
+.lakers-theme .esri-popup__main-container,
+.lakers-theme .esri-popup .esri-pointer-direction,
+.lakers-theme .esri-button {
+    background-color: #552582;
+    color: #FDB927;
+}
+
+.lakers-theme .esri-widget-button:focus,
+.lakers-theme .esri-widget-button:hover,
+.lakers-theme .esri-menu li:focus,
+.lakers-theme .esri-menu li:hover {
+    background-color: #3b195b;
+    color: #FDB927;
+}
+
+.lakers-theme .esri-button:focus,
+.lakers-theme .esri-button:hover {
+    color: #FDB927;
+}
+
+.lakers-logo {
+  background-image: url("lakers.png");
+  width: 16px;
+  height: 16px;
+}

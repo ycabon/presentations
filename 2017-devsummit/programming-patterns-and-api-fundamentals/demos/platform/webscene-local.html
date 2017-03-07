@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.0 - Local</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.2/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.2/"></script>
+
+    
+    <script type="text/javascript">
+      
+      require([
+        'dojo/on',
+
+        'esri/WebScene',
+
+        'esri/views/SceneView',
+
+        'esri/layers/TileLayer',
+        'esri/layers/ElevationLayer',
+        'esri/layers/FeatureLayer',
+        'esri/layers/GraphicsLayer',
+
+        'esri/renderers/SimpleRenderer',
+
+        'esri/symbols/PointSymbol3D',
+        'esri/symbols/LineSymbol3D',
+        'esri/symbols/ObjectSymbol3DLayer',
+        'esri/symbols/LineSymbol3DLayer',
+
+        'commons/init',
+
+        'dojo/domReady!'
+      ], function(
+        on,
+        WebScene,
+        SceneView, 
+        TileLayer, ElevationLayer, FeatureLayer, GraphicsLayer,
+        SimpleRenderer,
+        PointSymbol3D, LineSymbol3D, ObjectSymbol3DLayer, LineSymbol3DLayer
+      ) {
+
+
+        scene = new WebScene({
+          viewingMode: 'local',
+          
+          clippingEnabled: false,
+          
+          clippingArea: {
+            xmin: 344556.17949990794,
+            ymin: 3786680.957522931,
+            xmax: 368905.9689491527,
+            ymax: 3801033.594521225,
+            spatialReference: {
+              wkid: 26711
+            }
+          },
+
+          ground: {
+            layers: [
+              new ElevationLayer({
+                url: '//sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/earthquakedemoelevation/ImageServer'
+              })
+            ]
+          },
+          basemap: {
+            baseLayers: [
+              new TileLayer({
+                url: '//tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/EarthquakesMtns/MapServer'
+              })
+            ]
+          },
+          layers: [
+            featureLayer = new FeatureLayer({
+              url: '//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/CopyJSON_WFL/FeatureServer/0',
+              outFields: ['*'],
+              returnZ: true,
+              minScale: 1440000,
+              elevationInfo: {
+                mode: 'absoluteHeight'
+              },
+              // add a custom action
+              popupTemplate: {
+                content: '{*}'
+              },
+              renderer: rdn = new SimpleRenderer({
+                symbol: new PointSymbol3D({
+                  symbolLayers:[
+                    new ObjectSymbol3DLayer({
+                      resource:{
+                        primitive: 'sphere'
+                      },
+                      width: 10,
+                      height: 10,
+                      anchor: 'center'
+                    })
+                  ]
+                }), 
+                visualVariables: [
+                  {
+                    type: 'sizeInfo',
+                    field: 'MAG2',
+                    axis: 'height',
+                    valueUnit: 'meters'
+                  },
+                  {
+                    type: 'colorInfo',
+                    field: 'MAG',
+                    stops: [
+                      { value: 0, color: '#F5F500' },
+                      { value: 235600, color: '#F50000' }
+                    ]
+                  }
+                ]
+              })
+            }),
+
+            /*
+            new FeatureLayer({
+              url: "//sampleserver6.arcgisonline.com/arcgis/rest/services/VerticalLines/FeatureServer/0",
+              opacity: 0.5,
+              outFields: ['*'],
+              returnZ: true,
+              popupTemplate: null,
+              renderer: new SimpleRenderer({
+                symbol: new LineSymbol3D({
+                  symbolLayers: [
+                    new LineSymbol3DLayer({
+                      size: 2,
+                      material: {
+                        opacity: 0.1,
+                        color: '#d00'
+                      },
+                      enable: true
+                    })
+                  ]
+                })
+              }),
+            }),
+            */
+
+            new FeatureLayer({
+              title: 'Block Groups Damage',
+              url: '//services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/DamageBlocks/FeatureServer/0',
+              opacity: 0.8
+            }),
+
+            selectionLayer = new GraphicsLayer({
+              renderer: rdn = new SimpleRenderer({
+                symbol: new PointSymbol3D({
+                  symbolLayers:[
+                    new ObjectSymbol3DLayer({
+                      resource:{
+                        primitive: 'sphere'
+                      },
+                      material: {
+                        color: '#1FF'
+                      },
+                      width: 10,
+                      height: 10,
+                      anchor: 'center'
+                    })
+                  ]
+                }), 
+                visualVariables: [
+                  {
+                    type: 'sizeInfo',
+                    field: 'MAG2',
+                    axis: 'height',
+                    valueUnit: 'meters'
+                  }
+                ]
+              })
+            })
+          ]
+        });
+
+        view = new SceneView({
+          container: 'viewDiv',
+          map: scene,
+          
+          popup: {
+            dockEnabled: true,
+            dockOptions: {
+              breakpoint: false,
+              buttonEnabled: false,
+              position: "left"
+            }
+          },
+
+          ui: {
+            components: null
+          },
+
+          padding: {
+            top: 80, right: 500
+          },
+
+          constraints: {
+            collision: {
+              enabled: false
+            },
+            tilt: {
+              max: 179.99
+            }
+          },
+          camera: {
+            position: {
+              x: 354537,
+              y: 3790953,
+              z: 60000,
+              spatialReference: {
+                wkid: 26711
+              }
+            },
+            heading: 0,
+            tilt: 0
+          }
+        });
+        
+        view.then(function() {
+          view.popup.set('docked', true);
+          view.watch('popup.viewModel.selectedFeature', function(feature) {
+            if (!feature) { return; }
+            var gfx = feature.clone();
+            gfx.attributes.MAG2 += 200;
+            selectionLayer.clear();
+            selectionLayer.add(gfx);
+          });
+        });
+
+      });
+
+      toggleClippingArea = function(event) {
+        var chk = event.target;
+        scene.clippingEnabled = chk.checked;
+        if (chk.checked) {
+          editor.doc.replaceRange('true', { line: 6, ch: 19 }, { line: 6, ch: 24 });
+        }
+        else {
+          editor.doc.replaceRange('false', { line: 6, ch: 19 }, { line: 6, ch: 23 });
+        }
+      }
+      
+    </script>
+  </head>
+  
+<body class="light calcite">
+  <div class="application">
+    <div id="viewDiv">
+      <div id="code" class="code right top bottom shadowed visible">
+        <textarea id="codemirror">
+view = new SceneView({
+
+  // define as a sceneview in local mode  
+  viewingMode: 'local',
+
+  // define the clipping area
+  clippingEnabled: false,
+  clippingArea: {
+    xmin: 344556.17949990794,
+    ymin: 3786680.957522931,
+    xmax: 368905.9689491527,
+    ymax: 3801033.594521225,
+    spatialReference: {
+      wkid: 26711
+    }
+  }
+  
+});
+        </textarea>
+      </div>
+    </div>
+    <div class="applicationBar bluesky">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.0</span>
+        </div>
+        <div class="main">
+          <span class="title">Local SceneView</span>
+        </div>
+        <div class="actionBar">
+          <label class="topcoat-checkbox">
+            <input type="checkbox" onchange="toggleClippingArea(event)">
+            <div class="topcoat-checkbox__checkmark"></div>
+            Clipping Area
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+  
+</html>

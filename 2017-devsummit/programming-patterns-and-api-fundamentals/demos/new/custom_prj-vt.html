@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>VectorTiles - Any Projection</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+  </style>
+
+  <script>
+    var map, view;
+
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/VectorTileLayer",
+      "dojo/domReady!"
+    ], function(Map, MapView, VectorTileLayer) {
+
+      // Create a Map
+      var map = new Map();
+
+      // Make map view and bind it to the map
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        padding: {
+          top: 80
+        }
+        //center: [-100.33, 25.69],
+        //zoom: 10
+      });
+/*
+  var tileLyr = new VectorTileLayer({
+    url: "http://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/ElectionPollocks/VectorTileServer/resources/styles/root.json"
+  });
+*/
+
+      var tileLyr = new VectorTileLayer({
+        portalItem: {
+          id: "54bded8eab684d0aa2beeb12fbec41a3"
+        }
+      });
+
+      map.add(tileLyr);
+    });
+  </script>
+</head>
+<body class="light esri">
+  <div class="application">
+    <div id="viewDiv">
+
+      <div id="code" class="code right shadowed visible" style="width: 800px;">
+        <textarea id="codemirror">
+var tileLyr = new VectorTileLayer({
+  portalItem: {
+    id: "54bded8eab684d0aa2beeb12fbec41a3"
+  }
+});
+
+map.add(tileLyr);
+        </textarea>
+      </div>
+
+    </div>
+    <div class="applicationBar green">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">VectorTiles - Any Projection</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

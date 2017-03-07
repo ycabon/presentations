@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>4.3 - Environment</title>
+
+  <link rel="stylesheet" href="//js.arcgis.com/4.3/esri/css/main.css">
+  <link rel="stylesheet" href="../commons/css/style.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/codemirror.css">
+  <link rel="stylesheet" href="../commons/libs/codemirror/monokai.css">
+  <link href="../commons/widgets/LayerWidget/css/LayerWidget.css" rel="stylesheet" type="text/css">
+
+  <script src="../commons/dojo-config.js"></script>
+  <script src="//js.arcgis.com/4.3/"></script>
+
+  <style>
+    #sceneDiv {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+  <script>
+    var map;
+
+    require([
+      "require",
+
+      "esri/core/Scheduler",
+
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/SceneLayer",
+
+      "widgets/Clock/Clock",
+
+      "dojo/domReady!"
+    ],
+    function(
+      require,
+      Scheduler,
+      Map, SceneView,
+      SceneLayer,
+      Clock
+    ) {
+
+      view = new SceneView({
+
+        // position in Brest, France
+        camera: {
+          position: {
+            x: -500180.36326436285,
+            y: 6170505.2115241615,
+            z: 27.623250141739845,
+            spatialReference: {
+              wkid: 102100
+            }
+          },
+          heading: 204.85093814976383,
+          tilt: 104.94117423132887,
+          fov: 80
+        },
+
+        container: "sceneDiv",
+
+        environment: {
+          atmosphere: "realistic",
+          lighting: {
+            date: new Date(),
+            directShadows: true,
+            ambientOcclusion: true
+          }
+        },
+
+        map: new Map({
+          basemap: "satellite",
+          layers: [
+            new SceneLayer({
+              url: "//scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0"
+            })
+          ]
+        }),
+
+        ui: {
+          components: []
+        },
+
+        padding: {
+          top: 80
+        }
+      });
+
+      var dateField = document.getElementById("dateField");
+      var minute = 60 * 1000;
+      function updateDatefield() {
+        var date = new Date();
+        date.setTime(view.environment.lighting.date.getTime() + 2 * minute);
+        view.environment.lighting.date = date;
+        dateField.innerHTML = date.toLocaleString("fr-FR", {
+          timeZone: "Europe/Paris"
+        });
+      };
+      updateDatefield();
+
+      view.then(function() {
+        var timezone = view.environment.lighting.date;
+        var clock = new Clock({
+          el: "clock",
+          skin: require.toUrl("../commons/widgets/Clock/clock.svg"),
+          time: view.environment.lighting.date.getTime()
+        });
+
+        clock.on("time-change", function(time) {
+          view.environment.lighting.date = time;
+          updateDatefield();
+        })
+      });
+    });
+  </script>
+</head>
+<body class="dark">
+  <div class="application">
+    <div id="sceneDiv" class="view">
+      <div style="position: absolute; left: 20px; top: 80px; color: white; font-family: Lucida Grande, Helvetica, sans-serif;">
+          <span style="font-size: 68px;">Brest</span>
+          <br />
+          <span id="dateField" style="font-size: 40px;"><span>
+        </div>
+      </div>
+      <div id="clock" style="width: 300px; height: 300px; position: absolute; right: 20px; bottom: 20px;"></div>
+    <div class="applicationBar">
+      <div class="content">
+        <div class="cartouche">
+          <span class="label">4.3</span>
+        </div>
+        <div class="main">
+          <span class="title">Environment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<body>
+</html>

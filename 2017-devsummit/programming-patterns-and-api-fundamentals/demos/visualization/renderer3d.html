@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Urban Planning</title>
+  <link rel="stylesheet" href="//jsdev.arcgis.com/4.1/esri/css/main.css">
+  <script src="//jsdev.arcgis.com/4.1/"></script>
+
+
+  <style>
+    html,
+    body {
+      font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif;
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #view1Div{
+      float: left;
+      width: 50%;
+      height: 100%;
+      border-right: 2px solid white;
+      box-sizing: border-box;
+    }
+
+    #view2Div{
+      float: left;
+      width: 50%;
+      height: 100%;
+    }
+
+    .attributes{
+      font-size: 14px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.4);
+    }
+
+    .attributes .attribute{
+      padding: 10px 10px;
+    }
+
+    .attributes .attribute.selected{
+      padding: 10px 10px;
+      background-color: rgba(0, 121, 193, 0.125) !important;
+      color: #0079C1;
+    }
+
+    .attributes .attribute:hover{
+      cursor: pointer;
+      background-color: rgba(0, 121, 193, 0.065);
+      color: #0079C1;
+    }
+
+    #legend {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.4);
+      padding: 20px;
+    }
+
+    #timeslider {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0px;
+      background-color: white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.4);
+      padding: 20px;
+      width: 200px;
+      height:50px;
+      text-align: center;
+    }
+
+    #myRange{
+      margin-top: 14px;
+    }
+  </style>
+
+  <script>
+    var view1;
+    var view2;
+    var areaRenderer;
+    var energyRenderer;
+    var usageRenderer;
+    var sceneLayerA;
+    var sceneLayerB;
+
+      require([
+      "esri/WebScene",
+      "esri/widgets/Legend",
+      "esri/views/SceneView",
+      "esri/layers/SceneLayer",
+      "esri/renderers/UniqueValueRenderer",
+      "esri/renderers/SimpleRenderer",
+      "esri/symbols/MeshSymbol3D",
+      "esri/symbols/FillSymbol3DLayer",
+      "esri/PopupTemplate",
+      "dojo/promise/all",
+      "dojo/domReady!"
+    ], function(
+        WebScene, Legend, SceneView, SceneLayer, UniqueValueRenderer, SimpleRenderer, MeshSymbol3D, FillSymbol3DLayer, PopupTemplate, all
+    )
+      {
+        function createScene() {
+          var scene = new WebScene({
+            portalItem: {
+              id: "e0694e23f1ee438fa7700123c0fe7431"
+            }
+          });
+
+          view1 = new SceneView({
+            container: "view1Div",
+            map: scene
+          });
+          setEnvironmentSettings(view1);
+          view1.ui.empty("top-left");
+
+          view1.on('layerview-create', function(evt) {
+           if (evt.layer.title === "Scenario B") {
+              evt.layerView.visible = true;
+            }else if (evt.layer.title === "Scenario A"){
+              evt.layerView.visible = false;
+            }
+          });
+
+          view2 = new SceneView({
+            container: "view2Div",
+            map: scene
+          });
+          view2.ui.empty("top-left");
+
+          setEnvironmentSettings(view2);
+
+          var legend = new Legend({
+            view: view2
+          }, "legend");
+
+          synchronizeCamera();
+
+          createRenderers();
+        }
+
+
+        function setEnvironmentSettings(view){
+          view.environment.lighting.directShadowsEnabled = true;
+          view.environment.atmosphereEnabled = true;
+          view.environment.atmosphere.quality = "high";
+          view.environment.lighting.ambientOcclusionEnabled = true;
+        }
+
+        function synchronizeCamera(){
+          all([view1, view2]).then(function() {
+            view1.watch("camera", function(camera) {
+              if (view1.interacting || view1.animation) {
+                view2.camera = camera;
+              }
+            });
+            view2.watch("camera", function(camera) {
+              if (view2.interacting || view2.animation) {
+                view1.camera = camera;
+              }
+            });
+          });
+        }
+
+        function createRenderers() {
+
+          usageRenderer = new UniqueValueRenderer({
+            field: "Usage",
+            uniqueValueInfos: [
+              {
+                value: "Office",
+                symbol: new MeshSymbol3D({
+                  symbolLayers: [new FillSymbol3DLayer({
+                    material: {color: "#fd7f6f"}
+                  })]
+                })
+              },
+              {
+                value: "Hotel",
+                symbol: new MeshSymbol3D({
+                  symbolLayers: [new FillSymbol3DLayer({
+                    material: {color: "#7eb0d5"}
+                  })]
+                })
+              },
+              {
+                value: "Apartments",
+                symbol: new MeshSymbol3D({
+                  symbolLayers: [new FillSymbol3DLayer({
+                    material: {color: "#b2e061"}
+                  })]
+                })
+              }
+              ,
+              {
+                value: "Retail",
+                symbol: new MeshSymbol3D({
+                  symbolLayers: [new FillSymbol3DLayer({
+                    material: {color: "#bd7ebe"}
+                  })]
+                })
+              }
+            ]
+          });
+
+          areaRenderer = new SimpleRenderer({
+            symbol: new MeshSymbol3D({
+              symbolLayers: [new FillSymbol3DLayer({
+                material: {color: "#b8e4f8"}
+              })]
+            }),
+            visualVariables: [{
+              type: "color",
+              field: "Floor Area (m2)",
+              stops: [
+                {
+                  value: 100,
+                  color: "#b8e4f8",
+                  label: "< 100 m2"
+                },
+                {
+                  value: 300,
+                  color: "#58a0d6",
+                  label: "300"
+                },
+                {
+                  value: 600,
+                  label: "> 600 m2",
+                  color: "#41525c"
+                }]
+            }]
+          });
+
+          energyRenderer = new SimpleRenderer({
+            symbol: new MeshSymbol3D({
+              symbolLayers: [new FillSymbol3DLayer({
+                material: {color: "#b8e4f8"}
+              })]
+            }),
+            visualVariables: [{
+              type: "color",
+              field: "Energy (MWh per yr)",
+              stops: [
+                {
+                  value: 1,
+                  color: "#43a94d",
+                  label: "< 1 MWh/year"
+                },
+                {
+                  value: 100,
+                  color: "#fbfdbb",
+                  label: "100"
+                },
+                {
+                  value: 200,
+                  color: "#db2a24",
+                  label: "> 200 MWh/year"
+                }]
+            }]
+          });
+        }
+
+        createScene();
+    });
+
+    function updateUI(value){
+      var buttons = document.getElementsByClassName("attribute");
+      for (var i = 0; i < buttons.length; i++){
+        if (buttons[i].id === value){
+          buttons[i].className = "attribute selected";
+        } else {
+          buttons[i].className = "attribute";
+        }
+      }
+    }
+
+    function changeRenderer(value) {
+      if (!sceneLayerB) {
+        sceneLayerB = view1.map.allLayers.getItemAt(4);
+      }
+      if (!sceneLayerA) {
+        sceneLayerA = view2.map.allLayers.getItemAt(7);
+      }
+      if (sceneLayerA && sceneLayerB) {
+        switch (value) {
+          case "area":
+            sceneLayerA.renderer = areaRenderer;
+            sceneLayerB.renderer = areaRenderer;
+            break;
+          case "usage":
+            sceneLayerA.renderer = usageRenderer;
+            sceneLayerB.renderer = usageRenderer;
+            break;
+          case "energy":
+            sceneLayerA.renderer = energyRenderer;
+            sceneLayerB.renderer = energyRenderer;
+            break;
+          default:
+            sceneLayerA.renderer = null;
+            sceneLayerB.renderer = null;
+            break;
+
+        }
+      }
+      updateUI(value);
+    }
+
+    function timeSliderChanged(value){
+      var hours = parseInt(value,10);
+      var minutes = (value - parseInt(value,10)) * 60;
+      var copiedDate = new Date(view1.environment.lighting.date.getTime());
+      copiedDate.setUTCHours(hours - view1.environment.lighting.positionTimezoneInfo.hours);
+      copiedDate.setUTCMinutes(minutes);
+      view1.environment.lighting.date = copiedDate;
+      view2.environment.lighting.date = copiedDate;
+    }
+  </script>
+</head>
+
+<body>
+<div id="view1Div"></div>
+<div id="view2Div"></div>
+<div class="attributes">
+  <div id="without" class="attribute selected" onclick="changeRenderer('without')">Textured</div>
+  <div id="usage" class="attribute" onclick="changeRenderer('usage')">Usage</div>
+  <div id="area" class="attribute" onclick="changeRenderer('area')">Area</div>
+  <div id="energy" class="attribute" onclick="changeRenderer('energy')">Energy Consumption</div>
+</div>
+<div id="legend"></div>
+<div id="timeslider">
+  Time of the Day
+  <input type="range" id="myRange" min="0" max="24" step="0.1" style="width:200px;" oninput="timeSliderChanged(value)">
+</div>
+</body>
+
+</html>

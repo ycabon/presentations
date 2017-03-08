@@ -43,6 +43,8 @@
       "esri/Map",
       "esri/views/MapView",
       "esri/widgets/LayerList",
+      "esri/widgets/Search",
+      "esri/widgets/Expand",
 
       "esri/layers/TileLayer",
       "layers/BlendLayer",
@@ -50,7 +52,7 @@
       "dojo/domReady!"
     ],
     function(
-      esriConfig, Map, MapView, LayerList,
+      esriConfig, Map, MapView, LayerList, Search, Expand,
 
       TileLayer, BlendLayer
     ) {
@@ -64,7 +66,7 @@
           new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer"),
           new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer")
         ],
-        title: "Blended Layers",
+        title: "Shaded Relief",
         visible: false
       });
 
@@ -79,11 +81,19 @@
       view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [7.237753, 45.911767],
-        zoom: 9,
+        center: [-112.65607918633506, 36.30195474046006],
+        zoom: 11.5,
         constraints: {
           snapToZoom: false
         }
+      });
+
+      search = new Search({
+        view: view
+      });
+      expand = new Expand({
+        expandIconClass: "esri-icon-search", 
+        content: search
       });
       
       layerList = new LayerList({
@@ -91,6 +101,7 @@
       }, "LayerList");
 
       view.ui.add(layerList, "top-right");
+      view.ui.add(expand, "top-right");
 
     });
   </script>

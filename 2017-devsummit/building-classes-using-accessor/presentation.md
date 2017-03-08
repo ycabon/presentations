@@ -525,10 +525,10 @@ Defining subclasses. Work-around for multi inheritance
 
 import { declared, subclass, property } from "esri/core/tsSupport/declare";
 
-interface Base extends Layer, SceneService {}
+interface SceneLayer extends Layer, SceneService {}
 
 @subclass("esri.layers.SceneLayer")
-class SceneLayer extends declared(Layer, SceneService) implements Base {
+class SceneLayer extends declared(Layer, SceneService) implements SceneLayer {
   // ...
 }
 ```

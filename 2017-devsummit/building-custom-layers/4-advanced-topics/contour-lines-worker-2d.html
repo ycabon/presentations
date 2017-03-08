@@ -3,24 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>ArcGISDynamicLayer - 4.0</title>
+  <title>Contour Lines - Worker</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
 
-  <link rel="stylesheet" href="../../../../esri/css/main.css">
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
 
   <script>
     var dojoConfig = {
-      async: true,
-      isDebug: true,
-      has: {
-        "config-deferredInstrumentation": 0
-      },
       paths: {
-        app: window.location.href.replace(/\/[^/]+$/, ""),
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers"),
         lerc: "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/"
       }
     };
   </script>
-  <script src="../../../../dojo/dojo.js"></script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
 
   <style>
     html,
@@ -36,12 +41,10 @@
   <script>
     require([
       "esri/config",
-
       "esri/Map",
-
       "esri/views/MapView",
 
-      "app/layers/IsolineInWorkerLayer",
+      "layers/ContourWorkerLayer",
 
       "dojo/domReady!"
     ],
@@ -49,18 +52,19 @@
       esriConfig,
       Map,
       MapView,
-      IsolineLayer
+      ContourWorkerLayer
     ) {
+      // Define the loader configuration that runs in the workers
       var workerLoaderPaths = esriConfig.workers.loaderConfig.paths;
-      workerLoaderPaths.app = window.location.href.replace(/\/[^/]+$/, "");
+      workerLoaderPaths.layers = window.location.href.replace(/\/[^/]+$/, "/layers");
       workerLoaderPaths.lerc = "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/";
 
-      var isolineInfo = [];
-      for (var elevation = 500; elevation < 8000; elevation += 500) {
+      var contourInfo = [];
+      for (var elevation = 1000; elevation < 8000; elevation += 1000) {
 
         var alpha = 0;
         if (elevation % 1000 === 0) {
-          alpha = 1;
+          alpha = 0.75;
         }
         else if (elevation % 500 === 0) {
           alpha = 0.5;
@@ -70,15 +74,15 @@
         }
 
         var strokeStyle = "rgba(255, 255, 255, " + alpha + ")";
-        isolineInfo.push({
+        contourInfo.push({
           value: elevation,
-          lineWidth: 1,
+          lineWidth: 0.75,
           strokeStyle: strokeStyle
         });
       }
 
-      isoline = new IsolineLayer({
-        elevations: isolineInfo
+      isoline = new ContourWorkerLayer({
+        elevations: contourInfo
       });
 
       map = new Map({

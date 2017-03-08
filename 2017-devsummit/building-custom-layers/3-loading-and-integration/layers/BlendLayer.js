@@ -1,10 +1,11 @@
 define([
+  "dojo/Deferred",
   "dojo/promise/all",
 
   "esri/layers/BaseTileLayer"
 ],
 function(
-  all,
+  Deferred, all,
   BaseTileLayer
 ) {
 
@@ -22,6 +23,16 @@ function(
         // The BlendLayer will be loaded when every promise is resolved
         this.addResolvingPromise(promise);
       }, this);
+
+      var dfd = new Deferred();
+      setTimeout(
+        function() {
+          this.copyright = "My BlendLayer";
+          dfd.resolve();
+        }.bind(this),
+        2000
+      );
+      this.addResolvingPromise(dfd.promise);
     },
 
     fetchTile: function(level, row, col) {

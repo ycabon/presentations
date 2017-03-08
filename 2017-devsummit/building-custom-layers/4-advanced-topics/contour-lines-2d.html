@@ -3,24 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>ArcGISDynamicLayer - 4.0</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
 
-  <link rel="stylesheet" href="../../../../esri/css/main.css">
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
 
   <script>
     var dojoConfig = {
-      async: true,
-      isDebug: true,
-      has: {
-        "config-deferredInstrumentation": 0
-      },
       paths: {
-        app: window.location.href.replace(/\/[^/]+$/, ""),
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers"),
         lerc: "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/"
       }
     };
   </script>
-  <script src="../../../../dojo/dojo.js"></script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
 
   <style>
     html,
@@ -39,18 +43,18 @@
 
       "esri/views/MapView",
 
-      "app/layers/LercLayer",
-      "app/layers/IsolineLayer",
+      "layers/LercLayer",
+      "layers/ContourLayer",
 
       "dojo/domReady!"
     ],
     function(
       Map,
       MapView,
-      LercLayer, IsolineLayer
+      LercLayer, ContourLayer
     ) {
 
-      isoline = new IsolineLayer();
+      isoline = new ContourLayer();
       
       lerc = new LercLayer({
         urlTemplate: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer/tile/{z}/{y}/{x}",

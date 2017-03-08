@@ -12,10 +12,10 @@ define([
   LercDecode
 ) {
 
-  var IsolineWorker = function() {}
+  var ContourWorker = function() {}
 
-  IsolineWorker.prototype = {
-    generateIsolines: function(parameters) {
+  ContourWorker.prototype = {
+    generateContours: function(parameters) {
       var elevations = parameters.elevations;
       var lerc = LercDecode.decode(parameters.lerc, { noDataValue: 0 });
       var width = parameters.width;
@@ -151,6 +151,6 @@ define([
 
   };
 
-  return IsolineWorker;
+  return ContourWorker;
 
 });

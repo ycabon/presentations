@@ -17,7 +17,7 @@ function(
   // http://blog.bruce-hill.com/meandering-triangles/
 
   return BaseTileLayer.createSubclass({
-    declaredClass: "IsolineLayer",
+    declaredClass: "ContourWorkerLayer",
 
     properties: {
       urlTemplate: {
@@ -35,7 +35,10 @@ function(
     },
 
     load: function() {
-      var workerMid = require.toAbsMid("./support/IsolineWorker");
+      // The worker needs an absolute module id.
+      var workerMid = require.toAbsMid("./support/ContourWorker");
+
+      // Load the module in a worker
       var promise = workers.open(this, workerMid)
         .then(function(connection) {
           this._connection = connection;
@@ -59,7 +62,7 @@ function(
           return elevation.value;
         });
 
-        return this._connection.invoke("generateIsolines", {
+        return this._connection.invoke("generateContours", {
           lerc: response.data,
           elevations: elevations,
           width: this.tileInfo.size[0],
@@ -75,8 +78,8 @@ function(
         canvas.width = width;
         canvas.height = height;
 
-        context.fillStyle = "black";
-        context.fillRect(0, 0, width, height);
+        //context.fillStyle = "black";
+        //context.fillRect(0, 0, width, height);
 
         this.elevations.forEach(function(elevationInfo) {
           context.lineWidth = elevationInfo.lineWidth;

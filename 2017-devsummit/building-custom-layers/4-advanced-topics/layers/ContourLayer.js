@@ -17,7 +17,7 @@ function(
   // http://blog.bruce-hill.com/meandering-triangles/
 
   return BaseTileLayer.createSubclass({
-    declaredClass: "IsolineLayer",
+    declaredClass: "ContourLayer",
 
     properties: {
       urlTemplate: {

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>BaseDynamicLayer - 4.4</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      paths: {
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers")
+      }
+    };
+  </script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
+
+  <script>
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/LayerList",
+
+      "layers/WMSLayer",
+
+      "dojo/domReady!"
+    ],
+    function(
+      esriConfig, Map,
+      MapView,
+      LayerList,
+      WMSLayer
+    ) {
+      esriConfig.request.corsEnabledServers.push("http://geobretagne.fr/geoserver/cadastre/ows");
+
+      // Data from http://geobretagne.fr/mapfishapp/
+
+      var layer = new WMSLayer({
+        getMapUrl: "http://geobretagne.fr/geoserver/cadastre/ows",
+        getMapParameters: {
+          SERVICE: "WMS",
+          REQUEST: "GetMap",
+          FORMAT: "image/png",
+          TRANSPARENT: "TRUE",
+          STYLES: "",
+          VERSION: "1.3.0",
+          LAYERS: "CP.CadastralParcel",
+          WIDTH: "{width}",
+          HEIGHT: "{height}",
+          CRS: "EPSG:{wkid}",
+          BBOX: "{xmin},{ymin},{xmax},{ymax}"
+        },
+        
+        minScale: 18055.954822,
+        title: "Cadastral Parcel"
+      });
+
+
+      map = new Map({
+        basemap: "topo",
+        layers: [layer]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-4.487534, 48.388673],
+        zoom: 16,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+      
+
+      layerList = new LayerList({
+        view: view,
+      }, "LayerList");
+
+      view.ui.add(layerList, "top-right");
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

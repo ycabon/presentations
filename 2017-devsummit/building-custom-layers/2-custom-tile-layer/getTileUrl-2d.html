@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>getTileUrl 2D</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      paths: {
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers")
+      }
+    };
+  </script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/LayerList",
+      "esri/layers/GroupLayer",
+
+      "layers/TileWMSLayer",
+
+      "dojo/domReady!"
+    ],
+    function(
+      esriConfig, Map, MapView, LayerList,
+
+      GroupLayer, TileWMSLayer
+    ) {
+
+      
+      // Data from http://geobretagne.fr/mapfishapp/
+      // http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06
+
+      imagery1950 = new TileWMSLayer({
+        getMapUrl: "http://tile.geobretagne.fr/gwc02/service/wms",
+        getMapParameters: {
+          SERVICE: "WMS",
+          REQUEST: "GetMap",
+          FORMAT: "image/png",
+          TRANSPARENT: "TRUE",
+          STYLES: "",
+          VERSION: "1.1.1",
+          LAYERS: "satellite-ancien",
+          EXCEPTIONS:"application/vnd.ogc.se_xml",
+          WIDTH: "{width}",
+          HEIGHT: "{height}",
+          SRS: "EPSG:{wkid}",
+          BBOX: "{xmin},{ymin},{xmax},{ymax}"
+        },
+        
+        minScale: 0,
+        title: "Orthophotographie ancienne 1949-1951"
+      });
+
+      /*
+        http://tile.geobretagne.fr/gwc02/service/wms?LAYERS=carte&VERSION=1.1.1&FORMAT=image%2Fpng&SERVICE=WMS&REQUEST=GetMap&STYLES=&EXCEPTIONS=application%2Fvnd.ogc.se_xml&SLD_VERSION=1.0.0&SRS=EPSG%3A3857&BBOX=-508764.85747689,6173665.8977484,-503872.88766664,6178557.8675586&WIDTH=256&HEIGHT=256
+      */
+      scan25 = new TileWMSLayer({
+        getMapUrl: "http://tile.geobretagne.fr/gwc02/service/wms",
+        getMapParameters: {
+          SERVICE: "WMS",
+          REQUEST: "GetMap",
+          FORMAT: "image/png",
+          TRANSPARENT: "TRUE",
+          STYLES: "",
+          VERSION: "1.1.1",
+          LAYERS: "carte",
+          EXCEPTIONS:"application/vnd.ogc.se_xml",
+          WIDTH: "{width}",
+          HEIGHT: "{height}",
+          SRS: "EPSG:{wkid}",
+          BBOX: "{xmin},{ymin},{xmax},{ymax}"
+        },
+        
+        minScale: 0,
+        title: "IGN cartes scan25 et scan regional"
+      });
+
+      var group = new GroupLayer({
+        title: "Geobretagne",
+        layers: [
+          imagery1950,
+          scan25
+        ],
+        visibilityMode: "exclusive"
+      })
+
+
+      map = new Map({
+        basemap: "topo",
+        layers: [
+          group
+        ]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-4.487534, 48.388673],
+        zoom: 16,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+      
+      layerList = new LayerList({
+        view: view,
+      }, "LayerList");
+
+      view.ui.add(layerList, "top-right");
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Layer Loading</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      paths: {
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers")
+      }
+    };
+  </script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/LayerList",
+
+      "esri/layers/TileLayer",
+      "layers/BlendLayer",
+
+      "dojo/domReady!"
+    ],
+    function(
+      esriConfig, Map, MapView, LayerList,
+
+      TileLayer, BlendLayer
+    ) {
+
+      
+      // Data from http://geobretagne.fr/mapfishapp/
+      // http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06
+
+      layer = new BlendLayer({
+        multiply: [
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer"),
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer")
+        ],
+        title: "Blended Layers",
+        visible: false
+      });
+
+      map = new Map({
+        layers: [
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer"),
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"),
+          layer
+        ]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [7.237753, 45.911767],
+        zoom: 9,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+      
+      layerList = new LayerList({
+        view: view,
+      }, "LayerList");
+
+      view.ui.add(layerList, "top-right");
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

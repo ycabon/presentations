@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>ArcGISDynamicLayer - 4.0</title>
+
+  <link rel="stylesheet" href="../../../../esri/css/main.css">
+
+  <script>
+    var dojoConfig = {
+      async: true,
+      isDebug: true,
+      has: {
+        "config-deferredInstrumentation": 0
+      },
+      paths: {
+        lerc: "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/"
+      }
+    };
+  </script>
+  <script src="../../../../dojo/dojo.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "lerc/LercDecode",
+
+      "esri/Map",
+      "esri/Color",
+      "esri/request",
+
+      "esri/views/MapView",
+
+      "esri/layers/BaseTileLayer",
+      "esri/layers/support/TileInfo",
+
+      "esri/widgets/LayerList",
+
+      "dojo/domReady!"
+    ],
+    function(
+      LercDecode,
+      Map, Color, esriRequest,
+      MapView,
+      BaseTileLayer, TileInfo,
+      LayerList
+    ) {
+
+      toner = new LercLayer({
+        urlTemplate: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer/tile/{z}/{y}/{x}",
+        title: "Toner"
+      });
+
+      map = new Map({
+        basemap: "dark-gray",
+        layers: [toner]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 5
+      });
+
+      layerList = new LayerList({
+        view: view,
+      }, "LayerList");
+
+      view.ui.add(layerList, "top-right");
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

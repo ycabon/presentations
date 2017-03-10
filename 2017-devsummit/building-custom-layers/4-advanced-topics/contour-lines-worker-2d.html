@@ -59,8 +59,9 @@
       workerLoaderPaths.layers = window.location.href.replace(/\/[^/]+$/, "/layers");
       workerLoaderPaths.lerc = "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/";
 
+      // Create information about the contour we want
       var contourInfo = [];
-      for (var elevation = 1000; elevation < 8000; elevation += 1000) {
+      for (var elevation = 100; elevation < 8000; elevation += 100) {
 
         var alpha = 0;
         if (elevation % 1000 === 0) {
@@ -94,7 +95,7 @@
         container: "viewDiv",
         map: map,
         center: [-100, 40],
-        zoom: 5,
+        zoom: 4,
         constraints: {
           snapToZoom: false
         }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Layer Loading</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      paths: {
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers")
+      }
+    };
+  </script>
+  <script src="https://js.arcgis.com/4.6/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/LayerList",
+      "esri/widgets/Search",
+      "esri/widgets/Expand",
+
+      "esri/layers/TileLayer",
+      "layers/BlendLayer",
+
+      "dojo/domReady!"
+    ],
+    function(
+      esriConfig, Map, MapView, LayerList, Search, Expand,
+
+      TileLayer, BlendLayer
+    ) {
+
+      layer = new BlendLayer({
+        multiply: [
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer"),
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer")
+        ],
+        title: "Shaded Relief",
+        visible: false
+      });
+
+      map = new Map({
+        layers: [
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer"),
+          new TileLayer("https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"),
+          layer
+        ]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-112.65607918633506, 36.30195474046006],
+        zoom: 11.5,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+      search = new Search({
+        view: view
+      });
+      expand = new Expand({
+        expandIconClass: "esri-icon-search", 
+        content: search
+      });
+      
+      layerList = new LayerList({
+        view: view,
+      }, "LayerList");
+
+      view.ui.add(layerList, "top-right");
+      view.ui.add(expand, "top-right");
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

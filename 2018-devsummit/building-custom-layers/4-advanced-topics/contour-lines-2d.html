@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      paths: {
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers"),
+        lerc: "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/"
+      }
+    };
+  </script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+
+      "esri/views/MapView",
+
+      "layers/LercLayer",
+      "layers/ContourLayer",
+
+      "dojo/domReady!"
+    ],
+    function(
+      Map,
+      MapView,
+      LercLayer, ContourLayer
+    ) {
+
+      isoline = new ContourLayer();
+      
+      lerc = new LercLayer({
+        urlTemplate: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer/tile/{z}/{y}/{x}",
+        title: "Toner"
+      });
+
+      map = new Map({
+        basemap: "dark-gray",
+        layers: [lerc, isoline]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 5,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

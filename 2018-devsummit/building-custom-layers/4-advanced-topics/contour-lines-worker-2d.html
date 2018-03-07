@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Contour Lines - Worker</title>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.4/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var dojoConfig = {
+      paths: {
+        layers: window.location.href.replace(/\/[^/]+$/, "/layers"),
+        lerc: "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/"
+      }
+    };
+  </script>
+  <script src="https://jsdev.arcgis.com/4.4/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+
+      "layers/ContourWorkerLayer",
+
+      "dojo/domReady!"
+    ],
+    function(
+      esriConfig,
+      Map,
+      MapView,
+      ContourWorkerLayer
+    ) {
+      // Define the loader configuration that runs in the workers
+      var workerLoaderPaths = esriConfig.workers.loaderConfig.paths;
+      workerLoaderPaths.layers = window.location.href.replace(/\/[^/]+$/, "/layers");
+      workerLoaderPaths.lerc = "https://cdn.rawgit.com/Esri/lerc/b0650ff9/OtherLanguages/js/";
+
+      // Create information about the contour we want
+      var contourInfo = [];
+      for (var elevation = 100; elevation < 8000; elevation += 100) {
+
+        var alpha = 0;
+        if (elevation % 1000 === 0) {
+          alpha = 0.75;
+        }
+        else if (elevation % 500 === 0) {
+          alpha = 0.5;
+        }
+        else {
+          alpha = 0.25;
+        }
+
+        var strokeStyle = "rgba(255, 255, 255, " + alpha + ")";
+        contourInfo.push({
+          value: elevation,
+          lineWidth: 0.75,
+          strokeStyle: strokeStyle
+        });
+      }
+
+      isoline = new ContourWorkerLayer({
+        elevations: contourInfo
+      });
+
+      map = new Map({
+        basemap: "dark-gray",
+        layers: [isoline]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 4,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

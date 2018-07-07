@@ -1,4 +1,4 @@
-define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers", "esri/WebMap", "esri/views/MapView", "esri/widgets/LayerList", "esri/widgets/CoordinateConversion", "esri/widgets/HeatmapSlider"], function (require, exports, FeatureLayer, renderers_1, WebMap, MapView, LayerList, CoordinateConversion, HeatmapSlider) {
+define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers", "esri/WebMap", "esri/views/MapView", "esri/widgets/LayerList", "esri/widgets/CoordinateConversion", "esri/widgets/HeatmapSlider", "esri/symbols"], function (require, exports, FeatureLayer, renderers_1, WebMap, MapView, LayerList, CoordinateConversion, HeatmapSlider, symbols_1) {
     Object.defineProperty(exports, "__esModule", { value: true });
     var renderer = new renderers_1.HeatmapRenderer({
         colorStops: [
@@ -67,13 +67,19 @@ define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers", "esr
                 ratio: 1
             }
         ],
-        blurRadius: 4,
+        blurRadius: 2,
         maxPixelIntensity: 25,
         minPixelIntensity: 0
     });
     var layer = new FeatureLayer({
         url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Restaurants/FeatureServer/0",
-        renderer: renderer,
+        renderer: new renderers_1.SimpleRenderer({
+            symbol: new symbols_1.SimpleMarkerSymbol({
+                size: 2,
+                outline: null,
+                color: "black"
+            })
+        }),
         popupTemplate: {
             content: "{*}"
         }
@@ -90,7 +96,7 @@ define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers", "esr
     var view = new MapView({
         container: "viewDiv",
         center: [-74, 40.72],
-        zoom: 10,
+        zoom: 6,
         map: map,
         constraints: {
             snapToZoom: false,
@@ -103,13 +109,46 @@ define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers", "esr
     view.ui.add(new CoordinateConversion({
         view: view
     }), "bottom-right");
+    var heatmapConfigurationDiv = document.getElementById("heatmapConfiguration");
+    var blurRadiusSlider = document.getElementById("blurRadiusSlider");
+    var heatmapEnabledCheckbox = document.getElementById("heatmapEnabledCheckbox");
+    var heatmapSliderDiv = document.getElementById("heatmapSlider");
+    blurRadiusSlider.min = String(1);
+    blurRadiusSlider.max = String(5);
+    blurRadiusSlider.step = String(0.1);
+    blurRadiusSlider.value = String(renderer.blurRadius);
+    blurRadiusSlider.addEventListener("change", function () {
+        renderer = renderer.clone();
+        renderer.blurRadius = +blurRadiusSlider.value;
+        if (layer.renderer.type === "heatmap") {
+            layer.renderer = renderer;
+        }
+    });
+    blurRadiusSlider.addEventListener("input", function () {
+        renderer = renderer.clone();
+        renderer.blurRadius = +blurRadiusSlider.value;
+        if (layer.renderer.type === "heatmap") {
+            layer.renderer = renderer;
+        }
+    });
     var slider = new HeatmapSlider({
         colorStops: renderer.colorStops
-    });
+    }, heatmapSliderDiv);
     slider.on("change", function (event) {
         var renderer = layer.renderer.clone();
         renderer.colorStops = event.colorStops;
         layer.renderer = renderer;
     });
-    view.ui.add(slider, "bottom-left");
+    heatmapEnabledCheckbox.addEventListener("change", function () {
+        layer.renderer = heatmapEnabledCheckbox.checked
+            ? renderer
+            : new renderers_1.SimpleRenderer({
+                symbol: new symbols_1.SimpleMarkerSymbol({
+                    size: 2,
+                    outline: null,
+                    color: "black"
+                })
+            });
+    });
+    view.ui.add(heatmapConfigurationDiv, "bottom-left");
 });

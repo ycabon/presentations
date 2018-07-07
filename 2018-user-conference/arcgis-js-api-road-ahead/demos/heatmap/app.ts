@@ -1,12 +1,13 @@
 import FeatureLayer = require("esri/layers/FeatureLayer");
-import { HeatmapRenderer } from "esri/renderers";
+import { HeatmapRenderer, SimpleRenderer } from "esri/renderers";
 import WebMap = require("esri/WebMap");
 import MapView = require("esri/views/MapView");
 import LayerList = require("esri/widgets/LayerList");
 import CoordinateConversion = require("esri/widgets/CoordinateConversion");
 import HeatmapSlider = require("esri/widgets/HeatmapSlider");
+import { SimpleMarkerSymbol } from "esri/symbols";
 
-const renderer = new HeatmapRenderer({
+let renderer = new HeatmapRenderer({
   colorStops: [
     {
       color: "rgba(63, 40, 102, 0)",
@@ -73,7 +74,7 @@ const renderer = new HeatmapRenderer({
       ratio: 1
     }
   ],
-  blurRadius: 4,
+  blurRadius: 2,
   maxPixelIntensity: 25,
   minPixelIntensity: 0
 });
@@ -81,7 +82,13 @@ const renderer = new HeatmapRenderer({
 const layer = new FeatureLayer({
   url:
     "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Restaurants/FeatureServer/0",
-  renderer: renderer,
+  renderer: new SimpleRenderer({
+    symbol: new SimpleMarkerSymbol({
+      size: 2,
+      outline: null,
+      color: "black"
+    })
+  }),
   popupTemplate: {
     content: "{*}"
   }
@@ -100,7 +107,7 @@ const map = new WebMap({
 const view = new MapView({
   container: "viewDiv",
   center: [-74, 40.72],
-  zoom: 10,
+  zoom: 6,
   map: map,
   constraints: {
     snapToZoom: false,
@@ -122,9 +129,44 @@ view.ui.add(
   "bottom-right"
 );
 
-const slider = new HeatmapSlider({
-  colorStops: renderer.colorStops
+const heatmapConfigurationDiv = document.getElementById(
+  "heatmapConfiguration"
+) as HTMLDivElement;
+const blurRadiusSlider = document.getElementById(
+  "blurRadiusSlider"
+) as HTMLInputElement;
+const heatmapEnabledCheckbox = document.getElementById(
+  "heatmapEnabledCheckbox"
+) as HTMLInputElement;
+const heatmapSliderDiv = document.getElementById(
+  "heatmapSlider"
+) as HTMLDivElement;
+
+blurRadiusSlider.min = String(1);
+blurRadiusSlider.max = String(5);
+blurRadiusSlider.step = String(0.1);
+blurRadiusSlider.value = String(renderer.blurRadius);
+blurRadiusSlider.addEventListener("change", () => {
+  renderer = renderer.clone();
+  renderer.blurRadius = +blurRadiusSlider.value;
+  if (layer.renderer.type === "heatmap") {
+    layer.renderer = renderer;
+  }
 });
+blurRadiusSlider.addEventListener("input", () => {
+  renderer = renderer.clone();
+  renderer.blurRadius = +blurRadiusSlider.value;
+  if (layer.renderer.type === "heatmap") {
+    layer.renderer = renderer;
+  }
+});
+
+const slider = new HeatmapSlider(
+  {
+    colorStops: renderer.colorStops
+  },
+  heatmapSliderDiv
+);
 
 slider.on("change", event => {
   const renderer = (layer.renderer as HeatmapRenderer).clone();
@@ -133,4 +175,16 @@ slider.on("change", event => {
   layer.renderer = renderer;
 });
 
-view.ui.add(slider, "bottom-left");
+heatmapEnabledCheckbox.addEventListener("change", () => {
+  layer.renderer = heatmapEnabledCheckbox.checked
+    ? renderer
+    : new SimpleRenderer({
+        symbol: new SimpleMarkerSymbol({
+          size: 2,
+          outline: null,
+          color: "black"
+        })
+      });
+});
+
+view.ui.add(heatmapConfigurationDiv, "bottom-left");

@@ -7,7 +7,7 @@
 
 declare namespace __esriExtras {
   class HeatmapSlider extends __esri.Widget {
-    constructor(options: Partial<Pick<HeatmapSlider, "minSliderValue" | "maxSliderValue" | "showLabels" | "showTicks" | "showHandles" | "colorStops">>, srcNodeRef?: string);
+    constructor(options: Partial<Pick<HeatmapSlider, "minSliderValue" | "maxSliderValue" | "showLabels" | "showTicks" | "showHandles" | "colorStops">>, srcNodeRef?: string | HTMLDivElement);
     minSliderValue: number;
     maxSliderValue: number;
     showLabels: boolean;

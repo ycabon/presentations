@@ -16,6 +16,8 @@ import { SimpleRenderer } from "esri/renderers";
   });
 
   (view as any).gamepad.enabled = true;
+  (view as any).gamepad.mode = "flight";
+  (view as any).gamepad.sensitivity = 0.5;
 
   try {
     await view.when();

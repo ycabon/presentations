@@ -51,6 +51,8 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
                         map: webscene
                     });
                     view.gamepad.enabled = true;
+                    view.gamepad.mode = "flight";
+                    view.gamepad.sensitivity = 0.5;
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);

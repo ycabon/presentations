@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/tsSupport/extendsHelper"],function(e,f,g){Object.defineProperty(f,"__esModule",{value:!0});e=function(){function a(b,a,d){this._initialVelocity=b;this._stopVelocity=a;this._friction=d;this._duration=Math.abs(Math.log(Math.abs(this._initialVelocity)/this._stopVelocity)/Math.log(1-this._friction))}Object.defineProperty(a.prototype,"duration",{get:function(){return this._duration},enumerable:!0,configurable:!0});a.prototype.isFinished=function(b){return b>this.duration};
+Object.defineProperty(a.prototype,"friction",{get:function(){return this._friction},enumerable:!0,configurable:!0});a.prototype.value=function(b){return this.valueFromInitialVelocity(this._initialVelocity,b)};a.prototype.valueDelta=function(b,a){var d=this.value(b);return this.value(b+a)-d};a.prototype.valueFromInitialVelocity=function(a,c){c=Math.min(c,this.duration);var b=1-this.friction;return a*(Math.pow(b,c)-1)/Math.log(b)};return a}();f.Momentum=e});

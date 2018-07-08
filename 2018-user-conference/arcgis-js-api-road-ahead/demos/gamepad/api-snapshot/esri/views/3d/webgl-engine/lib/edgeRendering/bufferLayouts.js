@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../support/buffer/glUtil","../../../support/buffer/InterleavedLayout"],function(d,a,c,b){Object.defineProperty(a,"__esModule",{value:!0});a.EdgeInputBufferLayout=b.newLayout().vec3f("position").u16("componentIndex").u16("_padding");a.VertexLayout=b.newLayout().vec2u8("sideness");a.glVertexLayout=c.glLayout(a.VertexLayout,{prefixA:!0});a.CommonInstancesLayout=b.newLayout().vec3f("position0").vec3f("position1").u16("componentIndex").vec2u8("packedAttributes").u8("variantOffset",
+{glNormalized:!0}).u8("variantStroke").u8("variantExtension",{glNormalized:!0}).u8("_padding",{glPadding:!0});a.RegularEdgeInstancesLayout=a.CommonInstancesLayout.clone().vec3f("normal");a.SilhouetteEdgeInstancesLayout=a.CommonInstancesLayout.clone().vec3f("normalA").vec3f("normalB");a.EdgeShaderAttributeLocations={aPosition0:0,aPosition1:1,aComponentIndex:2,aPackedAttributes:3,aVariantOffset:4,aVariantStroke:5,aVariantExtension:6,aNormal:7,aNormalA:7,aNormalB:8,aSideness:9}});

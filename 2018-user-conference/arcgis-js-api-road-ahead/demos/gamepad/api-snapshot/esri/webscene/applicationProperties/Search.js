@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/Collection ../../core/JSONSupport ../../core/accessorSupport/decorators ./SearchLayer".split(" "),function(m,n,g,c,h,k,b,l){var e=h.ofType(l);return function(f){function a(a){a=f.call(this,a)||this;a.enabled=!1;a.hintText=null;a.layers=new e;return a}g(a,f);d=a;a.prototype.clone=function(){return new d({enabled:this.enabled,hintText:this.hintText,layers:this.layers?this.layers.clone():
+null})};c([b.property({type:Boolean,json:{write:!0}})],a.prototype,"enabled",void 0);c([b.property({type:String,json:{write:!0}})],a.prototype,"hintText",void 0);c([b.property({type:e,json:{write:{enabled:!0,isRequired:!0}}})],a.prototype,"layers",void 0);return a=d=c([b.subclass("esri.webscene.applicationProperties.Search")],a);var d}(b.declared(k))});

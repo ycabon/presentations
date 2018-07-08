@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["./Util"],function(g){return{AmbientLight:function(a,c,d,e,f,h,b){this.color=a;this.intensity=c;this.ssao=d;this.ssaoAttenuation=e;this.ssaoRadius=f;this.ssaoFilterRadius=h;this.ssaoSamples=b;this.set=function(b){for(var a in this)"set"!=a&&g.setIfDefined(a,b,this)}},DirectionalLight:function(a,c,d,e,f){this.color=a;this.intensity=c;this.direction=d;this.shadowMap=e;this.shadowAttenuation=f;this.set=function(a){for(var b in this)"set"!=b&&g.setIfDefined(b,a,this)}}}});

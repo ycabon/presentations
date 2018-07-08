@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","./TerrainConst","./TilePerLayerInfo"],function(l,m,h,k){return function(){function c(a){this.parent=null;this.lij=a;this.layerInfo=Array(h.LayerClass.LAYER_CLASS_COUNT)}c.prototype.tileDataAvailable=function(a,b,d){return(b=this.layerInfo[d][b].tilemap)?"unavailable"!==b.getAvailability(a.lij[1],a.lij[2]):!0};c.prototype.modifyLayers=function(a,b,d){a=b.length;for(var c=this.layerInfo[d],f=Array(a),e=0;e<a;e++){var g=b[e];f[e]=-1<g?c[g]:new k(d)}this.layerInfo[d]=f};return c}()});

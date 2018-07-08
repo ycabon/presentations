@@ -1,0 +1,24 @@
+/*
+  Theme: Light Green
+*/
+@import "../base/colors/scss/variables.scss";
+// ↳ https://github.com/Esri/calcite-colors.git
+
+$text_color: $Calcite_Gray_700;
+$background_color: $Calcite_Highlight_Green_150;
+$anchor_color: $Calcite_Gray_700;
+$anchor_hover_color: $Calcite_Gray_650;
+$interactive_text_color: $Calcite_Gray_650;
+$interactive_text_color--hover: $Calcite_Gray_700;
+
+$button_color: $Calcite_Gray_650;
+
+// Inverse
+$interactive_text_color--inverse: darken($text_color, 12%);
+$background_inverse_color: $Calcite_Highlight_Green_250;
+
+// Selected
+$selected_border_color: $interactive_text_color;
+$selected_background_color: $Calcite_Highlight_Green_100;
+
+@import "../base/core";

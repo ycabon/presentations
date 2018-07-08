@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({title:"M\u00e9r\u00e9s",hint:"\u00ed_Start to measure by clicking in the scene to place your first point_____________________\u0151",unsupported:"\u00ed_Direct line measurement is not supported in MapView_________________\u0151.",distance:"T\u00e1vols\u00e1g",direct:"\u00ed_Direct___\u0151",horizontal:"V\u00edzszintes",vertical:"F\u00fcgg\u0151leges",unit:"\u00ed_Unit__\u0151",newMeasurement:"\u00ed_New Measurement______\u0151",units:{metric:"\u00ed_Metric___\u0151",imperial:"\u00ed_Imperial___\u0151",
+kilometers:"kilom\u00e9ter",meters:"m\u00e9ter",miles:"m\u00e9rf\u00f6ld",inches:"h\u00fcvelyk",feet:"l\u00e1b",yards:"yard","nautical-miles":"tengeri m\u00e9rf\u00f6ld","us-feet":"l\u00e1b (US)","degrees-minutes-seconds":"DMS",degrees:"fok"}});

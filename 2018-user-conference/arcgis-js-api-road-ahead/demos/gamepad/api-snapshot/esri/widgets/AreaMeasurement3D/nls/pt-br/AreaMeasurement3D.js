@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({title:"Medir",hint:"Inicie a medi\u00e7\u00e3o clicando na cena para posicionar seu primeiro ponto",unsupported:"Medi\u00e7\u00e3o de \u00e1rea n\u00e3o \u00e9 suportada no MapView.",perimeterLength:"Per\u00edmetro",area:"\u00c1rea",unit:"Unidade",notApplicable:"n/a",newMeasurement:"Nova Medi\u00e7\u00e3o",units:{metric:"M\u00e9trico",imperial:"Imperial","square-kilometers":"Quil\u00f4metros Quadrados","square-meters":"Metros Quadrados","square-miles":"Milhas Quadradas","square-inches":"Polegadas Quadradas",
+"square-feet":"P\u00e9s Quadrados","square-yards":"Jardas Quadradas","square-us-feet":"P\u00e9s Quadrados (US)",acres:"Acres",ares:"Ares",hectares:"Hectares"}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({"esri/widgets/Legend/nls/Legend":{widgetLabel:"Jelmagyar\u00e1zat",points:"Pontok",lines:"Vonalak",polygons:"Polygonok",creatingLegend:"Jelmagyar\u00e1zat l\u00e9trehoz\u00e1sa",noLegend:"Nincs jelmagyar\u00e1zat",dotValue:"\u00ed_1 Dot \x3d {value} {unit}________\u0151",currentObservations:"Jelenlegi megfigyel\u00e9sek",previousObservations:"El\u0151z\u0151 megfigyel\u00e9sek",high:"Magas",low:"Alacsony",esriMetersPerSecond:"m/s",esriKilometersPerHour:"km/h",esriKnots:"csom\u00f3",esriFeetPerSecond:"ft/sec",
+esriMilesPerHour:"mph",showField:"\u00ed_{field}___\u0151",showNormField:"\u00ed_{field} divided by {normField}__________\u0151",showNormPct:"\u00ed_{field} as a percent of the total___________\u0151",showRatio:"\u00ed_Ratio of {field} to {normField}__________\u0151",showRatioPercent:"\u00ed_{field} as a percent of {normField}____________\u0151",showRatioPercentTotal:"\u00ed_{field} as a percent of {field} and {normField}_______________\u0151",_localized:{}}});

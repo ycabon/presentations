@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["./Util"],function(d){function c(b,a){this.glName=a.createBuffer();this.num=0;this.type=void 0;this.gl=a;void 0!==b&&this.setData(b,b.length);this.id=e++}var e=0;c.prototype.setData=function(b){var a=this.gl;b instanceof Uint16Array?this.type=a.UNSIGNED_SHORT:b instanceof Uint32Array?this.type=a.UNSIGNED_INT:d.assert(!1,"only unsigned short or int arrays are supported for indices");a.bindBuffer(a.ELEMENT_ARRAY_BUFFER,this.glName);a.bufferData(a.ELEMENT_ARRAY_BUFFER,b,a.STATIC_DRAW);a.bindBuffer(a.ELEMENT_ARRAY_BUFFER,
+null);this.num=b.length};c.prototype.bind=function(){var b=this.gl;b.bindBuffer(b.ELEMENT_ARRAY_BUFFER,this.glName)};c.prototype.getNum=function(){return this.num};c.prototype.getId=function(){return this.id};c.prototype.getType=function(){return this.type};c.prototype.dispose=function(){this.gl.deleteBuffer(this.glName)};return c});

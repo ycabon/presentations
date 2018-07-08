@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({abbreviatedDirections:{north:"N",south:"S",east:"E",west:"W"},addConversion:"Dodaj pretvorbo",captureMode:"Na\u010din zajemanja",changeCoordinateDisplay:"Spremeni prikaz koordinat",convert:"Pretvori",conversionOutputSuffix:"rezultat pretvorbe",copySuccessMessage:"Koordinate, kopirane v odlo\u017ei\u0161\u010de",defaultPattern:"Ponastavi na privzeto",goTo:"Pojdi na lokacijo",inputCoordTitle:"Vhodne koordinate",invalidCoordinate:"Neveljavne koordinate",liveMode:"Na\u010din v \u017eivo",locationOffBasemap:"Vhodne koordinate so izven obsega temeljne karte",
+noBasemap:"Ni temeljne karte.",noLocation:"Ni polo\u017eaja",removeConversion:"Odstrani pretvorbo",selectFormat:"Izberi format",settingsTitle:"Nastavitve formata"});

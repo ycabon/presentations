@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define("require exports ./tslib ./array ./iterator ./Map ./math ./number ./object ./Set ./string ./Symbol ./WeakMap ./Promise ./Symbol".split(" "),a)})(function(a,c){Object.defineProperty(c,"__esModule",{value:!0});a("./tslib");var b=a("./array");c.array=b;b=a("./iterator");c.iterator=b;b=a("./Map");c.Map=b.default;b=a("./math");c.math=
+b;b=a("./number");c.number=b;b=a("./object");c.object=b;b=a("./Set");c.Set=b.default;b=a("./string");c.string=b;b=a("./Symbol");c.Symbol=b.default;b=a("./WeakMap");c.WeakMap=b.default;"!has('es6-promise')";a("./Promise");"!has('es6-symbol')";a("./Symbol")});

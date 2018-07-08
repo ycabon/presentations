@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../config ../../core/Error ../../core/promiseUtils ../Portal ../PortalItem ../../tasks/GeometryService ../../tasks/support/ProjectParameters".split(" "),function(n,b,e,f,c,g,l,h,m){function k(a){void 0===a&&(a=null);if(e.geometryServiceUrl)return c.resolve(new h({url:e.geometryServiceUrl}));if(!a)return c.reject(new f("internal:geometry-service-url-not-configured"));var d;a.isInstanceOf(l)?d=a.portal||g.getDefault():a.isInstanceOf(g)&&(d=a);return d.load().then(function(a){if(a.helperServices&&
+a.helperServices.geometry&&a.helperServices.geometry.url)return c.resolve(new h({url:a.helperServices.geometry.url}));throw new f("internal:geometry-service-url-not-configured");})}Object.defineProperty(b,"__esModule",{value:!0});b.create=k;b.projectGeometry=function(a,d,b){void 0===b&&(b=null);return k(b).then(function(b){var c=new m;c.geometries=[a];c.outSpatialReference=d;return b.project(c)}).then(function(a){return a&&Array.isArray(a)&&1===a.length?a[0]:c.reject()})}});

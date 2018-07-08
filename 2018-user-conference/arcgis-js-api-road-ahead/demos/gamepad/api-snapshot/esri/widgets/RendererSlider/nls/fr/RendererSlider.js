@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({statsAvg:"Moyenne : ${avg}",count:"Nombre : ${count}",percent:"${num}%",high:"Elev\u00e9",low:"Faible",color:{changeMinMaxToolTIp:"Entrez une valeur.",handleToolTip:"Appariez les valeurs de donn\u00e9es aux couleurs.",maxValueToolTip:"Saisissez la valeur de donn\u00e9e attendue la plus importante.",minValueToolTip:"Saisissez la valeur de donn\u00e9e attendue la moins importante.",changeSymbol:"Modifier le symbole"},size:{handleToolTip:"Appariez les valeurs de donn\u00e9es \u00e0 la taille du symbole.",
+sizeInputBoxLines:"D\u00e9finissez l'\u00e9paisseur de la ligne de 0 \u00e0 18 pixels.",sizeInputBoxPoints:"D\u00e9finir la taille du symbole de 1 \u00e0 120 pixels"}});

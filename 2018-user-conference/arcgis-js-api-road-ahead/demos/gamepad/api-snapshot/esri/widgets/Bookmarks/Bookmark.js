@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/Accessor ../../core/accessorSupport/decorators ../../core/accessorSupport/ensureType ../../geometry/Extent ../../webdoc/support/Thumbnail".split(" "),function(m,n,g,d,h,c,k,l,e){return function(f){function b(a){a=f.call(this)||this;a.active=!1;a.extent=null;a.name=null;a.thumbnail=new e.default;return a}g(b,f);b.prototype.castThumbnail=function(a){return"string"===typeof a?new e.default({url:a}):
+k.ensureType(e.default,a)};d([c.property()],b.prototype,"active",void 0);d([c.property({type:l})],b.prototype,"extent",void 0);d([c.property()],b.prototype,"name",void 0);d([c.property({type:e.default})],b.prototype,"thumbnail",void 0);d([c.cast("thumbnail")],b.prototype,"castThumbnail",null);return b=d([c.subclass("esri.widgets.Bookmarks.Bookmark")],b)}(c.declared(h))});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({statsAvg:"Pr\u016fm\u011brn\u00e1 : ${avg}",count:"Po\u010det: ${count}",percent:"${num}%",high:"Vysok\u00e1",low:"N\u00edzk\u00e1",color:{changeMinMaxToolTIp:"Zadejte hodnotu.",handleToolTip:"P\u0159i\u0159adit barvy podle hodnoty dat.",maxValueToolTip:"Zadat nejv\u011bt\u0161\u00ed o\u010dek\u00e1vanou datovou hodnotu.",minValueToolTip:"Zadat nejmen\u0161\u00ed o\u010dek\u00e1vanou datovou hodnotu.",changeSymbol:"Zm\u011bnit symbol"},size:{handleToolTip:"P\u0159i\u0159adit velikost symbolu podle hodnoty dat.",
+sizeInputBoxLines:"Nastavte tlou\u0161\u0165ku \u010d\u00e1ry mezi 0 a 18 pixely.",sizeInputBoxPoints:"Nastavte velikost symbolu mezi 1 a 120 pixely."}});

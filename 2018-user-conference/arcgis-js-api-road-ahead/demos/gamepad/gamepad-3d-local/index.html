@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>gamepad-3d-local</title>
+  <link rel="shortcut icon" href="https://developers.arcgis.com/favicon.ico">
+  <link rel="stylesheet" href="../api-snapshot/esri/css/main.css">
+  <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.1/css/calcite-web.min.css">
+  <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.1/js/calcite-web.min.js"></script>
+  <script src="../api-snapshot/dojo/dojo.js"></script>
+  <style>
+    html,
+    body,
+    #view {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    #menu {
+      width: 245px;
+      height: 80px;
+      background-color: white;
+      display: none;
+      padding: 15px;
+      overflow: hidden;
+    }
+    .gp-control-width {
+      width: 110px;
+    }
+    .gp-control-height {
+      height: 35px;
+    }
+    label {
+      margin-bottom: 10px;
+      vertical-align: top;
+      margin-top: 7px;
+    }
+  </style>
+  <script>
+    require([
+      "esri/views/SceneView",
+      "esri/WebScene",
+      "dojo/dom",
+      "dojo/on",
+      "dojo/_base/fx",
+      "dojo/dom-construct",
+      "dojo/domReady!"
+    ],
+    function(
+      SceneView,
+      WebScene,
+      dom,
+      on,
+      fx,
+      domConstruct
+    ) {
+        // Create scene view.
+        var view = new SceneView({
+          container: "view",
+          map: new WebScene({
+            portalItem: {
+              // Grand Canyon - Local
+              id: "99594be0c8674dc787f7990fb1b1dff3"
+            }
+          })
+        });
+
+        // Position menu.
+        var menu = document.getElementById("menu");
+        view.ui.add(menu, "top-right");
+
+        // Show menu.
+        menu.style.display = "block";
+        
+        // Use gamepad checkbox.
+        on(dom.byId("activate"), "click", function(e) {
+          // Activate/deactivate gamepad navigation.
+          view.gamepad.enabled = e.target.checked;
+
+          // Animate menu height to reveal settings.
+          fx.animateProperty({
+            node:"menu",
+            properties: {
+                height: {
+                  start: e.target.checked ? 80 : 500,
+                  end: e.target.checked ? 500 : 80
+                }
+            }
+          }).play();
+        });
+
+        // Change device.
+        on(dom.byId("dropdown-gamepads"), "change", function(e) {
+          view.gamepad.device = e.target.value === "auto" ? null : e.target.value;
+        });
+
+        // Update sensitivity.
+        on(dom.byId("slider-sensitivity"), "change", function(e){
+          view.gamepad.sensitivity = e.target.value;
+        });
+
+        // Update Invert X Axis setting.
+        on(dom.byId("checkbox-invert-x"), "click", function(e){
+          view.gamepad.invertX = e.target.checked;
+        });
+
+        // Update Invert Y Axis setting.
+        on(dom.byId("checkbox-invert-y"), "click", function(e){
+          view.gamepad.invertY = e.target.checked;
+        });
+
+        // Switch to/from flight mode.
+        on(dom.byId("checkbox-flight"), "click", function(e) {
+          // Update gamepad setting.
+          view.gamepad.mode = e.target.checked ? "flight" : "hover";
+        });
+
+        // Explicitly call listControllers().
+        listControllers();
+
+        // Update the list of available gamepads whenever a device is connected or disconnected.
+        on(window, "gamepadconnected, gamepaddisconnected", function(e){
+          listControllers();
+        });
+
+        // Function to rebuild the list of available gamepads.
+        function listControllers() {
+          // Remove all current devices.
+          domConstruct.empty("dropdown-gamepads");
+
+          // Always add an "Auto" entry.
+          domConstruct.place(
+              "<option value='auto'>Auto</option>",
+              "dropdown-gamepads",
+              "first"
+            );
+
+          // Add an entry for each gamepad found. In theory gamepad.index is unique and persistent.          
+          view.gamepad.getGamepads().forEach(gamepad => {
+            domConstruct.place(
+              "<option value='" + gamepad.index + "'>Gamepad #" + gamepad.index + "</option>",
+              "dropdown-gamepads",
+              "last"
+            );
+          });
+        }
+    });
+  </script>
+</head>
+<body>
+  <div id="view"></div>
+  <div id="menu">
+    <h1 class="modifier-class">Gamepad</h1>
+    <label class="toggle-switch modifier-class">
+      <input id="activate" type="checkbox" class="toggle-switch-input">
+      <span class="toggle-switch-track margin-right-1"></span>
+      <span class="toggle-switch-label font-size--0 avenir-bold">Use Gamepad Controller</span>
+    </label>
+    <div class="gp-control-height" style="margin-top: 15px;">
+      <label class="inline-block gp-control-width">Controller:</label>
+      <select id="dropdown-gamepads" class="modifier-class inline-block gp-control-width">
+      </select>
+    </div>
+    <div class="gp-control-height">
+      <form class="calcite-slider" id="example1">
+        <label class="inline-block gp-control-width">Sensitivity:</label>
+        <input id="slider-sensitivity" class="inline-block gp-control-width" type="range" min="0.1" max="2" value="1" step="0.01" aria-valuemin="0.1" aria-valuemax="2" aria-valuenow="1">
+      </form>
+    </div>
+    <div class="gp-control-height">
+      <label class="toggle-switch modifier-class">
+        <span class="toggle-switch-label font-size--1">Invert X Axis:</span>
+        <input id="checkbox-invert-x" type="checkbox" class="toggle-switch-input">
+        <span class="toggle-switch-track margin-left-1"></span>
+      </label>
+    </div>
+    <div class="gp-control-height">
+      <label class="toggle-switch modifier-class">
+        <span class="toggle-switch-label font-size--1">Invert Y Axis:</span>
+        <input id="checkbox-invert-y" type="checkbox" class="toggle-switch-input" checked>
+        <span class="toggle-switch-track margin-left-1"></span>
+      </label>
+    </div>
+    <div class="gp-control-height">
+      <label class="toggle-switch modifier-class">
+        <span class="toggle-switch-label font-size--1">Flight mode:</span>
+        <input id="checkbox-flight" type="checkbox" class="toggle-switch-input"> 
+        <span class="toggle-switch-track margin-left-1"></span>
+      </label>
+    </div>
+    <div>
+      <img src="../gamepad.png" width="200" style="margin-left: 20px;"/>
+    </div>
+  </div>
+</body>
+</html>
+

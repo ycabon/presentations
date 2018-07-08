@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["./Util"],function(g){return function(){var b={},c=[],d={model:[],modelNormal:[],lightDirection:[],proj:[],shadowMapDistance:[],viewportPixelSz:[]};this.dispose=function(){for(var a in b)b[a].dispose();c=b=null};this.add=function(a,e){g.assert(void 0===b[a]);b[a]=e;e.getId()};this.get=function(a){return b[a]};this.getProgramsUsingUniform=function(a){return d[a]||[]};this.increaseRefCount=function(a){var e=a.getId();if(c[e])c[e]++;else{c[e]=1;for(var b in d)a.hasUniform(b)&&(g.assert(-1===
+d[b].indexOf(a),"common uniforms of program have already been determined"),d[b].push(a))}};this.decreaseRefCount=function(a){var b=a.getId();if(1<c[b])c[b]--;else{for(var g in d){var f=d[g],h=f.indexOf(a);-1<h&&(f[h]=f[f.length-1],f.pop())}c[b]=0}}}});

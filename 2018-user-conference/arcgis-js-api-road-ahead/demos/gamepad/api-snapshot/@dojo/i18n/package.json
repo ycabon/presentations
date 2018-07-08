@@ -1,0 +1,85 @@
+{
+  "_from": "@dojo/i18n@~2.0.0",
+  "_id": "@dojo/i18n@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-N7waSXe8ER602TW6WzEaqxMgbjGkFeu6B6xgRFQHoT08MuuwnnFAvjpBG3k3JVq1Kn6hBZqOYP2Fi2xqtdlasA==",
+  "_location": "/@dojo/i18n",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@dojo/i18n@~2.0.0",
+    "name": "@dojo/i18n",
+    "escapedName": "@dojo%2fi18n",
+    "scope": "@dojo",
+    "rawSpec": "~2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "~2.0.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@dojo/i18n/-/i18n-2.0.0.tgz",
+  "_shasum": "034d3bb6850346cfd630306b4549116bfaef4f2d",
+  "_spec": "@dojo/i18n@~2.0.0",
+  "_where": "/Users/lloy3317/Git/Development/Devtopia/arcgis-js-api-4",
+  "bugs": {
+    "url": "https://github.com/dojo/i18n/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "globalize": "1.3.0",
+    "tslib": "~1.8.1"
+  },
+  "deprecated": false,
+  "description": "Dojo 2 Internationalization",
+  "devDependencies": {
+    "@dojo/loader": "^2.0.0",
+    "@types/glob": "~5.0.0",
+    "@types/grunt": "~0.4.0",
+    "@types/node": "~9.6.5",
+    "@types/sinon": "^1.16.31",
+    "cldr-data": "~32.0.0",
+    "grunt": "^1.0.1",
+    "grunt-dojo2": "latest",
+    "grunt-tslint": "5.0.1",
+    "husky": "0.14.3",
+    "intern": "~4.1.0",
+    "lint-staged": "6.0.0",
+    "prettier": "1.9.2",
+    "sinon": "^1.17.6",
+    "tslint": "5.2.0",
+    "typescript": "~2.6.1"
+  },
+  "engines": {
+    "npm": ">=3.0.0"
+  },
+  "homepage": "https://dojo.io",
+  "license": "BSD-3-Clause",
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "main": "main.js",
+  "name": "@dojo/i18n",
+  "peerDependencies": {
+    "@dojo/core": "^2.0.0",
+    "@dojo/has": "^2.0.0",
+    "@dojo/shim": "^2.0.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4,
+    "useTabs": true,
+    "parser": "typescript",
+    "printWidth": 120,
+    "arrowParens": "always"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dojo/i18n.git"
+  },
+  "version": "2.0.0"
+}

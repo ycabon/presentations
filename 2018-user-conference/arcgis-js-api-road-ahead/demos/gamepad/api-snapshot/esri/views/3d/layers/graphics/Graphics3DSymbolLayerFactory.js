@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/Logger ./Graphics3DExtrudeSymbolLayer ./Graphics3DIconSymbolLayer ./Graphics3DLineSymbolLayer ./Graphics3DMeshFillSymbolLayer ./Graphics3DObjectSymbolLayer ./Graphics3DPathSymbolLayer ./Graphics3DPolygonFillSymbolLayer ./Graphics3DTextSymbolLayer".split(" "),function(u,a,c,g,h,k,l,m,n,p,q){Object.defineProperty(a,"__esModule",{value:!0});var r=c.getLogger("esri.views.3d.layers.graphics.Graphics3DSymbolLayerFactory");a.make=function(d,b,a,c){var f=e[d.type]&&
+e[d.type][b.type]||t[b.type];return f?new f(d,b,a,c):(r.error("GraphicsLayerFactory#make","unknown symbol type "+b.type),null)};var t={icon:h,object:m,line:k,path:n,fill:p,extrude:g,text:q},e={"mesh-3d":{fill:l}}});

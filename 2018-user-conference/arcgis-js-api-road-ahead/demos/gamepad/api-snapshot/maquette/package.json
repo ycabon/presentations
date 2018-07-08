@@ -1,0 +1,138 @@
+{
+  "_from": "maquette@~3.2.1",
+  "_id": "maquette@3.2.2",
+  "_inBundle": false,
+  "_integrity": "sha512-0H+cBxxDJinYxNVoi0ZSpbuO+Yf0abT/snRM2aqj+bhip4Dl7iy41q9NSBBWvR511qp0LcN0SpNIFDE9SCvwQQ==",
+  "_location": "/maquette",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "maquette@~3.2.1",
+    "name": "maquette",
+    "escapedName": "maquette",
+    "rawSpec": "~3.2.1",
+    "saveSpec": null,
+    "fetchSpec": "~3.2.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/maquette/-/maquette-3.2.2.tgz",
+  "_shasum": "a953b15a0db8df4a63f83933c85270d164de512c",
+  "_spec": "maquette@~3.2.1",
+  "_where": "/Users/lloy3317/Git/Development/Devtopia/arcgis-js-api-4",
+  "author": {
+    "name": "Johan Gorter",
+    "email": "johan@johangorter.com"
+  },
+  "browser": "./dist/maquette.umd.js",
+  "bugs": {
+    "url": "https://github.com/AFASSoftware/maquette/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Minimalistic Virtual DOM implementation with support for animated transitions.",
+  "devDependencies": {
+    "@types/chai-as-promised": "7.1.0",
+    "@types/sinon": "4.1.3",
+    "@types/sinon-chai": "2.7.29",
+    "Set": "0.4.1",
+    "browser-sync": "2.23.6",
+    "chai-as-promised": "7.1.1",
+    "cross-env": "5.1.3",
+    "debug": "3.1.0",
+    "del": "3.0.0",
+    "ink-docstrap": "1.3.2",
+    "inquirer": "5.1.0",
+    "istanbul": "0.4.5",
+    "jsdoc": "3.5.5",
+    "jsdom": "11.6.2",
+    "jsdom-global": "3.0.2",
+    "mocha": "5.0.1",
+    "nyc": "11.4.1",
+    "precss": "3.1.0",
+    "remap-istanbul": "0.10.1",
+    "rollup": "0.55.5",
+    "sinon": "4.3.0",
+    "sinon-chai": "2.14.0",
+    "typescript-assistant": "0.28.0",
+    "uglify-js": "3.3.10"
+  },
+  "homepage": "https://maquettejs.org/",
+  "keywords": [
+    "virtual",
+    "dom",
+    "animation",
+    "transitions"
+  ],
+  "license": "MIT",
+  "main": "./dist/maquette.cjs.js",
+  "module": "./dist/index.js",
+  "name": "maquette",
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "typings/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "lcov",
+      "html",
+      "text-summary"
+    ],
+    "cache": true,
+    "temp-directory": "./build/nyc/cache",
+    "all": true,
+    "check-coverage": true,
+    "report-dir": "./build/coverage",
+    "es-module": false,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "watermarks": {
+      "lines": [
+        75,
+        100
+      ],
+      "functions": [
+        75,
+        100
+      ],
+      "branches": [
+        75,
+        100
+      ],
+      "statements": [
+        75,
+        100
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AFASSoftware/maquette.git"
+  },
+  "scripts": {
+    "assist": "tsa assist",
+    "ci": "tsa ci && npm -s run dist && ts-node ./tools/check-file-size",
+    "clean": "tsa clean",
+    "dist": "tsc -p ./src/tsconfig.json && tsc -p ./examples/tsconfig.json && rollup -c && uglifyjs ./dist/maquette.umd.js -c unsafe=true,unsafe_comps=true,unsafe_math=true,passes=3 -m -o ./dist/maquette.umd.min.js",
+    "fix": "tsa fix",
+    "postcheckout": "tsa post-checkout || exit 0",
+    "postmerge": "tsa post-merge || exit 0",
+    "precommit": "tsa pre-commit",
+    "prepublishOnly": "tsa clean && npm run dist",
+    "prepush": "npm run dist && tsa pre-push",
+    "publish-website": "cd website && npm install --no-optional && node generate && npm run typedoc && firebase deploy",
+    "release": "tsa release",
+    "test": "tsa ci",
+    "test-also-with-browser": "npm run dist && cd examples/todomvc && npm install --no-save bower && bower install && cd ../../browser-tests && npm install && npm test"
+  },
+  "tonicExampleFilename": "examples/tonic-example.js",
+  "typings": "./dist/index.d.ts",
+  "version": "3.2.2"
+}

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define([],function(){var h={},e,p,u=1/65536;h.createGamma3CPU=function(g,n){if(!e){e=Array(256);var a;for(a=0;256>a;a++)e[a]=a*a*a;p=Array(256);for(a=0;256>a;a++)p[a]=Math.pow(a/256*16777216,1/3)}a=g.getContext("2d");var b=g.getAttribute("width"),c=g.getAttribute("height"),k=a.getImageData(0,0,b,c),b=b>>1,c=c>>1,h=1;do{g.setAttribute("width",b);g.setAttribute("height",c);for(var q=a.createImageData(b,c),l=0;l<c;l++)for(var m=0;m<b;m++)for(var v=4*(l*b+m),r=4*(2*l*b*2+2*m),t=4*((2*l+1)*b*2+2*m),f=
+0;4>f;f++){var w=q.data,x=v+f,d=void 0,d=0+e[k.data[r+f]],d=d+e[k.data[r+4+f]],d=d+e[k.data[t+f]],d=d+e[k.data[t+4+f]];w[x]=p[Math.round(d/4*u)]}a.putImageData(q,0,0);n.texSubImage2D(n.TEXTURE_2D,h,0,0,n.RGBA,n.UNSIGNED_BYTE,g);k=q;b>>=1;c>>=1;h++}while(1<b&&1<c)};return h});

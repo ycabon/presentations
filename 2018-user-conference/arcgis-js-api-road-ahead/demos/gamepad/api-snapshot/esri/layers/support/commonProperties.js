@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/accessorSupport/PropertyOrigin","../../core/accessorSupport/utils","../../core/accessorSupport/write"],function(g,a,c,e,f){Object.defineProperty(a,"__esModule",{value:!0});a.screenSizePerspectiveEnabled={type:Boolean,value:!0,json:{origins:{"web-scene":{read:{source:["id","url","layerType"],reader:function(d,b){if(null==b.screenSizePerspective&&"defaults"===this.originOf("screenSizePerspectiveEnabled"))e.getProperties(this).store.set("screenSizePerspectiveEnabled",
+!1,c.OriginId.DEFAULTS);else return b.screenSizePerspective}},write:{ignoreOrigin:!0,target:"screenSizePerspective",writer:function(d,b,a,c){"defaults"===this.originOf("screenSizePerspectiveEnabled")&&d?b[a]=d:f.willPropertyWrite(this,"screenSizePerspectiveEnabled",{},c)&&(b[a]=d)}}}}}};a.popupEnabled={type:Boolean,json:{read:{source:"disablePopup",reader:function(a,b){return!b.disablePopup}},write:{target:"disablePopup",writer:function(a,b,c){b[c]=!a}}}};a.labelsVisible={type:Boolean,json:{read:{source:"showLabels"},
+write:{target:"showLabels"}}}});

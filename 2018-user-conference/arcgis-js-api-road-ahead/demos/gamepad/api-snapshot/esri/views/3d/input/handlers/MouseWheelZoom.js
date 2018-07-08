@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/extendsHelper ../../state/controllers/global/ZoomStepController ../../state/controllers/local/ZoomStepController ../../state/helpers/PickingHelper ../../../input/InputHandler".split(" "),function(a,e,g,h,k,l,m){Object.defineProperty(e,"__esModule",{value:!0});a=function(a){function d(f,b){var c=a.call(this,!0)||this;c.view=f;c.pickingHelper=new l.PickingHelper(f);c.registerIncoming("mouse-wheel",b,function(a){return c.handleMouseWheel(a)});return c}
+g(d,a);d.prototype.handleMouseWheel=function(a){var b=a.data;this.cameraController&&this.cameraController.active||(this.cameraController=this.view.state.isGlobal?new h.ZoomStepController(this.view,this.pickingHelper,"interaction"):new k.ZoomStepController(this.view,this.pickingHelper,"interaction"),this.view.state.switchCameraController(this.cameraController));this.cameraController.zoomStep(-1/60*b.deltaY,[b.x,this.view.height-b.y]);a.stopPropagation()};return d}(m.InputHandler);e.MouseWheelZoom=
+a});

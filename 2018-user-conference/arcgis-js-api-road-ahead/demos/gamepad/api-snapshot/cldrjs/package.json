@@ -1,0 +1,89 @@
+{
+  "_from": "cldrjs@^0.4.6",
+  "_id": "cldrjs@0.4.8",
+  "_inBundle": false,
+  "_integrity": "sha1-O5lMRk0qMrWsp8XeF6YKh+RdxPk=",
+  "_location": "/cldrjs",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cldrjs@^0.4.6",
+    "name": "cldrjs",
+    "escapedName": "cldrjs",
+    "rawSpec": "^0.4.6",
+    "saveSpec": null,
+    "fetchSpec": "^0.4.6"
+  },
+  "_requiredBy": [
+    "/globalize"
+  ],
+  "_resolved": "https://registry.npmjs.org/cldrjs/-/cldrjs-0.4.8.tgz",
+  "_shasum": "3b994c464d2a32b5aca7c5de17a60a87e45dc4f9",
+  "_spec": "cldrjs@^0.4.6",
+  "_where": "/Users/lloy3317/Git/Development/Devtopia/arcgis-js-api-4/node_modules/globalize",
+  "author": {
+    "name": "Rafael Xavier de Souza",
+    "email": "rxaviers@gmail.com",
+    "url": "http://rafael.xavier.blog.br"
+  },
+  "bugs": {
+    "url": "https://github.com/rxaviers/cldrjs/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Simple CLDR traverser",
+  "devDependencies": {
+    "cldr-data-downloader": "0.2.x",
+    "grunt": "0.4.x",
+    "grunt-compare-size": "0.4.0",
+    "grunt-contrib-connect": "0.3.x",
+    "grunt-contrib-copy": "0.4.x",
+    "grunt-contrib-jshint": "0.10.x",
+    "grunt-contrib-requirejs": "0.4.x",
+    "grunt-contrib-uglify": "0.2.x",
+    "grunt-dco": "0.0.3",
+    "grunt-mocha": "0.3.x",
+    "gzip-js": "0.3.2",
+    "matchdep": "*"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "DCO.md",
+    "dist/",
+    "doc/",
+    "LICENSE-MIT",
+    "README.md"
+  ],
+  "homepage": "https://github.com/rxaviers/cldrjs#readme",
+  "keywords": [
+    "utility",
+    "globalization",
+    "internationalization",
+    "multilingualization",
+    "localization",
+    "g11n",
+    "i18n",
+    "m17n",
+    "L10n",
+    "localize",
+    "locale",
+    "cldr",
+    "json",
+    "inheritance",
+    "compiler"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/rxaviers/cldrjs/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "dist/node_main.js",
+  "name": "cldrjs",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rxaviers/cldrjs.git"
+  },
+  "version": "0.4.8"
+}

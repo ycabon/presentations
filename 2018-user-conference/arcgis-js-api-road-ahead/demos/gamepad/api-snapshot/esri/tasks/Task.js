@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/tsSupport/declareExtendsHelper ../core/tsSupport/decorateHelper ../core/tsSupport/paramHelper ../core/tsSupport/assignHelper ../core/Accessor ../core/urlUtils ../core/accessorSupport/decorators".split(" "),function(p,q,k,d,r,l,m,n,e){return function(h){function a(b){b=h.call(this)||this;b.requestOptions=null;b.url=null;return b}k(a,h);a.prototype.normalizeCtorArgs=function(b,a){return"string"!==typeof b?b:l({url:b},a)};Object.defineProperty(a.prototype,"parsedUrl",
+{get:function(){return this._parseUrl(this.url)},enumerable:!0,configurable:!0});a.prototype._parseUrl=function(b){return b?n.urlToObject(b):null};a.prototype._encode=function(b,a,e){var g={},f;for(f in b)if("declaredClass"!==f){var c=b[f];if(null!=c&&"function"!==typeof c)if(Array.isArray(c)){g[f]=[];for(var d=0;d<c.length;d++)g[f][d]=this._encode(c[d])}else"object"===typeof c?c.toJSON&&(c=c.toJSON(e&&e[f]),g[f]=a?c:JSON.stringify(c)):g[f]=c}return g};d([e.property({readOnly:!0,dependsOn:["url"]})],
+a.prototype,"parsedUrl",null);d([e.property()],a.prototype,"requestOptions",void 0);d([e.property({type:String})],a.prototype,"url",void 0);return a=d([e.subclass("esri.tasks.Task")],a)}(e.declared(m))});

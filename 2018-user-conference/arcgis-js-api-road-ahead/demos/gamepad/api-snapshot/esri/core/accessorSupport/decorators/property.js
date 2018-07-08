@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports dojo/has ../../lang ../../Logger ../metadata".split(" "),function(l,f,m,g,k,h){Object.defineProperty(f,"__esModule",{value:!0});k.getLogger("esri.core.accessorSupport.decorators.property");f.property=function(a){void 0===a&&(a={});return function(b,c){var d=b.constructor.prototype;if(d!==Function.prototype){(b=Object.getOwnPropertyDescriptor(b,c))&&(b.get||b.set)?(a=g.clone(a),b.set&&(a.set=b.set),b.get&&(a.get=b.get)):b&&b.hasOwnProperty("value")&&(a=g.clone(a),a.value=b.value);
+c=h.getPropertyMetadata(d,c);for(var e in a)d=a[e],Array.isArray(d)?c[e]=(c[e]||[]).concat(d):c[e]=d}}};f.propertyJSONMeta=function(a,b,c){a=h.getPropertyMetadata(a.constructor.prototype,c);a.json||(a.json={});a=a.json;void 0!==b&&(a.origins||(a.origins={}),a.origins[b]||(a.origins[b]={}),a=a.origins[b]);return a}});

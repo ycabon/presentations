@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/extendsHelper","../../../3d/state/controllers/GamepadController","../../../input/InputHandler"],function(c,b,e,d,f){Object.defineProperty(b,"__esModule",{value:!0});c=function(c){function b(b){var a=c.call(this,!0)||this;a.view=b;a._gamepadController=null;a.view.gamepad.enabled&&(a._gamepadController=new d.GamepadController(a.view),a.view.state.switchCameraController(a._gamepadController));a.view.gamepad.watch("isIdle",function(b){b?a._gamepadController&&
+a._gamepadController.finishController():a._gamepadController&&a._gamepadController.active||(a._gamepadController=new d.GamepadController(a.view),a.view.state.switchCameraController(a._gamepadController))});return a}e(b,c);return b}(f.InputHandler);b.GamepadNavigation=c});

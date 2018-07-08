@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({abbreviatedDirections:{north:"N",south:"S",east:"E",west:"W"},addConversion:"Prid\u0117ti konvertavim\u0105",captureMode:"U\u017efiksavimo re\u017eimas",changeCoordinateDisplay:"Keisti koordina\u010di\u0173 atvaizdavim\u0105",convert:"Konvertuoti",conversionOutputSuffix:"konvertavimo i\u0161vestis",copySuccessMessage:"Koordinat\u0117 nukopijuota \u012f main\u0173 srit\u012f",defaultPattern:"Gr\u0105\u017einti numatyt\u0105j\u0105 reik\u0161m\u0119",goTo:"Eiti \u012f viet\u0105",inputCoordTitle:"\u012evesties koordinat\u0117",
+invalidCoordinate:"Neteisinga koordinat\u0117",liveMode:"Realaus laiko re\u017eimas",locationOffBasemap:"\u012evesties koordinat\u0117 nepatenka \u012f pagrindo \u017eem\u0117lapio apr\u0117pt\u012f",noBasemap:"N\u0117ra pagrindo \u017eem\u0117lapio.",noLocation:"N\u0117ra pad\u0117ties",removeConversion:"Pa\u0161alinti konvertavim\u0105",selectFormat:"Pasirinkti format\u0105",settingsTitle:"Formato nustatymai"});

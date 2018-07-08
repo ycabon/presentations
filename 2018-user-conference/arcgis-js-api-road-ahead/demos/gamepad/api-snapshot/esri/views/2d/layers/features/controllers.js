@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/assignHelper","../../../../core/Error","../../../../core/promiseUtils"],function(e,d,f,g,c){Object.defineProperty(d,"__esModule",{value:!0});d.getControllerConfiguration=function(a){var b=a.source;return a.capabilities.operations.supportsQuery?b&&"esri.layers.graphics.sources.CSVSource"===b.declaredClass?c.resolve().then(function(){return{type:"memory",processing:a.processing&&a.processing.toWorker()||null}}):c.resolve({type:"on-demand",gdbVersion:a.gdbVersion,
+historicMoment:a.historicMoment&&a.historicMoment.getTime(),processing:a.processing&&a.processing.toWorker()||null}):c.reject(new g("graphicscontroller:query-capability-required","Service requires query capabilities to be used as a feature layer",{layer:a}))};d.createController=function(a,b){return("memory"===a?c.create(function(a){return e(["./controllers/MemoryController"],a)}):c.create(function(a){return e(["./controllers/OnDemandController"],a)})).then(function(a){return a.default}).then(function(a){return new a(f({},
+b.serviceAndViewInfo,{tileStore:b.tileStore,remoteClient:b.remoteClient}))})}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({attach:"\u0628\u064a\u062a_Attachments____\u0644\u0627\u062d\u0642\u0629",fields:"\u0628\u064a\u062a_Fields___\u0644\u0627\u062d\u0642\u0629",fieldsSummary:"\u0628\u064a\u062a_List of attributes and values__________\u0644\u0627\u062d\u0642\u0629",media:"\u0628\u064a\u062a_Media___\u0644\u0627\u062d\u0642\u0629",next:"\u0628\u064a\u062a_Next__\u0644\u0627\u062d\u0642\u0629",numCharts:"\u0628\u064a\u062a_Number of charts______\u0644\u0627\u062d\u0642\u0629",numImages:"\u0628\u064a\u062a_Number of images______\u0644\u0627\u062d\u0642\u0629",
+noTitle:"\u0628\u064a\u062a_Untitled___\u0644\u0627\u062d\u0642\u0629",previous:"\u0628\u064a\u062a_Previous___\u0644\u0627\u062d\u0642\u0629"});

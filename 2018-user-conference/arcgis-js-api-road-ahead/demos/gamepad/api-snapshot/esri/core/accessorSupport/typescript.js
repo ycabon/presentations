@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["../declare","../typescript","../JSONSupport","../lang"],function(k,g,l,m){function h(d,a){if(!d)return a;if(!a)return d;for(var b in a){var c=d[b],f=a[b];Array.isArray(f)&&Array.isArray(c)?d[b]=c.concat(f):d[b]="object"===typeof f&&"object"===typeof c?h(c,f):f}return d}return{subclass:function(d,a){return function(b){b=g.declareDefinition(b,d);c&&(b.instanceMembers.properties=h(c,b.instanceMembers.properties));var c=b.instanceMembers.properties;if(c)for(var a in c){var e=c[a];e&&!e.reader&&
+e.type&&(e.type===Date?e.reader=function(a){return null!=a?new Date(a):null}:-1!==e.type._meta.bases.indexOf(l)&&(e.reader=function(a){return function(b){return a.fromJSON(b)}}(e.type)))}return m.mixin(k(b.bases,b.instanceMembers),b.classMembers)}},shared:g.shared,property:function(d){return function(a,b){var c=Object.getPrototypeOf(a),c=c&&c.properties;a.properties&&a.properties!==c||(a.properties={});a.properties=a.properties||{};a.properties[b]=d||{}}}}});

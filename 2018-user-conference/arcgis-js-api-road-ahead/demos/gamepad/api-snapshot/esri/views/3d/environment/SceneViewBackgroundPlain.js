@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/declareExtendsHelper ../../../core/tsSupport/decorateHelper ../../../Color ../../../core/accessorSupport/decorators ./SceneViewBackground".split(" "),function(k,l,g,c,d,b,h){return function(f){function a(a){a=f.call(this)||this;a.type="plain";return a}g(a,f);e=a;Object.defineProperty(a.prototype,"color",{get:function(){return this.get("color")},set:function(a){null==a?this._set("color",new d([0,0,0,0])):this._set("color",a)},enumerable:!0,configurable:!0});
+a.prototype.clone=function(){return new e(this.cloneProperties())};a.prototype.cloneProperties=function(){return{color:this.color.clone()}};c([b.property({type:String,readOnly:!0})],a.prototype,"type",void 0);c([b.property({type:d,value:new d([0,0,0,0])})],a.prototype,"color",null);return a=e=c([b.subclass("esri.views.3d.environment.SceneViewBackgroundPlain")],a);var e}(b.declared(h))});

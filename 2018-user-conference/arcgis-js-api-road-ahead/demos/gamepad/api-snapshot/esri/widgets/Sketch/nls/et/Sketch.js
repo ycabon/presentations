@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Visand",draw:"Joonista",drawPoint:"Joonista punkt",drawPolygon:"Joonista pol\u00fcgoon",drawPolyline:"Joonista joon",drawMultipoint:"Joonista multipunkt",drawCircle:"Joonista ring",drawRectangle:"Joonista ristk\u00fclik",drawTriangle:"Joonista kolmnurk",drawSquare:"Joonista ruut",drawEllipse:"Joonista ellips",pan:"Liiguta kaarti",undo:"Ennista",redo:"Taasta",updateDrawing:"Uuenda joonist",clear:"Puhasta joonis",completeDrawing:"L\u00f5peta joonistamine",pauseDrawing:"Peata joonistamine",
+resumeDrawing:"J\u00e4tka joonistamist",rotate:"P\u00f6\u00f6ra",scale:"M\u00f5\u00f5tkava",addPointTooltip:"Kliki punkti lisamiseks",removePointTooltip:"Kliki selle punkti eemaldamiseks",completePolygonTooltip:"Kliki seda punkti l\u00f5petamiseks",startDrawingTooltip:"Kliki joonistamiseks",continueDrawingTooltip:"Kliki joonistamise j\u00e4tkamiseks",completeDrawingTooltip:"Topeltklikk l\u00f5petamiseks",addMultipointTooltip:"Kliki punktide lisamiseks",finishMultipointTooltip:"Topeltklikk l\u00f5petamiseks",
+addFreehandTooltip:"Alustamiseks hoia all ja l\u00f5petamiseks lase lahti",addShapeTooltip:"Kliki objekti lisamiseks v\u00f5i vajuta alla alustamiseks ja lase lahti l\u00f5petamiseks"});

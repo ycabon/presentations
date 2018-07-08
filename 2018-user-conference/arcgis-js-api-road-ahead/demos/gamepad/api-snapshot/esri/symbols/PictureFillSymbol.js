@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("../core/declare dojo/_base/lang ../core/lang ../core/screenUtils ./FillSymbol ./support/urlUtils".split(" "),function(h,k,d,b,l,e){var g={xscale:1,yscale:1,xoffset:0,yoffset:0,width:12,height:12},c=h(l,{declaredClass:"esri.symbols.PictureFillSymbol",properties:{type:"picture-fill",url:e.urlPropertyDefinition,xscale:{value:1,json:{write:!0}},yscale:{value:1,json:{write:!0}},width:{value:12,cast:b.toPt,json:{write:!0}},height:{value:12,cast:b.toPt,json:{write:!0}},xoffset:{value:0,cast:b.toPt,
+json:{write:!0}},yoffset:{value:0,cast:b.toPt,json:{write:!0}},source:e.sourcePropertyDefinition},getDefaults:function(){return k.mixin(this.inherited(arguments),g)},normalizeCtorArgs:function(a,c,d,e){if(a&&"string"!==typeof a&&null==a.imageData)return a;var f={};a&&(f.url=a);c&&(f.outline=c);null!=d&&(f.width=b.toPt(d));null!=e&&(f.height=b.toPt(e));return f},clone:function(){var a=new c({color:d.clone(this.color),height:this.height,outline:this.outline&&this.outline.clone(),url:this.url,width:this.width,
+xoffset:this.xoffset,xscale:this.xscale,yoffset:this.yoffset,yscale:this.yscale});a._set("source",d.clone(this.source));return a}});c.defaultProps=g;return c});

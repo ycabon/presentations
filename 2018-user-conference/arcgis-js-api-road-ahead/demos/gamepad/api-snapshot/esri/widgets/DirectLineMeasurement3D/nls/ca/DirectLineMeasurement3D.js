@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({title:"Mesura",hint:"\u00f3_Start to measure by clicking in the scene to place your first point_____________________\u00e0",unsupported:"\u00f3_Direct line measurement is not supported in MapView_________________\u00e0.",distance:"Dist\u00e0ncia",direct:"\u00f3_Direct___\u00e0",horizontal:"Horitzontal",vertical:"Vertical",unit:"\u00f3_Unit__\u00e0",newMeasurement:"\u00f3_New Measurement______\u00e0",units:{metric:"\u00f3_Metric___\u00e0",imperial:"\u00f3_Imperial___\u00e0",kilometers:"Quil\u00f2metres",
+meters:"Metres",miles:"Milles",inches:"Polzades",feet:"Peus",yards:"Iardes","nautical-miles":"Milles n\u00e0utiques","us-feet":"Peus (EUA)","degrees-minutes-seconds":"DMS",degrees:"Graus"}});

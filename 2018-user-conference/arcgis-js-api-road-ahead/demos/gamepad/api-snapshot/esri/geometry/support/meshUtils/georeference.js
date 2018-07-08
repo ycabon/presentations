@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../views/3d/lib/glMatrix","../../../views/3d/support/projectionUtils"],function(p,k,l,h){Object.defineProperty(k,"__esModule",{value:!0});k.georeference=function(d,c,e){var a=c.spatialReference;if(a.isWGS84||a.isWebMercator&&(!e||!1!==e.geographic)){e=c.spatialReference;h.computeLinearTransformation(c.spatialReference,[c.x,c.y,c.z||0],n,h.SphericalECEFSpatialReference);var a=d.position,b=n,k=c.spatialReference,m=new Float64Array(a.length);for(c=0;c<a.length;c+=3){for(var f=
+0;3>f;f++)g[f]=a[c+f];l.mat4d.multiplyVec3(b,g);for(f=0;3>f;f++)m[c+f]=g[f]}c=new Float64Array(a.length);h.bufferToBuffer(m,h.SphericalECEFSpatialReference,0,c,k,0,m.length/3);d=d.normal;if(e.isWebMercator&&d){e=new Float32Array(d.length);for(a=0;a<d.length;a+=3)for(b=h.webMercator.y2lat(c[a+1]),b=Math.cos(b),g[0]=d[a+0]*b,g[1]=d[a+1]*b,g[2]=d[a+2],l.vec3d.normalize(g),b=0;3>b;b++)e[a+b]=g[b];d=e}d={position:c,normal:d}}else{e=new Float64Array(d.position.length);a=d.position;for(b=0;b<a.length;b+=
+3)e[b+0]=a[b+0]+c.x,e[b+1]=a[b+1]+c.y,e[b+2]=a[b+2]+(c.z||0);d={position:e,normal:d.normal}}return d};var n=l.mat4d.create(),g=l.vec3d.create()});

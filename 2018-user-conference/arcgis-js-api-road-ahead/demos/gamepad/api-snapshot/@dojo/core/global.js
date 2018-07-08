@@ -1,0 +1,2 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports","@dojo/shim/global","./instrument"],a)})(function(a,b){Object.defineProperty(b,"__esModule",{value:!0});var c=a("@dojo/shim/global");a("./instrument").deprecated({message:"has been replaced with @dojo/shim/global",name:"@dojo/core/global",url:"https://github.com/dojo/core/issues/302"});b.default=c.default});

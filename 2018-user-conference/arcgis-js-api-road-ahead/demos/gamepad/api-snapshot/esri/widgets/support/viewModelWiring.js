@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["../../core/watchUtils"],function(d){function e(a,b){Array.isArray(b)||(b=[b]);return b.map(function(b){return a.viewModel.on(b,function(c){a.emit(b,c)})})}return{createGetterDelegate:function(a){var b="viewModel."+a;return function(){return this.get(b)}},createSetterDelegate:function(a){return function(b){var c=this.get("viewModel");c&&c.set(a,b)}},createMethodDelegate:function(a){var b="viewModel."+a;return function(){var a=this.get(b);if(a)return a.apply(this.viewModel,arguments)}},setUpEventDelegates:function(a,
+b){var c=e(a,b),f=d.init(a,"viewModel",function(d,f){c.forEach(function(a){a.remove()});c.length=0;d&&(c=e(a,b));a.own.apply(a,c)});a.own(f)}}});

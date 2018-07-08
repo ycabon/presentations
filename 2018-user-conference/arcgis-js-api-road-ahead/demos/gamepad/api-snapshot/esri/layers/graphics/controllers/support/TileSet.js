@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../geometry/support/aaBoundingRect","../../../../tasks/support/QuantizationParameters"],function(g,h,e,f){return function(){function b(a){this.layer=a.layer;this.tileInfo=a.tileInfo}b.prototype.fetch=function(a){return this._queryTile(a)};b.prototype._queryTile=function(a){return this.layer.queryFeatures(this._createQuery(a))};b.prototype._createQuery=function(a){this.tileInfo.updateTileInfo(a);var d=this.tileInfo.spatialReference,c=this.layer.createQuery();c.geometry=
+e.toExtent(a.extent,d);c.outSpatialReference=d;this._setResolutionParams(c,a);return c};b.prototype._setResolutionParams=function(a,d){var c=this.layer,b=c.geometryType;if("polyline"===b||"polygon"===b)d=this.tileInfo.lodAt(d.level).resolution,"polyline"===b&&(a.maxAllowableOffset=d),c.get("capabilities.query.supportsQuantization")&&(a.quantizationParameters=new f.default({mode:"view",originPosition:"upper-left",tolerance:d,extent:c.fullExtent}))};return b}()});

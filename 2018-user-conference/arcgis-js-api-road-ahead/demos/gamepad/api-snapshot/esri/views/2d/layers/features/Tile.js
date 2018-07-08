@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports @dojo/shim/Set ../../../../core/ArrayPool ../../../../geometry/support/aaBoundingRect ../../../../tasks/support/QuantizationParameters ../../tiling/TileKey".split(" "),function(c,e,f,g,h,k,l){Object.defineProperty(e,"__esModule",{value:!0});c=function(){function a(a,b){this.bounds=h.create();this.key=new l(0,0,0,0);this.objectIds=new f.default;this.key.set(b);b=a.getLODInfoAt(this.key);this.tileInfoView=a;this.tileInfoView.getTileBounds(this.bounds,this.key,!0);this.resolution=
+b.resolution;this.scale=b.scale}Object.defineProperty(a.prototype,"id",{get:function(){return this.key.id},enumerable:!0,configurable:!0});a.prototype.clone=function(){return new a(this.tileInfoView,this.id)};a.prototype.createChildTiles=function(){for(var c=this.key.getChildKeys(),b=g.acquire(),d=0;d<c.length;d++)b[d]=new a(this.tileInfoView,c[d]);return b};a.prototype.getQuantizationParameters=function(){return k.default.fromJSON({mode:"view",originPosition:"upperLeft",tolerance:this.resolution,
+extent:{xmin:this.bounds[0],ymin:this.bounds[1],xmax:this.bounds[2],ymax:this.bounds[3],spatialReference:this.tileInfoView.tileInfo.spatialReference}})};return a}();e.Tile=c;e.default=c});

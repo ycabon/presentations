@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/extendsHelper ../../../../core/scheduling ../../../2d/viewpointUtils ../../../input/InputHandler".split(" "),function(d,f,k,g,h,l){Object.defineProperty(f,"__esModule",{value:!0});var b={translation:[0,0,0],heading:0,tilt:0};d=function(d){function e(b){var a=d.call(this,!0)||this;a.view=b;a._updateFrameTask=null;a.view.gamepad.enabled&&(a._updateFrameTask=g.addFrameTask({update:function(){a._processGamepad()}}));a.view.gamepad.watch("enabled",function(b){b?
+a._updateFrameTask=g.addFrameTask({update:function(){a._processGamepad()}}):(a._updateFrameTask.remove(),a._updateFrameTask=null)});return a}k(e,d);e.prototype._processGamepad=function(){this.view.gamepad.updateTransformation(b);if(0!==b.translation[0]||0!==b.translation[1]||0!==b.translation[2]||0!==b.heading||0!==b.tilt){var c=this.view.viewpoint.clone();h.translateBy(c,c,[5*b.translation[0],5*-b.translation[1]]);var a=this.view.size;h.scaleAndRotateBy(c,c,1+.01*b.translation[2],this.view.constraints.rotationEnabled?
+1*-b.heading:0,[a[0]/2,a[1]],a);c=this.view.constraints.constrain(c,this.view.viewpoint);this.view.viewpoint=c}};return e}(l.InputHandler);f.GamepadNavigation=d});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({title:"Mesura",hint:"\u00f3_Start to measure by clicking in the scene to place your first point_____________________\u00e0",unsupported:"\u00f3_Area measurement is not supported in MapView_______________\u00e0.",perimeterLength:"Per\u00edmetre",area:"\u00c0rea",unit:"\u00f3_Unit__\u00e0",notApplicable:"\u00f3_n/a__\u00e0",newMeasurement:"\u00f3_New Measurement______\u00e0",units:{metric:"\u00f3_Metric___\u00e0",imperial:"\u00f3_Imperial___\u00e0","square-kilometers":"Quil\u00f2metres quadrats",
+"square-meters":"Metres quadrats","square-miles":"Milles quadrades","square-inches":"Polzades quadrades","square-feet":"Peus quadrats","square-yards":"Iardes quadrades","square-us-feet":"\u00f3_Square Feet (US)______\u00e0",acres:"Acres",ares:"\u00c0rees",hectares:"Hect\u00e0rees"}});

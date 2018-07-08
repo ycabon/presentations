@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/declareExtendsHelper ../../../core/tsSupport/decorateHelper ../../../core/Accessor ../../../core/Evented ../../../core/accessorSupport/decorators".split(" "),function(k,l,f,d,g,h,c){return function(e){function b(){var a=null!==e&&e.apply(this,arguments)||this;a.history=[];a.redoHistory=[];a.view=null;return a}f(b,e);b.prototype.canUndo=function(){return 0<this.history.length};b.prototype.canRedo=function(){return 0<this.redoHistory.length};b.prototype.undo=
+function(){if(this.canUndo()){var a=this.history.pop();a.undo();this.redoHistory.push(a)}};b.prototype.redo=function(){if(this.canRedo()){var a=this.redoHistory.pop();a.redo();this.history.push(a)}};b.prototype.getCoordsFromScreenPoint=function(a){a=this.view.toMap(a);return[a.x,a.y]};b.prototype.isDuplicateVertex=function(a,b){if(a.length){a=a[a.length-1];var c=a[1];return a[0]===b[0]&&c===b[1]}return!1};d([c.property({readOnly:!0})],b.prototype,"history",void 0);d([c.property({readOnly:!0})],b.prototype,
+"redoHistory",void 0);d([c.property()],b.prototype,"view",void 0);return b=d([c.subclass("esri.views.2d.draw.DrawAction")],b)}(c.declared(g,h))});

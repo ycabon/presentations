@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports"],function(c,f){Object.defineProperty(f,"__esModule",{value:!0});c=function(){function a(b,a,d,e){void 0===d&&(d=0);b=this.TypedArrayConstructor=b;void 0===e&&(e=b.BYTES_PER_ELEMENT);this.data=new b(a,0===a.byteLength?0:d);this.elementStride=e/b.BYTES_PER_ELEMENT}a.prototype.get=function(a){return this.data[a*this.elementStride]};a.prototype.set=function(a,c){this.data[a*this.elementStride]=c};Object.defineProperty(a.prototype,"count",{get:function(){return Math.ceil(this.data.length/
+this.elementStride)},enumerable:!0,configurable:!0});Object.defineProperty(a.prototype,"buffer",{get:function(){return this.data.buffer},enumerable:!0,configurable:!0});Object.defineProperty(a.prototype,"typedBuffer",{get:function(){return this.data},enumerable:!0,configurable:!0});Object.defineProperty(a.prototype,"stride",{get:function(){return this.elementStride*this.TypedArrayConstructor.BYTES_PER_ELEMENT},enumerable:!0,configurable:!0});a.ElementCount=1;return a}();f.BufferViewSingle=c});

@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u0628\u064a\u062a_Bookmarks____\u0644\u0627\u062d\u0642\u0629",goToBookmark:"\u0628\u064a\u062a_Go to bookmark_____\u0644\u0627\u062d\u0642\u0629",noBookmarksHeading:"\u0628\u064a\u062a_No Bookmarks_____\u0644\u0627\u062d\u0642\u0629",noBookmarksDescription:"\u0628\u064a\u062a_Add bookmarks to your map and they will appear here_________________\u0644\u0627\u062d\u0642\u0629.",disabledHeading:"\u0628\u064a\u062a_Bookmarks Disabled______\u0644\u0627\u062d\u0642\u0629",disabledDescription:"\u0628\u064a\u062a_Add a MapView to enable bookmarks___________\u0644\u0627\u062d\u0642\u0629."});

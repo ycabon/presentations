@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["dojo/_base/lang","dojo/io-query","./ArcGISService","../support/TileInfo","../support/TilemapCache"],function(f,g,h,e,k){return h.createSubclass([],{declaredClass:"esri.layers.mixins.ArcGISCachedService",properties:{minScale:{json:{origins:{service:{read:!1}}}},maxScale:{json:{origins:{service:{read:!1}}}},resampling:!0,supportsBlankTile:{value:!1,readOnly:!0,dependsOn:["version"],get:function(){return 10.2<=this.version}},tileInfo:{value:null,type:e,json:{read:function(a,b){var d=b.minScale?
+b.minScale:Infinity,c=b.maxScale?b.maxScale:-Infinity;return a?(a.lods=a.lods.filter(function(a){return a.scale<=d&&a.scale>=c}),e.fromJSON(a)):null}}},tilemapCache:{value:null,json:{read:{source:["capabilities"],reader:function(a,b){return b.capabilities&&-1<b.capabilities.indexOf("Tilemap")?new k({layer:this}):null}}}},version:{}},getTileUrl:function(a,b,d){var c=f.mixin({},this.parsedUrl.query,{token:this.token,blankTile:!this.tilemapCache&&this.resampling&&this.supportsBlankTile?!1:null});a=this.parsedUrl.path+
+"/tile/"+a+"/"+b+"/"+d;c=g.objectToQuery(c);return a+(c?"?"+c:"")}})});

@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports","tslib","../MatchRegistry"],a)})(function(a,d){Object.defineProperty(d,"__esModule",{value:!0});var e=a("tslib");a=function(a){function b(){return null!==a&&a.apply(this,arguments)||this}e.__extends(b,a);b.prototype.setDefaultProvider=function(a){this._defaultValue=a};b.prototype.register=function(c,b,d){return a.prototype.register.call(this,
+"string"===typeof c?function(a,b){return c===a}:c instanceof RegExp?function(a,b){return c?c.test(a):null}:c,b,d)};return b}(a("../MatchRegistry").default);d.default=a});

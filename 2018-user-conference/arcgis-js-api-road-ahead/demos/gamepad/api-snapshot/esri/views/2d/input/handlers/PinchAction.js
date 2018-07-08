@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/extendsHelper","../../../input/DragEventSeparator","../../../input/InputHandler"],function(d,g,h,k,l){Object.defineProperty(g,"__esModule",{value:!0});d=function(d){function b(b){var a=d.call(this,!0)||this;a.view=b;a.registerIncoming("drag",function(e){return a._handleDrag(e)});a.registerIncoming("pointer-down",function(e){return a.stopMomentumNavigation()});var f=a.view.navigation;a.dragEventSeparator=new k.DragEventSeparator({start:function(e,
+c){f.pinch.begin(a.view,c.data);c.stopPropagation()},update:function(e,c){f.pinch.update(a.view,c.data);c.stopPropagation()},end:function(e,c){f.pinch.end(a.view,c.data);c.stopPropagation()},condition:function(a){return 2<=a}});return a}h(b,d);b.prototype._handleDrag=function(b){this.dragEventSeparator.handle(b)};b.prototype.stopMomentumNavigation=function(){this.view.navigation.pinch.stopMomentumNavigation()};return b}(l.InputHandler);g.PinchRotateAndZoom=d});

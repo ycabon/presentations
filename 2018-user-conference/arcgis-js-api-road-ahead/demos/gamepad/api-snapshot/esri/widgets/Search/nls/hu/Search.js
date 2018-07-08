@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Keres\u00e9s",searchButtonTitle:"Keres\u00e9s",clearButtonTitle:"Keres\u00e9s t\u00f6rl\u00e9se",placeholder:"C\u00edm vagy hely keres\u00e9se",searchIn:"Keres\u00e9s ebben",all:"Mind",allPlaceholder:"C\u00edm vagy hely keres\u00e9se",emptyValue:"Adjon meg egy keres\u00e9si kifejez\u00e9st.",untitledResult:"C\u00edm n\u00e9lk\u00fcl",untitledSource:"C\u00edm n\u00e9lk\u00fcli forr\u00e1s",noResults:"Nincs eredm\u00e9ny",noResultsFound:"\u00ed_There were no results found_________\u0151.",
+noResultsFoundForValue:"\u00ed_There were no results found for {value}_____________\u0151.",showMoreResults:"T\u00f6bb eredm\u00e9ny megjelen\u00edt\u00e9se",hideMoreResults:"Elrejt\u00e9s",searchResult:"Keres\u00e9si eredm\u00e9ny",moreResultsHeader:"T\u00f6bb eredm\u00e9ny",esriLocatorName:"Esri World Geocoder",useCurrentLocation:"\u00ed_Use current location_______\u0151"});

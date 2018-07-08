@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports dojo/has ../../../../core/nextTick ../../../../core/promiseUtils ../../engine/webgl/rendererInfoUtils".split(" "),function(h,k,l,c,b,m){Object.defineProperty(k,"__esModule",{value:!0});k.createOrReuseTileRenderer=function(d,e,f){if(d&&d.supportsRenderer(e))return b.create(function(a){return c(function(){return a(d)})});var g=f.layer,g=l("esri-webgl")&&l("esri-featurelayer-webgl")&&m.isRendererWebGLCompatible(e)&&g.capabilities.query.supportsQuantization;switch(e.type){case "class-breaks":case "simple":case "unique-value":if(g)return b.create(function(a){c(function(){return h(["./tileRenderers/SymbolTileRenderer"],
+a)})}).then(function(a){return a.default}).then(function(a){return new a(f)});break;case "heatmap":return b.create(function(a){c(function(){return h(["./tileRenderers/HeatmapTileRenderer"],a)})}).then(function(a){return a.default}).then(function(a){return new a(f)})}return b.resolve(null)}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","dojo/aspect","dojo/Deferred","dojo/when"],function(h,k,l,m){function g(){k.after(this.constructor._meta,"ctor",this._pluginsHandler,!0);this._plugins={}}g.prototype={addPlugin:function(a,b){var d=this,c=this._plugins,e=new l;try{h([a],function(f){a in c?e.resolve({id:c[a].declaredId||a.replace(/\//g,".")}):(c[a]=f,m(f.add(d,b),function(){var b={id:f.declaredId||a.replace(/\//g,".")};d.emit("plugin-add",b);e.resolve(b)},function(a){e.reject(a)}))})}catch(f){e.reject(f)}return e.promise},
+removePlugin:function(a){if(a in this._plugins){var b=this._plugins[a];b.remove(this);delete this._plugins[a];this.emit("plugin-remove",{id:b.declaredId||a.replace(/\//g,".")})}},_pluginsHandler:function(){Array.prototype.slice.call(arguments).some(function(a){if(a&&a.plugins&&a.plugins instanceof Array){a=a.plugins;var b,d,c;for(c=0;c<a.length;c++)b=a[c],d=b instanceof Object?b.id:b,this.addPlugin(d,b.options);return!0}},this)}};return g});

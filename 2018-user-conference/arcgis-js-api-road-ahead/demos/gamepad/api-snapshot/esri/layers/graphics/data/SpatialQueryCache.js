@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","@dojo/shim/iterator","../../../core/LRUMap"],function(d,e,f,g){Object.defineProperty(e,"__esModule",{value:!0});var h=function(){return function(b,a,c){this.cache=b;this.key=a;this.result=c}}(),c=new g(2E6,{disposeFunction:function(b,a){a.cache.has(a.key)&&a.cache.delete(a.key)},sizeOfFunction:function(b){return b.result.size}});d=function(){function b(){this._id=b.id_gen++ +"$$";this._keys=new Set}Object.defineProperty(b.prototype,"size",{get:function(){return this._keys.size},
+enumerable:!0,configurable:!0});b.prototype.clear=function(){var a=this;0!==this._keys.size&&(f.forOf(this._keys,function(b){c.delete(a._getGlobalKey(b))}),this._keys.clear())};b.prototype.delete=function(a){this._keys.delete(a);return c.delete(this._getGlobalKey(a))};b.prototype.get=function(a){return(a=c.get(this._getGlobalKey(a)))&&a.result};b.prototype.has=function(a){return c.has(this._getGlobalKey(a))};b.prototype.set=function(a,b){this._keys.add(a);c.set(this._getGlobalKey(a),new h(this,a,
+b));return this};b.prototype._getGlobalKey=function(a){return this._id+a};b.id_gen=0;return b}();e.default=d});

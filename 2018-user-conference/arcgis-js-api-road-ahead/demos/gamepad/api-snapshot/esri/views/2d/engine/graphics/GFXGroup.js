@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/extendsHelper","dojo/_base/lang","../Container"],function(g,h,d,e,f){return function(c){function a(){return null!==c&&c.apply(this,arguments)||this}d(a,c);a.prototype.attach=function(b){this.g=b.surface.createGroup();return c.prototype.attach.call(this,b)};a.prototype.detach=function(b){c.prototype.detach.call(this,b);this.g.destroy();this.g=null};a.prototype.prepareChildrenRenderParameters=function(b){return e.mixin({},b,{surface:this.g})};
+a.prototype.detachChild=function(b,a){return b.detach(a)};a.prototype.attachChild=function(b,a){return b.attach(a)};a.prototype.renderChild=function(a,c){return a.processRender(c)};return a}(f)});

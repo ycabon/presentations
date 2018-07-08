@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports"],a)})(function(a,c){Object.defineProperty(c,"__esModule",{value:!0});var d=/[[\]{}()|\/\\^$.*+?]/g,e=/[&<]/g,f=/[&<>'"]/g,g={"\x26":"\x26amp;","\x3c":"\x26lt;","\x3e":"\x26gt;",'"':"\x26quot;","'":"\x26#39;"};c.escapeRegExp=function(b){return b?b.replace(d,"\\$\x26"):b};c.escapeXml=function(b,a){void 0===a&&
+(a=!0);return b?b.replace(a?f:e,function(a){return g[a]}):b}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/extendsHelper ../../state/controllers/global/ZoomStepController ../../state/controllers/local/ZoomStepController ../../state/helpers/PickingHelper ../../../input/InputHandler ../../../input/handlers/support".split(" "),function(a,e,g,h,k,l,m,n){Object.defineProperty(e,"__esModule",{value:!0});a=function(a){function d(f,c){var b=a.call(this,!0)||this;b.view=f;b.pickingHelper=new l.PickingHelper(f);b.registerIncoming("double-click",c,function(a){return b.handleDoubleClick(a)});
+return b}g(d,a);d.prototype.handleDoubleClick=function(a){var c=a.data;if(n.eventMatchesPointerAction(c,"primary")){var b=this.view.state.isGlobal?new h.ZoomStepController(this.view,this.pickingHelper,"animation"):new k.ZoomStepController(this.view,this.pickingHelper,"animation");this.view.state.switchCameraController(b);b.zoomStep(Math.log(.5)/Math.log(.6),[c.x,this.view.height-c.y]);a.stopPropagation()}};return d}(m.InputHandler);e.DoubleClickZoom=a});

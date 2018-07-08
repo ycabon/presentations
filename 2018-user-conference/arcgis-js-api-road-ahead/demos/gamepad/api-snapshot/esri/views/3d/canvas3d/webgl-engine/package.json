@@ -1,0 +1,6 @@
+{
+    "name": "engine",
+    "description": "low level api",
+    "version": "1.0",
+    "dojoBuild": "engine.profile.js"
+}

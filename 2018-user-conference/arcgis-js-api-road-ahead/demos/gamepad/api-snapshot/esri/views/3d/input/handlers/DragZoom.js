@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/extendsHelper ../../state/controllers/global/ZoomController ../../state/controllers/local/ZoomController ../../state/helpers/PickingHelper ../../../input/InputHandler ../../../input/handlers/support".split(" "),function(a,f,g,h,k,l,m,n){Object.defineProperty(f,"__esModule",{value:!0});a=function(a){function e(b,c,p){var d=a.call(this,!0)||this;d.view=b;d.pointerAction=c;d.pickingHelper=new l.PickingHelper(b);d.registerIncoming("drag",p,function(b){return d.handleDrag(b)});
+return d}g(e,a);e.prototype.handleDrag=function(b){var c=b.data;if(!(1<c.pointers.size)&&n.eventMatchesMousePointerAction(b.data,this.pointerAction)){var a=[c.center.x,this.view.height-c.center.y];switch(c.action){case "start":this.cameraController=this.view.state.isGlobal?new h.ZoomController(this.view,this.pickingHelper):new k.ZoomController(this.view,this.pickingHelper);this.view.state.switchCameraController(this.cameraController);this.cameraController.begin(a);break;case "update":this.cameraController.update(a);
+break;case "end":this.cameraController.end(),this.cameraController=null}b.stopPropagation()}};return e}(m.InputHandler);f.DragZoom=a});

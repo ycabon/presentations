@@ -1,0 +1,20 @@
+$compass_size: 20px !default;
+
+@mixin compass() {
+  .esri-compass {
+    border-radius: 50%;
+  }
+
+  .esri-compass--active {
+    background-color: $selected_background_color;
+  }
+
+  .esri-compass .esri-compass__icon {
+    font-size: $compass_size;
+  }
+  // TODO: update with correctly sized compass SVG.
+}
+
+@if $include_Compass == true {
+  @include compass();
+}

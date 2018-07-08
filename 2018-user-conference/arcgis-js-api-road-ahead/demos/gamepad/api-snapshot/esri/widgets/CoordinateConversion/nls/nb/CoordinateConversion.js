@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({abbreviatedDirections:{north:"N",south:"S",east:"E",west:"W"},addConversion:"Legg til konvertering",captureMode:"Opptaksmodus",changeCoordinateDisplay:"Endre koordinatvisning",convert:"Konverter",conversionOutputSuffix:"utdata for konvertering",copySuccessMessage:"Koordinat kopiert til utklippstavlen",defaultPattern:"Tilbakestill til standard",goTo:"G\u00e5 til lokasjon",inputCoordTitle:"Inndatakoordinat",invalidCoordinate:"Ugyldig koordinat",liveMode:"Live-modus",locationOffBasemap:"Inndatakoordinaten er utenfor bakgrunnskartets utstrekning",
+noBasemap:"Ingen bakgrunnskart.",noLocation:"Ingen posisjon",removeConversion:"Fjern konvertering",selectFormat:"Velg format",settingsTitle:"Formatinnstillinger"});

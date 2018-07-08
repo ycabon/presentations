@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","../request","../core/promiseUtils","./Layer","./support/TileInfo"],function(c,e,f,g,h){return g.createSubclass({properties:{attributionDataUrl:null,tileInfo:h},getTileUrl:function(b,a,c){},fetchTile:function(b,a,c,d){b=this.getTileUrl(b,a,c);a={responseType:"image",allowImageDataAccess:d&&d.allowImageDataAccess||!1};d&&d.timestamp&&(a.query={_ts:d.timestamp});return"string"===typeof b?e(b,a).then(function(a){return a.data}):b.then(function(a){return e(a,{responseType:"image"})}).then(function(a){return a.data})},
+importLayerViewModule:function(b){switch(b.type){case "2d":return f.create(function(a){c(["../views/2d/layers/TiledLayerView2D"],a)});case "3d":return f.create(function(a){c(["../views/3d/layers/TileLayerView3D"],a)})}}})});

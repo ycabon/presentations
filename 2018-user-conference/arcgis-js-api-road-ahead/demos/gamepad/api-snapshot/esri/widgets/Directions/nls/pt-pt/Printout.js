@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({printNotes:"Introduzir notas aqui",printDisclaimer:"As dire\u00e7\u00f5es s\u00e3o fornecidas apenas para fins relacionados com planeamento e encontram-se sujeitas aos \x3ca href\x3d'http://www.esri.com/legal/licensing-translations' target\x3d'_blank'\x3etermos de utiliza\u00e7\u00e3o da Esri\x3c/a\x3e. Podem existir condi\u00e7\u00f5es din\u00e2micas de estradas que originem diferen\u00e7as de precis\u00e3o em rela\u00e7\u00e3o \u00e0s suas dire\u00e7\u00f5es, e estas t\u00eam de ser consideradas juntamente com sinais e restri\u00e7\u00f5es legais. O risco associado \u00e0 utiliza\u00e7\u00e3o \u00e9 totalmente assumido por si.",
+printoutError:"Parece ter ocorrido um erro."});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","./tsSupport/generatorHelper","./tsSupport/awaiterHelper","./promiseUtils"],function(h,b,d,e,g){Object.defineProperty(b,"__esModule",{value:!0});b.forEach=function(a,b,f){return e(this,void 0,void 0,function(){return d(this,function(c){switch(c.label){case 0:return[4,g.eachAlways(a.map(function(a,c){return b.apply(f,[a,c])}))];case 1:return c.sent(),[2]}})})};b.map=function(a,b,f){return e(this,void 0,void 0,function(){var c;return d(this,function(d){switch(d.label){case 0:return[4,
+g.eachAlways(a.map(function(a,c){return b.apply(f,[a,c])}))];case 1:return c=d.sent(),[2,c.map(function(a){return a.value})]}})})};b.maybe=function(a){return e(this,void 0,void 0,function(){return d(this,function(b){return[2,a.then(function(a){return{ok:!0,value:a}}).catch(function(a){return{ok:!1,error:a}})]})})};b.assertMaybe=function(a){if(!0===a.ok)return a.value;throw a.error;}});

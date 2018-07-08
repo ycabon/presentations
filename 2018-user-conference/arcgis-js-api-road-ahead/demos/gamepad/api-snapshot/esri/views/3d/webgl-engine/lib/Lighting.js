@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","./gl-matrix"],function(g,h,d){var e=d.vec3d,b=d.vec4d;return function(){function c(a,c,d,f){this.ambient=b.create(a);this.diffuse=b.create(c);this.specular=b.create(d);this.direction=e.create(f)}c.prototype.setUniforms=function(a){a.setUniform4fv("lightAmbient",this.ambient);a.setUniform4fv("lightDiffuse",this.diffuse);a.setUniform4fv("lightSpecular",this.specular);a.setUniform3fv("lightDirection",this.direction)};c.prototype.set=function(a){a.ambient&&b.set(a.ambient,
+this.ambient);a.diffuse&&b.set(a.diffuse,this.diffuse);a.specular&&b.set(a.specular,this.specular);a.direction&&e.set(a.direction,this.direction)};c.prototype.get=function(){return{ambient:this.ambient,diffuse:this.diffuse,specular:this.specular,direction:this.direction}};return c}()});

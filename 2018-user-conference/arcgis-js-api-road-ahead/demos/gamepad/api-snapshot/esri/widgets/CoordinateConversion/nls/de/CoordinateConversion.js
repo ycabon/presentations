@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({abbreviatedDirections:{north:"N",south:"S",east:"O",west:"W"},addConversion:"Konvertierung hinzuf\u00fcgen",captureMode:"Erfassungsmodus",changeCoordinateDisplay:"Koordinatenanzeige \u00e4ndern",convert:"Konvertieren",conversionOutputSuffix:"Konvertierungsergebnis",copySuccessMessage:"In Zwischenablage kopierte Koordinate",defaultPattern:"Auf Standard zur\u00fccksetzen",goTo:"Zu Position wechseln",inputCoordTitle:"Eingabe-Koordinate",invalidCoordinate:"Ung\u00fcltige Koordinate",liveMode:"Live-Modus",
+locationOffBasemap:"Die Eingabe-Koordinate befindet sich au\u00dferhalb der Grundkartenausdehnung.",noBasemap:"Keine Grundkarte.",noLocation:"Keine Position",removeConversion:"Konvertierung entfernen",selectFormat:"Format ausw\u00e4hlen",settingsTitle:"Formateinstellungen"});

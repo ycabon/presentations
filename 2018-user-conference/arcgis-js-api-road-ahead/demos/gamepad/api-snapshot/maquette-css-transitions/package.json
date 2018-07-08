@@ -1,0 +1,119 @@
+{
+  "_from": "maquette-css-transitions@~1.1.0",
+  "_id": "maquette-css-transitions@1.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-dQObmIYOKqcyzn3hoqDPNV2iLqUiUHF5CwBh0LEbVK3/d1tskJGHeX5y1Ejqqt27rCCsWxW3BEJWVdVU8vKBRw==",
+  "_location": "/maquette-css-transitions",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "maquette-css-transitions@~1.1.0",
+    "name": "maquette-css-transitions",
+    "escapedName": "maquette-css-transitions",
+    "rawSpec": "~1.1.0",
+    "saveSpec": null,
+    "fetchSpec": "~1.1.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/maquette-css-transitions/-/maquette-css-transitions-1.1.0.tgz",
+  "_shasum": "b990b3efbe589954e243c7e92e4983591012e33d",
+  "_spec": "maquette-css-transitions@~1.1.0",
+  "_where": "/Users/lloy3317/Git/Development/Devtopia/arcgis-js-api-4",
+  "author": {
+    "name": "AFAS Software"
+  },
+  "browser": "./dist/maquette-css-transitions.umd.js",
+  "bugs": {
+    "url": "https://github.com/AFASSoftware/maquette-css-transitions/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "CSS transitions for maquette",
+  "devDependencies": {
+    "@types/sinon": "2.3.6",
+    "@types/sinon-chai": "2.7.29",
+    "mocha": "4.0.1",
+    "rollup": "0.50.0",
+    "sinon": "4.0.1",
+    "sinon-chai": "2.14.0",
+    "typescript-assistant": "0.23.2",
+    "uglify-js": "3.1.5"
+  },
+  "homepage": "https://github.com/AFASSoftware/maquette-css-transitions#readme",
+  "keywords": [
+    "maquette",
+    "css",
+    "transitions",
+    "animated"
+  ],
+  "license": "MIT",
+  "main": "./dist/maquette-css-transitions.cjs.js",
+  "module": "./dist/maquette-css-transitions.js",
+  "name": "maquette-css-transitions",
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "typings/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "lcov",
+      "html",
+      "text-summary"
+    ],
+    "cache": true,
+    "temp-directory": "./build/nyc/cache",
+    "all": true,
+    "check-coverage": true,
+    "report-dir": "./build/coverage",
+    "es-module": false,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "watermarks": {
+      "lines": [
+        75,
+        100
+      ],
+      "functions": [
+        75,
+        100
+      ],
+      "branches": [
+        75,
+        100
+      ],
+      "statements": [
+        75,
+        100
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AFASSoftware/maquette-css-transitions.git"
+  },
+  "scripts": {
+    "assist": "tsa assist",
+    "ci": "tsa ci",
+    "clean": "tsa clean",
+    "coverage-show": "opn build/coverage/index.html",
+    "dist": "tsc -p ./src/tsconfig.json && rollup -c && uglifyjs ./dist/maquette-css-transitions.umd.js -c unsafe=true -m -o ./dist/maquette-css-transitions.umd.min.js",
+    "fix": "tsa fix",
+    "postcheckout": "tsa post-checkout || exit 0",
+    "postmerge": "tsa post-merge || exit 0",
+    "precommit": "tsa pre-commit",
+    "prepublishOnly": "tsa clean && npm -s run dist",
+    "prepush": "npm run dist && tsa pre-push",
+    "release": "tsa release",
+    "test": "tsa ci"
+  },
+  "typings": "./dist/index.d.ts",
+  "version": "1.1.0"
+}

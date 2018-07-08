@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define({printNotes:"Masukkan catatan di sini",printDisclaimer:"Arah diberikan hanya untuk tujuan perencanaan dan mematuhi \x3ca href\x3d'http://www.esri.com/legal/licensing-translations' target\x3d'_blank'\x3eketentuan penggunaan Esri\x3c/a\x3e. Kondisi jalan yang dinamis dapat menyebabkan akurasi yang berbeda dengan arah Anda serta harus diperhitungkan juga rambu-rambu dan peraturan hukum. Anda menanggung semua risiko penggunaan.",printoutError:"Sepertinya ada kesalahan."});

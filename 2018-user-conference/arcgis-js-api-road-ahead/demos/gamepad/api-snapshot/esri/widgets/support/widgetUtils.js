@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+define(["require","exports","dojo/has","../../core/Logger","maquette-css-transitions"],function(f,c,g,e,d){Object.defineProperty(c,"__esModule",{value:!0});e.getLogger("esri.widgets.support.widgetUtils");c.join=function(){for(var a=[],b=0;b<arguments.length;b++)a[b]=arguments[b];return a.join(" ")};c.isRtl=function(){return"rtl"===document.dir};c.storeNode=function(a){this[a.getAttribute("data-node-ref")]=a};c.cssTransition=function(a,b){return("enter"===a?d.createEnterCssTransition:d.createExitCssTransition)(b)}});

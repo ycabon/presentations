@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.8/esri/copyright.txt for details.
+//>>built
+var merge=function(a,d,c){a&&"object"==typeof a&&(d=d||{},Object.keys(a).forEach(function(b){void 0!==a[b]&&(d[b]=a[b])},c||this));return d},mixin=function(a,d){return merge(d,a.prototype)},geomToBbox=function(a){function d(a,b){a.length||(a=[Infinity,Infinity,-Infinity,-Infinity]);b[0]<a[0]&&(a[0]=b[0]);b[1]<a[1]&&(a[1]=b[1]);3<b.length?(b[2]>a[2]&&(a[2]=b[2]),b[3]>a[3]&&(a[3]=b[3])):(b[0]>a[2]&&(a[2]=b[0]),b[1]>a[3]&&(a[3]=b[1]));return a}var c=[];if(null!=a.x&&null!=a.y)return[a.x,a.y,a.x,a.y];
+if(a.points){var b=a.points,f=b.length;for(a=-1;++a<f;)c=d(c,b[a]);return c}if(a.paths||a.rings){var b=a.paths||a.rings,f=b.length,e,g,h;for(a=-1;++a<f;)for(g=b[a],e=g.length,h=-1;++h<e;)c=d(c,g[h]);return c}if(a.xmin)return[a.xmin,a.ymin,a.xmax,a.ymax];if(a.vertexAttributes){b=a.vertexAttributes.position;f=a.faces;e=[0,0];if(f)for(a=0;a<f.length;a+=3)g=3*f[a],e[0]=b[g+0],e[1]=b[g+1],c=d(c,e);else for(a=0;a<b.length;a+=3)e[0]=b[a+0],e[1]=b[a+1],c=d(c,e);return c}};

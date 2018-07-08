@@ -1,0 +1,82 @@
+{
+  "_from": "@dojo/shim@~2.0.0",
+  "_id": "@dojo/shim@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-v/zD80U+8ajNrfxwKH6yy//l6ATQ/LzeYVXcqmBkGQ0NA4vDujLS3ceF3Wt0XL55JXLUYaVSQACMqy0H9DPD3A==",
+  "_location": "/@dojo/shim",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@dojo/shim@~2.0.0",
+    "name": "@dojo/shim",
+    "escapedName": "@dojo%2fshim",
+    "scope": "@dojo",
+    "rawSpec": "~2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "~2.0.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@dojo/shim/-/shim-2.0.0.tgz",
+  "_shasum": "472fe5c0f10640f94ea065b405dfa34cf32fc462",
+  "_spec": "@dojo/shim@~2.0.0",
+  "_where": "/Users/lloy3317/Git/Development/Devtopia/arcgis-js-api-4",
+  "bugs": {
+    "url": "https://github.com/dojo/shim/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "intersection-observer": "0.4.2",
+    "pepjs": "0.4.2",
+    "tslib": "~1.8.0",
+    "web-animations-js": "2.3.1"
+  },
+  "deprecated": false,
+  "description": "Modules that provide modular fills of ES6+ functionality",
+  "devDependencies": {
+    "@dojo/loader": "^2.0.0",
+    "@types/glob": "~5.0.0",
+    "@types/grunt": "~0.4.0",
+    "@types/node": "~9.6.5",
+    "grunt": "~1.0.1",
+    "grunt-dojo2": "latest",
+    "grunt-tslint": "5.0.1",
+    "husky": "0.14.3",
+    "intern": "~4.1.0",
+    "lint-staged": "6.0.0",
+    "prettier": "1.9.2",
+    "tslint": "5.8.0",
+    "typescript": "~2.6.1"
+  },
+  "engines": {
+    "npm": ">=3.0.0"
+  },
+  "homepage": "https://dojo.io",
+  "license": "BSD-3-Clause",
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "main": "main.js",
+  "name": "@dojo/shim",
+  "peerDependencies": {
+    "@dojo/has": "^2.0.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4,
+    "useTabs": true,
+    "parser": "typescript",
+    "printWidth": 120,
+    "arrowParens": "always"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dojo/shim.git"
+  },
+  "version": "2.0.0"
+}

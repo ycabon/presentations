@@ -1,15 +1,21 @@
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>Client-side filtering</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/themes/dark-blue/main.css">
   <link rel="stylesheet" href="./app.css">
-  <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/themes/dark-red/main.css">
 </head>
 
 <body>
   <div id="applicationDiv">
-    <div id="viewDiv"></div>
+    <div id="viewDiv">
+      <div id="topbar" class="esri-widget">
+        <button class="action-button esri-icon-polygon" id="polygonButton" type="button" title="Draw polygon"></button>
+        <button class="action-button esri-icon-trash" id="resetBtn" type="button" title="Clear graphics"></button>
+      </div>
+    </div>
     <div id="sliderContainer" class="esri-widget">
       <span id="sliderValue"></span>
       <div id="sliderInnerContainer">
@@ -23,18 +29,18 @@
       </div>
       <div id="playButton" class="esri-widget esri-widget-button toggle-button">
         <div>
-          <span class="toggle-button-icon esri-icon-play" aria-label="play icon"></span>          Play</div>
+          <span class="toggle-button-icon esri-icon-play" aria-label="play icon"></span> Play</div>
         <div>
-          <span class="toggle-button-icon esri-icon-pause" aria-label="pause icon"></span>          Pause</div>
+          <span class="toggle-button-icon esri-icon-pause" aria-label="pause icon"></span> Pause</div>
       </div>
     </div>
   </div>
   <script>
     var dojoConfig = { has: { "esri-featurelayer-webgl": 1, "esri-workers-for-memory-layers": 1 }, deps: ["./app.js"] };
   </script>
-  <!-- <script src="https://js.arcgis.com/4.8/"></script> -->
-  <script src="http://ycabon.esri.com/arcgis-js-api-4/test-apps/dojo-config.js"></script>
-  <script src="http://ycabon.esri.com/arcgis-js-api-4/dojo/dojo.js"></script>
+  <script src="https://jsdev.arcgis.com/4.9/"></script>
+  <!-- <script src="http://ycabon.esri.com/arcgis-js-api-4/test-apps/dojo-config.js"></script>
+  <script src="http://ycabon.esri.com/arcgis-js-api-4/dojo/dojo.js"></script> -->
 </body>
 
 </html>

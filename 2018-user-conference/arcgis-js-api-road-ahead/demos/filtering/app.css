@@ -138,3 +138,28 @@ body {
   box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.75);
   transform: translate3d(-50%, -125%, 0);
 }
+
+#topbar {
+  padding: 4px;
+}
+
+.action-button {
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  color: #69dcff;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+}
+
+.action-button:hover,
+.action-button:focus {
+  background-color: #151515;
+  color: #e9faff;
+}
+
+.active {
+  background: #69dcff;
+  color: #282828;
+}

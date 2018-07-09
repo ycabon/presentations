@@ -1,0 +1,21 @@
+{
+  "name": "arcgis-js-api-road-ahead",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/arcgis-js-api": "^4.8.0",
+    "arcgis-js-api": "^4.8.0",
+    "prettier": "^1.13.7",
+    "typescript": "^2.9.2"
+  },
+  "devDependencies": {
+    "tslint": "^5.10.0",
+    "tslint-plugin-prettier": "^1.3.0"
+  }
+}

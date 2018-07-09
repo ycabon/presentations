@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    // "**/node_modules": true,
+    "**/.git": true,
+    "**/.DS_Store": true,
+    // "**/**.js": { "when": "$(basename).d.ts" },
+    "**/*.js": { "when": "$(basename).ts" }
+  },
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.DS_Store": true,
+    // "**/**.js": { "when": "$(basename).d.ts" },
+    "**/*.js": { "when": "$(basename).ts" }
+  },
+
+  "tslint.enable": true
+}

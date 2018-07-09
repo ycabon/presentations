@@ -118,7 +118,7 @@ const url =
   await watchUtils.whenDefinedOnce(layerView, "featuresView.tileRenderer");
 
   const featuresView: {
-    setVisibility(visibilities: { id: number; visibility: boolean }[]): void;
+    setVisibility(showFeatures: number[], hideFeatures: number[]): void;
   } = (layerView as any).featuresView.tileRenderer.featuresView;
   let hiddenIds: number[] = [];
 
@@ -151,12 +151,7 @@ const url =
         where: `year <> ${value}`
       })
       .then(objectIds => {
-        featuresView.setVisibility(
-          hiddenIds.map(id => ({ id, visibility: true }))
-        );
-        featuresView.setVisibility(
-          objectIds.map(id => ({ id, visibility: false }))
-        );
+        featuresView.setVisibility(hiddenIds, objectIds);
         hiddenIds = objectIds;
       })
       .catch(error => {

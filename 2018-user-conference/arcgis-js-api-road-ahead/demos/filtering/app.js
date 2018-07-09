@@ -57,8 +57,7 @@ define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/rende
                 where: "year <> " + value
             })
                 .then(function (objectIds) {
-                featuresView.setVisibility(hiddenIds.map(function (id) { return ({ id: id, visibility: true }); }));
-                featuresView.setVisibility(objectIds.map(function (id) { return ({ id: id, visibility: false }); }));
+                featuresView.setVisibility(hiddenIds, objectIds);
                 hiddenIds = objectIds;
             })
                 .catch(function (error) {

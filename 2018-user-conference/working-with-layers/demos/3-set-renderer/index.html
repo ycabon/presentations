@@ -17,10 +17,16 @@
   <script>
     var dojoConfig = {
       has: {
-        "esri-featurelayer-webgl": 0
+        "esri-featurelayer-webgl": 1
       },
       deps: ["./app.js"]
     };
+  </script>
+  <script>
+    let title = window.location.href;
+    title = title.substring(title.indexOf("demos/") + 6);
+    title = title.substring(0, title.indexOf("/"));
+    document.title = title;
   </script>
   <script src="https://js.arcgis.com/4.8/"></script>
 </head>

@@ -1,8 +1,6 @@
 import WebMap = require("esri/WebMap");
 import FeatureLayer = require("esri/layers/FeatureLayer");
 import MapView = require("esri/views/MapView");
-import Legend = require("esri/widgets/Legend");
-import LayerList = require("esri/widgets/LayerList");
 
 const map = new WebMap({
   basemap: "topo-vector"
@@ -17,25 +15,12 @@ const view = new MapView({
 
 const layer = new FeatureLayer({
   url:
-    "https://services.arcgis.com/V6ZHFr6zdgG0/arcgis/rest/services/Trees/FeatureServer/0"
+    "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
 });
 
 map.add(layer);
 
+// Load the layer then zoom the mapview to the layer's extent
 layer.load().then(() => {
   view.extent = layer.fullExtent;
 });
-
-view.ui.add(
-  new Legend({
-    view
-  }),
-  "bottom-left"
-);
-
-view.ui.add(
-  new LayerList({
-    view
-  }),
-  "top-right"
-);

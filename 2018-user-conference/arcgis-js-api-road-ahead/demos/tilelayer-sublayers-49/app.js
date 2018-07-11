@@ -5,7 +5,8 @@ define(["require", "exports", "esri/WebMap", "esri/layers/Layer", "esri/portal/P
     // Published Layer: http://jsapi.maps.arcgis.com/home/item.html?id=744010c91dae4f7f9d8cf8a3a76599c7
     Layer.fromPortalItem({
         portalItem: new PortalItem({
-            id: "0fd7dc7c53c34b03ab4475d895b5d32f"
+            // id: "0fd7dc7c53c34b03ab4475d895b5d32f"
+            id: "7837e613092d4fefa93f5f47427f9338"
             // id: "744010c91dae4f7f9d8cf8a3a76599c7"
         })
     }).then(function (layer) {

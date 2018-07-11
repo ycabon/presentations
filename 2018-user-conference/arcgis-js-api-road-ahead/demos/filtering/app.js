@@ -70,7 +70,7 @@ define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/rende
                     style: "solid",
                     outline: {
                         color: "white",
-                        width: 2
+                        width: "1px"
                     }
                 })
             });
@@ -106,6 +106,15 @@ define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/rende
             drawPolygonButton.addEventListener("click", function () {
                 // set the sketch to create a polygon geometry
                 sketchViewModel.create("polygon");
+                setActiveButton(this);
+            });
+            //***************************************
+            // activate the sketch to create a polygon
+            //***************************************
+            var drawCircleButton = document.getElementById("circleButton");
+            drawCircleButton.addEventListener("click", function () {
+                // set the sketch to create a polygon geometry
+                sketchViewModel.create("circle");
                 setActiveButton(this);
             });
             //**************

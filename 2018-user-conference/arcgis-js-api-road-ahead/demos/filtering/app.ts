@@ -205,7 +205,7 @@ const url =
         style: "solid",
         outline: {
           color: "white",
-          width: 2
+          width: "1px"
         }
       })
     });
@@ -252,6 +252,20 @@ const url =
     ) {
       // set the sketch to create a polygon geometry
       sketchViewModel.create("polygon");
+      setActiveButton(this);
+    });
+
+    //***************************************
+    // activate the sketch to create a polygon
+    //***************************************
+    const drawCircleButton = document.getElementById(
+      "circleButton"
+    ) as HTMLButtonElement;
+    drawCircleButton.addEventListener("click", function(
+      this: HTMLButtonElement
+    ) {
+      // set the sketch to create a polygon geometry
+      sketchViewModel.create("circle");
       setActiveButton(this);
     });
 

@@ -1,4 +1,4 @@
-# Esri User Conference 2018 - 
+# Esri User Conference 2018 - Working with Layers
 
 - [1. Creating a FeatureLayer](http://ycabon.github.io/presentations/2018-user-conference/working-with-layers/demos/1-creating-a-feature-layer/)
 - [2. Add Widgets](http://ycabon.github.io/presentations/2018-user-conference/working-with-layers/demos/2-add-widgets/)

@@ -1,4 +1,4 @@
-define(["require", "exports", "esri/WebMap", "esri/layers/FeatureLayer", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/LayerList", "esri/renderers", "esri/symbols", "esri/PopupTemplate"], function (require, exports, WebMap, FeatureLayer, MapView, Legend, LayerList, renderers_1, symbols_1, PopupTemplate) {
+define(["require", "exports", "esri/WebMap", "esri/layers/FeatureLayer", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/LayerList", "esri/renderers", "esri/symbols", "esri/PopupTemplate", "esri/layers/support/LabelClass"], function (require, exports, WebMap, FeatureLayer, MapView, Legend, LayerList, renderers_1, symbols_1, PopupTemplate, LabelClass) {
     Object.defineProperty(exports, "__esModule", { value: true });
     var map = new WebMap({
         basemap: "topo-vector"
@@ -61,14 +61,26 @@ define(["require", "exports", "esri/WebMap", "esri/layers/FeatureLayer", "esri/v
                 labelExpression: "{C_Storage}",
                 labelPlacement: "above-center",
                 symbol: new symbols_1.TextSymbol({
-                    color: "black",
-                    haloColor: "white",
+                    color: "white",
+                    haloColor: "rgba(0, 0, 0, 0.65)",
                     haloSize: 1
                 }),
                 where: "C_Storage > 0"
             }
         ]
     });
+    layer.labelingInfo = [
+        new LabelClass({
+            labelExpression: "{C_Storage}",
+            labelPlacement: "above-center",
+            symbol: new symbols_1.TextSymbol({
+                color: "black",
+                haloColor: "white",
+                haloSize: 1
+            }),
+            where: "C_Storage > 0"
+        })
+    ];
     map.add(layer);
     layer.load().then(function () {
         view.extent = layer.fullExtent;

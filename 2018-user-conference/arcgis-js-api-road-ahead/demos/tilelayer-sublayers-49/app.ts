@@ -12,8 +12,8 @@ const map = new WebMap();
 
 Layer.fromPortalItem({
   portalItem: new PortalItem({
-    // id: "0fd7dc7c53c34b03ab4475d895b5d32f"
-    id: "7837e613092d4fefa93f5f47427f9338"
+    id: "0fd7dc7c53c34b03ab4475d895b5d32f"
+    // id: "7837e613092d4fefa93f5f47427f9338"
     // id: "744010c91dae4f7f9d8cf8a3a76599c7"
   })
 }).then(function(layer) {
@@ -22,7 +22,9 @@ Layer.fromPortalItem({
 
 const view = new MapView({
   container: "viewDiv",
-  map: map
+  map: map,
+  center: [-100, 40],
+  zoom: 3
 });
 
 const layerlist = new LayerList({

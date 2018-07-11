@@ -6,6 +6,7 @@ import LayerList = require("esri/widgets/LayerList");
 import { SimpleRenderer } from "esri/renderers";
 import { SimpleMarkerSymbol, TextSymbol } from "esri/symbols";
 import PopupTemplate = require("esri/PopupTemplate");
+import LabelClass = require("esri/layers/support/LabelClass");
 
 const map = new WebMap({
   basemap: "topo-vector"
@@ -71,14 +72,27 @@ const layer = new FeatureLayer({
       labelExpression: "{C_Storage}",
       labelPlacement: "above-center",
       symbol: new TextSymbol({
-        color: "black",
-        haloColor: "white",
+        color: "white",
+        haloColor: "rgba(0, 0, 0, 0.65)",
         haloSize: 1
       }),
       where: "C_Storage > 0"
     }
   ]
 });
+
+layer.labelingInfo = [
+  new LabelClass({
+    labelExpression: "{C_Storage}",
+    labelPlacement: "above-center",
+    symbol: new TextSymbol({
+      color: "black",
+      haloColor: "white",
+      haloSize: 1
+    }),
+    where: "C_Storage > 0"
+  })
+];
 
 map.add(layer);
 

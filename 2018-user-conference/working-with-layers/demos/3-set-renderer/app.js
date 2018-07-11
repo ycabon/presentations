@@ -10,19 +10,20 @@ define(["require", "exports", "esri/WebMap", "esri/layers/FeatureLayer", "esri/v
         center: [-100, 40]
     });
     var layer = new FeatureLayer({
-        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
-        renderer: new renderers_1.SimpleRenderer({
-            symbol: new symbols_1.SimpleMarkerSymbol({
-                style: "circle",
-                size: 6,
-                color: "forestgreen",
-                outline: {
-                    color: "white",
-                    width: 1
-                }
-            })
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+    });
+    var renderer = new renderers_1.SimpleRenderer({
+        symbol: new symbols_1.SimpleMarkerSymbol({
+            style: "circle",
+            size: 6,
+            color: "forestgreen",
+            outline: {
+                color: "white",
+                width: 1
+            }
         })
     });
+    layer.renderer = renderer;
     map.add(layer);
     layer.load().then(function () {
         view.extent = layer.fullExtent;

@@ -16,10 +16,12 @@ define(["require", "exports", "esri/WebMap", "esri/layers/FeatureLayer", "esri/v
     layer.load().then(function () {
         view.extent = layer.fullExtent;
     });
-    view.ui.add(new Legend({
+    var legend = new Legend({
         view: view
-    }), "bottom-left");
-    view.ui.add(new LayerList({
+    });
+    var layerList = new LayerList({
         view: view
-    }), "top-right");
+    });
+    view.ui.add(legend, "bottom-left");
+    view.ui.add(layerList, "top-right");
 });

@@ -19,19 +19,22 @@ const view = new MapView({
 
 const layer = new FeatureLayer({
   url:
-    "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
-  renderer: new SimpleRenderer({
-    symbol: new SimpleMarkerSymbol({
-      style: "circle",
-      size: 6,
-      color: "forestgreen",
-      outline: {
-        color: "white",
-        width: 1
-      }
-    })
+    "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+});
+
+const renderer = new SimpleRenderer({
+  symbol: new SimpleMarkerSymbol({
+    style: "circle",
+    size: 6,
+    color: "forestgreen",
+    outline: {
+      color: "white",
+      width: 1
+    }
   })
 });
+
+layer.renderer = renderer;
 
 map.add(layer);
 

@@ -37,8 +37,8 @@ const layer = new FeatureLayer({
         // https://developers.arcgis.com/javascript/latest/api-reference/esri-renderers-Renderer.html#RealWorldSize
         type: "size",
         field: "Crown_Base",
-        valueUnit: "meters",
-        valueRepresentation: "diameter"
+        valueUnit: "feet",
+        valueRepresentation: "radius"
       },
       {
         // Color the tree symbol continously based on its carbon storage

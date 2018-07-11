@@ -26,16 +26,13 @@ layer.load().then(() => {
   view.extent = layer.fullExtent;
 });
 
-view.ui.add(
-  new Legend({
-    view
-  }),
-  "bottom-left"
-);
+const legend = new Legend({
+  view
+});
 
-view.ui.add(
-  new LayerList({
-    view
-  }),
-  "top-right"
-);
+const layerList = new LayerList({
+  view
+});
+
+view.ui.add(legend, "bottom-left");
+view.ui.add(layerList, "top-right");

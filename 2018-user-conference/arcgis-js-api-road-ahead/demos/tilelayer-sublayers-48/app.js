@@ -14,9 +14,7 @@ define(["require", "exports", "esri/WebMap", "esri/layers/Layer", "esri/portal/P
     });
     var view = new MapView({
         container: "viewDiv",
-        map: map,
-        zoom: 3,
-        center: [-100, 40]
+        map: map
     });
     var layerlist = new LayerList({
         view: view

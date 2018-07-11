@@ -22,9 +22,7 @@ Layer.fromPortalItem({
 
 const view = new MapView({
   container: "viewDiv",
-  map: map,
-  zoom: 3,
-  center: [-100, 40]
+  map: map
 });
 
 const layerlist = new LayerList({

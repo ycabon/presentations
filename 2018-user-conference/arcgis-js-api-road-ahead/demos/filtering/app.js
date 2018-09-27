@@ -81,7 +81,7 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             sketchViewModel.on("rotate", updateQuery);
             sketchViewModel.on("reshape", updateQuery);
             sketchViewModel.on("update-complete", updateGraphic);
-            sketchViewModel.on("update-cancel", updateGraphic);
+            sketchViewModel.on("update-cancel", done);
             function updateQuery(event) {
                 query.geometry = event.geometry;
                 invalidateQuery();
@@ -96,6 +96,9 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             function updateGraphic(event) {
                 event.graphic.geometry = event.geometry;
                 drawLayer.add(event.graphic);
+                editGraphic = null;
+            }
+            function done(event) {
                 editGraphic = null;
             }
             //***************************************

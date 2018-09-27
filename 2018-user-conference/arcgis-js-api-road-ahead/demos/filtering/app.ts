@@ -148,6 +148,7 @@ const url =
     await layerView.queryObjectIds({ where: "1=1" })
   );
 
+  // Experimental, not final API, don't use in prod
   const featuresView: {
     setVisibility(showFeatures: number[], hideFeatures: number[]): void;
   } = (layerView as any).tileRenderer.featuresView;
@@ -216,6 +217,7 @@ const url =
     sketchViewModel.on("rotate", updateQuery);
     sketchViewModel.on("reshape", updateQuery);
     sketchViewModel.on("update-complete", updateGraphic);
+    sketchViewModel.on("update-cancel", done);
 
     function updateQuery(event: any) {
       query.geometry = event.geometry;
@@ -234,6 +236,10 @@ const url =
     function updateGraphic(event: any) {
       event.graphic.geometry = event.geometry;
       drawLayer.add(event.graphic);
+      editGraphic = null;
+    }
+
+    function done(event: any) {
       editGraphic = null;
     }
 

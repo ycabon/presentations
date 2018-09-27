@@ -33,10 +33,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/renderers", "esri/symbols", "esri/WebMap", "esri/widgets/Legend", "esri/widgets/Expand", "esri/views/MapView", "esri/core/watchUtils", "esri/layers/GraphicsLayer", "esri/widgets/Sketch/SketchViewModel", "esri/Graphic", "esri/tasks/support/Query", "@dojo/core/util", "@dojo/shim/Set"], function (require, exports, esriConfig, CSVLayer, renderers_1, symbols_1, WebMap, Legend, Expand, MapView, watchUtils, GraphicsLayer, SketchViewModel, Graphic, Query, util_1, Set_1) {
+define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/symbols", "esri/WebMap", "esri/widgets/Legend", "esri/widgets/Expand", "esri/views/MapView", "esri/core/watchUtils", "esri/layers/GraphicsLayer", "esri/widgets/Sketch/SketchViewModel", "esri/Graphic", "esri/tasks/support/Query", "@dojo/framework/core/util", "@dojo/framework/shim/Set"], function (require, exports, CSVLayer, renderers_1, symbols_1, WebMap, Legend, Expand, MapView, watchUtils, GraphicsLayer, SketchViewModel, Graphic, Query, util_1, Set_1) {
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
-    esriConfig.request.corsEnabledServers.push("https://arcgis.github.io");
     var map;
     var view;
     var url = "https://arcgis.github.io/arcgis-samples-javascript/sample-data/hurricanes.csv";
@@ -261,11 +260,10 @@ define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/rende
                             style: "card"
                         })
                     }), "top-left");
-                    setupDrawing();
                     return [4 /*yield*/, view.whenLayerView(layer)];
                 case 1:
                     layerView = (_b.sent());
-                    return [4 /*yield*/, watchUtils.whenDefinedOnce(layerView, "featuresView.tileRenderer")];
+                    return [4 /*yield*/, watchUtils.whenDefinedOnce(layerView, "tileRenderer")];
                 case 2:
                     _b.sent();
                     slider = document.getElementById("slider");
@@ -281,7 +279,7 @@ define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/rende
                     return [4 /*yield*/, layerView.queryObjectIds({ where: "1=1" })];
                 case 4:
                     allObjectIds = new (_a.apply(Set_1.default, [void 0, _b.sent()]))();
-                    featuresView = layerView.featuresView.tileRenderer.featuresView;
+                    featuresView = layerView.tileRenderer.featuresView;
                     oldHiddenIds = [];
                     query = new Query();
                     invalidateQuery = util_1.throttleAfter(function () {
@@ -302,6 +300,7 @@ define(["require", "exports", "esri/config", "esri/layers/CSVLayer", "esri/rende
                             console.error(error);
                         });
                     }, 50);
+                    setupDrawing();
                     return [2 /*return*/];
             }
         });

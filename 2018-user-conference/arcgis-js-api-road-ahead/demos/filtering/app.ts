@@ -1,4 +1,3 @@
-import esriConfig = require("esri/config");
 import CSVLayer = require("esri/layers/CSVLayer");
 import { UniqueValueRenderer } from "esri/renderers";
 import { PictureMarkerSymbol, SimpleFillSymbol } from "esri/symbols";
@@ -12,10 +11,8 @@ import GraphicsLayer = require("esri/layers/GraphicsLayer");
 import SketchViewModel = require("esri/widgets/Sketch/SketchViewModel");
 import Graphic = require("esri/Graphic");
 import Query = require("esri/tasks/support/Query");
-import { throttleAfter } from "@dojo/core/util";
-import Set from "@dojo/shim/Set";
-
-esriConfig.request.corsEnabledServers.push("https://arcgis.github.io");
+import { throttleAfter } from "@dojo/framework/core/util";
+import Set from "@dojo/framework/shim/Set";
 
 let map: WebMap;
 let view: MapView;
@@ -126,11 +123,9 @@ const url =
     "top-left"
   );
 
-  setupDrawing();
-
   const layerView = (await view.whenLayerView(layer)) as CSVLayerView;
 
-  await watchUtils.whenDefinedOnce(layerView, "featuresView.tileRenderer");
+  await watchUtils.whenDefinedOnce(layerView, "tileRenderer");
 
   const slider = document.getElementById("slider") as HTMLInputElement;
   const sliderValue = document.getElementById("sliderValue");
@@ -155,7 +150,7 @@ const url =
 
   const featuresView: {
     setVisibility(showFeatures: number[], hideFeatures: number[]): void;
-  } = (layerView as any).featuresView.tileRenderer.featuresView;
+  } = (layerView as any).tileRenderer.featuresView;
   let oldHiddenIds: number[] = [];
   const query = new Query();
   const invalidateQuery = throttleAfter(() => {
@@ -177,6 +172,8 @@ const url =
         console.error(error);
       });
   }, 50);
+
+  setupDrawing();
 
   /**
    * Sets the current visualized construction year.
@@ -219,7 +216,6 @@ const url =
     sketchViewModel.on("rotate", updateQuery);
     sketchViewModel.on("reshape", updateQuery);
     sketchViewModel.on("update-complete", updateGraphic);
-    sketchViewModel.on("update-cancel", updateGraphic);
 
     function updateQuery(event: any) {
       query.geometry = event.geometry;

@@ -33,7 +33,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/symbols", "esri/WebMap", "esri/widgets/Legend", "esri/widgets/Expand", "esri/views/MapView", "esri/core/watchUtils", "esri/layers/GraphicsLayer", "esri/widgets/Sketch/SketchViewModel", "esri/Graphic", "esri/tasks/support/Query", "@dojo/framework/core/util", "@dojo/framework/shim/Set"], function (require, exports, CSVLayer, renderers_1, symbols_1, WebMap, Legend, Expand, MapView, watchUtils, GraphicsLayer, SketchViewModel, Graphic, Query, util_1, Set_1) {
+define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/symbols", "esri/WebMap", "esri/widgets/Legend", "esri/widgets/Expand", "esri/views/MapView", "esri/core/watchUtils", "esri/layers/GraphicsLayer", "esri/widgets/Sketch/SketchViewModel", "esri/tasks/support/Query", "@dojo/framework/core/util", "@dojo/framework/shim/Set"], function (require, exports, CSVLayer, renderers_1, symbols_1, WebMap, Legend, Expand, MapView, watchUtils, GraphicsLayer, SketchViewModel, Query, util_1, Set_1) {
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
     var map;
@@ -57,13 +57,13 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
         }
         function setupDrawing() {
             view.ui.add(document.getElementById("topbar"), "top-right");
-            var editGraphic;
             // GraphicsLayer to hold graphics created via sketch view model
             var drawLayer = new GraphicsLayer();
             map.add(drawLayer);
             // create a new sketch view model
             var sketchViewModel = new SketchViewModel({
                 view: view,
+                layer: drawLayer,
                 polygonSymbol: new symbols_1.SimpleFillSymbol({
                     color: "rgba(0,0,0,0)",
                     style: "solid",
@@ -74,32 +74,18 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                 })
             });
             setUpClickHandler();
-            sketchViewModel.on("create-complete", addGraphic);
-            sketchViewModel.on("create", updateQuery);
-            sketchViewModel.on("scale", updateQuery);
-            sketchViewModel.on("move", updateQuery);
-            sketchViewModel.on("rotate", updateQuery);
-            sketchViewModel.on("reshape", updateQuery);
-            sketchViewModel.on("update-complete", updateGraphic);
-            sketchViewModel.on("update-cancel", done);
-            function updateQuery(event) {
-                query.geometry = event.geometry;
+            sketchViewModel.on("create", function (event) {
+                updateQuery(event.graphic.geometry);
+            });
+            sketchViewModel.on("update", function (event) {
+                updateQuery(event.graphics[0].geometry);
+            });
+            function updateQuery(geometry) {
+                if (geometry.type !== "polygon") {
+                    return;
+                }
+                query.geometry = geometry;
                 invalidateQuery();
-            }
-            function addGraphic(event) {
-                var graphic = new Graphic({
-                    geometry: event.geometry,
-                    symbol: sketchViewModel.graphic.symbol
-                });
-                drawLayer.add(graphic);
-            }
-            function updateGraphic(event) {
-                event.graphic.geometry = event.geometry;
-                drawLayer.add(event.graphic);
-                editGraphic = null;
-            }
-            function done(event) {
-                editGraphic = null;
             }
             //***************************************
             // activate the sketch to create a polygon
@@ -107,7 +93,9 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             var drawPolygonButton = document.getElementById("polygonButton");
             drawPolygonButton.addEventListener("click", function () {
                 // set the sketch to create a polygon geometry
-                sketchViewModel.create("polygon");
+                sketchViewModel.create({
+                    tool: "polygon"
+                });
                 setActiveButton(this);
             });
             //***************************************
@@ -116,7 +104,9 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             var drawCircleButton = document.getElementById("circleButton");
             drawCircleButton.addEventListener("click", function () {
                 // set the sketch to create a polygon geometry
-                sketchViewModel.create("circle");
+                sketchViewModel.create({
+                    tool: "circle"
+                });
                 setActiveButton(this);
             });
             //**************
@@ -132,6 +122,7 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             function setActiveButton(selectedButton) {
                 // focus the view to activate keyboard shortcuts for sketching
                 view.focus();
+                drawLayer.removeAll();
                 var elements = document.getElementsByClassName("active");
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.remove("active");
@@ -151,15 +142,10 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                         for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
                             var graphic = results_1[_i].graphic;
                             if (graphic.layer === drawLayer) {
-                                // Check if we're already editing a graphic
-                                if (!editGraphic) {
-                                    // Save a reference to the graphic we intend to update
-                                    editGraphic = graphic;
-                                    // Remove the graphic from the GraphicsLayer
-                                    // Sketch will handle displaying the graphic while being updated
-                                    drawLayer.remove(editGraphic);
-                                    sketchViewModel.update(editGraphic);
-                                }
+                                sketchViewModel.update({
+                                    tool: "move",
+                                    graphics: [graphic]
+                                });
                                 return;
                             }
                         }
@@ -285,7 +271,7 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                     featuresView = layerView.tileRenderer.featuresView;
                     oldHiddenIds = [];
                     query = new Query();
-                    invalidateQuery = util_1.throttleAfter(function () {
+                    invalidateQuery = util_1.throttle(function () {
                         layer
                             .queryObjectIds(query)
                             .then(function (objectIds) {

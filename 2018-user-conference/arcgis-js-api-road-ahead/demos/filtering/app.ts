@@ -9,9 +9,8 @@ import CSVLayerView = require("esri/views/layers/CSVLayerView");
 import watchUtils = require("esri/core/watchUtils");
 import GraphicsLayer = require("esri/layers/GraphicsLayer");
 import SketchViewModel = require("esri/widgets/Sketch/SketchViewModel");
-import Graphic = require("esri/Graphic");
 import Query = require("esri/tasks/support/Query");
-import { throttleAfter } from "@dojo/framework/core/util";
+import { throttle } from "@dojo/framework/core/util";
 import Set from "@dojo/framework/shim/Set";
 
 let map: WebMap;
@@ -154,7 +153,7 @@ const url =
   } = (layerView as any).tileRenderer.featuresView;
   let oldHiddenIds: number[] = [];
   const query = new Query();
-  const invalidateQuery = throttleAfter(() => {
+  const invalidateQuery = throttle(() => {
     layer
       .queryObjectIds(query)
       .then(objectIds => {
@@ -189,7 +188,6 @@ const url =
   function setupDrawing() {
     view.ui.add(document.getElementById("topbar"), "top-right");
 
-    let editGraphic: Graphic;
     // GraphicsLayer to hold graphics created via sketch view model
     const drawLayer = new GraphicsLayer();
 
@@ -198,6 +196,7 @@ const url =
     // create a new sketch view model
     const sketchViewModel = new SketchViewModel({
       view: view,
+      layer: drawLayer,
       polygonSymbol: new SimpleFillSymbol({
         color: "rgba(0,0,0,0)",
         style: "solid",
@@ -210,37 +209,20 @@ const url =
 
     setUpClickHandler();
 
-    sketchViewModel.on("create-complete", addGraphic);
-    sketchViewModel.on("create", updateQuery);
-    sketchViewModel.on("scale", updateQuery);
-    sketchViewModel.on("move", updateQuery);
-    sketchViewModel.on("rotate", updateQuery);
-    sketchViewModel.on("reshape", updateQuery);
-    sketchViewModel.on("update-complete", updateGraphic);
-    sketchViewModel.on("update-cancel", done);
+    sketchViewModel.on("create", event => {
+      updateQuery(event.graphic.geometry);
+    });
 
-    function updateQuery(event: any) {
-      query.geometry = event.geometry;
+    sketchViewModel.on("update", event => {
+      updateQuery(event.graphics[0].geometry);
+    });
+
+    function updateQuery(geometry: any) {
+      if (geometry.type !== "polygon") {
+        return;
+      }
+      query.geometry = geometry;
       invalidateQuery();
-    }
-
-    function addGraphic(event: any) {
-      const graphic = new Graphic({
-        geometry: event.geometry,
-        symbol: sketchViewModel.graphic.symbol
-      });
-
-      drawLayer.add(graphic);
-    }
-
-    function updateGraphic(event: any) {
-      event.graphic.geometry = event.geometry;
-      drawLayer.add(event.graphic);
-      editGraphic = null;
-    }
-
-    function done(event: any) {
-      editGraphic = null;
     }
 
     //***************************************
@@ -253,7 +235,9 @@ const url =
       this: HTMLButtonElement
     ) {
       // set the sketch to create a polygon geometry
-      sketchViewModel.create("polygon");
+      sketchViewModel.create({
+        tool: "polygon"
+      });
       setActiveButton(this);
     });
 
@@ -267,7 +251,9 @@ const url =
       this: HTMLButtonElement
     ) {
       // set the sketch to create a polygon geometry
-      sketchViewModel.create("circle");
+      sketchViewModel.create({
+        tool: "circle"
+      });
       setActiveButton(this);
     });
 
@@ -285,6 +271,7 @@ const url =
     function setActiveButton(selectedButton?: HTMLButtonElement) {
       // focus the view to activate keyboard shortcuts for sketching
       view.focus();
+      drawLayer.removeAll();
       const elements = document.getElementsByClassName("active");
       for (let i = 0; i < elements.length; i++) {
         elements[i].classList.remove("active");
@@ -306,15 +293,10 @@ const url =
 
           for (const { graphic } of results) {
             if (graphic.layer === drawLayer) {
-              // Check if we're already editing a graphic
-              if (!editGraphic) {
-                // Save a reference to the graphic we intend to update
-                editGraphic = graphic;
-                // Remove the graphic from the GraphicsLayer
-                // Sketch will handle displaying the graphic while being updated
-                drawLayer.remove(editGraphic);
-                sketchViewModel.update(editGraphic);
-              }
+              sketchViewModel.update({
+                tool: "move",
+                graphics: [graphic]
+              });
               return;
             }
           }

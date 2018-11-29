@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>Client-side filtering</title>
-  <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/themes/dark-blue/main.css">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/themes/dark-blue/main.css">
   <link rel="stylesheet" href="./app.css">
 </head>
 
@@ -35,11 +35,12 @@
       has: {
         // This flag enables workers to be used by layers
         // experimental, don't use in prod.
-        // The layer never stops that worker, so if the layer removed, the worker lives
+        // The layer never stops that worker, so if the layer removed, the worker continues to live,
+        // creating a memory leak
         "esri-workers-for-memory-layers": 1
       }, deps: ["./app.js"] };
   </script>
-  <script src="https://js.arcgis.com/4.9/"></script>
+  <script src="https://js.arcgis.com/4.10/"></script>
 </body>
 
 </html>

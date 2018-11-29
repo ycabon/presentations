@@ -10,10 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@dojo/framework": "^3.0.1",
-    "@types/arcgis-js-api": "^4.8.1",
-    "arcgis-js-api": "^4.9.0",
-    "prettier": "^1.14.3",
-    "typescript": "^3.1.1"
+    "@types/arcgis-js-api": "^4.9.0",
+    "prettier": "^1.15.2",
+    "typescript": "^3.1.6"
   },
   "devDependencies": {
     "tslint": "^5.11.0",

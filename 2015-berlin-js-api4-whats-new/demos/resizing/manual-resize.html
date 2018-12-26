@@ -7,12 +7,12 @@
     <link href="../commons/css/style.css" rel="stylesheet" type="text/css">
     <link href="//js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
     <script src="../commons/dojo-config.js"></script>
-    
+
     <style>
       body.light {
         background: #fff;
       }
-    
+
       #Div {
         background: url(../commons/images/noisy_grid_light.png) #fff;
         width: 400px;
@@ -24,23 +24,23 @@
       }
     </style>
 
-    <script src="//js.arcgis.com/4.0beta1/"></script>   
+    <script src="//js.arcgis.com/4.0beta1/"></script>
     <script src="../commons/libs/yui/yui/yui-min.js"></script>
-    
+
     <script type="text/javascript">
       var map, view, resizer;
-      
+
       require([
         "dojo/query",
         "dojo/dom-attr",
-        
+
         "esri/Map",
-        
+
         "esri/geometry/SpatialReference",
         "esri/geometry/Extent",
 
         "esri/views/MapView",
-        
+
         "dojo/domReady!"
       ], function(
         domQuery, domAttr,
@@ -48,11 +48,11 @@
         SpatialReference, Extent,
         MapView
       ) {
-        
+
         //----------------------------------
         //  Setup the map
         //----------------------------------
-        
+
         map = new Map({
           basemap: 'satellite',
           extent: {
@@ -75,16 +75,16 @@
           width: 400,
           height: 400
         });
-        
+
         bookmark = new Extent(
           -13864470.529727584,2843782.8381202556,-7465774.017920611,6366001.101500241,
           new SpatialReference(102100)
         );
-        
+
         //----------------------------------
         //  Setup the ui
         //----------------------------------
-        
+
         var resizeAlignSelect = domQuery("#resizeAlignSelect")[0];
         var preserveExtentChk = domQuery("#preserveExtentChk")[0];
         var mapExtent;
@@ -120,14 +120,14 @@
         view._widthSetter = view._heightSetter = null;
         //
       });
-        
-      
+
+
     </script>
   </head>
-  
+
   <body class="light">
     <div class="application">
-      <div id="viewDiv" style="top: 200px; left: 200px; width: 400px, height: 400px">
+      <div id="viewDiv" style="top: 200px; left: 200px; width: 400px; height: 400px">
         <div class="logo-med"></div>
       </div>
       <div class="applicationBar">
@@ -159,8 +159,8 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </body>
-  
+
 </html>

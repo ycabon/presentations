@@ -10,8 +10,6 @@ import watchUtils = require("esri/core/watchUtils");
 import GraphicsLayer = require("esri/layers/GraphicsLayer");
 import SketchViewModel = require("esri/widgets/Sketch/SketchViewModel");
 import Query = require("esri/tasks/support/Query");
-import { throttle } from "@dojo/framework/core/util";
-import Set from "@dojo/framework/shim/Set";
 
 let map: WebMap;
 let view: MapView;
@@ -143,37 +141,26 @@ const url =
 
   await watchUtils.whenFalseOnce(layerView, "updating");
 
-  const allObjectIds = new Set(
-    await layerView.queryObjectIds({ where: "1=1" })
-  );
-
-  // Experimental, not final API, don't use in prod
   const featuresView: {
-    setVisibility(showFeatures: number[], hideFeatures: number[]): void;
-  } = (layerView as any).tileRenderer.featuresView;
-  let oldHiddenIds: number[] = [];
-  const query = new Query();
-  const invalidateQuery = throttle(() => {
-    layer
-      .queryObjectIds(query)
-      .then(objectIds => {
-        const visibleSet = new Set(objectIds);
-        const hiddenIds: number[] = [];
-        allObjectIds.forEach(oid => {
-          if (!visibleSet.has(oid)) {
-            hiddenIds.push(oid);
-          }
-        });
+    filter: Partial<
+      Pick<
+        Query,
+        "geometry" | "spatialRelationship" | "where" | "distance" | "units"
+      >
+    >;
+  } = layerView as any;
 
-        featuresView.setVisibility(oldHiddenIds, hiddenIds);
-        oldHiddenIds = hiddenIds;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, 50);
+  const query: Partial<
+    Pick<
+      Query,
+      "geometry" | "spatialRelationship" | "where" | "distance" | "units"
+    >
+  > = {};
 
   setupDrawing();
+  const invalidateQuery = () => {
+    featuresView.filter = query;
+  };
 
   /**
    * Sets the current visualized construction year.
@@ -235,9 +222,7 @@ const url =
       this: HTMLButtonElement
     ) {
       // set the sketch to create a polygon geometry
-      sketchViewModel.create({
-        tool: "polygon"
-      });
+      sketchViewModel.create("polygon");
       setActiveButton(this);
     });
 
@@ -251,9 +236,7 @@ const url =
       this: HTMLButtonElement
     ) {
       // set the sketch to create a polygon geometry
-      sketchViewModel.create({
-        tool: "circle"
-      });
+      sketchViewModel.create("circle");
       setActiveButton(this);
     });
 
@@ -293,9 +276,8 @@ const url =
 
           for (const { graphic } of results) {
             if (graphic.layer === drawLayer) {
-              sketchViewModel.update({
-                tool: "move",
-                graphics: [graphic]
+              sketchViewModel.update([graphic], {
+                tool: "move"
               });
               return;
             }

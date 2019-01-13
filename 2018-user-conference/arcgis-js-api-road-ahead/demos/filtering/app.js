@@ -33,7 +33,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/symbols", "esri/WebMap", "esri/widgets/Legend", "esri/widgets/Expand", "esri/views/MapView", "esri/core/watchUtils", "esri/layers/GraphicsLayer", "esri/widgets/Sketch/SketchViewModel", "esri/tasks/support/Query", "@dojo/framework/core/util", "@dojo/framework/shim/Set"], function (require, exports, CSVLayer, renderers_1, symbols_1, WebMap, Legend, Expand, MapView, watchUtils, GraphicsLayer, SketchViewModel, Query, util_1, Set_1) {
+define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/symbols", "esri/WebMap", "esri/widgets/Legend", "esri/widgets/Expand", "esri/views/MapView", "esri/core/watchUtils", "esri/layers/GraphicsLayer", "esri/widgets/Sketch/SketchViewModel"], function (require, exports, CSVLayer, renderers_1, symbols_1, WebMap, Legend, Expand, MapView, watchUtils, GraphicsLayer, SketchViewModel) {
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
     var map;
@@ -93,9 +93,7 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             var drawPolygonButton = document.getElementById("polygonButton");
             drawPolygonButton.addEventListener("click", function () {
                 // set the sketch to create a polygon geometry
-                sketchViewModel.create({
-                    tool: "polygon"
-                });
+                sketchViewModel.create("polygon");
                 setActiveButton(this);
             });
             //***************************************
@@ -104,9 +102,7 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
             var drawCircleButton = document.getElementById("circleButton");
             drawCircleButton.addEventListener("click", function () {
                 // set the sketch to create a polygon geometry
-                sketchViewModel.create({
-                    tool: "circle"
-                });
+                sketchViewModel.create("circle");
                 setActiveButton(this);
             });
             //**************
@@ -142,9 +138,8 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                         for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
                             var graphic = results_1[_i].graphic;
                             if (graphic.layer === drawLayer) {
-                                sketchViewModel.update({
-                                    tool: "move",
-                                    graphics: [graphic]
+                                sketchViewModel.update([graphic], {
+                                    tool: "move"
                                 });
                                 return;
                             }
@@ -153,9 +148,9 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                 });
             }
         }
-        var layer, layerView, slider, sliderValue, allObjectIds, _a, featuresView, oldHiddenIds, query, invalidateQuery;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var layer, layerView, slider, sliderValue, featuresView, query, invalidateQuery;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     layer = new CSVLayer({
                         title: "Hurricanes",
@@ -251,10 +246,10 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                     }), "top-left");
                     return [4 /*yield*/, view.whenLayerView(layer)];
                 case 1:
-                    layerView = (_b.sent());
+                    layerView = (_a.sent());
                     return [4 /*yield*/, watchUtils.whenDefinedOnce(layerView, "tileRenderer")];
                 case 2:
-                    _b.sent();
+                    _a.sent();
                     slider = document.getElementById("slider");
                     sliderValue = document.getElementById("sliderValue");
                     // const playButton = document.getElementById("playButton");
@@ -263,33 +258,13 @@ define(["require", "exports", "esri/layers/CSVLayer", "esri/renderers", "esri/sy
                     slider.addEventListener("change", inputHandler);
                     return [4 /*yield*/, watchUtils.whenFalseOnce(layerView, "updating")];
                 case 3:
-                    _b.sent();
-                    _a = Set_1.default.bind;
-                    return [4 /*yield*/, layerView.queryObjectIds({ where: "1=1" })];
-                case 4:
-                    allObjectIds = new (_a.apply(Set_1.default, [void 0, _b.sent()]))();
-                    featuresView = layerView.tileRenderer.featuresView;
-                    oldHiddenIds = [];
-                    query = new Query();
-                    invalidateQuery = util_1.throttle(function () {
-                        layer
-                            .queryObjectIds(query)
-                            .then(function (objectIds) {
-                            var visibleSet = new Set_1.default(objectIds);
-                            var hiddenIds = [];
-                            allObjectIds.forEach(function (oid) {
-                                if (!visibleSet.has(oid)) {
-                                    hiddenIds.push(oid);
-                                }
-                            });
-                            featuresView.setVisibility(oldHiddenIds, hiddenIds);
-                            oldHiddenIds = hiddenIds;
-                        })
-                            .catch(function (error) {
-                            console.error(error);
-                        });
-                    }, 50);
+                    _a.sent();
+                    featuresView = layerView;
+                    query = {};
                     setupDrawing();
+                    invalidateQuery = function () {
+                        featuresView.filter = query;
+                    };
                     return [2 /*return*/];
             }
         });

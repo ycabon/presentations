@@ -2,7 +2,7 @@
 
 <h1 style="text-align: left; font-size: 80px;">Visualizing Temporal Data</h1>
 <h2 style="text-align: left; font-size: 60px;">with the ArcGIS API for JavaScript</h2>
-<p style="text-align: left; font-size: 30px;">Yann Cabon | Richie Carmichael</p>
+<p style="text-align: left; font-size: 30px;">Yann Cabon | Richie Carmichael | Jeremy Bartley</p>
 <p style="text-align: left; font-size: 30px;"><a href="https://github.com/ycabon">@ycabon</a> | <a href="https://github.com/richiecarmichael">@richiecarmichael</a></p>
     <p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
 

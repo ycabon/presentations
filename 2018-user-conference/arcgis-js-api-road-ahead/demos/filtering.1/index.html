@@ -1,0 +1,48 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Client-side filtering</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/themes/dark-blue/main.css">
+  <link rel="stylesheet" href="./app.css">
+</head>
+
+<body>
+  <div id="applicationDiv">
+    <div id="viewDiv">
+      <div id="topbar" class="esri-widget">
+        <button class="action-button esri-icon-radio-unchecked" id="circleButton" type="button" title="Draw circle"></button>
+        <button class="action-button esri-icon-polygon" id="polygonButton" type="button" title="Draw polygon"></button>
+        <button class="action-button esri-icon-trash" id="resetBtn" type="button" title="Clear graphics"></button>
+      </div>
+    </div>
+    <div id="sliderContainer" class="esri-widget">
+      <span id="sliderValue"></span>
+      <div id="sliderInnerContainer">
+        <div id="sliderLabels">
+          <span>1950</span>
+          <span>2017</span>
+        </div>
+        <div id="rangeWrapper">
+          <input id="slider" type="range" min="1950" max="2015" step="1" value="1984" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var dojoConfig = {
+      has: {
+        // This flag enables workers to be used by layers
+        // experimental, don't use in prod.
+        // The layer never stops that worker, so if the layer removed, the worker continues to live,
+        // creating a memory leak
+        // "esri-workers-for-memory-layers": 1
+      }, deps: ["./app.js"] };
+  </script>
+  <script src="./dojo-config.js"></script>
+  <script src="http://ycabon.esri.com/arcgis-js-api-4/dojo/dojo.js"></script>
+  <!-- <script src="https://js.arcgis.com/4.10/"></script> -->
+</body>
+
+</html>

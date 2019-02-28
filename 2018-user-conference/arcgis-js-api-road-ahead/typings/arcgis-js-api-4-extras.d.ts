@@ -15,9 +15,21 @@ declare namespace __esriExtras {
     showHandles: boolean;
     colorStops: __esri.HeatmapColorStop[];
   }
+
+  class FeatureFilter {
+    constructor(options?: Partial<Pick<FeatureFilter, "definitionExpression" | "spatialRelationship" | "geometry">>);
+    definitionExpression: string;
+    spatialRelationship: string;
+    geometry: __esri.Geometry;
+  }
 }
 
 declare module "esri/widgets/HeatmapSlider" {
   import HeatmapSlider = __esriExtras.HeatmapSlider;
   export = HeatmapSlider;
+}
+
+declare module "esri/layers/support/FeatureFilter" {
+  import FeatureFilter = __esriExtras.FeatureFilter;
+  export = FeatureFilter;
 }

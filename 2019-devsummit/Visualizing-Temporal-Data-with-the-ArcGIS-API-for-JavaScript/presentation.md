@@ -48,16 +48,20 @@ const view = new MapView();
 
 - Showing a webmap with time
 - 3.x API
-
+  - Mature time support
+  - Distinquition between map and layer time.
+  - Dynamic Map Service, Image Service and Feature Service layers supported time.
+  
 ---
 
 ## Time support in 4.x - Roadmap
 
 - What do we ship in 4.11:
-  - time metadata
-  - server-side queries
-  - client-side queries
-  - client-side filtering
+  - Time metadata
+  - Feature Layers
+    - Server-side queries
+    - Client-side queries
+    - Client-side filtering (for display)
 - Next
   - Image layers: TileLayer, MapImageLayer, ImageryLayer
   - New TimeSlider widget
@@ -88,7 +92,7 @@ TODO Yann - New York demo
 
 ## Client-side - Building a timeline chart
 
-TODO Richie
+TODO Richie - Yet Another Quake Demo
 
 ---
 

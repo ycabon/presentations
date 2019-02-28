@@ -34,6 +34,70 @@ const view = new MapView();
 
 ---
 
+# Agenda
+
+- Time support in the JS API
+- New APIs in 4.11
+- Visualizing time using Arcade
+- Visualizing time using Visual Variables
+-
+
+---
+
+## Time support in ArcGIS
+
+- Showing a webmap with time
+- 3.x API
+
+---
+
+## Time support in 4.x - Roadmap
+
+- What do we ship in 4.11:
+  - time metadata
+  - server-side queries
+  - client-side queries
+  - client-side filtering
+- Next
+  - Image layers: TileLayer, MapImageLayer, ImageryLayer
+  - New TimeSlider widget
+
+---
+
+## New APIs in 4.11
+
+TODO slides: Richie
+  slide about the time metatata.
+  query
+  etc..
+
+---
+
+## Visualizing time using Arcade: Color earthquakes by age.
+
+TODO Jeremy
+
+---
+
+## Visualizing time using Visual Variables
+
+TODO Yann - New York demo
+
+
+---
+
+## Client-side - Building a timeline chart
+
+TODO Richie
+
+---
+
+## Client-side - Building a heatmap chart using clientside statistics.
+
+TODO Kristian
+
+---
+
 <!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-5.png" -->
 
 ## Headline Here 5

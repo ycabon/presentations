@@ -34,42 +34,111 @@ const view = new MapView();
 
 ---
 
-# Agenda
+## Agenda
 
 - Time support in the JS API
 - New APIs in 4.11
 - Visualizing time using Arcade
 - Visualizing time using Visual Variables
--
 
 ---
 
-## Time support in ArcGIS
+### Time support in ArcGIS
 
 - Showing a webmap with time
 - 3.x API
 
 ---
 
-## Time support in 4.x - Roadmap
+### Time support in 4.x - Roadmap
 
 - What do we ship in 4.11:
-  - time metadata
-  - server-side queries
-  - client-side queries
-  - client-side filtering
+  - Time metadata
+    - TimeInfo
+    - TimeExtent
+  - Server-side queries
+  - Client-side queries
+  - Client-side filtering (display)
 - Next
   - Image layers: TileLayer, MapImageLayer, ImageryLayer
   - New TimeSlider widget
 
 ---
 
-## New APIs in 4.11
+### Time Metadata
 
-TODO slides: Richie
-  slide about the time metatata.
-  query
-  etc..
+```js
+var featureLayer = new FeatureLayer({
+    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
+});
+featureLayer.load().then(function(){
+    // Get time metadata.
+    var timeInfo = featureLayer.timeInfo;
+
+    console.log(`
+        Start Field: ${timeInfo.startField}       // date_
+        End Field:   ${timeInfo.endField}         // null
+        Time Extent:
+            Start:   ${timeInfo.timeExtent.start} // Sat Jan 03 1970 16:00:00 GMT-0800 (Pacific Standard Time)
+            End:     ${timeInfo.timeExtent.end}   // Wed May 27 2009 17:00:00 GMT-0700 (Pacific Daylight Time)
+    `);
+});
+```
+
+---
+
+### New APIs in 4.11 - TimeInfo
+
+![](./timeinfo.png)
+
+- Temporal properties intended by the service publisher.
+- Used by the API for building queries and other widgets.
+
+_Additional information about TimeInfo [here](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-TimeInfo.html)._
+
+---
+
+### New APIs in 4.11 - TimeExtent
+
+![](./timeextent.png)
+
+- Used in metadata and queries to describe a period of time.
+
+_Additional information about TimeExtent [here](https://developers.arcgis.com/javascript/latest/api-reference/esri-TimeExtent.html)._
+
+---
+
+### Server-side queries
+![](./client-side.gif)
+
+---
+
+### Server-side queries
+```js
+var query = {
+  timeExtent: {
+    start: new Date(2000, 0, 1),
+    end: new Date(2007, 0, 1)
+  },
+  where: "mag >= 5"
+};
+featureLayerQuake.queryFeatureCount(query).then(function(count){
+  console.log(`${count} quakes found.`)
+});
+```
+The [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) now includes a `timeExtent` property for temporal filtering of time-enabled feature layers. Tip: Layers can be retrospectiely time-enabled with the developer dashboard.
+
+---
+
+## Client-side queries
+
+TODO: Richie
+
+---
+
+## Client-side filtering
+
+TODO: Richie
 
 ---
 
@@ -82,7 +151,6 @@ TODO Jeremy
 ## Visualizing time using Visual Variables
 
 TODO Yann - New York demo
-
 
 ---
 

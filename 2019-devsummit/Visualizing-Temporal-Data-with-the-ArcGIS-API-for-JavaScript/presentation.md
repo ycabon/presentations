@@ -72,7 +72,6 @@ var featureLayer = new FeatureLayer({
     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
 });
 featureLayer.load().then(function(){
-    // Get time metadata.
     var timeInfo = featureLayer.timeInfo;
 
     console.log(`
@@ -123,7 +122,7 @@ var query = {
   where: "mag >= 5"
 };
 featureLayerQuake.queryFeatureCount(query).then(function(count){
-  console.log(`${count} quakes found.`)
+  console.log(`${count} quakes found.`);  // e.g. 9123 quakes found.
 });
 ```
 The [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) now includes a `timeExtent` property for temporal filtering of time-enabled feature layers. Tip: Layers can be retrospectiely time-enabled with the developer dashboard.

@@ -24,29 +24,74 @@
 
 ---
 
-### Slide Title
+## Agenda - Yann
 
-* A bullet
-
-```ts
-const view = new MapView();
-```
+- Client-side APIs in 4.11
+- Building interactive charts
+- Adding drag-n-drop and export back.
 
 ---
 
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-5.png" -->
+## Client-side APIs in 4.11 - Yann
 
-## Headline Here 5
-
-* Bullet [points here](http://hakim.se).
+- Client-side layers
+  - CSVLayer
+  - GeoJSONLayer
+  - FeatureLayer with collection
+- Client-side query
+- Filter & Effect
 
 ---
 
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-6.png" -->
+### Client-side layers - Yann
 
-## Headline Here 6
+CSVLayer
 
-* Bullet [points here](http://hakim.se).
+---
+
+### Client-side layers - Yann
+
+GeoJSON
+
+---
+
+### Client-side layers - Yann
+
+FeatureLayer with collection
+
+---
+
+### Client-side query - Yann
+
+query features
+query by distance
+demo
+
+---
+
+### Client-side query - Richie
+
+time queries
+setup of timeInfo
+demo
+
+---
+
+### Filter & Effect - Yann
+
+---
+
+### App - Richie
+
+Client side analytics: blue light demo using geometry engine.?
+
+---
+
+### App - Yann
+
+Make a chart using clienside statistics and draw. ?
+
+---
 
 ---
 

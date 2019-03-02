@@ -81,9 +81,15 @@ demo
 
 ---
 
-### App - Richie
+### Client side analytics - Richie
+![](./blue-light.gif)
+[demo](https://apl.esri.com/jg/BlueLights/index.html)
 
-Client side analytics: blue light demo using geometry engine.?
+---
+
+### Client side analytics - Richie
+
+- Explain the API was used?
 
 ---
 

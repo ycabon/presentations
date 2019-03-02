@@ -86,29 +86,23 @@ featureLayer.load().then(function(){
 
 ---
 
-### New APIs in 4.11 - TimeInfo
+### TimeInfo
 
 ![](./timeinfo.png)
-
 - Temporal properties intended by the service publisher.
 - Used by the API for building queries and other widgets.
 
-_Additional information about TimeInfo [here](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-TimeInfo.html)._
-
 ---
 
-### New APIs in 4.11 - TimeExtent
+### TimeExtent
 
 ![](./timeextent.png)
-
-- Used in metadata and queries to describe a period of time.
-
-_Additional information about TimeExtent [here](https://developers.arcgis.com/javascript/latest/api-reference/esri-TimeExtent.html)._
+- Used by [TimeInfo](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-TimeInfo.html) metadata and [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) to describe a period of time.
 
 ---
 
 ### Server-side queries
-![](./client-side.gif)
+![](./server-side-query.png)
 
 ---
 
@@ -122,22 +116,99 @@ var query = {
   where: "mag >= 5"
 };
 featureLayerQuake.queryFeatureCount(query).then(function(count){
-  console.log(`${count} quakes found.`);  // e.g. 9123 quakes found.
+  console.log(`${count} quakes found.`);  // e.g. 9235 quakes found.
 });
 ```
-The [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) now includes a `timeExtent` property for temporal filtering of time-enabled feature layers. Tip: Layers can be retrospectiely time-enabled with the developer dashboard.
+- _timeExtent_ added to [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html)
+- Layers must be _time enabled_
+- *Tip:* Use the [developer dashboard](https://developers.arcgis.com/dashboard) to retroactively time-enabled layers
 
 ---
 
-## Client-side queries
-
-TODO: Richie
+### More server-side queries
+- FeatureLayer.queryExtent()
+- FeatureLayer.queryFeatureCount()
+- FeatureLayer.queryFeatures()
+- FeatureLayer.queryObjectIds()
 
 ---
 
-## Client-side filtering
+### Demo
+[Yet Another Earthquake App](http://richiecarmichael.github.io/quake-map/index.html)
 
-TODO: Richie
+---
+
+### Client-side queries
+
+TODO Richie
+
+---
+
+### Client-side queries - tips
+```js
+view.whenLayerView(featureLayerQuake).then(function(layerView){
+    layerView.watch("updating", function(value){
+        if (!value){
+            // Finished updating
+        }
+    });
+});
+```
+- Wait for content to be downloaded
+- Geometries are generalized
+- Restrict queries to information in visual extent
+
+---
+
+### Client-side filtering
+![](./client-side-filter-2.gif)
+
+---
+
+### Enabling client-side filtering
+```js
+var quakeView = null;
+view.whenLayerView(featureLayerQuake).then(function(layerView){
+    quakeView = layerView;
+});
+```
+```js
+function updateMapView(startDate, endDate) {
+    quakeView.filter = {
+        timeExtent: {
+            start: startDate,
+            end: endDate
+        }
+    };
+}
+```
+
+---
+
+![](./client-side-filter-3.gif)
+
+---
+
+### Filtering with effects
+```js
+function updateMapView(startDate, endDate) {
+    quakeView.effect = {
+        filter: {
+            timeExtent: {
+                start: startDate,
+                end: endDate
+            }
+        },
+        insideEffect: null,
+        outsideEffect: "saturate(0%) opacity(25%)"
+    };
+}
+```
+
+---
+
+### List of possible filter effects
+TODO Richie
 
 ---
 
@@ -150,12 +221,6 @@ TODO Jeremy
 ## Visualizing time using Visual Variables
 
 TODO Yann - New York demo
-
----
-
-## Client-side - Building a timeline chart
-
-TODO Richie
 
 ---
 

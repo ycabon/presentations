@@ -37,7 +37,6 @@
         "esri/views/MapView",
 
         "esri/renderers/smartMapping/creators/color",
-        "esri/renderers/smartMapping/symbology/color",
 
         "esri/widgets/Legend"
       ], function(
@@ -46,7 +45,6 @@
         MapView,
 
         color,
-        colorSymbology,
 
         Legend
       ) {
@@ -57,8 +55,9 @@
 
         layer = new FeatureLayer({
           url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Median_Disposable_Income_2015/FeatureServer",
-          title: "Dispoable Income 2015",
+          title: "Median Disposable Income 2015",
           copyright: "Insee | © les contributeurs d'OpenStreetMap sous licence ODbL",
+          opacity: 1,
           renderer: {
             type: "simple",
             symbol: {
@@ -66,7 +65,22 @@
               color: "gray",
               outline: null
             }
-          }
+          },
+          labelingInfo: [{
+            minScale: 500000,
+            labelExpressionInfo: {
+              expression: "$feature.nom"
+            },
+            symbol: {
+              type: "text",
+              font: {
+                size: 10,
+                family: "sans-serif"
+              },
+              haloColor: "rgba(255,255,255,0.8)",
+              haloSize: "1px"
+            }
+          }]
         });
 
         layer.load()

@@ -28,8 +28,6 @@
       href="https://jsdev.arcgis.com/4.11/esri/themes/light/main.css"
     />
     <script src="./loaderConfig.js"></script>
-    <!-- <script src="http://ycabon.esri.com/arcgis-js-api-4/test-apps/dojo-config.js"></script>
-    <script src="http://ycabon.esri.com/arcgis-js-api-4/dojo/dojo.js"></script> -->
     <script src="https://jsdev.arcgis.com/4.11/"></script>
 
     <script>
@@ -39,7 +37,6 @@
         "esri/views/MapView",
 
         "esri/renderers/smartMapping/creators/color",
-        "esri/renderers/smartMapping/symbology/color",
 
         "esri/widgets/Legend"
       ], function(
@@ -48,7 +45,6 @@
         MapView,
 
         color,
-        colorSymbology,
 
         Legend
       ) {
@@ -58,8 +54,10 @@
 
         layer = new GeoJSONLayer({
           url: "./median_income_by_commune_france.json",
-          title: "Dispoable Income 2015",
+          title: "Median Disposable Income 2015",
           copyright: "Insee | © les contributeurs d'OpenStreetMap sous licence ODbL",
+          spatialReference: { wkid: 2154 },
+          opacity: 1,
           renderer: {
             type: "simple",
             symbol: {
@@ -68,12 +66,21 @@
               outline: null
             }
           },
-          popupTemplate: {
-
-          },
-          spatialReference: {
-            wkid: 2154
-          }
+          labelingInfo: [{
+            minScale: 500000,
+            labelExpressionInfo: {
+              expression: "$feature.nom"
+            },
+            symbol: {
+              type: "text",
+              font: {
+                size: 10,
+                family: "sans-serif"
+              },
+              haloColor: "rgba(255,255,255,0.8)",
+              haloSize: "1px"
+            }
+          }]
         });
 
         layer.load()
@@ -84,6 +91,8 @@
           }))
           .then((result) => {
             console.log(result);
+            result.renderer.defaultSymbol.outline = null;
+            result.renderer.classBreakInfos[0].symbol.outline = null;
             layer.renderer = result.renderer;
           });
 

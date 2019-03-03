@@ -199,10 +199,8 @@ function updateMapView(startDate, endDate) {
 
 ### Supported effects
 ```css
-filter: blur(5px);
 filter: brightness(0.4);
 filter: contrast(200%);
-filter: drop-shadow(16px 16px 20px blue);
 filter: grayscale(50%);
 filter: hue-rotate(90deg);
 filter: invert(75%);

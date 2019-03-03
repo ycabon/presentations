@@ -23,13 +23,131 @@
 
 ---
 
-### Slide Title
+### Agenda
 
-* A bullet
+---
+
+## Feature Layer powered by
+
+* [Feature Services](TODO sample from SDK)
+* [Feature Collections](TODO sample from SDK)
+* Client side data
+  * [CSV](TODO sample from SDK)
+  * [GeoJSON](TODO sample from SDK)
+
+---
+
+## Feature Layer powered by dynamic feature tiles
+
+---
+
+## Visualization styles
+
+---
+
+## Popups to communicate information
+
+---
+
+## Bringing portal feature layer into your app
+
+* By url
 
 ```ts
-const view = new MapView();
+const layer = new FeatureLayer({
+  url: "TOTO",
+  renderer: {
+
+  },
+  popupTemplate: {
+
+  }
+});
+
+map.add(layer);
 ```
+
+---
+
+## Bringing portal feature layer into your app
+
+* By url
+
+```ts
+const layer = new FeatureLayer({
+  portalItem: {
+    id: "TOTO"
+  }
+})
+
+map.add(layer);
+```
+
+---
+
+## Bringing portal feature layer into your app
+
+* By url
+
+```ts
+const layer = await Layer.fromPortalItem({
+  portalItem: {
+    id: "TOTO"
+  }
+})
+
+map.add(layer);
+```
+
+---
+
+## Bringing portal feature layer into your app
+
+* Restrict data retrieved from the feature service
+
+```ts
+layer.definitionExpression = "TODO < 10";
+```
+
+* to work with a subset of feature
+* to remove features without `null` attributes.
+
+---
+
+## Bringing portal feature layer into your app
+
+* New in 4.11 - only requesting the fields needed for display
+
+```ts
+const webmap = new WebMap({
+  portalItem: {
+    id: "TODO"
+  }
+});
+await webmap.loadAll();
+const layer = webmap.allLayers
+  .find((layer) => layer.title === "test");
+
+layer.outFields = ["some_field"];
+```
+
+---
+
+## Query the data from the server
+
+* statistics, individual features, grouped
+* accessing attachements
+* navigating relationships to other features in other layers
+
+---
+
+## Interact with the data in memory
+
+* when is the layerview ready
+* when is the layerview updating
+* add interactivity by querying the layerview
+* filter
+* effect
 
 ---
 

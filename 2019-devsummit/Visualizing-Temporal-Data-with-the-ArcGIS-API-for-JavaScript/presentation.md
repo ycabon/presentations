@@ -3,39 +3,15 @@
 <h1 style="text-align: left; font-size: 80px;">Visualizing Temporal Data</h1>
 <h2 style="text-align: left; font-size: 60px;">with the ArcGIS API for JavaScript</h2>
 <p style="text-align: left; font-size: 30px;">Yann Cabon | Richie Carmichael | Jeremy Bartley</p>
-<p style="text-align: left; font-size: 30px;"><a href="https://github.com/ycabon">@ycabon</a> | <a href="https://github.com/richiecarmichael">@richiecarmichael</a></p>
-    <p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
-
-## Headline Here 2
-
-* Bullet [points here](http://hakim.se).
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
-
-## Headline Here 3
-
-* Bullet [points here](http://hakim.se).
-
----
-
-### Slide Title
-
-* A bullet
-
-```ts
-const view = new MapView();
-```
+<p style="text-align: left; font-size: 30px;">
+    <a href="https://github.com/ycabon">@ycabon</a> |
+    <a href="https://github.com/richiecarmichael">@richiecarmichael</a>
+</p>
+<p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
 
 ---
 
 ## Agenda
-
 - Time support in the JS API
 - New APIs in 4.11
 - Visualizing time using Arcade
@@ -44,14 +20,12 @@ const view = new MapView();
 ---
 
 ### Time support in ArcGIS
-
 - Showing a webmap with time
 - 3.x API
 
 ---
 
 ### Time support in 4.x - Roadmap
-
 - What do we ship in 4.11:
   - Time metadata
     - TimeInfo
@@ -66,7 +40,6 @@ const view = new MapView();
 ---
 
 ### Time Metadata
-
 ```js
 var featureLayer = new FeatureLayer({
     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
@@ -87,7 +60,6 @@ featureLayer.load().then(function(){
 ---
 
 ### TimeInfo
-
 ![](./timeinfo.png)
 - Temporal properties intended by the service publisher.
 - Used by the API for building queries and other widgets.
@@ -95,7 +67,6 @@ featureLayer.load().then(function(){
 ---
 
 ### TimeExtent
-
 ![](./timeextent.png)
 - Used by [TimeInfo](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-TimeInfo.html) metadata and [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) to describe a period of time.
 
@@ -126,10 +97,12 @@ featureLayerQuake.queryFeatureCount(query).then(function(count){
 ---
 
 ### More server-side queries
-- FeatureLayer.queryExtent()
-- FeatureLayer.queryFeatureCount()
-- FeatureLayer.queryFeatures()
-- FeatureLayer.queryObjectIds()
+```js
+FeatureLayer.queryExtent()
+FeatureLayer.queryFeatureCount()
+FeatureLayer.queryFeatures()
+FeatureLayer.queryObjectIds()
+```
 
 ---
 
@@ -139,8 +112,12 @@ featureLayerQuake.queryFeatureCount(query).then(function(count){
 ---
 
 ### Client-side queries
-
-TODO Richie
+```js
+FeatureLayerView.queryExtent()
+FeatureLayerView.queryFeatureCount()
+FeatureLayerView.queryFeatures()
+FeatureLayerView.queryObjectIds()
+```
 
 ---
 
@@ -175,6 +152,7 @@ view.whenLayerView(featureLayerQuake).then(function(layerView){
 ```js
 function updateMapView(startDate, endDate) {
     quakeView.filter = {
+        where: "mag >= 5",
         timeExtent: {
             start: startDate,
             end: endDate
@@ -185,6 +163,17 @@ function updateMapView(startDate, endDate) {
 
 ---
 
+### Todo (Richie) - Necessary?
+|                          | Instantenous       | Non-instantaneous  |
+|:------------------------ |:------------------ |:------------------ |
+| Example                  | Earthquake         | Epidemic           |
+| Description              | Start date only    | Start and end date |
+| Query with <i>start</i>  | N/A                | Intersecting       | 
+| Query with <i>start</i><br>and <i>end</i> | Intersecting       | Intersecting       |
+
+---
+
+<!-- Animated gif showing an outside effect. -->
 ![](./client-side-filter-3.gif)
 
 ---
@@ -194,6 +183,7 @@ function updateMapView(startDate, endDate) {
 function updateMapView(startDate, endDate) {
     quakeView.effect = {
         filter: {
+            where: "mag >= 5",
             timeExtent: {
                 start: startDate,
                 end: endDate
@@ -207,8 +197,19 @@ function updateMapView(startDate, endDate) {
 
 ---
 
-### List of possible filter effects
-TODO Richie
+### Supported effects
+```css
+filter: blur(5px);
+filter: brightness(0.4);
+filter: contrast(200%);
+filter: drop-shadow(16px 16px 20px blue);
+filter: grayscale(50%);
+filter: hue-rotate(90deg);
+filter: invert(75%);
+filter: opacity(25%);
+filter: saturate(30%);
+filter: sepia(60%);
+```
 
 ---
 

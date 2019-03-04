@@ -219,13 +219,19 @@ TODO Jeremy
 
 ## Visualizing time using Visual Variables
 
-TODO Yann - New York demo
+[![./demos/animate_vv/animate_vv.png](./demos/animate_vv/animate_vv.png)](./demos/animate_vv/animate_vv.html)
 
 ---
 
-## Client-side - Building a heatmap chart using clientside statistics.
+## Visualizing time using Visual Variables
 
-TODO Kristian
+[![./esri_uk_tweet.png](./esri_uk_tweet.png)](https://twitter.com/EsriUKGeoDev/status/1010140091396784128/photo/1)
+
+---
+
+## Client-side - Building a heatmap chart using clientside statistics
+
+[![./demos/heatmap_chart/heatmap_chart.png](./demos/heatmap_chart/heatmap_chart.png)](./demos/heatmap_chart/index.html)
 
 ---
 

@@ -243,7 +243,6 @@
           Promise.all([
             layerView.queryFeatures(query).then(response => {
               const results = response.features[0];
-              console.log(results.attributes)
 
               const values = [
                 results.attributes.Biomass_AvgCapacity,
@@ -260,17 +259,23 @@
               chart.data.datasets[0].data = values;
               chart.update();
             }),
-            layerView.queryObjectIds(query).then(ids => {
+            layerView.queryObjectIds(query).then((objectIds) => {
               if (highlightHandle) {
                 highlightHandle.remove();
                 highlightHandle = null;
               }
 
-              if (!ids || !ids.length) {
+              if (!objectIds || !objectIds.length) {
                 return;
               }
 
-              highlightHandle = layerView.highlight(ids);
+              // highlightHandle = layerView.highlight(ids);
+              layerView.effect = {
+                excludedEffect: "grayscale(100%) opacity(25%)",
+                filter: {
+                  objectIds
+                }
+              }
             })
           ])
           .then(() => {

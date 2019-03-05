@@ -102,7 +102,7 @@ FeatureLayer.queryObjectIds()
 ---
 
 ### Client-side queries
-[demo](http://richiecarmichael.github.io/quake-map/index.html)
+[demo](https://richiecarmichael.github.io/quake-map/index.html)
 
 ---
 

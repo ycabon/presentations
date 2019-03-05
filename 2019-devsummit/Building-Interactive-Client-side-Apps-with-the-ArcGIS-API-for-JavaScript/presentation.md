@@ -135,7 +135,7 @@ quakeView.effect = {
 ---
 
 ### Client-side query
-[demo](http://richiecarmichael.github.io/quake-map/index.html)
+[demo](https://richiecarmichael.github.io/quake-map/index.html)
 
 ---
 
@@ -188,8 +188,8 @@ view.on("pointer-move", function(event){
 
 ---
 
-### Client-side query
-* fdfd
+### Client-side Analysis
+[demo](https://apl.esri.com/jg/BuildingIntersect/index.html)
 
 ---
 

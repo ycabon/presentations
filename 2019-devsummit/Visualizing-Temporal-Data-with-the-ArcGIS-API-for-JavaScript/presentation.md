@@ -102,7 +102,56 @@ FeatureLayer.queryObjectIds()
 ---
 
 ### Client-side queries
-[demo](http://richiecarmichael.github.io/quake-map/index.html?mag=6)
+[demo](http://richiecarmichael.github.io/quake-map/index.html)
+
+---
+
+```js
+view.on("pointer-move", function(event){
+    if (!quakeView) { return; }
+    event.stopPropagation();
+
+    const query = featureLayerQuake.createQuery();
+    query.timeExtent = {
+        start: startTime,
+        end: endTime
+    };
+    query.geometry = view.toMap(event);
+    query.distance = 500;
+    query.units = "kilometers";
+    query.returnQueryGeometry = true;
+
+    quakeView.queryFeatures(query).then(function(results) {
+        // Draw selection circle.
+        view.graphics.removeAll();
+        view.graphics.add(new Graphic({
+            geometry: results.queryGeometry,
+            symbol: {
+                type: "simple-fill",
+                color: [255, 255, 255, 0],
+                outline: {
+                    color: [255, 255, 255, 0.5],
+                    width: 0.5
+                }
+            }
+        }));
+
+        // Highlight selected Earthquakes.
+        if (highlight) {
+            highlight.remove();
+            highlight = null;
+        }
+        highlight = quakeView.highlight(results.features);
+
+        // Highlight selected Earthquakes in chart.
+        d3.selectAll("#dots circle").classed('highlight', false);
+        results.features.forEach(function(feature){
+            const dot = index[feature.attributes.OBJECTID];
+            d3.select(dot).classed('highlight', true);
+        });
+    });
+});
+```
 
 ---
 

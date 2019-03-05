@@ -83,12 +83,11 @@ demo
 
 ### Client side analytics - Richie
 ![](./blue-light.gif)
-[demo](https://apl.esri.com/jg/BlueLights/index.html)
+[demo1](https://apl.esri.com/jg/BlueLights/index.html) [demo2](https://apl.esri.com/jg/BuildingIntersect/index.html)
 
 ---
 
 ### Client side analytics - Richie
-
 - Explain the API was used?
 
 ---
@@ -96,8 +95,6 @@ demo
 ### App - Yann
 
 Make a chart using clienside statistics and draw. ?
-
----
 
 ---
 

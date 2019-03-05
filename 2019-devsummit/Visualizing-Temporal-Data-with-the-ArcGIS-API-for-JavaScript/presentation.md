@@ -73,11 +73,6 @@ featureLayer.load().then(function(){
 ---
 
 ### Server-side queries
-![](./server-side-query.png)
-
----
-
-### Server-side queries
 ```js
 var query = {
   timeExtent: {
@@ -106,8 +101,8 @@ FeatureLayer.queryObjectIds()
 
 ---
 
-### Demo
-[Yet Another Earthquake App](http://richiecarmichael.github.io/quake-map/index.html)
+### Client-side queries
+[demo](http://richiecarmichael.github.io/quake-map/index.html?mag=6)
 
 ---
 
@@ -132,7 +127,7 @@ view.whenLayerView(featureLayerQuake).then(function(layerView){
 });
 ```
 - Wait for content to be downloaded
-- Geometries are generalized
+- Geometry is generalized
 - Restrict queries to information in visual extent
 
 ---
@@ -163,16 +158,6 @@ function updateMapView(startDate, endDate) {
 
 ---
 
-### Todo (Richie) - Necessary?
-|                          | Instantenous       | Non-instantaneous  |
-|:------------------------ |:------------------ |:------------------ |
-| Example                  | Earthquake         | Epidemic           |
-| Description              | Start date only    | Start and end date |
-| Query with <i>start</i>  | N/A                | Intersecting       | 
-| Query with <i>start</i><br>and <i>end</i> | Intersecting       | Intersecting       |
-
----
-
 <!-- Animated gif showing an outside effect. -->
 ![](./client-side-filter-3.gif)
 
@@ -189,8 +174,8 @@ function updateMapView(startDate, endDate) {
                 end: endDate
             }
         },
-        insideEffect: null,
-        outsideEffect: "saturate(0%) opacity(25%)"
+        includedEffect: null,
+        excludedEffect: "saturate(0%) opacity(25%)"
     };
 }
 ```
@@ -199,14 +184,14 @@ function updateMapView(startDate, endDate) {
 
 ### Supported effects
 ```css
-filter: brightness(0.4);
-filter: contrast(200%);
-filter: grayscale(50%);
-filter: hue-rotate(90deg);
-filter: invert(75%);
-filter: opacity(25%);
-filter: saturate(30%);
-filter: sepia(60%);
+brightness(0.4);
+contrast(200%);
+grayscale(50%);
+hue-rotate(90deg);
+invert(75%);
+opacity(25%);
+saturate(30%);
+sepia(60%);
 ```
 
 ---

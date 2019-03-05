@@ -188,11 +188,6 @@ view.on("pointer-move", function(event){
 
 ---
 
-### Client-side Analysis
-[demo](https://apl.esri.com/jg/BuildingIntersect/index.html)
-
----
-
 ### Filter & Effect - Yann
 
 ---

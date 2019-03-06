@@ -6,8 +6,8 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
   <title>FeatureLayer.queryAttachments()</title>
 
-  <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
-  <script src="https://js.arcgis.com/4.10/"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.11/"></script>
 
   <style>
     html,
@@ -17,8 +17,8 @@
       margin: 0;
       padding: 0;
     }
-    #viewDiv {
-      height: 100%;
+    #viewDiv, #attachementsDiv {
+      height: 50%;
       width: 100%;
     }
   </style>
@@ -29,13 +29,13 @@
       "esri/views/MapView",
       "esri/layers/FeatureLayer",
 
-      "dgrid/OnDemandGrid",
-      "dstore/Store",
-      "dstore/QueryResults"
+      "dgrid/Grid"
     ], function(
       Map, MapView, FeatureLayer,      
-      OnDemandGrid, Store, QueryResults  
+      Grid
     ) {
+      var grid;
+
       var layer = new FeatureLayer({
         url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Beverly%20Hills%20Trees%20By%20Block/FeatureServer/0",
         outFields: ["*"]
@@ -50,12 +50,21 @@
       var view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [-118.399400711028, 34.08713590709093],
-        zoom: 17,
         popup: {
           autoOpenEnabled: false
         }
       });
+
+      layer.load()
+      .then(() => {
+          // Set the view extent to the data extent
+          view.extent = layer.fullExtent;
+
+          // New in 4.11: FeatureLayer.createPopupTemplate()
+          layer.popupTemplate = layer.createPopupTemplate();
+
+          return createGrid().then((g) => grid = g);
+        });
 
       view.on("click", (event) => {
         queryFeatures(event);
@@ -64,104 +73,58 @@
       function queryFeatures(screenPoint) {
         const point = view.toMap(screenPoint);
 
+        if (grid) {
+          grid.destroy();
+        }
+
+        // Query the for the feature ids where the user clicked
+
         // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures
-        layer.queryFeatures({
+        layer.queryObjectIds({
           geometry: point,
+
           spatialRelationship: "intersects",
           returnGeometry: false,
           outFields: ["*"]
         })
-        .then((featureSet) => {
-          // https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html#open
-          view.popup.open({
-            location: point,
-            features: featureSet.features
-          })
-        });
-      }
+        .then((objectIds) => {
+          if (!objectIds.length) { return; }
 
-      function createPopupTemplate() {
-        return { // autocasts as new PopupTemplate()
-          title: "Beverly Hills trees by block",
+          // Query the for the related features for the features ids found
 
-          // Set content elements in the order to display.
-          // The first element displayed here is the fieldInfos.
-          content: [{
-            // It is also possible to set the fieldInfos outside of the content
-            // directly in the popupTemplate. If no fieldInfos is specifically set
-            // in the content, it defaults to whatever may be set within the popupTemplate.
-            type: "fields", // FieldsContentElement
-            fieldInfos: [{
-              fieldName: "Point_Count",
-              visible: false,
-              label: "Count of Points",
-              format: {
-                places: 0,
-                digitSeparator: true
-              }
-            }, {
-              fieldName: "relationships/0/Point_Count_COMMON",
-              visible: true,
-              label: "Sum of species tree count",
-              format: {
-                places: 0,
-                digitSeparator: true
-              },
-              statisticType: "sum"
-            }, {
-              fieldName: "relationships/0/COMMON",
-              visible: false,
-              label: "Common Name"
-            }, {
-              fieldName: "BLOCKCE10",
-              visible: true,
-              label: "Block"
-            }]
-          }, {
-            // You can also set a descriptive text element. This element
-            // uses an attribute from the featurelayer which displays a
-            // sentence giving the total amount of trees value within a
-            // specified census block. Text elements can only be set within the content.
-            type: "text", // TextContentElement
-            text: "There are {Point_Count} trees within census block {BLOCKCE10}"
-          }, {
-            // You can set a media element within the popup as well. This
-            // can be either an image or a chart. You specify this within
-            // the mediaInfos. The following creates a pie chart in addition
-            // to two separate images. The chart is also set up to work with
-            // related tables. Similar to text elements, media can only be set within the content.
-            type: "media", // MediaContentElement
-            mediaInfos: [{
-              title: "<b>Count by type</b>",
-              type: "pie-chart",
-              caption: "",
-              value: {
-                fields: ["relationships/0/Point_Count_COMMON"],
-                normalizeField: null,
-                tooltipField: "relationships/0/COMMON"
-              }
-            }, {
-              title: "<b>Mexican Fan Palm</b>",
-              type: "image",
-              caption: "tree species",
-              value: {
-                sourceURL: "https://www.sunset.com/wp-content/uploads/96006df453533f4c982212b8cc7882f5-800x0-c-default.jpg"
-              }
-            }, {
-              title: "<b>Indian Laurel Fig</b>",
-              caption: "tree species",
-              value: {
-                sourceURL: "https://selectree.calpoly.edu/images/0600/09/original/ficus-microcarpa-tree-3.jpg"
-              }
-            }]
-          }, {
-            // You can set a attachment element(s) within the popup as well.
-            // Similar to text and media elements, attachments can only be set
-            // within the content. Any attachmentInfos associated with the feature
-            // will be listed in the popup.
-            type: "attachments" // AttachmentsContentElement
-          }]
-        };
+          // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryAttachments
+          return layer.queryAttachments({
+            attachmentTypes: ["image/jpeg"],
+            objectIds
+          });
+        })
+        .then((attachmentsByFeatureId) => {
+          if (!attachmentsByFeatureId) { return; }
+
+          // Display the attachements
+          Object.keys(attachmentsByFeatureId)
+            .forEach((objectId) => {
+              const attachements = attachmentsByFeatureId[objectId];
+
+              console.group("attachment for", objectId);
+
+              attachements.forEach(function (attachement) {
+                console.log("attachment id", attachement.id);
+                console.log("content type", attachement.contentType);
+                console.log("name", attachement.name);
+                console.log("size", attachement.size);
+                console.log("url", attachement.url);
+                console.groupEnd();
+
+                const image = document.createElement("img");
+                image.src = attachement.url;
+                document.getElementById("attachementsDiv").appendChild(image);
+              });
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        })
       }
     });
   </script>
@@ -170,6 +133,7 @@
 
 <body>
   <div id="viewDiv"></div>
+  <div id="attachementsDiv"></div>
 </body>
 
 </html>

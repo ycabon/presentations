@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
-  <title>Multiple popup elements - 4.10</title>
+  <title>FeatureLayer.queryRelatedFeatures()</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
   <script src="https://js.arcgis.com/4.11/"></script>
@@ -70,29 +70,14 @@
         queryFeatures(event);
       });
 
-
-      function createGrid() {
-        const relatedLayer = new FeatureLayer({
-          url: layer.url,
-          layerId: layer.relationships[0].relatedTableId
-        })
-
-        return relatedLayer.load()
-          .then(() => {
-            const columns = relatedLayer.fields.map(field => {
-              return {
-                label: field.alias,
-                field: field.name
-              };
-            })
-            
-            return new Grid({ columns }, "gridDiv");
-          });
-      }
-
-
       function queryFeatures(screenPoint) {
         const point = view.toMap(screenPoint);
+
+        if (grid) {
+          grid.destroy();
+        }
+
+        // Query the for the feature ids where the user clicked
 
         // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures
         layer.queryObjectIds({
@@ -103,6 +88,10 @@
           outFields: ["*"]
         })
         .then((objectIds) => {
+          if (!objectIds.length) { return; }
+
+          // Query the for the related features for the features ids found
+
           // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#relationships
           // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryRelatedFeatures
           return layer.queryRelatedFeatures({
@@ -112,6 +101,10 @@
           });
         })
         .then((relatedFeatureSetByObjectId) => {
+          if (!relatedFeatureSetByObjectId) { return; }
+
+          // Create a grid with the data
+
           Object.keys(relatedFeatureSetByObjectId)
             .forEach((objectId) => {
               const relatedFeatureSet = relatedFeatureSetByObjectId[objectId];
@@ -119,6 +112,18 @@
                 return feature.attributes;
               });
 
+              if (!rows.length) { return; }
+
+              const el = document.createElement("div")
+              document.body.appendChild(el);
+              grid = new Grid({
+                columns: Object.keys(rows[0]).map((fieldName) => {
+                  return {
+                    label: fieldName,
+                    field: fieldName
+                  };
+                })
+              }, el);
               grid.renderArray(rows);
             });
         })
@@ -133,7 +138,6 @@
 
 <body>
   <div id="viewDiv"></div>
-  <div id="gridDiv"></div>
 </body>
 
 </html>

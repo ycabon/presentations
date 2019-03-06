@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
 
-  <title>Add a Legend to LayerList - 4.10</title>
+  <title>Setting definitionExpression</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/themes/dark/main.css">
 
@@ -30,33 +30,44 @@
 
       "esri/views/MapView",
       
-      "esri/layers/Layer",
+      "esri/layers/VectorTileLayer",
+      "esri/layers/FeatureLayer",
       
       "esri/widgets/LayerList"
     ], function(
       Basemap, Map,
       MapView,
-      Layer,
+      VectorTileLayer, FeatureLayer,
       LayerList
     ) {
       const basemap = new Basemap({
-        portalItem: {
-          id: "4f2e99ba65e34bb8af49733d9778fb8e"
-        }
+        baseLayers: [
+          new VectorTileLayer({
+            url: "https://www.arcgis.com/sharing/rest/content/items/d7397603e9274052808839b70812be50/resources/styles/root.json"
+          })
+        ],
+        referenceLayers: [
+          new VectorTileLayer({
+            url: "https://www.arcgis.com/sharing/rest/content/items/4a3922d6d15f405d8c2b7a448a7fbad2/resources/styles/root.json",
+            opacity: 0.57
+          }),
+          new VectorTileLayer({
+            url: "https://www.arcgis.com/sharing/rest/content/items/1ddbb25aa29c4811aaadd94de469856a/resources/styles/root.json",
+            opacity: 0.13,
+            maxScale: 70.5310735,
+            minScale: 295828763.795777
+          })
+        ]
       });
 
-      // http://jsapi.maps.arcgis.com/home/item.html?id=82d8d8213afc4bb380bb16083735f573
-      Layer.fromPortalItem({
-        portalItem: {
-          id: "82d8d8213afc4bb380bb16083735f573"
-        }
-      })
-      .then((layer) => {
-        map.add(layer);
-      })
+      const layer = new FeatureLayer({
+        url: "https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/ACS_Income_2016_5yr/FeatureServer",
+        definitionExpression: "STATE_NAME = 'California'"
+      });
 
       const map = new Map({
-        basemap
+        basemap,
+        layers: [layer]
       });
 
       // Add the map to a MapView

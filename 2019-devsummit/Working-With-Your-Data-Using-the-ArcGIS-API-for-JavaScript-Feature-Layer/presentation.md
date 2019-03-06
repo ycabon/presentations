@@ -9,31 +9,23 @@
 
 <!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
 
-## Headline Here 2
-
-* Bullet [points here](http://hakim.se).
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
-
-## Headline Here 3
-
-* Bullet [points here](http://hakim.se).
-
----
-
 ### Agenda
+
+* Types of feature layers
+* Feature Layer powered by dynamic feature tiles
+* Visualization styles
+* Popups to communicate information
+* Bringing portal feature layer into your app
 
 ---
 
 ## Feature Layer powered by
 
-* [Feature Services](TODO sample from SDK)
-* [Feature Collections](TODO sample from SDK)
+* [Feature Services](https://developers.arcgis.com/javascript/latest/sample-code/layers-featurelayer/index.html)
+* [Feature Collections](https://developers.arcgis.com/javascript/latest/sample-code/layers-featurelayer-collection/index.html)
 * Client side data
-  * [CSV](TODO sample from SDK)
-  * [GeoJSON](TODO sample from SDK)
+  * CSV: [SDK sample](https://developers.arcgis.com/javascript/latest/sample-code/layers-csv-projection/index.html)
+  * GeoJSON: [Plenary](https://ycabon.github.io/2019-devsummit-plenary/2_geojson.html)
 
 ---
 
@@ -49,82 +41,94 @@
 
 ---
 
-## Bringing portal feature layer into your app
+## Bringing a feature layer into your app
 
-* By url
+* FeatureLayer by URL
 
 ```ts
 const layer = new FeatureLayer({
-  url: "TOTO",
-  renderer: {
+  url: "https://<url to my server>/FeatureServer",
+  layerId: 0,
+  renderer: { ... },
+  popupTemplate: { ... },
+});
 
-  },
-  popupTemplate: {
+map.add(layer);
+```
 
+[Demo](./demos/1_bringing_data/1_byUrl.html)
+
+---
+
+## Bringing a feature layer into your app
+
+Restrict data retrieved from the feature service
+* to work with a subset of features
+* to remove features with `null` attributes.
+
+```ts
+layer.definitionExpression = "STATE_NAME = 'California'";
+```
+
+[Demo](./demos/1_bringing_data/2_byUrl_definitionExpression.html)
+
+---
+
+## Bringing a feature layer into your app
+
+FeatureLayer by portal item
+
+```ts
+const portal = new Portal({
+  url: "https://jsapi.maps.argis.com"
+});
+
+const layer = new FeatureLayer({
+  portalItem: {
+    id: "bca022ee5d9440c9b60399ee4d809d9b",
+    portal
   }
 });
 
 map.add(layer);
 ```
 
+[Demo](./demos/1_bringing_data/3_byPortalItem.html)
+
 ---
 
-## Bringing portal feature layer into your app
+## Bringing a feature layer into your app
 
-* By url
+Alternative: using `Layer.fromPortalItem()`
 
 ```ts
-const layer = new FeatureLayer({
+Layer.fromPortalItem({
   portalItem: {
-    id: "TOTO"
+    id: "82d8d8213afc4bb380bb16083735f573"
   }
 })
-
-map.add(layer);
+.then((layer) => {
+  map.add(layer);
+});
 ```
+
+[Demo](./demos/1_bringing_data/4_byPortalItem_using_fromPortalItem.html)
 
 ---
 
 ## Bringing portal feature layer into your app
 
-* By url
-
-```ts
-const layer = await Layer.fromPortalItem({
-  portalItem: {
-    id: "TOTO"
-  }
-})
-
-map.add(layer);
-```
-
----
-
-## Bringing portal feature layer into your app
-
-* Restrict data retrieved from the feature service
-
-```ts
-layer.definitionExpression = "TODO < 10";
-```
-
-* to work with a subset of feature
-* to remove features without `null` attributes.
-
----
-
-## Bringing portal feature layer into your app
-
-* New in 4.11 - only requesting the fields needed for display
+New in 4.11: Only fields for display requested
 
 ```ts
 const webmap = new WebMap({
   portalItem: {
-    id: "TODO"
+    id: "<webmap id>"
   }
 });
+
 await webmap.loadAll();
+
 const layer = webmap.allLayers
   .find((layer) => layer.title === "test");
 
@@ -149,21 +153,13 @@ layer.outFields = ["some_field"];
 * filter
 * effect
 
+[Demo](./demos/4_client-side_statistics/index.html)
+
 ---
 
 <!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-5.png" -->
 
-## Headline Here 5
-
-* Bullet [points here](http://hakim.se).
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-6.png" -->
-
-## Headline Here 6
-
-* Bullet [points here](http://hakim.se).
+# Questions
 
 ---
 

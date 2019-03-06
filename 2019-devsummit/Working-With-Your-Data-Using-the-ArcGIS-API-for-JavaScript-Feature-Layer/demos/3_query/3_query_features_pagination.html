@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+  <title>FeatureLayer.queryFeatures() - pagination</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.10/"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #viewDiv, #gridDiv {
+      height: 50%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+
+      "dgrid/OnDemandGrid",
+      "dstore/Store",
+      "dstore/QueryResults"
+    ], function(
+      Map, MapView, FeatureLayer,      
+      OnDemandGrid, Store, QueryResults  
+    ) {
+      var layer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Median_Disposable_Income_2015/FeatureServer",
+        outFields: ["*"]
+      });
+
+      // setup the map
+      var map = new Map({
+        layers: [layer]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        spatialReference: {
+          wkid: 2154
+        },
+        center: {
+          spatialReference: {
+            wkid: 2154
+          },
+          x: 603737.3294851505,
+          y: 6826948.894620353
+        },
+        scale: 2893742
+      });
+
+      createGrid();
+
+      async function createGrid() {
+        await layer.load();
+
+        const columns = layer.fields
+          .map((field) => {
+            return {
+              field: field.name,
+              label: field.alias || field.name
+            };
+          });
+
+        // utility to convert featureset's features to rows
+        function convertFeatureSetToRows(featureSet) {
+          return featureSet.features.map((feature) => {
+            return feature.attributes;
+          });
+        }
+
+        const FeatureLayerStore = Store.createSubclass({
+          getIdentity(row) {
+            return row[this.layer.objectIdField];
+          },
+
+          // Implementation of `fetchRange()` to query
+          // a feature service by pages
+          fetchRange(args) {
+            const { start, end } = args
+
+            // Query for the page of features.
+            const promise = layer
+              .queryFeatures({
+                start,
+                num: end - start,
+                outFields: ["*"]
+              })
+            .then((featureSet) => convertFeatureSetToRows(featureSet));
+
+            // Return a dstore query result with the total count
+            return new QueryResults(promise, {
+              totalLength: Promise.resolve(this.featureCount)
+            });
+          },
+
+          fetch(args) {  throw "fetch not implemented"; },
+          get() { throw "get not implemented"; },
+          sort() { throw "not implemented"; }
+        });
+
+        const grid = new OnDemandGrid({
+          columns,
+
+          // How much data to fetch at once
+          minRowsPerPage: 500,
+          maxRowsPerPage: layer.maxRecordCount,
+
+          collection: new FeatureLayerStore({
+            layer,
+            featureCount: await layer.queryFeatureCount()
+          })
+        }, "gridDiv");
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="gridDiv"></div>
+</body>
+
+</html>

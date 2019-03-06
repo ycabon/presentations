@@ -3,19 +3,22 @@
 <h1 style="text-align: left; font-size: 80px;">Working With Your Data</h1>
 <h2 style="text-align: left; font-size: 60px;">Using the ArcGIS API for JavaScript Feature Layer</h2>
 <p style="text-align: left; font-size: 30px;">Jeremy Bartley | Yann Cabon</p>
-    <p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
+    <p style="text-align: left; font-size: 30px;">slides: <a href="https://git.io/fhp4D"><code>https://git.io/fhp4D</code></a></p>
 
 ---
 
 <!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
 
-### Agenda
+## Agenda
 
 * Types of feature layers
 * Feature Layer powered by dynamic feature tiles
 * Visualization styles
 * Popups to communicate information
 * Bringing portal feature layer into your app
+* Labelling
+* Query the data from the server
+* Interact with the data in memory
 
 ---
 
@@ -63,6 +66,7 @@ map.add(layer);
 ## Bringing a feature layer into your app
 
 Restrict data retrieved from the feature service
+
 * to work with a subset of features
 * to remove features with `null` attributes.
 
@@ -137,11 +141,22 @@ layer.outFields = ["some_field"];
 
 ---
 
+## Labelling
+
+Label features to show relevant information at a glance
+
+* [Multiline labels](https://developers.arcgis.com/javascript/latest/sample-code/labels-multiline/index.html) 
+* [Multiple label classes](https://developers.arcgis.com/javascript/latest/sample-code/labels-multiple-classes/index.html) 
+
+---
+
 ## Query the data from the server
 
-* statistics, individual features, grouped
-* accessing attachements
-* navigating relationships to other features in other layers
+* [queryFeatures()](./demos/3_query/1_query_features.html)
+* [queryFeatures() - by distance](./demos/3_query/2_query_features_by_distance.html)
+* [queryFeatures() - pagination](./demos/3_query/3_query_features_pagination.html)
+* [queryAttachments()](./demos/3_query/4_query_attachments.html)
+* [queryRelatedFeatures()](./demos/3_query/5_query_related_features.html)
 
 ---
 
@@ -150,8 +165,7 @@ layer.outFields = ["some_field"];
 * when is the layerview ready
 * when is the layerview updating
 * add interactivity by querying the layerview
-* filter
-* effect
+* filter & effect
 
 [Demo](./demos/4_client-side_statistics/index.html)
 

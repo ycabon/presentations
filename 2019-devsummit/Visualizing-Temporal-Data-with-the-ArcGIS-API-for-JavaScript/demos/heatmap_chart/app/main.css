@@ -26,18 +26,6 @@ body, #viewDiv {
   visibility: hidden;
 }
 
-/* #zoomBtn {
-  font-size: 16px;
-  background-color: white;
-  border: 1px solid #D3D3D3;
-  color: #6e6e6e;
-  height: 32px;
-  width: 32px;
-  text-align: center;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-} */
-
 .season-item {
   background-color: rgba(50,50,50,0.5);
   color: #fff;

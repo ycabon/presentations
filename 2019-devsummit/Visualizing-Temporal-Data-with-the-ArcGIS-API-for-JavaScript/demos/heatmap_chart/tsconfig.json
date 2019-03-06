@@ -16,7 +16,8 @@
     "suppressImplicitAnyIndexErrors": true
   },
   "include": [
-    "./app/*"
+    "./app/*",
+    "./typings/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"

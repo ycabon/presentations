@@ -1,6 +1,6 @@
 
 interface StatisticsResponse {
-   timeOfDay: "Morning" | "Afternoon" | "Evening" | "Night" | string,
+   duration: "2.5" | "5" | "7.5" | "10" | string,
    season: "Winter" | "Spring" | "Summer" | "Fall" | string,
    value: number
  } 

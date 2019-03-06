@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
-    <title>ArcGIS JSAPI 4.9 TypeScript Demo</title>
+    <title>Flash Flood Warnings (2002-2012)</title>
     <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/themes/light/main.css">
     <link rel="stylesheet" href="app/main.css">
 
@@ -32,23 +32,21 @@
         <div class="canvas">
           <canvas id="chartCanvas"></canvas>
         </div>
-        <div class="col1 col-label">Morning</div>
-        <div class="col2 col-label">Afternoon</div>
-        <div class="col3 col-label">Evening</div>
-        <div class="col4 col-label">Night</div>
+        <div class="col1 col-label">2 hours</div>
+        <div class="col2 col-label">4 hours</div>
+        <div class="col3 col-label">6 hours</div>
+        <div class="col4 col-label">8 hours</div>
         <div class="row-label1 row-label">Winter</div>
         <div class="row-label2 row-label">Spring</div>
         <div class="row3 row-label">Summer</div>
         <div class="row4 row-label">Fall</div>
         <button class="esri-widget--button" id="resetBtn" type="button" title="Clear Filter">Reset</button>
         <div id="titleDiv" class="esri-widget">
-          <div id="titleText">When the skies turn dark</div>
-          <div id="dataDescription">Tornado Warnings (2002 - 2011)</div>
+          <div id="titleText">Flash Floods by Season</div>
+          <div id="dataDescription">Flash Flood Warnings (2002 - 2012)</div>
         </div>
       </div>
-      
     </div>
-    <button class="esri-icon-zoom-in-fixed esri-widget--button" id="zoomBtn" type="button" title="Zoom to extent"></button>
     <script>require(["app/main"]);</script>
   </body>
 </html>

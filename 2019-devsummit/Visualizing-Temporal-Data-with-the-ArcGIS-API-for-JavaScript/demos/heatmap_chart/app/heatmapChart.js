@@ -5,8 +5,8 @@ define(["require", "exports", "esri/views/layers/support/FeatureFilter", "esri/C
     var highlighted = null;
     var layerView = null;
     var data = [];
-    var start = new Color("#efe6e6");
-    var end = new Color("#672929");
+    var start = new Color("#eaf5ff");
+    var end = new Color("#003E72");
     var numCols = 4;
     var numRows = 4;
     function normalize(value, minValue, maxValue) {
@@ -46,7 +46,7 @@ define(["require", "exports", "esri/views/layers/support/FeatureFilter", "esri/C
             ctx.fillRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
             // Draw text
             ctx.fillStyle = "white";
-            ctx.strokeStyle = "#511e1f";
+            ctx.strokeStyle = "#003E72";
             // ctx.fill
             ctx.lineWidth = 4;
             ctx.textBaseline = "middle";
@@ -99,11 +99,11 @@ define(["require", "exports", "esri/views/layers/support/FeatureFilter", "esri/C
     // }
     function onCellSelect(cell) {
         var season = constants_1.seasons[cell.row];
-        var timeOfDay = constants_1.timesOfDay[cell.col];
+        var duration = constants_1.durations[cell.col];
         if (mousemoveEnabled) {
             highlighted = { col: cell.col, row: cell.row };
             layerView.filter = new FeatureFilter({
-                where: "Season = '" + season + "' AND timeOfDay = '" + timeOfDay + "'"
+                where: "Season = '" + season + "' AND DurationClass = '" + duration + "'"
             });
         }
         updateGrid();

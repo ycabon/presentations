@@ -12,18 +12,15 @@ import { SimpleRenderer } from "esri/renderers";
 import { updateGrid } from "./heatmapChart";
 
 import Expand = require("esri/widgets/Expand");
-import { timesOfDay, seasons } from "./constants";
+import { durations, seasons } from "./constants";
 
 ( async () => {
 
-  const url = "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Tornado_warnings_2002_to_2011_for_interactive_demo/FeatureServer/0";
-
   const layer = new FeatureLayer({
-    // url,
     portalItem: {
-      id: "105fee001d244d33b90bf3ae5a243679"
+      id: "f9e348953b3848ec8b69964d5bceae02"
     },
-    outFields: [ "timeOfDay", "SEASON" ]
+    outFields: [ "DurationClass", "SEASON" ]
   });
 
   const countiesLayer = new FeatureLayer({
@@ -49,12 +46,15 @@ import { timesOfDay, seasons } from "./constants";
   const view = new MapView({
     map: map,
     container: "viewDiv",
-    center: [ -89.89219164308874, 38.32818747333555 ],
+    center: [ -97.20977281984334, 40.29693762632632 ],
     zoom: 4,
     highlightOptions: {
-      color: "white",//"#262626",
+      color: "#262626",
       haloOpacity: 1,
       fillOpacity: 0
+    },
+    constraints: {
+      snapToZoom: false
     }
   });
 
@@ -76,15 +76,11 @@ import { timesOfDay, seasons } from "./constants";
   view.ui.add(seasonsExpand, "top-left");
   view.ui.add(chartExpand, "top-left");
   view.ui.add("titleDiv", "top-right");
-  const zoomBtn = document.getElementById("zoomBtn");
-  view.ui.add("zoomBtn", "top-left");
-  zoomBtn.addEventListener("click", toggleExtent);
 
   const layerView = await view.whenLayerView(layer) as esri.FeatureLayerView;
   const countiesLayerView = await view.whenLayerView(countiesLayer) as esri.FeatureLayerView;
 
   const layerStats = await queryLayerStatistics(layer);
-  console.log(layerStats)
   updateGrid(layerStats, layerView);
   
   seasonsElement.addEventListener("click", filterBySeason);
@@ -175,7 +171,7 @@ import { timesOfDay, seasons } from "./constants";
         statisticType: "count"
       })
     ];
-    query.groupByFieldsForStatistics = [ "SEASON + '-' + timeOfDay" ];
+    query.groupByFieldsForStatistics = [ "SEASON + '-' + DurationClass" ];
     query.geometry = geometry;
     query.distance = distance;
     query.units = units;
@@ -186,9 +182,9 @@ import { timesOfDay, seasons } from "./constants";
     const responseChartData = queryResponse.features.map( feature => {
       const timeSpan = feature.attributes["EXPR_1"].split("-");
       const season = timeSpan[0];
-      const timeOfDay = timeSpan[1];
+      const duration = timeSpan[1];
       return {
-        timeOfDay,
+        duration,
         season, 
         value: feature.attributes.value
       };
@@ -205,16 +201,16 @@ import { timesOfDay, seasons } from "./constants";
         statisticType: "count"
       })
     ];
-    query.groupByFieldsForStatistics = [ "SEASON + '-' + timeOfDay" ];
+    query.groupByFieldsForStatistics = [ "SEASON + '-' + DurationClass" ];
 
     const queryResponse = await layer.queryFeatures(query);
 
     const responseChartData = queryResponse.features.map( feature => {
       const timeSpan = feature.attributes["EXPR_1"].split("-");
       const season = timeSpan[0];
-      const timeOfDay = timeSpan[1];
+      const duration = timeSpan[1];
       return {
-        timeOfDay,
+        duration,
         season, 
         value: feature.attributes.value
       };
@@ -223,14 +219,13 @@ import { timesOfDay, seasons } from "./constants";
   }
 
   function createDataObjects(data: StatisticsResponse[]): ChartData[] {
-
     let formattedChartData: ChartData[] = [];
 
-    timesOfDay.forEach( (timeOfDay, t) => {
+    durations.forEach( (duration, t) => {
       seasons.forEach( (season, s) => {
 
         const matches = data.filter( datum => {
-          return datum.season === season && datum.timeOfDay === timeOfDay;
+          return datum.season === season && datum.duration === duration;
         });
 
         formattedChartData.push({
@@ -245,26 +240,7 @@ import { timesOfDay, seasons } from "./constants";
     return formattedChartData;
   }
 
-  let extentIndex = 0;
-  const extents = [
-    view.extent.clone(),
-    new Extent({
-      "spatialReference": {
-        "wkid": 3857
-      },
-      "xmin": -10868752.477228628,
-      "ymin": 3300368.82862141,
-      "xmax": -9154117.05873601,
-      "ymax": 4158909.530320281
-    })
-  ]
-  function toggleExtent () {
-    extentIndex = extentIndex === 0 ? 1 : 0;
-    view.goTo(extents[extentIndex]);
-  }
-
   const resetBtn = document.getElementById("resetBtn");
-
   resetBtn.addEventListener("click", resetVisuals);
 
   function resetVisuals () {
@@ -278,7 +254,6 @@ import { timesOfDay, seasons } from "./constants";
       node.classList.add("visible-season");
     });
     updateGrid(layerStats, layerView, true);
-
   }
 
 })();

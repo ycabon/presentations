@@ -4,7 +4,7 @@
 <h2 style="text-align: left; font-size: 60px;">with the ArcGIS API for JavaScript</h2>
 <p style="text-align: left; font-size: 30px;">Yann Cabon | Richie Carmichael</p>
 <p style="text-align: left; font-size: 30px;"><a href="https://github.com/ycabon">@ycabon</a> | <a href="https://github.com/richiecarmichael">@richiecarmichael</a></p>
-    <p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
+    <p style="text-align: left; font-size: 30px;">slides: <a href="https://git.io/fhpdw"><code>https://git.io/fhpdw</code></a></p>
 
 ---
 
@@ -119,40 +119,11 @@ const geoJSONLayer = new GeoJSONLayer({
 
 [API Reference](http://bzh.esri.com/javascript/latest/api-reference/esri-layers-GeoJSONLayer.html)
 | [Sample](http://bzh.esri.com/javascript/latest/sample-code/layers-geojson/index.html)
-| [Plenary Demo](https://ycabon.github.io/2019-devsummit-plenary/2_geojson.html)
-
----
-
-### Client-side layers - GeoJSON
-
-- Implementation of the spec [`rfc7946`](https://tools.ietf.org/html/rfc7946)
-- Support for `"Feature"` and `"FeatureCollection"`
-- Support for fixing ring winding order
-- Not supported:
-  - mixed geometry types for consistency with other layers.
-  - `crs` object - only geographic coordinates using WGS84 datum (long/lat)
-  - No Antimeridian crossing
-
----
-
-### Client-side layers - GeoJSON
-
-- Not supported, maybe pile:
-  - `"GeometryCollection"` object
-  - TopoJSON
-  - Feature `id` as `string`
-- Not supported yet but will be:
-  - Export back to GeoJSON
-  - updating features using GeoJSON, only through `applyEdits()`
-  - Loading a `GeoJSONLayer` using a `GeoJSON` object
-  - WebMap spec
-  - `queryParameters` and `refresh()`
 
 ---
 
 ### Client-side layers - GeoJSON - Tips
 
-- Prefer `GeoJSON` over `CSV`. `CSV` inference is CPU heavy.
 - specify the layer's spatial reference
 - Limitation at 4.11: create a blob url from GeoJSON object
 
@@ -188,19 +159,147 @@ url = null;
 
 ---
 
+### Client-side layers - GeoJSON - Tips
+
+- Fix [elevation data](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
+
+```ts
+const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+
+const layer = new GeoJSONLayer({
+  url,
+  title: "USGS Earthquakes",
+  copyright: "USGS",
+  definitionExpression: "type = 'earthquake'",
+
+  elevationInfo = {
+    mode: "absolute-height",
+    unit: "kilometers",
+    featureExpressionInfo: {
+      expression: "Geometry($feature).z * -1"
+    }
+  }
+});
+```
+
+[Plenary Demo](https://ycabon.github.io/2019-devsummit-plenary/2_geojson.html)
+
+---
+
+### Client-side layers - GeoJSON
+
+- Implementation of the spec [`rfc7946`](https://tools.ietf.org/html/rfc7946)
+- Support for `"Feature"` and `"FeatureCollection"`
+- Support for fixing ring winding order
+- Feature Layer
+- Not supported:
+  - mixed geometry types for consistency with other layers.
+  - `crs` object - only geographic coordinates using WGS84 datum (long/lat)
+  - No Antimeridian crossing
+
+---
+
+### Client-side layers - GeoJSON
+
+- Not supported, maybe pile:
+  - `"GeometryCollection"` object
+  - TopoJSON
+  - Feature `id` as `string`
+- Not supported yet but will be:
+  - Export back to GeoJSON
+  - updating features using GeoJSON, only through `applyEdits()`
+  - Loading a `GeoJSONLayer` using a `GeoJSON` object
+  - WebMap spec
+  - `queryParameters` and `refresh()`
+
+---
+
 ### Client-side layers
 
-- Each implementation uses the client-side query engine
+- Each implementation uses the client-side query engine.
 - Pick what's best for your usage.
+- Prefer `GeoJSON` over `CSV`.
+- Proper attribution using `copyright` property.
 - *"With [`GeoJSON`](./demos/geojson_or_featurelayer/geojson.html) I ditch my [`FeatureLayer`](./demos/geojson_or_featurelayer/featureLayer.html)"* NO!!!
+- [Quantization benefits](https://github.com/ycabon/quantization/)
 
 ---
 
 ### Client-side query - Yann
 
-query features
-query by distance
-demo
+- `(CSV|GeoJSON|Feature)Layer`:
+  - `queryFeatures()`
+  - `queryFeatureCount()`
+  - `queryObjectIds()`
+  - `queryExtent()`
+
+- `(CSV|GeoJSON|Feature)LayerView`:
+  - `queryFeatures()`
+  - `queryFeatureCount()`
+  - `queryObjectIds()`
+  - `queryExtent()`
+
+---
+
+### Filter
+
+```ts
+// display rain gauges where their water percent is over 30%
+// and if the gauges are completely contained by the 10 miles
+// buffer around the filter geometry
+featureLayerView.filter = new FeatureFilter({
+  where: "percentile >= 30",
+  geometry: filterPolygon,
+  spatialRelationship: "contains",
+  distance: 10,
+  units: "miles"
+});
+```
+
+[API Reference](http://bzh.esri.com/javascript/latest/api-reference/esri-views-layers-support-FeatureFilter.html)
+| [Sample: filter by attribute](http://bzh.esri.com/javascript/latest/sample-code/featurefilter-attributes/index.html)
+| [Sample: filter by geometry](http://bzh.esri.com/javascript/latest/sample-code/featurefilter-geometry/index.html)
+
+---
+
+### Effect
+
+```ts
+layerView.effect = new FeatureEffect({
+  // Examples:
+  // brightness(0.4);
+  // contrast(200%);
+  // grayscale(50%);
+  // hue-rotate(90deg);
+  // invert(75%);
+  // opacity(25%);
+  // saturate(30%);
+  // sepia(60%);
+  excludedEffect: "grayscale(100%) opacity(0.5)",
+
+  filter: new FeatureFilter({
+    where: `some_attr < 100`,
+    geometry: new Point({
+      longitude: -100,
+      latitude: 40
+    }),
+    distance: 100,
+    unit: "kilometers",
+    spatialRelationship: "contains"
+  })
+});
+```
+
+[CSS reference](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
+| [CSS filter parser](https://github.com/ycabon/css-filter-parser)
+| [API Reference](http://bzh.esri.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html)
+| [Plenary Demo](https://ycabon.github.io/2019-devsummit-plenary/3_filter_effect.html)
+
+---
+
+### Putting it all together
+
+[![Demo](./demos/client-side_statistics/client-side_statistics.png)](./demos/client-side_statistics/index.html)
 
 ---
 

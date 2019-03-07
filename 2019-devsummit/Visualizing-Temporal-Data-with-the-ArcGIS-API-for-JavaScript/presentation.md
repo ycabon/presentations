@@ -232,6 +232,7 @@ function updateMapView(startDate, endDate) {
 ---
 
 ### Supported effects
+
 ```css
 brightness(0.4);
 contrast(200%);
@@ -245,9 +246,7 @@ sepia(60%);
 
 ---
 
-## Visualizing time using Arcade: Color earthquakes by age.
-
-TODO Jeremy
+## Visualizing time using Arcade: Color earthquakes by age
 
 ---
 

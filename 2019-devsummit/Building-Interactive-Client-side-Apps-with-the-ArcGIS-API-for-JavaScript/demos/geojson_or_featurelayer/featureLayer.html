@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>FeatureLayer - 4.11</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv canvas {
+        filter: drop-shadow(0px 20px 15px #888);
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.11/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.11/"></script>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/layers/FeatureLayer",
+        "esri/views/MapView",
+
+        "esri/renderers/smartMapping/creators/color",
+
+        "esri/widgets/Legend"
+      ], function(
+        Map,
+        FeatureLayer,
+        MapView,
+
+        color,
+
+        Legend
+      ) {
+        // http://jsapi.maps.arcgis.com/home/item.html?id=715b438682ca4a92a899a26f3d06fff5
+
+        // commune boundaries from https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/
+        // Indicator https://statistiques-locales.insee.fr/#c=indicator&i=filosofi.med&s=2015
+
+        layer = new FeatureLayer({
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Median_Disposable_Income_2015/FeatureServer",
+          title: "Median Disposable Income 2015",
+          copyright: "Insee | © les contributeurs d'OpenStreetMap sous licence ODbL",
+          opacity: 1,
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-fill",
+              color: "gray",
+              outline: null
+            }
+          },
+
+          // More in labelling part
+          labelingInfo: [{
+            minScale: 500000,
+            labelExpressionInfo: {
+              expression: "$feature.nom"
+            },
+            symbol: {
+              type: "text",
+              font: {
+                size: 10,
+                family: "sans-serif"
+              },
+              haloColor: "rgba(255,255,255,0.8)",
+              haloSize: "1px"
+            }
+          }]
+        });
+
+        layer.load()
+          .then(() => color.createContinuousRenderer({
+            layer,
+            field: "medianIncome2015",
+            theme: "above-and-below"
+          }))
+          .then((result) => {
+            console.log(result);
+            result.renderer.defaultSymbol.outline = null;
+            result.renderer.classBreakInfos[0].symbol.outline = null;
+            layer.renderer = result.renderer;
+          });
+
+        map = new Map({
+          layers: [layer]
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map: map,
+          spatialReference: {
+            wkid: 2154
+          },
+          center: {
+            spatialReference: {
+              wkid: 2154
+            },
+            x: 603737.3294851505,
+            y: 6826948.894620353
+          },
+          scale: 2893742
+        });
+
+        view.ui.add(new Legend({ view }), {
+          position: "bottom-right"
+        })
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

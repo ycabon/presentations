@@ -161,7 +161,7 @@ view.on("pointer-move", function(event){
             geometry: results.queryGeometry,
             symbol: {
                 type: "simple-fill",
-                color: [255, 255, 255, 0],
+                color: null,
                 outline: {
                     color: [255, 255, 255, 0.5],
                     width: 0.5

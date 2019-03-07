@@ -269,22 +269,6 @@ TODO Jeremy
 
 ---
 
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-5.png" -->
-
-## Headline Here 5
-
-* Bullet [points here](http://hakim.se).
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-6.png" -->
-
-## Headline Here 6
-
-* Bullet [points here](http://hakim.se).
-
----
-
 <!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-esri.png" -->
 
 ---

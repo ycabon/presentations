@@ -8,22 +8,6 @@
 
 ---
 
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
-
-## Headline Here 2
-
-* Bullet [points here](http://hakim.se).
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
-
-## Headline Here 3
-
-* Bullet [points here](http://hakim.se).
-
----
-
 ## Agenda - Yann
 
 - Client-side APIs in 4.11

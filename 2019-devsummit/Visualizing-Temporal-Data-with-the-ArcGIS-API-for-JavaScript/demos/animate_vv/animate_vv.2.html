@@ -183,40 +183,6 @@
       #slider {
         width: 100%;
       }
-      /**
-    * Play/Stop toggle button
-    */
-
-      #playButton {
-        flex: 0 0 100px;
-        order: 3;
-
-        margin: 20px 0;
-      }
-
-      .toggle-button {
-        display: flex;
-      }
-
-      .toggle-button.toggled .toggle-button-icon {
-        color: #cc1b1b;
-      }
-
-      .toggle-button .toggle-button-icon {
-        color: #1bcc1b;
-      }
-
-      .toggle-button > :nth-child(2) {
-        display: none;
-      }
-
-      .toggle-button.toggled > :nth-child(1) {
-        display: none;
-      }
-
-      .toggle-button.toggled > :nth-child(2) {
-        display: block;
-      }
     </style>
   </head>
 
@@ -239,25 +205,6 @@
               step="1"
               value="1984"
             />
-          </div>
-        </div>
-        <div
-          id="playButton"
-          class="esri-widget esri-widget--button toggle-button"
-        >
-          <div>
-            <span
-              class="toggle-button-icon esri-icon-play"
-              aria-label="play icon"
-            ></span>
-            Play
-          </div>
-          <div>
-            <span
-              class="toggle-button-icon esri-icon-pause"
-              aria-label="pause icon"
-            ></span>
-            Pause
           </div>
         </div>
       </div>

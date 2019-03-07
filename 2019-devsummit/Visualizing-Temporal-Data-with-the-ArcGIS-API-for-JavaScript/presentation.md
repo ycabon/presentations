@@ -7,7 +7,7 @@
     <a href="https://github.com/ycabon">@ycabon</a> |
     <a href="https://github.com/richiecarmichael">@richiecarmichael</a>
 </p>
-<p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
+<p style="text-align: left; font-size: 30px;">slides: <a href="https://git.io/fhp7R"><code>https://git.io/fhp7R</code></a></p>
 
 ---
 
@@ -16,12 +16,6 @@
 - New APIs in 4.11
 - Visualizing time using Arcade
 - Visualizing time using Visual Variables
-
----
-
-### Time support in ArcGIS
-- Showing a webmap with time
-- 3.x API
 
 ---
 
@@ -252,19 +246,7 @@ sepia(60%);
 
 ## Visualizing time using Visual Variables
 
-[![./demos/animate_vv/animate_vv.png](./demos/animate_vv/animate_vv.png)](./demos/animate_vv/animate_vv.html)
-
----
-
-## Visualizing time using Visual Variables
-
-[![./esri_uk_tweet.png](./esri_uk_tweet.png)](https://twitter.com/EsriUKGeoDev/status/1010140091396784128/photo/1)
-
----
-
-## Client-side - Building a heatmap chart using clientside statistics
-
-[![./demos/heatmap_chart/heatmap_chart.png](./demos/heatmap_chart/heatmap_chart.png)](./demos/heatmap_chart/index.html)
+[![./demos/animate_vv/animate_vv.png](./demos/animate_vv/animate_vv.png)](./demos/animate_vv/animate_vv.1.html)
 
 ---
 

@@ -53,7 +53,7 @@ demo
 
 ---
 
-### Introducting TimeInfo
+### TimeInfo
 ```js
 var featureLayer = new FeatureLayer({
     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
@@ -73,7 +73,7 @@ featureLayer.load().then(function(){
 
 ---
 
-### Introducting TimeExtent
+### TimeExtent
 ```js
 var timeExtent = new TimeExtent({
     start: new Date(2000, 0, 1),

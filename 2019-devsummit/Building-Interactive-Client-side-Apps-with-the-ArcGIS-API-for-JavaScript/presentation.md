@@ -10,12 +10,16 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
+
 ## Agenda
 
 - Client-side APIs in 4.11
 - Building interactive charts
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Client-side APIs in 4.11
 
@@ -27,6 +31,8 @@
 - Filter & Effect
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Client-side layers - CSVLayer
 
@@ -49,6 +55,8 @@ const new CSVLayer({
 | [Plenary Demo](https://ycabon.github.io/2018-devsummit-plenary/2-hurricanes.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Client-side layers - CSVLayer - Tips
 
@@ -77,6 +85,8 @@ url = null;
 ```
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Client-side layers - FeatureLayer
 
@@ -110,6 +120,8 @@ Supports data in any spatial reference
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side layers - GeoJSON
 
 ```ts
@@ -123,6 +135,8 @@ const geoJSONLayer = new GeoJSONLayer({
 | [Sample](http://bzh.esri.com/javascript/latest/sample-code/layers-geojson/index.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Client-side layers - GeoJSON - Tips
 
@@ -161,6 +175,8 @@ url = null;
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side layers - GeoJSON - Tips
 
 - Fix [elevation data](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
@@ -188,6 +204,8 @@ const layer = new GeoJSONLayer({
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side layers - GeoJSON
 
 - Implementation of the spec [`rfc7946`](https://tools.ietf.org/html/rfc7946)
@@ -200,6 +218,8 @@ const layer = new GeoJSONLayer({
   - No Antimeridian crossing
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Client-side layers - GeoJSON
 
@@ -216,6 +236,8 @@ const layer = new GeoJSONLayer({
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side layers
 
 - Each implementation uses the client-side query engine.
@@ -226,6 +248,8 @@ const layer = new GeoJSONLayer({
 - [Quantization benefits](https://github.com/ycabon/quantization/)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Client-side query
 
@@ -242,6 +266,8 @@ const layer = new GeoJSONLayer({
   - `queryExtent()`
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Filter
 
@@ -263,6 +289,8 @@ featureLayerView.filter = new FeatureFilter({
 | [Sample: filter by geometry](http://bzh.esri.com/javascript/latest/sample-code/featurefilter-geometry/index.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Effect
 
@@ -299,11 +327,15 @@ layerView.effect = new FeatureEffect({
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Putting it all together
 
 [![Demo](./demos/client-side_statistics/client-side_statistics.png)](./demos/client-side_statistics/index.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### TimeInfo
 
@@ -326,6 +358,8 @@ featureLayer.load().then(function(){
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### TimeExtent
 
 ```js
@@ -346,6 +380,8 @@ var query = {
 ```
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Using Time-enabled Queries
 
@@ -377,11 +413,15 @@ quakeView.effect = {
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side query
 
 [demo](https://richiecarmichael.github.io/quake-map/index.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ```js
 view.on("pointer-move", function(event){

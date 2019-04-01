@@ -11,7 +11,10 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
+
 ## Agenda
+
 - Time support in the JS API
 - New APIs in 4.11
 - Visualizing time using Arcade
@@ -19,7 +22,10 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Time support in 4.x - Roadmap
+
 - What do we ship in 4.11:
   - Time metadata
     - TimeInfo
@@ -33,7 +39,10 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Time Metadata
+
 ```js
 var featureLayer = new FeatureLayer({
     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
@@ -53,20 +62,29 @@ featureLayer.load().then(function(){
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### TimeInfo
+
 ![](./timeinfo.png)
 - Temporal properties intended by the service publisher.
 - Used by the API for building queries and other widgets.
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### TimeExtent
+
 ![](./timeextent.png)
 - Used by [TimeInfo](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-TimeInfo.html) metadata and [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) to describe a period of time.
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Server-side queries
+
 ```js
 var query = {
   timeExtent: {
@@ -79,13 +97,17 @@ featureLayerQuake.queryFeatureCount(query).then(function(count){
   console.log(`${count} quakes found.`);  // e.g. 9235 quakes found.
 });
 ```
+
 - _timeExtent_ added to [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html)
 - Layers must be _time enabled_
 - *Tip:* Use the [developer dashboard](https://developers.arcgis.com/dashboard) to retroactively time-enabled layers
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### More server-side queries
+
 ```js
 FeatureLayer.queryExtent()
 FeatureLayer.queryFeatureCount()
@@ -95,10 +117,15 @@ FeatureLayer.queryObjectIds()
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side queries
+
 [demo](https://richiecarmichael.github.io/quake-map/index.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ```js
 view.on("pointer-move", function(event){
@@ -149,7 +176,10 @@ view.on("pointer-move", function(event){
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side queries
+
 ```js
 FeatureLayerView.queryExtent()
 FeatureLayerView.queryFeatureCount()
@@ -159,7 +189,10 @@ FeatureLayerView.queryObjectIds()
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side queries - tips
+
 ```js
 view.whenLayerView(featureLayerQuake).then(function(layerView){
     layerView.watch("updating", function(value){
@@ -169,24 +202,32 @@ view.whenLayerView(featureLayerQuake).then(function(layerView){
     });
 });
 ```
+
 - Wait for content to be downloaded
 - Geometry is generalized
 - Restrict queries to information in visual extent
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side filtering
+
 ![](./client-side-filter-2.gif)
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Enabling client-side filtering
+
 ```js
 var quakeView = null;
 view.whenLayerView(featureLayerQuake).then(function(layerView){
     quakeView = layerView;
 });
 ```
+
 ```js
 function updateMapView(startDate, endDate) {
     quakeView.filter = {
@@ -201,12 +242,17 @@ function updateMapView(startDate, endDate) {
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 <!-- Animated gif showing an outside effect. -->
 ![](./client-side-filter-3.gif)
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Filtering with effects
+
 ```js
 function updateMapView(startDate, endDate) {
     quakeView.effect = {
@@ -225,6 +271,8 @@ function updateMapView(startDate, endDate) {
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Supported effects
 
 ```css
@@ -240,9 +288,13 @@ sepia(60%);
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Visualizing time using Arcade: Color earthquakes by age
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Visualizing time using Visual Variables
 

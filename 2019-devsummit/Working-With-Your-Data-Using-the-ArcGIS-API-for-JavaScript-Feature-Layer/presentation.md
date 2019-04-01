@@ -22,6 +22,8 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Feature Layer powered by
 
 * [Feature Services](https://developers.arcgis.com/javascript/latest/sample-code/layers-featurelayer/index.html)
@@ -32,17 +34,25 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Feature Layer powered by dynamic feature tiles
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Visualization styles
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Popups to communicate information
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Bringing a feature layer into your app
 
@@ -63,6 +73,8 @@ map.add(layer);
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Bringing a feature layer into your app
 
 Restrict data retrieved from the feature service
@@ -77,6 +89,8 @@ layer.definitionExpression = "STATE_NAME = 'California'";
 [Demo](./demos/1_bringing_data/2_byUrl_definitionExpression.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Bringing a feature layer into your app
 
@@ -101,6 +115,8 @@ map.add(layer);
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Bringing a feature layer into your app
 
 Alternative: using `Layer.fromPortalItem()`
@@ -119,6 +135,8 @@ Layer.fromPortalItem({
 [Demo](./demos/1_bringing_data/4_byPortalItem_using_fromPortalItem.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Bringing portal feature layer into your app
 
@@ -141,6 +159,8 @@ layer.outFields = ["some_field"];
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ## Labelling
 
 Label features to show relevant information at a glance
@@ -149,6 +169,8 @@ Label features to show relevant information at a glance
 * [Multiple label classes](https://developers.arcgis.com/javascript/latest/sample-code/labels-multiple-classes/index.html) 
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Query the data from the server
 
@@ -159,6 +181,8 @@ Label features to show relevant information at a glance
 * [queryRelatedFeatures()](./demos/3_query/5_query_related_features.html)
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Interact with the data in memory
 

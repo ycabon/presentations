@@ -3,7 +3,9 @@
 <h1 style="text-align: left; font-size: 80px;">Building Interactive Client-side Apps</h1>
 <h2 style="text-align: left; font-size: 60px;">with the ArcGIS API for JavaScript</h2>
 <p style="text-align: left; font-size: 30px;">Yann Cabon | Richie Carmichael</p>
-<p style="text-align: left; font-size: 30px;"><a href="https://github.com/ycabon">@ycabon</a> | <a href="https://github.com/richiecarmichael">@richiecarmichael</a></p>
+<p style="text-align: left; font-size: 30px;">
+  <a href="https://github.com/ycabon">@ycabon</a> | <a href="https://github.com/richiecarmichael">@richiecarmichael</a>
+</p>
     <p style="text-align: left; font-size: 30px;">slides: <a href="https://git.io/fhpdw"><code>https://git.io/fhpdw</code></a></p>
 
 ---
@@ -51,7 +53,7 @@ const new CSVLayer({
 ### Client-side layers - CSVLayer - Tips
 
 - specify the layer's spatial reference
-- pass by a blob url
+- pass data by a blob url
 
 ```ts
 const csv = `
@@ -65,7 +67,7 @@ const blob = new Blob([csv], {
 let url = URL.createObjectURL(blob);
 
 const layer = new CSVLayer({
-  url: ""
+  url: url
 });
 
 await layer.load();
@@ -225,7 +227,7 @@ const layer = new GeoJSONLayer({
 
 ---
 
-### Client-side query - Yann
+### Client-side query
 
 - `(CSV|GeoJSON|Feature)Layer`:
   - `queryFeatures()`

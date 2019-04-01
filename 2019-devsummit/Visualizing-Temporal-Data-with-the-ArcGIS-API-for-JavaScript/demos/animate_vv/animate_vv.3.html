@@ -126,7 +126,7 @@
           slider.value = Math.floor(year);
           
           layerView.filter = {
-            where: `CNSTRCT_YR <= ${year}`
+            where: `CNSTRCT_YR >= ${year - 5} AND CNSTRCT_YR <= ${year + 5}`
           };
         }
 

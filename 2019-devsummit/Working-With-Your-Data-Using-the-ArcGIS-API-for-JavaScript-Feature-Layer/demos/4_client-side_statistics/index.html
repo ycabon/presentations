@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Filter features by geometry</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.11/esri/themes/light/main.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://js.arcgis.com/4.11/"></script>
+
+    <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #viewDiv {
+      position: absolute;
+      top: 0;
+      right: 40%;
+      left: 0;
+      bottom: 0px;
+      margin: 0;
+      padding: 0;
+    }
+
+    #panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 40%;
+      overflow: scroll;
+      background: #efefef;
+    }
+
+    </style>
+    <script>
+    require([
+      "esri/WebMap",
+      "esri/views/MapView",
+      "esri/widgets/Sketch/SketchViewModel"
+    ], function (WebMap, MapView, SketchViewModel) {
+
+    const ctx = document.getElementById("energy-chart").getContext("2d");
+
+    const webmap = new WebMap({
+      portalItem: {
+        id: "878abf89a760405dadb935ac69829448"
+      }
+    });
+
+    webmap.loadAll()
+      .then(() => {
+        // add the fields we need for our analysis
+        webmap.layers.getItemAt(0).outFields = ["fuel1", "capacity_mw"];
+      })
+
+    const view = new MapView({
+      container: "viewDiv",
+      map: webmap,
+      center: [13.4, 52.52],
+      scale: 80000000,
+      highlightOptions: {
+        color: "black",
+        haloOpacity: 0.65,
+        fillOpacity: 0.45
+      },
+      constraints: {
+        snapToZoom: false
+      }
+    });
+
+    view.ui.add("select-by-polygon", "top-left");
+    const selectButton = document.getElementById("select-by-polygon");
+    const sketchViewModel = new SketchViewModel({
+      view: view,
+      layer: view.graphics,
+      polygonSymbol: {
+        type: "simple-fill",
+        color: "rgba(138,43,226, 0)",
+        style: "solid",
+        outline: {
+          color: "white",
+          width: 2
+        }
+      }
+    });
+
+    const fuelTypes = [
+      "Biomass",
+      "Coal",
+      "Gas",
+      "Hydro",
+      "Nuclear",
+      "Oil",
+      "Solar",
+      "Waste",
+      "Wind",
+      "Other"
+    ];
+    const noData = [0,0,0,0,0,0,0,0,0,0];
+
+    const chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: fuelTypes,
+        datasets: [{
+          backgroundColor: ["#ff5bc6", "#ff9aae", "#d398ff", "#5cb9ff", "#6dbf5c", "#ffd7c4", "#ffffc1", "#fe8e5b", "#9ade6f", "#B4CFE4"],
+          borderColor: "rgb(255, 255, 255)",
+          borderWidth: 0,
+          data: noData
+        }]
+      },
+      options: {
+        responsive: false,
+        cutoutPercentage: 35,
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: "Avg. Power Plant Capacity"
+        }
+      }
+    });
+
+    view.when().then(async () => {
+      const layer = webmap.layers.getItemAt(0);
+      const layerView = await view.whenLayerView(layer);
+
+      sketchViewModel.on("create", (event) => {
+        var graphic = event.graphic;
+        if (graphic) {
+          selectFeatures(layerView, graphic.geometry);
+        }
+      });
+
+      selectButton.addEventListener("click", () => {
+        layerView.effect = null;
+        chart.data.datasets[0].data = noData;
+        chart.update();
+        view.popup.close();
+        // ready to draw a polygon
+        view.graphics.removeAll();
+        sketchViewModel.reset();
+        sketchViewModel.create("circle");
+      });
+    });
+
+    var nextGeom;
+    var running = false;
+
+    async function selectFeatures(layerView, geometry) {
+      if (running) {
+        nextGeom = geometry.clone();
+        return;
+      }
+
+      running = true;
+
+      const query = layerView.layer.createQuery();
+      query.geometry = geometry;
+      query.outStatistics = [
+        {
+          onStatisticField: "capacity_mw",
+          outStatisticFieldName: "sum_capacity_mw",
+          statisticType: "sum"
+        }
+      ];
+      query.groupByFieldsForStatistics = ["fuel1"];
+
+      layerView.effect = {
+        excludedEffect: "grayscale(100%) opacity(25%)",
+        filter: {
+          geometry: query.geometry,
+          where: query.where
+        }
+      };
+
+      // Fetch statistics
+      featureSet = await layerView.queryFeatures(query);
+
+      // map the stat by the fuel type
+      const statByFuelType = new Map();
+      featureSet.features.forEach((feature) => {
+        const { fuel1, sum_capacity_mw } = feature.attributes;
+        statByFuelType.set(fuel1, sum_capacity_mw);
+      });
+
+      // create the values for the chart
+      const data = fuelTypes.map((fuelType) => {
+        return statByFuelType.get(fuelType) || 0;
+      });
+
+      //update chart
+      chart.data.datasets[0].data = data;
+      chart.update();
+      
+      running = false;
+
+      if (nextGeom) {
+        selectFeatures(layerView, nextGeom);
+        nextGeom = null;
+      }
+    }
+  });
+    </script>
+  </head>
+
+  <body>
+  <div id="viewDiv">
+    <div id="select-by-polygon" class="esri-widget esri-widget--button esri-widget esri-interactive" title="Select features by polygon">
+      <span class="esri-icon-radio-unchecked"></span>
+    </div>
+  </div>
+  <div id="panel">
+    <div style="padding: 15px;">
+      <canvas id="energy-chart" width="500" height="500" style="float:left;"></canvas>
+    </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Animate color visual variable - 4.11</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.11/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.11/"></script>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/layers/FeatureLayer",
+        "esri/views/MapView",
+        "esri/geometry/Polygon",
+        "esri/widgets/Legend",
+        "esri/widgets/Home",
+        "esri/widgets/Fullscreen"
+      ], (...mods) => (async function(Map, FeatureLayer, MapView, Polygon, Legend, Home, Fullscreen) {
+        //--------------------------------------------------------------------------
+        //
+        //  Setup Map and View
+        //
+        //--------------------------------------------------------------------------
+
+        var layer = new FeatureLayer({
+          portalItem: {
+            id: "dfe2d606134546f5a712e689d76540ac"
+          },
+          definitionExpression: "CNSTRCT_YR > 0",
+          title: "Building Footprints",
+          minScale: 72223.819286,
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-fill",
+              color: "rgba(28, 28, 28, 0.8)",
+              outline: null
+            }
+          }
+        });
+
+        var map = new Map({
+          basemap: {
+            portalItem: {
+              // http://www.arcgis.com/home/item.html?id=3582b744bba84668b52a16b0b6942544
+              id: "3582b744bba84668b52a16b0b6942544"
+            }
+          },
+          layers: [layer]
+        });
+
+        var view = new MapView({
+          map: map,
+          container: "viewDiv",
+          center: [-73.99, 40.72],
+          zoom: 13,
+          constraints: {
+            snapToZoom: false,
+            minScale: 72223.819286
+          },
+          // This ensures that when going fullscreen
+          // The top left corner of the view extent
+          // stays aligned with the top left corner
+          // of the view's container
+          resizeAlign: "top-left"
+        });
+
+        //--------------------------------------------------------------------------
+        //
+        //  Setup UI
+        //
+        //--------------------------------------------------------------------------
+
+        var applicationDiv = document.getElementById("applicationDiv");
+        var slider = document.getElementById("slider");
+        var sliderValue = document.getElementById("sliderValue");
+        var titleDiv = document.getElementById("titleDiv");
+
+        view.ui.empty("top-left");
+        view.ui.add(titleDiv, "top-left");
+        view.ui.add(
+          new Home({
+            view: view
+          }),
+          "top-left"
+        );
+        view.ui.add(
+          new Fullscreen({
+            view: view,
+            element: applicationDiv
+          }),
+          "top-right"
+        );
+
+        const layerView = await view.whenLayerView(layer);
+
+        // Starts the application by visualizing year 1984
+        setYear(1984);
+
+        // Update filter when user drags the slider
+        function inputHandler() {
+          setYear(parseInt(slider.value));
+        }
+        slider.addEventListener("input", inputHandler);
+        slider.addEventListener("change", inputHandler);
+
+        //--------------------------------------------------------------------------
+        //
+        //  Methods
+        //
+        //--------------------------------------------------------------------------
+
+        /**
+         * Sets the current visualized construction year.
+         */
+        function setYear(year) {
+          sliderValue.innerHTML = Math.floor(year);
+          slider.value = Math.floor(year);
+          
+          layerView.filter = {
+            where: `CNSTRCT_YR >= ${year - 5} AND CNSTRCT_YR <= ${year + 5}`
+          };
+        }
+
+      })(...mods));
+    </script>
+
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #applicationDiv {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+        flex: 1 1 auto;
+        order: 1;
+      }
+
+      #titleDiv {
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.2019rem;
+        padding: 10px;
+      }
+
+
+      #sliderContainer {
+        flex: 0 0 80px;
+        order: 2;
+
+        display: flex;
+        flex-flow: row;
+
+        padding: 0 12px;
+      }
+
+      #sliderValue {
+        flex: 0 0 100px;
+        order: 1;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+
+        font-size: 300%;
+      }
+
+      #sliderInnerContainer {
+        flex: 1 1 auto;
+        order: 2;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
+      }
+
+      #sliderLabels {
+        flex: 1 1 auto;
+        order: 1;
+
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      #rangeWrapper {
+        flex: 1 1 auto;
+        order: 2;
+
+        position: relative;
+        padding: 0 20px;
+      }
+
+      #slider {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="applicationDiv">
+      <div id="viewDiv">
+        <div id="titleDiv" class="esri-widget">New York Construction</div>
+      </div>
+
+      <div id="sliderContainer" class="esri-widget">
+        <span id="sliderValue">1984</span>
+        <div id="sliderInnerContainer">
+          <div id="sliderLabels"><span>1880</span> <span>2017</span></div>
+          <div id="rangeWrapper">
+            <input
+              id="slider"
+              type="range"
+              min="1880"
+              max="2017"
+              step="1"
+              value="1984"
+            />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

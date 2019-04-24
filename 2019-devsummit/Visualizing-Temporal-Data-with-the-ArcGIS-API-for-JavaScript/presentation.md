@@ -7,11 +7,14 @@
     <a href="https://github.com/ycabon">@ycabon</a> |
     <a href="https://github.com/richiecarmichael">@richiecarmichael</a>
 </p>
-<p style="text-align: left; font-size: 30px;">slides: <a href=""><code>TODO</code></a></p>
+<p style="text-align: left; font-size: 30px;">slides: <a href="https://git.io/fhp7R"><code>https://git.io/fhp7R</code></a></p>
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-2.png" -->
+
 ## Agenda
+
 - Time support in the JS API
 - New APIs in 4.11
 - Visualizing time using Arcade
@@ -19,13 +22,10 @@
 
 ---
 
-### Time support in ArcGIS
-- Showing a webmap with time
-- 3.x API
-
----
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Time support in 4.x - Roadmap
+
 - What do we ship in 4.11:
   - Time metadata
     - TimeInfo
@@ -39,7 +39,10 @@
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Time Metadata
+
 ```js
 var featureLayer = new FeatureLayer({
     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
@@ -59,25 +62,29 @@ featureLayer.load().then(function(){
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### TimeInfo
+
 ![](./timeinfo.png)
 - Temporal properties intended by the service publisher.
 - Used by the API for building queries and other widgets.
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### TimeExtent
+
 ![](./timeextent.png)
 - Used by [TimeInfo](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-TimeInfo.html) metadata and [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) to describe a period of time.
 
 ---
 
-### Server-side queries
-![](./server-side-query.png)
-
----
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ### Server-side queries
+
 ```js
 var query = {
   timeExtent: {
@@ -90,13 +97,17 @@ featureLayerQuake.queryFeatureCount(query).then(function(count){
   console.log(`${count} quakes found.`);  // e.g. 9235 quakes found.
 });
 ```
+
 - _timeExtent_ added to [Query](https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html)
 - Layers must be _time enabled_
 - *Tip:* Use the [developer dashboard](https://developers.arcgis.com/dashboard) to retroactively time-enabled layers
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### More server-side queries
+
 ```js
 FeatureLayer.queryExtent()
 FeatureLayer.queryFeatureCount()
@@ -106,12 +117,69 @@ FeatureLayer.queryObjectIds()
 
 ---
 
-### Demo
-[Yet Another Earthquake App](http://richiecarmichael.github.io/quake-map/index.html)
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
+### Client-side queries
+
+[demo](https://richiecarmichael.github.io/quake-map/index.html)
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
+```js
+view.on("pointer-move", function(event){
+    if (!quakeView) { return; }
+    event.stopPropagation();
+
+    const query = featureLayerQuake.createQuery();
+    query.timeExtent = {
+        start: startTime,
+        end: endTime
+    };
+    query.geometry = view.toMap(event);
+    query.distance = 500;
+    query.units = "kilometers";
+    query.returnQueryGeometry = true;
+
+    quakeView.queryFeatures(query).then(function(results) {
+        // Draw selection circle.
+        view.graphics.removeAll();
+        view.graphics.add(new Graphic({
+            geometry: results.queryGeometry,
+            symbol: {
+                type: "simple-fill",
+                color: null,
+                outline: {
+                    color: [255, 255, 255, 0.5],
+                    width: 0.5
+                }
+            }
+        }));
+
+        // Highlight selected Earthquakes.
+        if (highlight) {
+            highlight.remove();
+            highlight = null;
+        }
+        highlight = quakeView.highlight(results.features);
+
+        // Highlight selected Earthquakes in chart.
+        d3.selectAll("#dots circle").classed('highlight', false);
+        results.features.forEach(function(feature){
+            const dot = index[feature.attributes.OBJECTID];
+            d3.select(dot).classed('highlight', true);
+        });
+    });
+});
+```
+
+---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side queries
+
 ```js
 FeatureLayerView.queryExtent()
 FeatureLayerView.queryFeatureCount()
@@ -121,7 +189,10 @@ FeatureLayerView.queryObjectIds()
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side queries - tips
+
 ```js
 view.whenLayerView(featureLayerQuake).then(function(layerView){
     layerView.watch("updating", function(value){
@@ -131,24 +202,32 @@ view.whenLayerView(featureLayerQuake).then(function(layerView){
     });
 });
 ```
+
 - Wait for content to be downloaded
-- Geometries are generalized
+- Geometry is generalized
 - Restrict queries to information in visual extent
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Client-side filtering
+
 ![](./client-side-filter-2.gif)
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Enabling client-side filtering
+
 ```js
 var quakeView = null;
 view.whenLayerView(featureLayerQuake).then(function(layerView){
     quakeView = layerView;
 });
 ```
+
 ```js
 function updateMapView(startDate, endDate) {
     quakeView.filter = {
@@ -163,22 +242,17 @@ function updateMapView(startDate, endDate) {
 
 ---
 
-### Todo (Richie) - Necessary?
-|                          | Instantenous       | Non-instantaneous  |
-|:------------------------ |:------------------ |:------------------ |
-| Example                  | Earthquake         | Epidemic           |
-| Description              | Start date only    | Start and end date |
-| Query with <i>start</i>  | N/A                | Intersecting       | 
-| Query with <i>start</i><br>and <i>end</i> | Intersecting       | Intersecting       |
-
----
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 <!-- Animated gif showing an outside effect. -->
 ![](./client-side-filter-3.gif)
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Filtering with effects
+
 ```js
 function updateMapView(startDate, endDate) {
     quakeView.effect = {
@@ -189,61 +263,42 @@ function updateMapView(startDate, endDate) {
                 end: endDate
             }
         },
-        insideEffect: null,
-        outsideEffect: "saturate(0%) opacity(25%)"
+        includedEffect: null,
+        excludedEffect: "saturate(0%) opacity(25%)"
     };
 }
 ```
 
 ---
 
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
+
 ### Supported effects
+
 ```css
-filter: blur(5px);
-filter: brightness(0.4);
-filter: contrast(200%);
-filter: drop-shadow(16px 16px 20px blue);
-filter: grayscale(50%);
-filter: hue-rotate(90deg);
-filter: invert(75%);
-filter: opacity(25%);
-filter: saturate(30%);
-filter: sepia(60%);
+brightness(0.4);
+contrast(200%);
+grayscale(50%);
+hue-rotate(90deg);
+invert(75%);
+opacity(25%);
+saturate(30%);
+sepia(60%);
 ```
 
 ---
 
-## Visualizing time using Arcade: Color earthquakes by age.
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
-TODO Jeremy
+## Visualizing time using Arcade: Color earthquakes by age
 
 ---
+
+<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-3.png" -->
 
 ## Visualizing time using Visual Variables
 
-TODO Yann - New York demo
-
----
-
-## Client-side - Building a heatmap chart using clientside statistics.
-
-TODO Kristian
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-5.png" -->
-
-## Headline Here 5
-
-* Bullet [points here](http://hakim.se).
-
----
-
-<!-- .slide: data-background="../reveal.js/img/2019/devsummit/bg-6.png" -->
-
-## Headline Here 6
-
-* Bullet [points here](http://hakim.se).
+[![./demos/animate_vv/animate_vv.png](./demos/animate_vv/animate_vv.png)](./demos/animate_vv/animate_vv.1.html)
 
 ---
 

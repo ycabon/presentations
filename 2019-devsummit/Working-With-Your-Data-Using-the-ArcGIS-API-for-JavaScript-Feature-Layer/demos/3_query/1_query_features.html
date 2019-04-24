@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+  <title>FeatureLayer.queryFeatures()</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.11/"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #viewDiv {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+
+      "dgrid/OnDemandGrid",
+      "dstore/Store",
+      "dstore/QueryResults"
+    ], function(
+      Map, MapView, FeatureLayer,      
+      OnDemandGrid, Store, QueryResults  
+    ) {
+      var layer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Beverly%20Hills%20Trees%20By%20Block/FeatureServer/0",
+        outFields: ["*"]
+      });
+
+      // setup the map
+      var map = new Map({
+        basemap: "hybrid",
+        layers: [layer]
+      });
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        popup: {
+          autoOpenEnabled: false
+        }
+      });
+      
+      layer.load()
+      .then(() => {
+          // Set the view extent to the data extent
+          view.extent = layer.fullExtent;
+
+          // New in 4.11: FeatureLayer.createPopupTemplate()
+          layer.popupTemplate = layer.createPopupTemplate();
+        });
+
+      view.on("click", (event) => {
+        queryFeatures(event);
+      });
+
+      function queryFeatures(screenPoint) {
+        const point = view.toMap(screenPoint);
+
+        // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures
+        layer.queryFeatures({
+          geometry: point,
+          spatialRelationship: "intersects",
+          returnGeometry: false,
+          outFields: ["*"]
+        })
+        .then((featureSet) => {
+          // https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Popup.html#open
+          view.popup.open({
+            location: point,
+            features: featureSet.features
+          })
+        });
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

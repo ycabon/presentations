@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+  <title>FeatureLayer.queryRelatedFeatures()</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.11/"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #viewDiv, #gridDiv {
+      height: 50%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+
+      "dgrid/Grid"
+    ], function(
+      Map, MapView, FeatureLayer,      
+      Grid
+    ) {
+      var grid;
+
+      var layer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Beverly%20Hills%20Trees%20By%20Block/FeatureServer/0",
+        outFields: ["*"]
+      });
+
+      // setup the map
+      var map = new Map({
+        basemap: "hybrid",
+        layers: [layer]
+      });
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        popup: {
+          autoOpenEnabled: false
+        }
+      });
+
+      layer.load()
+      .then(() => {
+          // Set the view extent to the data extent
+          view.extent = layer.fullExtent;
+
+          // New in 4.11: FeatureLayer.createPopupTemplate()
+          layer.popupTemplate = layer.createPopupTemplate();
+
+          return createGrid().then((g) => grid = g);
+        });
+
+      view.on("click", (event) => {
+        queryFeatures(event);
+      });
+
+      function queryFeatures(screenPoint) {
+        const point = view.toMap(screenPoint);
+
+        if (grid) {
+          grid.destroy();
+        }
+
+        // Query the for the feature ids where the user clicked
+
+        // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures
+        layer.queryObjectIds({
+          geometry: point,
+
+          spatialRelationship: "intersects",
+          returnGeometry: false,
+          outFields: ["*"]
+        })
+        .then((objectIds) => {
+          if (!objectIds.length) { return; }
+
+          // Query the for the related features for the features ids found
+
+          // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#relationships
+          // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryRelatedFeatures
+          return layer.queryRelatedFeatures({
+            outFields: ["*"],
+            relationshipId: layer.relationships[0].id,
+            objectIds
+          });
+        })
+        .then((relatedFeatureSetByObjectId) => {
+          if (!relatedFeatureSetByObjectId) { return; }
+
+          // Create a grid with the data
+
+          Object.keys(relatedFeatureSetByObjectId)
+            .forEach((objectId) => {
+              const relatedFeatureSet = relatedFeatureSetByObjectId[objectId];
+              const rows = relatedFeatureSet.features.map((feature) => {
+                return feature.attributes;
+              });
+
+              if (!rows.length) { return; }
+
+              const el = document.createElement("div")
+              document.body.appendChild(el);
+              grid = new Grid({
+                columns: Object.keys(rows[0]).map((fieldName) => {
+                  return {
+                    label: fieldName,
+                    field: fieldName
+                  };
+                })
+              }, el);
+              grid.renderArray(rows);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

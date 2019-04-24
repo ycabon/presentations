@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+  <title>FeatureLayer.queryAttachments()</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.11/"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #viewDiv, #attachementsDiv {
+      height: 50%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+
+      "dgrid/Grid"
+    ], function(
+      Map, MapView, FeatureLayer,      
+      Grid
+    ) {
+      var grid;
+
+      var layer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Beverly%20Hills%20Trees%20By%20Block/FeatureServer/0",
+        outFields: ["*"]
+      });
+
+      // setup the map
+      var map = new Map({
+        basemap: "hybrid",
+        layers: [layer]
+      });
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        popup: {
+          autoOpenEnabled: false
+        }
+      });
+
+      layer.load()
+      .then(() => {
+          // Set the view extent to the data extent
+          view.extent = layer.fullExtent;
+
+          // New in 4.11: FeatureLayer.createPopupTemplate()
+          layer.popupTemplate = layer.createPopupTemplate();
+
+          return createGrid().then((g) => grid = g);
+        });
+
+      view.on("click", (event) => {
+        queryFeatures(event);
+      });
+
+      function queryFeatures(screenPoint) {
+        const point = view.toMap(screenPoint);
+
+        if (grid) {
+          grid.destroy();
+        }
+
+        // Query the for the feature ids where the user clicked
+
+        // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryFeatures
+        layer.queryObjectIds({
+          geometry: point,
+
+          spatialRelationship: "intersects",
+          returnGeometry: false,
+          outFields: ["*"]
+        })
+        .then((objectIds) => {
+          if (!objectIds.length) { return; }
+
+          // Query the for the related features for the features ids found
+
+          // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#queryAttachments
+          return layer.queryAttachments({
+            attachmentTypes: ["image/jpeg"],
+            objectIds
+          });
+        })
+        .then((attachmentsByFeatureId) => {
+          if (!attachmentsByFeatureId) { return; }
+
+          // Display the attachements
+          Object.keys(attachmentsByFeatureId)
+            .forEach((objectId) => {
+              const attachements = attachmentsByFeatureId[objectId];
+
+              console.group("attachment for", objectId);
+
+              attachements.forEach(function (attachement) {
+                console.log("attachment id", attachement.id);
+                console.log("content type", attachement.contentType);
+                console.log("name", attachement.name);
+                console.log("size", attachement.size);
+                console.log("url", attachement.url);
+                console.groupEnd();
+
+                const image = document.createElement("img");
+                image.src = attachement.url;
+                document.getElementById("attachementsDiv").appendChild(image);
+              });
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="attachementsDiv"></div>
+</body>
+
+</html>

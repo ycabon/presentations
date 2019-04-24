@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+
+  <title>Bringing FeatureLayer by portalItem</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/themes/dark/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #282a2c;
+    }
+  </style>
+
+  <script src="https://js.arcgis.com/4.11/"></script>
+
+  <script>
+    require([
+      "esri/Basemap",
+      "esri/Map",
+
+      "esri/views/MapView",
+      
+      "esri/layers/FeatureLayer",
+      
+      "esri/widgets/LayerList"
+    ], function(
+      Basemap, Map,
+      MapView,
+      FeatureLayer,
+      LayerList
+    ) {
+      const basemap = new Basemap({
+        portalItem: {
+          id: "4f2e99ba65e34bb8af49733d9778fb8e"
+        }
+      });
+
+      // http://jsapi.maps.arcgis.com/home/item.html?id=bca022ee5d9440c9b60399ee4d809d9b
+      const layer = new FeatureLayer({
+        portalItem: {
+          id: "bca022ee5d9440c9b60399ee4d809d9b"
+        }
+      });
+
+      const map = new Map({
+        basemap,
+        layers: [layer]
+      });
+
+      // Add the map to a MapView
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 4,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+      // Add a legend instance to the panel of a
+      // ListItem in a LayerList instance
+      const layerList = new LayerList({
+        view: view,
+        listItemCreatedFunction: function(event) {
+          const item = event.item;
+          if (item.layer.type != "group") { // don't show legend twice
+            item.panel = {
+              content: "legend",
+              open: true
+            };
+          }
+        }
+      });
+      view.ui.add(layerList, "top-right");
+
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

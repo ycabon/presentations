@@ -10,6 +10,7 @@
 }
 
 body {
+  background: #28469c;
 	margin: 0 auto !important;
 	border: 0;
 	padding: 0;
@@ -18,6 +19,7 @@ body {
 }
 
 html {
+  background: #28469c;
 	width: 100%;
 	height: 100%;
 	overflow: visible;

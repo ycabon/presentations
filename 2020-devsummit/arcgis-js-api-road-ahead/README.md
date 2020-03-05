@@ -1,0 +1,2 @@
+- [Client-side `StreamLayer`](https://ycabon.github.io/presentations/2020-devsummit/arcgis-js-api-road-ahead/client-side-stream-layer.html)
+- [Blend mode + dynamic Hillshade](https://ycabon.github.io/presentations/2020-devsummit/arcgis-js-api-road-ahead/blend-mode-dynamic-hillshade.html)

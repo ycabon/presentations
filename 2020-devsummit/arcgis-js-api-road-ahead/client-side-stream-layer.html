@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>MapView</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ycabon/presentations@gh-pages/2020-devsummit/arcgis-js-api-road-ahead/js-api/esri/themes/dark-red/main.css">
+  <style type="text/css" media="screen">
+    html,
+    body,
+    #viewDiv {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      background-color: black;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ycabon/presentations@gh-pages/2020-devsummit/arcgis-js-api-road-ahead/js-api/dojo/dojo.js"></script>
+
+  <script>
+    require([
+      "esri/WebMap",
+      "esri/layers/StreamLayer",
+      "esri/views/MapView",
+      "esri/widgets/Legend",
+      "esri/widgets/Expand"
+    ], function(
+      WebMap,
+      StreamLayer,
+      MapView,
+      Legend, Expand
+    ) {
+      layer = new StreamLayer({
+        title: "Hurricanes",
+        copyright: "NOAA",
+        purgeOptions: null,
+        fields: [
+          {
+            name: "__esri_stream_id__",
+            type: "oid"
+          }, {
+            name: "Category",
+            type: "double"
+          }, {
+            name: "Serial_Num",
+            type: "string"
+          }, {
+            name: "Name",
+            type: "string"
+          }, {
+            name: "wmo_pres",
+            type: "double"
+          }, {
+            name: "wmo_wind",
+            type: "double"
+          }, {
+            name: "ISO_time",
+            type: "date"
+          }
+        ],
+        popupTemplate: {
+          title: "{Name}",
+          content: [
+            {
+              type: "text",
+              text:
+                "Category {Category} storm with that occurred at {ISO_time}."
+            },
+            {
+              type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "wmo_pres",
+                  label: "Pressure"
+                },
+                {
+                  fieldName: "wmo_wind",
+                  label: "Wind Speed (mph)"
+                }
+              ]
+            }
+          ],
+          fieldInfos: [
+            {
+              fieldName: "ISO_time",
+              format: {
+                dateFormat: "short-date-short-time"
+              }
+            }
+          ]
+        },
+        renderer: {
+          type: "unique-value",
+          field: "Category",
+          uniqueValueInfos: createUniqueValueInfos()
+        },
+        geometryType: "point",
+        objectIdField: "__esri_stream_id__",
+        timeInfo: {
+          trackIdField: "Serial_Num"
+        }
+      });
+
+      map = new WebMap({
+        // contains a basemap with a South Pole Stereographic projection
+        // the CSVLayer coordinates will re-project client-side
+        // with the Projection Engine to match the view's Spatial Reference
+        basemap: {
+          portalItem: {
+            id: "3113eacc129942b4abde490a51aeb33f"
+          }
+        },
+        layers: [layer]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        highlightOptions: {
+          color: "#ff642e",
+          haloOpacity: 1,
+          fillOpacity: 0.25
+        },
+        popup: {
+          dockEnabled: true,
+          dockOptions: {
+            breakpoint: false
+          }
+        }
+      });
+
+      const legendExpand = new Expand({
+        view: view,
+        content: new Legend({
+          view: view,
+          style: "card"
+        })
+      });
+      view.ui.add(legendExpand, "top-left");
+
+      function createUniqueValueInfos() {
+        const fireflyImages = [
+          "cat1.png",
+          "cat2.png",
+          "cat3.png",
+          "cat4.png",
+          "cat5.png"
+        ];
+
+        const baseUrl =
+          "https://arcgis.github.io/arcgis-samples-javascript/sample-data/";
+
+        return fireflyImages.map(function(url, i) {
+          return {
+            value: i + 1, // Category number
+            symbol: {
+              type: "picture-marker",
+              url: baseUrl + url
+            }
+          };
+        });
+      }
+
+      view.ui.add(document.getElementById("stream-features"), "top-right");
+
+      var queue = [];
+
+      function pushQueue(results) {
+        queue.push(results);
+        if (queue.length === 1) {
+          requestAnimationFrame(processQueue);
+        }
+      }
+
+      function processQueue() {
+        var processed = 0;
+        while (queue.length > 0 && processed < 10) {
+          const result = queue.shift();
+
+          layer.postFeature({
+            attributes: result.data,
+            geometry: {
+              x: result.data.Longitude,
+              y: result.data.Latitude,
+              spatialReference: {
+                wkid: 4326
+              }
+            }
+          });
+
+          processed++;
+        }
+
+        if (queue.length > 0) {
+          requestAnimationFrame(processQueue);
+        }
+      }
+
+      document.getElementById("stream-features").onclick = () => {
+        view.whenLayerView(layer).then(() => {
+          Papa.parse("http://ycabon.esri.com/arcgis-js-api-4/test-apps/esri/layers/stream-layer/Hurricanes.csv", {
+            download: true,
+            worker: true,
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            step: pushQueue
+          });
+        });
+      }
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv">
+    <button id="stream-features">Stream Features</button>
+  </div>
+</body>
+
+</html>

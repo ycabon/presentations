@@ -1,0 +1,227 @@
+
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <title>Raster Hillshade</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ycabon/presentations@gh-pages/2020-devsummit/arcgis-js-api-road-ahead/js-api/esri/css/main.css">
+  <script src="https://cdn.jsdelivr.net/gh/ycabon/presentations@gh-pages/2020-devsummit/arcgis-js-api-road-ahead/js-api/dojo/dojo.js"></script>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #rendererDiv {
+      padding: 10px;
+      width: 280px;
+    }
+
+    .slider {
+      height: 40px;
+      width: 100%;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/TileImageryLayer",
+      "esri/layers/TileLayer",
+      "esri/renderers/RasterShadedReliefRenderer",
+      "esri/widgets/Slider",
+      "esri/tasks/support/AlgorithmicColorRamp"
+    ], (
+      Map,
+      MapView,
+      TileImageryLayer,
+      TileLayer,
+      RasterShadedReliefRenderer,
+      Slider,
+      AlgorithmicColorRamp
+    ) => (async () => {
+      let hillshadeType = "traditional";
+
+      let colorRamp = new AlgorithmicColorRamp({
+        algorithm: "lab-lch",
+        toColor: "#0000FF",
+        fromColor: "#FFFF00"
+      });
+
+      let renderer = new RasterShadedReliefRenderer({
+        altitude: 45,
+        azimuth: 315,
+        hillshadeType: hillshadeType,//"multi-directional",
+        zFactor: 1,
+        scalingType: "adjusted",
+        // colorRamp: colorRamp
+      });
+
+      let layer = new TileImageryLayer({
+        url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+        renderer: renderer
+      });
+
+      let worldImagery = new TileLayer({
+        url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+      });
+
+      let map = new Map({
+        basemap: "gray",
+        layers: [
+          layer,
+          worldImagery
+        ]
+      });
+
+      let view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 4
+      });
+
+      const layerView = await view.whenLayerView(worldImagery);
+      window.layerView = layerView;
+      layerView.blendMode = "multiply";
+
+      view.ui.add("rendererDiv", "top-right");
+
+      function updateRenderer() {
+        if (!layer.loaded) {
+          return;
+        }
+        let renderer = layer.renderer.clone();
+        // renderer.colorRamp = colorRamp;
+        let bandStat = layer.rasterInfo.statistics[0];
+        renderer.hillshadeType = hillshadeType;
+        switch (hillshadeType) {
+          case "traditional":
+            renderer.zFactor = zFactorSlider.values[0];
+            renderer.altitude = altitudeSlider.values[0];
+            renderer.azimuth = azimuthSlider.values[0];
+            break;
+          case "multi-directional":
+            renderer.zFactor = zFactorSlider.values[0];
+            break;
+        }
+        layer.renderer = renderer;
+        // console.log(layer.renderer)
+      }
+
+      const hillshadeTypeSelect = document.getElementById("hillshadeType");
+      hillshadeTypeSelect.addEventListener("change", function() {
+        hillshadeType = hillshadeTypeSelect.value;
+        changeHillshadeType(hillshadeType);
+      });
+
+      const zFactorLabel = document.getElementById("zFactorLabel");
+      function changeHillshadeType(hillshadeType) {
+        zFactorLabel.innerHTML = hillshadeType + " value:";
+        switch (hillshadeType) {
+          case "traditional":
+            document.getElementById("azimuthLabel").style = "";
+            document.getElementById("azimuth-slider").style = "";
+            document.getElementById("altitudeLabel").style = "";
+            document.getElementById("altitude-slider").style = "";
+            break;
+          case "multi-directional":
+            document.getElementById("azimuthLabel").style = "display: none;";
+            document.getElementById("azimuth-slider").style = "display: none;";
+            document.getElementById("altitudeLabel").style = "display: none;";
+            document.getElementById("altitude-slider").style = "display: none;";
+            break;
+        }
+        console.log("chaned")
+        updateRenderer();
+      }
+
+      const zFactorSlider = new Slider({
+        container: "zFactor-slider",
+        min: 1,
+        max: 10,
+        values: [1],
+        steps: 1,
+        snapOnClickEnabled: false,
+        visibleElements: {
+          labels: true,
+          rangeLabels: true
+        }
+      });
+      zFactorSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+
+      const altitudeSlider = new Slider({
+        container: "altitude-slider",
+        min: 0,
+        max: 90,
+        values: [45],
+        steps: 1,
+        snapOnClickEnabled: false,
+        visibleElements: {
+          labels: true,
+          rangeLabels: true
+        }
+      });
+      altitudeSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+
+      const azimuthSlider = new Slider({
+        container: "azimuth-slider",
+        min: 0,
+        max: 360,
+        values: [315],
+        steps: 5,
+        snapOnClickEnabled: false,
+        visibleElements: {
+          labels: true,
+          rangeLabels: true
+        }
+      });
+      azimuthSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+
+      let colorRampCheckBox = document.getElementById("tinted");
+      colorRampCheckBox.addEventListener("click", function(val) {
+        if (!layer.loaded) {
+          return;
+        }
+        let renderer = layer.renderer.clone();
+        renderer.colorRamp = colorRampCheckBox.checked ? colorRamp : null;
+        layer.renderer = renderer;
+      });
+    })());
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="rendererDiv" class="esri-widget">
+    <h3 class="esri-widget__heading">Shaded Relief Parameters</h3>
+
+    <label class="esri-feature-form__label">Select type</label>
+    <select id="hillshadeType" class="esri-input esri-select">
+      <option value="traditional" selected>traditional</option>
+      <option value="multi-directional">multi-directional</option>
+    </select>
+    <br />
+    <label id="zFactorLabel" class="esri-feature-form__label">Exaggeration Factor:</label>
+    <div id="zFactor-slider" class="slider"></div>
+    <label id="altitudeLabel" class="esri-feature-form__label">Sun Altitude:</label>
+    <div id="altitude-slider" class="slider"></div>
+    <label id="azimuthLabel" class="esri-feature-form__label">Sun Azimuth:</label>
+    <div id="azimuth-slider" class="slider"></div>
+    <input type="checkbox" id="tinted" class="hidden"/><label class="hidden">Tinted hillshade</label>
+  </div>
+</body>
+
+</html>

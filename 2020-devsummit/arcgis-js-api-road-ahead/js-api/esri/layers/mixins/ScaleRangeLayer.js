@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/tsSupport/declareExtendsHelper","../../core/tsSupport/decorateHelper","../../core/accessorSupport/decorators"],function(f,b,e,d,c){Object.defineProperty(b,"__esModule",{value:!0});b.ScaleRangeLayer=function(b){return function(b){function a(){var a=null!==b&&b.apply(this,arguments)||this;a.minScale=0;a.maxScale=0;return a}e(a,b);Object.defineProperty(a.prototype,"scaleRangeId",{get:function(){return this.minScale+","+this.maxScale},enumerable:!0,configurable:!0});
+d([c.property({type:Number,json:{write:!0}})],a.prototype,"minScale",void 0);d([c.property({type:Number,json:{write:!0}})],a.prototype,"maxScale",void 0);d([c.property({readOnly:!0,dependsOn:["minScale","maxScale"]})],a.prototype,"scaleRangeId",null);return a=d([c.subclass("esri.layers.mixins.ScaleRangeLayer")],a)}(c.declared(b))}});

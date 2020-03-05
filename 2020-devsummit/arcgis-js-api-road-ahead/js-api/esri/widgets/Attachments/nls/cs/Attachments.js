@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u0158_Attachments____________\u016f",attachmentDetails:"\u0158_Attachment details___________________\u016f",add:"\u0158_Add_______\u016f",update:"\u0158_Update_____________\u016f",cancel:"\u0158_Cancel_____________\u016f",noTitle:"\u0158_Untitled_________________\u016f","delete":"\u0158_Delete_____________\u016f",selectFile:"\u0158_Select file____________\u016f",changeFile:"\u0158_Change file____________\u016f",noAttachments:"\u0158_No attachments_______________\u016f",addErrorMessage:"\u0158_Error adding the attachment. Please try again________________________\u016f.",
+deleteErrorMessage:"\u0158_Error deleting the attachment. Please try again_________________________\u016f.",updateErrorMessage:"\u0158_Error updating the attachment. Please try again_________________________\u016f."});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../core/maybe"],function(d,e,f){Object.defineProperty(e,"__esModule",{value:!0});d=function(){function b(a,c){var b=this;this._textureRep=a;this._textureId=c;this._textureRef=f.applySome(this._textureId,function(a){return b._textureRep.acquire(a)})}b.prototype.dispose=function(){var a=this;this._textureRef=f.applySome(this._textureId,function(c){a._textureRep.release(c)})};b.prototype.bind=function(a,c,b,d,e){f.isSome(this._textureRef)&&(c.setUniform1i(b,d),
+a.bindTexture(this._textureRef.glTexture,d),e&&(a=this._textureRef.glTexture,c.setUniform2f(e,a.descriptor.width,a.descriptor.height)))};return b}();e.RenderTexture=d});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({root:{widgetLabel:"\u00e5_Attachments____________\u00f8",attachmentDetails:"\u00e5_Attachment details___________________\u00f8",view:"\u00e5_View_________\u00f8",add:"\u00e5_Add_______\u00f8",update:"\u00e5_Update_____________\u00f8",cancel:"\u00e5_Cancel_____________\u00f8",delete:"\u00e5_Delete_____________\u00f8",selectFile:"\u00e5_Select file____________\u00f8",changeFile:"\u00e5_Change file____________\u00f8",noAttachments:"\u00e5_No attachments_______________\u00f8",addErrorMessage:"\u00e5_Error adding the attachment. Please try again________________________\u00f8.",
+deleteErrorMessage:"\u00e5_Error deleting the attachment. Please try again_________________________\u00f8.",updateErrorMessage:"\u00e5_Error updating the attachment. Please try again_________________________\u00f8."},ar:1,bs:1,ca:1,cs:1,da:1,de:1,el:1,es:1,et:1,fi:1,fr:1,hr:1,hu:1,he:1,id:1,it:1,ja:1,ko:1,lv:1,lt:1,nl:1,nb:1,pl:1,"pt-br":1,"pt-pt":1,ro:1,ru:1,sl:1,sr:1,sv:1,th:1,tr:1,uk:1,vi:1,"zh-cn":1,"zh-hk":1,"zh-tw":1});

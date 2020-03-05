@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/makeTemplateObjectHelper ../core/shaderLibrary/ScreenSpacePass ../core/shaderModules/interfaces ../core/shaderModules/ShaderBuilder".split(" "),function(m,e,b,k,c,l){Object.defineProperty(e,"__esModule",{value:!0});e.build=function(d){var a=new l.ShaderBuilder;a.include(k.ScreenSpacePass);a.fragment.uniforms.add("tex","sampler2D");0===d.function&&(d.hasOpacityFactor?(a.fragment.uniforms.add("opacity","float"),a.fragment.code.add(c.glsl(f||(f=b(["\n      void main() {\n        gl_FragColor \x3d texture2D(tex, uv) * opacity;\n      }"],
+["\n      void main() {\n        gl_FragColor \x3d texture2D(tex, uv) * opacity;\n      }"]))))):a.fragment.code.add(c.glsl(g||(g=b(["\n      void main() {\n        gl_FragColor \x3d texture2D(tex, uv);\n      }"],["\n      void main() {\n        gl_FragColor \x3d texture2D(tex, uv);\n      }"])))));2===d.function&&a.fragment.code.add(c.glsl(h||(h=b(["\n    void main() {\n      gl_FragColor \x3d vec4(1.0 - texture2D(tex, uv).a);\n    }"],["\n    void main() {\n      gl_FragColor \x3d vec4(1.0 - texture2D(tex, uv).a);\n    }"]))));
+return a};var f,g,h});

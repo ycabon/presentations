@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports","./handleDecorator","./../diff"],a)})(function(a,b){function c(a,b,c){void 0===b&&(b=f.auto);return g.handleDecorator(function(d,e){d.addDecorator("diffProperty:"+a,b.bind(null));d.addDecorator("registeredDiffProperty",a);(c||e)&&d.addDecorator("diffReaction",{propertyName:a,reaction:e?d[e]:c})})}Object.defineProperty(b,
+"__esModule",{value:!0});var g=a("./handleDecorator"),f=a("./../diff");b.diffProperty=c;b.default=c});

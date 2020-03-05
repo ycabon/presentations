@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/assignHelper ../../../../core/maybe ../../../../core/libs/gl-matrix-2/vec4f64 ../support/edgeUtils".split(" "),function(m,f,h,g,k,l){Object.defineProperty(f,"__esModule",{value:!0});f.parseFilterMode=function(a){switch(a.filterMode.type){case "solid":return{mode:0};case "wire-frame":return{mode:1,edgeMaterial:l.createMaterialFromEdges(a.filterMode.edges,{})};case "x-ray":return{mode:2,opacity:a.filterMode.opacity}}};f.applyFilterMode=function(a,b){if(g.isNone(b))a.color[3]=
+0,a.edgeMaterial=null,a.pickable=!1;else switch(b.mode){case 1:a.color[3]=0;a.edgeMaterial=b.edgeMaterial;a.pickable=!1;break;case 2:a.color[0]=1;a.color[1]=1;a.color[2]=1;a.color[3]*=b.opacity;a.colorMixMode=3;a.castShadows=!1;a.pickable=!1;var c;c=a.edgeMaterial;b=b.opacity;if(g.isNone(c))c=null;else{if(d.lastMaterial!==c||d.lastOpacity!==b){var f=d,e;e=k.vec4f64.clone(c.color);e[3]=.5*e[3]*b;e=h({},c,{color:e});f.cachedMaterial=e;d.lastMaterial=c;d.lastOpacity=b}c=d.cachedMaterial}a.edgeMaterial=
+c}};var d={cachedMaterial:null,lastMaterial:null,lastOpacity:0}});

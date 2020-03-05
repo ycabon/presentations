@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/libs/gl-matrix-2/vec3 ../../../../core/libs/gl-matrix-2/vec3f64 ../lib/LongVectorMath ./SphericalHarmonics".split(" "),function(q,k,e,l,m,p){function n(a,b){return Math.max(-e.vec3.dot(b.direction,a),0)}Object.defineProperty(k,"__esModule",{value:!0});k.evaluateGroundTruth=function(a,b,g,c){var d=l.vec3f64.create(),f=l.vec3f64.create(),h=n(a,b);e.vec3.scale(f,b.intensity,h);e.vec3.add(d,d,f);for(h=0;h<g.length;h++){b=g[h];var k=n(a,b);e.vec3.scale(f,b.intensity,
+k);e.vec3.add(d,d,f)}for(a=0;a<c.length;a++)b=c[a],e.vec3.scale(f,b.intensity,Math.PI),e.vec3.add(d,d,f);return d};k.evaluateSphericalHarmonics=function(a,b,g){var c=l.vec3f64.create(),d=l.vec3f64.create(),f=p.orderFromNumberOfCoefficients(g.r.length),h=n(a,b);e.vec3.scale(d,b.intensity,h);e.vec3.add(c,c,d);a=p.computeCoefficients(a,f);c[0]+=m.dotProduct(a,g.r);c[1]+=m.dotProduct(a,g.g);c[2]+=m.dotProduct(a,g.b);return c}});

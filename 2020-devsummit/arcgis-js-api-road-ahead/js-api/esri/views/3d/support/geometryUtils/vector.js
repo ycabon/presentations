@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/mathUtils","../../../../core/libs/gl-matrix-2/vec3"],function(f,d,e,b){Object.defineProperty(d,"__esModule",{value:!0});d.projectPoint=function(a,c,d){c=b.vec3.dot(a,c)/b.vec3.dot(a,a);return b.vec3.scale(d,a,c)};d.projectPointSignedLength=function(a,c){return b.vec3.dot(a,c)/b.vec3.length(a)};d.angle=function(a,c){a=b.vec3.dot(a,c)/(b.vec3.length(a)*b.vec3.length(c));return-e.acosClamped(a)}});

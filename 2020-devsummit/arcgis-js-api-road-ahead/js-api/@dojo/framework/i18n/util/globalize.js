@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports","globalize/dist/globalize","../i18n"],a)})(function(a,c){function g(a){return a&&a!==h.default.locale?new e(a):e}Object.defineProperty(c,"__esModule",{value:!0});var e=a("globalize/dist/globalize"),h=a("../i18n");c.default=g;c.globalizeDelegator=function(a,b){var c,d;c=b.locale;d=b.optionsOrLocale;var f=b.unit;
+b=b.value;var e=d;"string"===typeof d&&(c=d,e=void 0);d=e;b="undefined"!==typeof b?[b]:[];"undefined"!==typeof f&&b.push(f);"undefined"!==typeof d&&b.push(d);f=g(c);return f[a].apply(f,b)}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/Error ../../../../core/Logger ../../../../core/promiseUtils ../../../../layers/support/arcgisLayerUrl".split(" "),function(h,b,e,f,c,d){Object.defineProperty(b,"__esModule",{value:!0});var g=f.getLogger("esri.views.3d.layers.support.tiledLayerUtils");b.checkArcGISServiceVersionCompatibility=function(a){if(!d.isHostedAgolService(a.url)){if(10.22>a.version)return a=new e("layerview:service-version-too-old","Tiled Map Layers on servers prior to 10.2.2 are not supported. Detected version: "+
+a.version,{minVersion:10.22,detectedVersion:a.version}),c.reject(a);10.22!==a.version||d.isHostedSecuredProxyService(a.url,a.get("portalItem.id"))||g.warnOnce("ArcGIS server version 10.2.2 needs the following patch installed in order for map layers to work properly: https://support.esri.com/en/download/2146");return c.resolve()}}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/lang ../../core/accessorSupport/decorators ./CodedValue ./Domain".split(" "),function(l,m,f,c,g,b,h,k){return function(e){function a(a){a=e.call(this,a)||this;a.codedValues=null;a.type="coded-value";return a}f(a,e);d=a;a.prototype.getName=function(a){var b=null;if(this.codedValues){var c=String(a);this.codedValues.some(function(a){String(a.code)===c&&(b=a.name);return!!b})}return b};a.prototype.clone=
+function(){return new d({codedValues:g.clone(this.codedValues),name:this.name})};var d;c([b.property({type:[h.default],json:{write:!0}})],a.prototype,"codedValues",void 0);c([b.enumeration.serializable()({codedValue:"coded-value"})],a.prototype,"type",void 0);return a=d=c([b.subclass("esri.layers.support.CodedValueDomain")],a)}(b.declared(k))});

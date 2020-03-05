@@ -1,0 +1,17 @@
+All code modifications have been merged with
+https://github.com/google/draco/commit/f5929ea657789792d202a179a1f1c671346f5efb.
+The next draco wasm build should contain all changes needed. The last step
+below might still be needed. Below are the instructions to build the wasm by
+hand, for reference:
+
+```
+git clone https://github.com/google/draco.git
+cd draco
+mkdir build
+cd build
+source ~/dev/emsdk-1.38.31/emsdk_env.sh
+cmake -GNinja -DCMAKE_TOOLCHAIN_FILE=${EMSCRIPTEN}/cmake/Modules/Platform/Emscripten.cmake -DENABLE_EXTRA_SPEED=ON -DENABLE_WASM=ON ..
+ninja
+cp draco_decoder.js draco_decoder.wasm ../../arcgis-js-api-4/esri/libs/draco/
+sed -i 's/const version/var version/' ../../arcgis-js-api-4/esri/libs/draco/draco_decoder.js
+```

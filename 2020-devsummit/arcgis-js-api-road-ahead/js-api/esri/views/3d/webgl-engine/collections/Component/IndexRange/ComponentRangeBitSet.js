@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../lib/ComponentUtils"],function(f,g,d){Object.defineProperty(g,"__esModule",{value:!0});f=function(){function b(a){this._totalCount=a;this.isVisibleBit=!1;this.data=new Uint32Array(0)}b.prototype.componentCount=function(){var a=0;this.forEachComponent(function(){a++;return!0});return a};b.prototype.reset=function(a){var c=this;"all"===a?d.unhideAllComponents(this):(d.hideAllComponents(this),a.forEach(function(a){d.updateVisibilityWithCount(c,c._totalCount,a,!0)}))};
+b.prototype.forEachComponent=function(a){for(var c=0;c<this._totalCount;c++)if(d.getVisibility(this,c)&&!a(c))return!1;return!0};b.prototype.forEachComponentRange=function(a){for(var c=0,e=!1,b=0;b<this._totalCount;b++)if(d.getVisibility(this,b))e||(c=b,e=!0);else if(e){if(!a(c,b))return!1;c=b;e=!1}return e&&!a(c,this._totalCount)?!1:!0};b.prototype.computeOffsetRanges=function(a){var c=d.generateVisibleIndexRanges(this,a);if(void 0===c)return[a[0],a[a.length-1]];a=Array(2*c.length);for(var b=0;b<
+c.length;b++)a[2*b]=c[b][0],a[2*b+1]=c[b][1]-c[b][0];return a};return b}();g.ComponentRangeBitSet=f});

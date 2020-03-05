@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"T\u00e1vols\u00e1gm\u00e9r\u00e9s",hint:"A m\u00e9r\u00e9st \u00fagy kell elkezdeni, hogy bele kell kattintani a t\u00e9rk\u00e9pbe az els\u0151 pont elhelyez\u00e9s\u00e9hez",unsupported:"A 2D t\u00e1vols\u00e1g m\u00e9r\u00e9s\u00e9t csak a MapView t\u00e1mogatja.",distance:"T\u00e1vols\u00e1g",newMeasurement:"\u00daj m\u00e9r\u00e9s",mode:"M\u00f3d",modes:{auto:"Automatikus",planar:"S\u00edkbeli",geodesic:"Geod\u00e9ziai"},unit:"M\u00e9rt\u00e9kegys\u00e9g",units:{metric:"Metrikus",
+imperial:"Angolsz\u00e1sz",kilometers:"Kilom\u00e9ter",meters:"M\u00e9ter",miles:"M\u00e9rf\u00f6ld",inches:"H\u00fcvelyk",feet:"L\u00e1b",yards:"Yard","nautical-miles":"Tengeri m\u00e9rf\u00f6ld","us-feet":"L\u00e1b (US)","degrees-minutes-seconds":"DMS",degrees:"Fok"}});

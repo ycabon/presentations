@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/handleUtils ../../../../core/maybe ./lineGraphicVisualElementUtils ./pointGraphicVisualElementUtils".split(" "),function(g,b,c,d,e,f){Object.defineProperty(b,"__esModule",{value:!0});b.createVisualElements=function(a){switch(d.expect(a.graphic.geometry).type){case "point":return f.createVisualElements(a);case "polygon":case "polyline":return e.createVisualElements(a);default:return c.makeHandle()}}});

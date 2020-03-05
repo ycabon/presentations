@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/assignHelper ../../core/Collection ../../core/maybe ../DOMContainer".split(" "),function(k,d,l,g,e,h){function f(a,c){var b=a.view;b&&(c&&b.ready&&b.activeTool!==a?(b.activeTool=a,h.isDOMContainer(b)&&b.focus()):c||b.activeTool!==a||(b.activeTool=null))}Object.defineProperty(d,"__esModule",{value:!0});d.setActive=f;d.swap=function(a,c,b){a=a.activeTool;c!==a&&(e.isSome(a)&&a.deactivate&&a.deactivate(),b(c),e.isSome(c)&&c.activate&&c.activate())};d.newToolCollection=
+function(){var a=new g;a.on("after-add",function(a){a=a.item;a.view&&a.view.ready&&a.attach()});a.on("after-remove",function(a){a=a.item;f(a,!1);a.destroyed||a.detach()});return a};d.areToolManipulatorsEditable=function(a){return!1!==a.visible&&!1!==a.editable&&(null==a.hasEditableFlag||a.hasEditableFlag(1))};d.evaluateToolConstructorArguments=function(a){return e.isNone(a)?{}:"function"===typeof a?a():a}});

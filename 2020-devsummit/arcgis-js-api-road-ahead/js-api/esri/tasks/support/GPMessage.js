@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/jsonMap ../../core/JSONSupport ../../core/accessorSupport/decorators".split(" "),function(k,l,f,c,g,h,b){var d=new g.default({esriJobMessageTypeInformative:"informative",esriJobMessageTypeProcessDefinition:"process-definition",esriJobMessageTypeProcessStart:"process-start",esriJobMessageTypeProcessStop:"process-stop",esriJobMessageTypeWarning:"warning",esriJobMessageTypeError:"error",esriJobMessageTypeEmpty:"empty",
+esriJobMessageTypeAbort:"abort"});return function(e){function a(a){a=e.call(this,a)||this;a.description=null;a.type=null;return a}f(a,e);c([b.property({type:String,json:{write:!0}})],a.prototype,"description",void 0);c([b.property({type:String,json:{read:d.read,write:d.write}})],a.prototype,"type",void 0);return a=c([b.subclass("esri.tasks.support.GPMessage")],a)}(b.declared(h.JSONSupport))});

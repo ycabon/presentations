@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../Ground","../core/Logger","../core/accessorSupport/ensureType"],function(h,a,d,e,f){Object.defineProperty(a,"__esModule",{value:!0});var g=e.getLogger("esri.support.groundUtils");a.groundElevationLayers={"world-elevation":{id:"worldElevation",url:"//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",layerType:"ArcGISTiledElevationServiceLayer"},"world-topobathymetry":{id:"worldTopoBathymetry",url:"//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/TopoBathy3D/ImageServer",
+layerType:"ArcGISTiledElevationServiceLayer"}};a.ensureType=function(b){var c;"string"===typeof b?b in a.groundElevationLayers?c=new d({resourceInfo:{data:{layers:[a.groundElevationLayers[b]]}}}):g.warn("Unable to find ground definition for: "+b+'. Try "world-elevation"'):c=f.default(d,b);return c}});

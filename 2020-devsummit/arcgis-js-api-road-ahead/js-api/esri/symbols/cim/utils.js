@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports"],function(E,c){Object.defineProperty(c,"__esModule",{value:!0});c.evaluateValueOrFunction=function(b,c,e,g){return"function"===typeof b?b(c,e,g):b};c.colorToArray=function(b){return[b.r,b.g,b.b,b.a]};c.resampleHermite=function(b,c,e,g,r,t,u){void 0===u&&(u=!0);var k=c/r;e/=t;for(var A=Math.ceil(k/2),B=Math.ceil(e/2),f=0;f<t;f++)for(var h=0;h<r;h++){for(var l=4*(h+(u?t-f-1:f)*r),a=0,m=0,v=0,w=0,x=0,y=0,z=0,C=(f+.5)*e,n=Math.floor(f*e);n<(f+1)*e;n++)for(var p=Math.abs(C-
+(n+.5))/B,D=(h+.5)*k,p=p*p,q=Math.floor(h*k);q<(h+1)*k;q++){var d=Math.abs(D-(q+.5))/A,a=Math.sqrt(p+d*d);-1<=a&&1>=a&&(a=2*a*a*a-3*a*a+1,0<a&&(d=4*(q+n*c),z+=a*b[d+3],v+=a,255>b[d+3]&&(a=a*b[d+3]/250),w+=a*b[d],x+=a*b[d+1],y+=a*b[d+2],m+=a))}g[l]=w/m;g[l+1]=x/m;g[l+2]=y/m;g[l+3]=z/v}}});

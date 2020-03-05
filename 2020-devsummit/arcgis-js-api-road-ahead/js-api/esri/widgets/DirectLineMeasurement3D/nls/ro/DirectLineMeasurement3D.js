@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"M\u0103surarea direct\u0103 a liniei",hint:"\u00cencepe\u0163i s\u0103 m\u0103sura\u0163i f\u0103c\u00e2nd clic \u00een scen\u0103 pentru a plasa primul punct",unsupported:"M\u0103surarea direct\u0103 a liniei 3D este acceptat\u0103 doar \u00een SceneView.",distance:"Distan\u0163\u0103",direct:"Direct",horizontal:"Orizontal",vertical:"Vertical",unit:"Unitate",newMeasurement:"M\u0103surare nou\u0103",units:{metric:"Metric",imperial:"Englez",kilometers:"Kilometri",meters:"Metri",
+miles:"Mile",inches:"Inci",feet:"Ft",yards:"Yarzi","nautical-miles":"Mile marine","us-feet":"Picioare (SUA)","degrees-minutes-seconds":"DMS",degrees:"Grade"}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/libs/gl-matrix-2/vec3","../../../../core/libs/gl-matrix-2/vec3f64","../intersectionUtils"],function(m,c,d,k,l){Object.defineProperty(c,"__esModule",{value:!0});c.applySurfaceCollisionConstraint=function(e,a,f){void 0===f&&(f=0);var b=e.state.constraints;if(!b.collision.enabled)return!1;var g=l.surfaceElevationBelowEye(e,a),c=e.renderCoordsHelper.getAltitude(a.eye),b=g+b.collision.elevationMargin;if(c>=b)return!1;g=d.vec3.length(a.eye);d.vec3.subtract(h,
+a.center,a.eye);e.renderCoordsHelper.setAltitude(b,a.eye);1===f?d.vec3.add(a.center,a.eye,h):2===f&&d.vec3.scale(a.center,a.center,(g-c+b)/g);a.markViewDirty();return!0};var h=k.vec3f64.create()});

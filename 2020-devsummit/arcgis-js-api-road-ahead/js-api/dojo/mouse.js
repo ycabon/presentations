@@ -1,0 +1,3 @@
+//>>built
+define(["./_base/kernel","./on","./has","./dom","./_base/window"],function(k,l,b,m,n){function c(a,b){var h=function(f,g){return l(f,a,function(a){if(b)return b(a,g);if(!m.isDescendant(a.relatedTarget,f))return g.call(this,a)})};h.bubble=function(b){return c(a,function(a,c){var d=b(a.target),e=a.relatedTarget;if(d&&d!=(e&&1==e.nodeType&&b(e)))return c.call(d,a)})};return h}b={LEFT:0,MIDDLE:1,RIGHT:2,isButton:function(a,b){return a.button==b},isLeft:function(a){return 0==a.button},isMiddle:function(a){return 1==
+a.button},isRight:function(a){return 2==a.button}};k.mouseButtons=b;return{_eventHandler:c,enter:c("mouseover"),leave:c("mouseout"),wheel:"mousewheel",isLeft:b.isLeft,isMiddle:b.isMiddle,isRight:b.isRight}});

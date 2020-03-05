@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({root:{widgetLabel:"Feature table",header:"{title} (Features: {count}, Selected: {selected})",untitled:"Untitled",relatedRecords:"Related records",attachments:"Attachments",loading:"Loading...",syncing:"Syncing...",errorData:"Data error.",errorLayer:"Layer error.",errorUpdateFailed:"Update failed.",errorDomainType:"Domain type is not supported.",show:"Show",hide:"Hide",options:"Options",allColums:"All columns",sortAsc:"Sort ascending",sortDesc:"Sort descending",toggleColumns:"Show/hide columns",
+clearSelection:"Clear selection",centerOnSelection:"Center on selection",showSelected:"Show selected records",filter:"Filter",addField:"Add field",refreshData:"Refresh data",date:"Date",number:"Number",string:"String"}});

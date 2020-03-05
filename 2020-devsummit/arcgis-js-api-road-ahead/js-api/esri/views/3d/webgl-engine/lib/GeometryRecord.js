@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/ObjectPool","../../../../core/libs/gl-matrix-2/vec3","./IdGen"],function(h,k,b,c,d){return function(){function a(e,b,c,d,f,g){this.id=a._idGen.gen(e&&e.id);this.geometry=e;this.material=b;this.transformation=c;this.instanceParameters=d;this.origin=f;this.shaderTransformation=g}a.prototype.getStaticTransformation=function(){return this.transformation};a.prototype.getShaderTransformation=function(){return this.shaderTransformation?this.shaderTransformation(this.transformation):
+this.transformation};a.prototype.computeAttachmentOrigin=function(a){return(this.material.computeAttachmentOrigin?this.material.computeAttachmentOrigin(this.geometry,a):this.geometry.computeAttachmentOrigin(a))?(c.vec3.transformMat4(a,a,this.getStaticTransformation()),!0):!1};a._idGen=new d.IdGen;a.pool=new b(a,!0);return a}()});

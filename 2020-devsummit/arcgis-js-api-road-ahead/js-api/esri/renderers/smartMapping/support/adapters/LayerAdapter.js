@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/declareExtendsHelper ../../../../core/tsSupport/decorateHelper ../../../../core/tsSupport/generatorHelper ../../../../core/tsSupport/awaiterHelper ../../../../core/Loadable ../../../../core/accessorSupport/decorators".split(" "),function(g,h,e,c,k,l,f,b){return function(d){function a(a){return d.call(this,a)||this}e(a,d);c([b.property()],a.prototype,"geometryType",void 0);c([b.property()],a.prototype,"objectIdField",void 0);c([b.property()],a.prototype,
+"supportsSQLExpression",void 0);c([b.property()],a.prototype,"hasQueryEngine",void 0);c([b.property()],a.prototype,"minScale",void 0);c([b.property()],a.prototype,"maxScale",void 0);c([b.property()],a.prototype,"fullExtent",void 0);return a=c([b.subclass("esri.renderers.smartMapping.support.adapters.LayerAdapter")],a)}(b.declared(f))});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../centroid","../OptimizedFeature","../OptimizedGeometry"],function(g,c,d,e,f){Object.defineProperty(c,"__esModule",{value:!0});c.optimizedFeatureQueryEngineAdapter={getObjectId:function(a){return a.objectId},getAttributes:function(a){return a.attributes},getAttribute:function(a,b){return a.attributes[b]},cloneWithGeometry:function(a,b){return new e.default(b,a.attributes,null,a.objectId)},getGeometry:function(a){return a.geometry},getCentroid:function(a,b){a.centroid||
+(a.centroid=d.getCentroidOptimizedGeometry(new f.default,a.geometry,b.hasZ,b.hasM));return a.centroid}};c.default=c.optimizedFeatureQueryEngineAdapter});

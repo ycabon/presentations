@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/jsonMap ../../core/JSONSupport ../../core/urlUtils ../../core/accessorSupport/decorators".split(" "),function(b,a,g,e,h,k,f,d){Object.defineProperty(a,"__esModule",{value:!0});var l=h.strict()({sphere:"sphere",cylinder:"cylinder",cube:"cube",cone:"cone",diamond:"diamond",tetrahedron:"tetrahedron",invertedCone:"inverted-cone"});b=function(a){function c(){return null!==a&&a.apply(this,arguments)||
+this}g(c,a);b=c;c.prototype.clone=function(){return new b({href:this.href,primitive:this.primitive})};var b;e([d.property({type:String,json:{read:f.read,write:f.write}})],c.prototype,"href",void 0);e([d.enumeration.serializable()(l)],c.prototype,"primitive",void 0);return c=b=e([d.subclass("esri.symbols.support.ObjectSymbol3DLayerResource")],c)}(d.declared(k.JSONSupport));a.ObjectSymbol3DLayerResource=b;a.defaultPrimitive="sphere";a.default=b});

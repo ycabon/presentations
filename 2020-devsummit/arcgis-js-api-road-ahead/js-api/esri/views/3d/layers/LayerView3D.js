@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/declareExtendsHelper ../../../core/tsSupport/decorateHelper ../../../core/promiseUtils ../../../core/watchUtils ../../../core/accessorSupport/decorators ../../../geometry/support/heightModelInfoUtils".split(" "),function(l,a,g,e,h,k,d,f){Object.defineProperty(a,"__esModule",{value:!0});a.LayerView3D=function(a){return function(a){function b(){var c=null!==a&&a.apply(this,arguments)||this;c.slicePlaneEnabled=!1;c.supportsHeightUnitConversion=!1;return c}
+g(b,a);b.prototype.destroy=function(){this.view=null};b.prototype.postscript=function(c){this.inherited(arguments);f.mayHaveHeightModelInfo(this.layer)&&this.addResolvingPromise(this._validateHeightModelInfo())};b.prototype._validateHeightModelInfo=function(){var c=this;return h.create(function(a,b){k.whenFalseOnce(c.view.defaultsFromMap,"isHeightModelInfoSearching",function(){var d=f.rejectLayerError(c.layer,c.view.heightModelInfo,c.supportsHeightUnitConversion);d?b(d):a()})})};e([d.property()],
+b.prototype,"view",void 0);e([d.property()],b.prototype,"slicePlaneEnabled",void 0);return b=e([d.subclass("esri.views.3d.layers.LayerView3D")],b)}(d.declared(a))}});

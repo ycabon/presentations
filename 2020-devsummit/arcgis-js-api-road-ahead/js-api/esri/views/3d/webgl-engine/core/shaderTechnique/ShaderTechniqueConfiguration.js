@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../core/mathUtils"],function(c,b,h){Object.defineProperty(b,"__esModule",{value:!0});c=function(){return function(){this.key=0}}();b.ShaderTechniqueConfiguration=c;b.parameter=function(b){void 0===b&&(b={});return function(a,d){a.__configurationParameters=a.__configurationParameters||[];a.__configurationParameters.push(d);var c="_"+d;void 0===a.__configurationParameters__offset&&(a.__configurationParameters__offset=0);var e=a.__configurationParameters__offset,
+f=Math.ceil(h.log2(b.count||2)),g=(1<<f)-1<<e;a.__configurationParameters__offset+=f;if(32<=a.__configurationParameters__offset)throw Error("ShaderTechniqueConfiguration is too complex, requiring more than 32 bits to encode.\n      Either the configuration must be simplified, or this restriction must be relaxed.(Currently used: "+a.__configurationParameters__offset+")");Object.defineProperty(a,d,{get:function(){return this[c]},set:function(a){this.key=this.key&~g|a<<e&g;this[c]=a}})}}});

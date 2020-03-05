@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/tsSupport/declareExtendsHelper ../core/tsSupport/decorateHelper ./Accessor ./Handles ./accessorSupport/decorators ../views/support/WatchUpdatingTracking".split(" "),function(g,e,h,f,k,l,c,m){Object.defineProperty(e,"__esModule",{value:!0});e.HandleOwnerMixin=function(d){return function(b){function a(){return null!==b&&b.apply(this,arguments)||this}h(a,b);a.prototype.destroy=function(){this.destroyed||(this.handles.destroy(),this.updatingHandles.destroy())};Object.defineProperty(a.prototype,
+"handles",{get:function(){return this._get("handles")||new l},enumerable:!0,configurable:!0});Object.defineProperty(a.prototype,"updatingHandles",{get:function(){return this._get("updatingHandles")||new m.WatchUpdatingTracking},enumerable:!0,configurable:!0});f([c.property({readOnly:!0})],a.prototype,"handles",null);f([c.property({readOnly:!0})],a.prototype,"updatingHandles",null);return a=f([c.subclass("esri.core.HandleOwner")],a)}(c.declared(d))};g=function(d){function b(){return null!==d&&d.apply(this,
+arguments)||this}h(b,d);return b=f([c.subclass("esri.core.HandleOwner")],b)}(c.declared(e.HandleOwnerMixin(k)));e.HandleOwner=g});

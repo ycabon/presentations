@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({"esri/widgets/Attribution/nls/Attribution":{widgetLabel:"Atribuci\u00f3n",_localized:{}},"esri/widgets/Compass/nls/Compass":{widgetLabel:"Br\u00fajula",reset:"Restablecer orientaci\u00f3n de br\u00fajula",_localized:{}},"esri/widgets/NavigationToggle/nls/NavigationToggle":{widgetLabel:"Alternancia de navegaci\u00f3n",toggle:"Alternar desplazamiento panor\u00e1mico y rotaci\u00f3n en 3D",_localized:{}},"esri/widgets/Zoom/nls/Zoom":{widgetLabel:"Zoom",zoomIn:"Acercar",zoomOut:"Alejar",_localized:{}}});

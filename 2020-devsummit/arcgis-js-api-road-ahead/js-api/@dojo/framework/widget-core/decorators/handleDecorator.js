@@ -1,0 +1,2 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports"],a)})(function(a,b){function c(a){return function(b,c,d){"function"===typeof b?a(b.prototype,void 0):a(b,c)}}Object.defineProperty(b,"__esModule",{value:!0});b.handleDecorator=c;b.default=c});

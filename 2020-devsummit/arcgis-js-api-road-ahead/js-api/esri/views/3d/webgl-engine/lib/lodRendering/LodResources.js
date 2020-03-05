@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../core/arrayUtils"],function(f,c,d){function e(a){var b=[];a.components.forEach(function(a){b.push(a.geometry)});return d.unique(b)}Object.defineProperty(c,"__esModule",{value:!0});c.materialsFromLodResources=function(a){var b=[];a.levels.forEach(function(a){a.components.forEach(function(a){b.push(a.material)})});return d.unique(b)};c.texturesFromLodResources=function(a){var b=[];a.levels.forEach(function(a){a.components.forEach(function(a){a.textures&&b.push.apply(b,
+a.textures)})});return d.unique(b)};c.geometriesFromLodLevelResources=e;c.geometriesFromLodResources=function(a){var b=[];a.levels.forEach(function(a){a.components.forEach(function(a){b.push(a.geometry)})});return d.unique(b)};c.computeFaceCount=function(a){var b=0;e(a).forEach(function(a){b+=a.data.indexCount/3});return b}});

@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports","tslib","../core/Evented"],a)})(function(a,c){Object.defineProperty(c,"__esModule",{value:!0});var d=a("tslib");a=function(a){function b(b){var c=a.call(this)||this;c._payload=b;return c}d.__extends(b,a);b.prototype.setInvalidator=function(a){this._invalidator=a};b.prototype.get=function(){return this._payload};
+b.prototype.set=function(a){this._payload=a;this._invalidator&&this._invalidator()};return b}(a("../core/Evented").Evented);c.Injector=a;c.default=a});

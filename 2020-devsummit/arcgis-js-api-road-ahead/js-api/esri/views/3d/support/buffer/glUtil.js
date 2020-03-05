@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/assignHelper"],function(l,d,f){Object.defineProperty(d,"__esModule",{value:!0});var h={divisor:0};d.glLayout=function(e,b){void 0===b&&(b={});b=f({},h,b);var d=e.stride;return e.fieldNames.filter(function(a){a=e.fields.get(a).optional;return!(a&&a.glPadding)}).map(function(a){var c=e.fields.get(a),f=c.constructor.ElementCount;var g=k[c.constructor.ElementType];if(!g)throw Error("BufferType not supported in WebGL");return{name:a,stride:d,count:f,
+type:g,offset:c.offset,normalized:!(!c.optional||!c.optional.glNormalized),divisor:b.divisor}})};var k={u8:5121,u16:5123,u32:5125,i8:5120,i16:5122,i32:5124,f32:5126}});

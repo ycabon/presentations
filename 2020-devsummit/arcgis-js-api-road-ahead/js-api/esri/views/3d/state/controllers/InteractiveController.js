@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/extendsHelper","./CameraController","../../webgl-engine/lib/Camera"],function(d,e,h,f,g){Object.defineProperty(e,"__esModule",{value:!0});d=function(c){function a(){var b=null!==c&&c.apply(this,arguments)||this;b.beginCamera=new g.default;b.currentCamera=new g.default;return b}h(a,c);Object.defineProperty(a.prototype,"isInteractive",{get:function(){return!0},enumerable:!0,configurable:!0});a.prototype.stepController=function(b,a){a.copyViewFrom(this.currentCamera);
+this.currentCamera.copyFrom(a)};a.prototype.onControllerStart=function(a){this.state=f.State.Running;this.beginCamera.copyFrom(a);this.currentCamera.copyFrom(a)};a.prototype.onControllerEnd=function(a){a.copyViewFrom(this.currentCamera)};return a}(f.CameraController);e.InteractiveController=d});

@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports"],a)})(function(a,b){Object.defineProperty(b,"__esModule",{value:!0});a=function(){function a(a){a=a.onChange;this._current="/";this._onChangeFunction=a;this._onChange()}a.prototype.prefix=function(a){return a};a.prototype.set=function(a){this._current!==a&&(this._current=a,this._onChange())};Object.defineProperty(a.prototype,
+"current",{get:function(){return this._current},enumerable:!0,configurable:!0});a.prototype._onChange=function(){this._onChangeFunction(this._current)};return a}();b.MemoryHistory=a;b.default=a});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../../core/compilerUtils ../../../../../core/maybe ../../../../../geometry/Circle ../../../../../support/elevationInfoUtils".split(" "),function(h,a,e,f,g,d){Object.defineProperty(a,"__esModule",{value:!0});a.isSupportedGraphic=function(b){if("graphics"!==b.layer.type)return 1;var c=b.geometry;if(f.isNone(c))return 2;var a=c.type;switch(a){case "polygon":if(c instanceof g)return 3;break;case "polyline":break;case "point":case "multipoint":case "extent":case "mesh":return 3;
+default:return e.neverReached(a),3}return"on-the-ground"!==d.getGraphicEffectiveElevationMode(b)&&d.hasGraphicFeatureExpressionInfo(b)?4:0}});

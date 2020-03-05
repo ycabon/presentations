@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","./projection"],function(g,e,d){Object.defineProperty(e,"__esModule",{value:!0});var f={namespace:void 0,performanceLogger:function(){},eventHandlerInterceptor:void 0,styleApplyer:function(b,c,a){b.style[c]=a}};e.applyDefaultProjectionOptions=function(b){return d.extend(f,b)};e.dom={create:function(b,c){c=e.applyDefaultProjectionOptions(c);d.createDom(b,document.createElement("div"),void 0,c);return d.createProjection(b,c)},append:function(b,c,a){a=e.applyDefaultProjectionOptions(a);
+d.createDom(c,b,void 0,a);return d.createProjection(c,a)},insertBefore:function(b,c,a){a=e.applyDefaultProjectionOptions(a);d.createDom(c,b.parentNode,b,a);return d.createProjection(c,a)},merge:function(b,c,a){a=e.applyDefaultProjectionOptions(a);c.domNode=b;d.initPropertiesAndChildren(b,c,a);return d.createProjection(c,a)},replace:function(b,c,a){a=e.applyDefaultProjectionOptions(a);d.createDom(c,b.parentNode,b,a);b.parentNode.removeChild(b);return d.createProjection(c,a)}}});

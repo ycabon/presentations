@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/has","../../core/promiseUtils","./draco_decoder"],function(e,a,g,c,b){function f(){return!!g("esri-wasm")}function h(){return e.toUrl("./draco_decoder.wasm")}Object.defineProperty(a,"__esModule",{value:!0});a.DracoDecoderInstance=b.DracoDecoderInstance;a.DecoderInstance=b.DecoderInstance;a.MeshInstance=b.MeshInstance;a.isSupported=f;a.getDecoderModule=function(){if(!f())return c.reject(Error("Draco decompression not available, missing WebAssembly support"));
+d||(d=c.create(function(a){return e(["./draco_decoder"],function(c){var b=c({locateFile:h,onModuleLoaded:function(){return a(b)}});delete b.then})}).catch(function(a){return c.reject(a)}));return d};var d});

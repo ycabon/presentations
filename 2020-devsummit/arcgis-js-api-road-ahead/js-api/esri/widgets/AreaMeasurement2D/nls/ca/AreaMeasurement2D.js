@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Mesura d'\u00e0rea",hint:"Per iniciar la mesura, feu clic al mapa i col\u00b7loqueu el primer punt",unsupported:"La mesura d'\u00e0rea 2D nom\u00e9s s'admet al MapView.",perimeter:"Per\u00edmetre",area:"\u00c0rea",newMeasurement:"Mesura nova",mode:"Mode",modes:{auto:"Autom\u00e0tic",planar:"Pla",geodesic:"Geod\u00e8sic"},unit:"Unitat",units:{metric:"Sistema m\u00e8tric",imperial:"Sistema imperial","square-kilometers":"Quil\u00f2metres quadrats","square-meters":"Metres quadrats",
+"square-miles":"Milles quadrades","square-inches":"Polzades quadrades","square-feet":"Peus quadrats","square-yards":"Iardes quadrades","square-us-feet":"Peus quadrats (EUA)",acres:"Acres",ares:"\u00c0rees",hectares:"Hect\u00e0rees"}});

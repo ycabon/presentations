@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../../core/tsSupport/makeTemplateObjectHelper","../../shaderModules/interfaces"],function(f,a,b,c){Object.defineProperty(a,"__esModule",{value:!0});a.PiUtils=function(a){a.vertex.code.add(c.glsl(d||(d=b(["\n    const float PI \x3d 3.141592653589793;\n  "],["\n    const float PI \x3d 3.141592653589793;\n  "]))));a.fragment.code.add(c.glsl(e||(e=b(["\n    const float PI \x3d 3.141592653589793;\n    const float LIGHT_NORMALIZATION \x3d 1.0 / PI;\n    const float INV_PI \x3d 0.3183098861837907;\n    const float HALF_PI \x3d 1.570796326794897;\n    "],
+["\n    const float PI \x3d 3.141592653589793;\n    const float LIGHT_NORMALIZATION \x3d 1.0 / PI;\n    const float INV_PI \x3d 0.3183098861837907;\n    const float HALF_PI \x3d 1.570796326794897;\n    "]))))};var d,e});

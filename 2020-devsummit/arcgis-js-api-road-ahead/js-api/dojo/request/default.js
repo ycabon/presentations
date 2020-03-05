@@ -1,0 +1,2 @@
+//>>built
+define(["exports","require","../has"],function(c,e,a){var d=a("config-requestProvider"),b;if(a("host-browser")||a("host-webworker"))b="./xhr";d||(d=b);c.getPlatformDefaultId=function(){return b};c.load=function(a,c,f,g){e(["platform"==a?b:d],function(a){f(a)})}});

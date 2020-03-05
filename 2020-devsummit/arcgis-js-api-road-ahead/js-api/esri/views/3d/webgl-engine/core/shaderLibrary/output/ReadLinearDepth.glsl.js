@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../../core/tsSupport/makeTemplateObjectHelper","../util/RgbaFloatEncoding.glsl","../../shaderModules/interfaces"],function(g,a,d,e,f){function b(a){a.include(e.RgbaFloatEncoding);a.fragment.code.add(f.glsl(c||(c=d(["\n    float linearDepth(sampler2D depthTex, vec2 uv, vec2 nearFar) {\n      return -(rgba2float(texture2D(depthTex, uv)) * (nearFar[1] - nearFar[0]) + nearFar[0]);\n    }\n  "],["\n    float linearDepth(sampler2D depthTex, vec2 uv, vec2 nearFar) {\n      return -(rgba2float(texture2D(depthTex, uv)) * (nearFar[1] - nearFar[0]) + nearFar[0]);\n    }\n  "]))))}
+Object.defineProperty(a,"__esModule",{value:!0});a.ReadLinearDepth=b;(function(a){a.bindUniforms=function(a,b){a.setUniform2fv("nearFar",b.nearFar)}})(b=a.ReadLinearDepth||(a.ReadLinearDepth={}));var c});

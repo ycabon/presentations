@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u9762\u7a4d\u6e2c\u91cf",hint:"\u6309\u4e00\u4e0b\u5730\u5716\u4f86\u653e\u7f6e\u7b2c\u4e00\u500b\u9ede\uff0c\u4ee5\u958b\u59cb\u6e2c\u91cf",unsupported:"\u50c5 MapView \u652f\u63f4 2D \u9762\u7a4d\u6e2c\u91cf\u3002",perimeter:"\u5468\u908a",area:"\u9762\u7a4d",newMeasurement:"\u65b0\u6e2c\u91cf",mode:"\u6a21\u5f0f",modes:{auto:"\u81ea\u52d5",planar:"\u5e73\u9762",geodesic:"\u6e2c\u5730\u7dda"},unit:"\u55ae\u4f4d",units:{metric:"\u516c\u5236",imperial:"\u82f1\u5236","square-kilometers":"\u5e73\u65b9\u516c\u91cc",
+"square-meters":"\u5e73\u65b9\u516c\u5c3a","square-miles":"\u5e73\u65b9\u82f1\u91cc","square-inches":"\u5e73\u65b9\u82f1\u540b","square-feet":"\u5e73\u65b9\u82f1\u544e","square-yards":"\u5e73\u65b9\u78bc","square-us-feet":"\u5e73\u65b9\u82f1\u544e (\u7f8e\u5236)",acres:"\u82f1\u755d",ares:"\u516c\u755d",hectares:"\u516c\u9803"}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u0627\u0644\u0639\u0646\u0635\u0631 \u0627\u0644\u0645\u0646\u0628\u062b\u0642",zoom:"\u062a\u0642\u0631\u064a\u0628 \u0625\u0644\u0649",next:"\u0627\u0644\u0645\u0639\u0644\u0645 \u0627\u0644\u062a\u0627\u0644\u064a",previous:"\u0627\u0644\u0645\u0639\u0644\u0645 \u0627\u0644\u0633\u0627\u0628\u0642",dock:"\u0645\u0631\u0633\u0649",undock:"\u0625\u0644\u063a\u0627\u0621 \u0625\u0631\u0633\u0627\u0621",pageText:"{index} \u0645\u0646 {total}",selectedFeature:"\u0627\u0644\u0645\u0639\u0627\u0644\u0645 \u0627\u0644\u0645\u064f\u062d\u062f\u062f\u0629",
+selectedFeatures:"{total} \u0646\u062a\u064a\u062c\u0629"});

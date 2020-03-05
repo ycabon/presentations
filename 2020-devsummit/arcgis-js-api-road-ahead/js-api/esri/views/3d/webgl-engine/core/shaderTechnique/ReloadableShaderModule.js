@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../core/promiseUtils"],function(e,f,g){Object.defineProperty(f,"__esModule",{value:!0});e=function(){function d(a,b,c){this._relativePath=b;this._moduleRequire=c;this._module=a}d.prototype.get=function(){return this._module};d.prototype.reload=function(){var a=this,b=this._moduleRequire.toUrl(this._relativePath),b=b.slice(b.indexOf("esri/"));this._recursivelyInvalidateModuleCache(b);return g.create(function(b){a._moduleRequire([a._relativePath],function(c){a._module=
+c;b()})})};d.prototype._recursivelyInvalidateModuleCache=function(a){if(-1!==a.search("shader")||-1!==a.search("shading")){var b=this._moduleRequire.modules,c=b[a];if(c)for(c=c.deps,delete b[a],a=0;a<c.length;a++)b=c[a],"esri"===b.pid&&this._recursivelyInvalidateModuleCache(b.mid)}};return d}();f.ReloadableShaderModule=e});

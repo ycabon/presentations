@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../../core/tsSupport/makeTemplateObjectHelper","../shaderModules/interfaces"],function(e,a,c,d){Object.defineProperty(a,"__esModule",{value:!0});a.Offset=function(a){a.vertex.code.add(d.glsl(b||(b=c(["\n    vec4 offsetBackfacingClipPosition(vec4 posClip, vec3 posWorld, vec3 normalWorld, vec3 camPosWorld) {\n      vec3 camToVert \x3d posWorld - camPosWorld;\n\n      bool isBackface \x3d dot(camToVert, normalWorld) \x3e 0.0;\n      if (isBackface) {\n        posClip.z +\x3d 0.0000003 * posClip.w;\n      }\n      return posClip;\n    }\n  "],
+["\n    vec4 offsetBackfacingClipPosition(vec4 posClip, vec3 posWorld, vec3 normalWorld, vec3 camPosWorld) {\n      vec3 camToVert \x3d posWorld - camPosWorld;\n\n      bool isBackface \x3d dot(camToVert, normalWorld) \x3e 0.0;\n      if (isBackface) {\n        posClip.z +\x3d 0.0000003 * posClip.w;\n      }\n      return posClip;\n    }\n  "]))))};var b});

@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({"esri/widgets/Search/nls/Search":{widgetLabel:"Cercare",searchButtonTitle:"Ricerca",clearButtonTitle:"Cancella ricerca",placeholder:"Trova indirizzo o luogo",searchIn:"Cerca in",all:"tutte le",allPlaceholder:"Trova indirizzo o luogo",emptyValue:"Immettere un termine di ricerca.",untitledResult:"Senza titolo",untitledSource:"Origine senza titolo",noResults:"Nessun risultato",noResultsFound:"Nessun risultato trovato.",noResultsFoundForValue:"Nessun risultato trovato per {value}.",showMoreResults:"Mostra altri risultati",
+hideMoreResults:"Nascondi",searchResult:"Risultato ricerca",moreResultsHeader:"Altri risultati",useCurrentLocation:"Usa posizione corrente",_localized:{}},"esri/widgets/Attribution/nls/Attribution":{widgetLabel:"Attribuzione",_localized:{}},"esri/widgets/Compass/nls/Compass":{widgetLabel:"Bussola",reset:"Ripristina orientamento bussola",_localized:{}},"esri/widgets/NavigationToggle/nls/NavigationToggle":{widgetLabel:"Attivazione/disattivazione navigazione",toggle:"Attiva/disattiva per eseguire pan o rotazione in 3D",
+_localized:{}},"esri/widgets/Zoom/nls/Zoom":{widgetLabel:"Zoom",zoomIn:"Zoom avanti",zoomOut:"Zoom indietro",_localized:{}}});

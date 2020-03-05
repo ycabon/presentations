@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/decorateHelper ../../../core/tsSupport/declareExtendsHelper ../../../geometry ../../../core/accessorSupport/decorators ../../../geometry/Geometry ../../../geometry/support/jsonUtils ./ClipArea".split(" "),function(n,p,c,g,f,b,h,k,l){var m={base:h,key:"type",typeMap:{extent:f.Extent,polygon:f.Polygon}};return function(d){function a(){var a=null!==d&&d.apply(this,arguments)||this;a.type="geometry";a.geometry=null;return a}g(a,d);e=a;Object.defineProperty(a.prototype,
+"version",{get:function(){return(this._get("version")||0)+1},enumerable:!0,configurable:!0});a.prototype.clone=function(){return new e({geometry:this.geometry.clone()})};var e;c([b.property({types:m,json:{read:k.fromJSON,write:!0}})],a.prototype,"geometry",void 0);c([b.property({readOnly:!0,dependsOn:["geometry"]})],a.prototype,"version",null);return a=e=c([b.subclass("esri.views.layers.support.Geometry")],a)}(b.declared(l))});

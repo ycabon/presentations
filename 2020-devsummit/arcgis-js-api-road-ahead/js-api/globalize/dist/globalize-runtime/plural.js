@@ -1,0 +1,3 @@
+//>>built
+(function(a,b){"function"===typeof define&&define.amd?define(["../globalize-runtime"],b):"object"===typeof exports?module.exports=b(require("../globalize-runtime")):b(a.Globalize)})(this,function(a){var b=a._runtimeKey,e=a._validateParameterPresence,f=a._validateParameterType,d=function(a,g){f(a,g,void 0===a||"number"===typeof a,"Number")};a._pluralGeneratorFn=function(a){return function(c){e(c,"value");d(c,"value");return a(c)}};a._validateParameterTypeNumber=d;a.plural=a.prototype.plural=function(a,
+b){e(a,"value");d(a,"value");return this.pluralGenerator(b)(a)};a.pluralGenerator=a.prototype.pluralGenerator=function(c){c=c||{};return a[b("pluralGenerator",this._locale,[c])]};return a});

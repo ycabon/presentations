@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/decorateHelper ../../../core/tsSupport/declareExtendsHelper ../../../core/accessorSupport/decorators ./ClipArea".split(" "),function(g,h,c,e,b,f){return function(d){function a(){var a=null!==d&&d.apply(this,arguments)||this;a.type="path";a.path=[];return a}e(a,d);Object.defineProperty(a.prototype,"version",{get:function(){return(this._get("version")||0)+1},enumerable:!0,configurable:!0});c([b.property({type:[[[Number]]],json:{write:!0}})],a.prototype,
+"path",void 0);c([b.property({readOnly:!0,dependsOn:["path"]})],a.prototype,"version",null);return a=c([b.subclass("esri.views.layers.support.Path")],a)}(b.declared(f))});

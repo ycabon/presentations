@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/jsonMap"],function(k,c,g){Object.defineProperty(c,"__esModule",{value:!0});var h=new g.default({preserveShape:"preserve-shape"});c.lengthsToRESTParameters=function(a){var d=a.toJSON(),c=d.lengthUnit,e=d.geodesic,f=d.calculationType,b={};b.polylines=JSON.stringify(d.polylines);a=a.polylines[0].spatialReference;b.sr=a.wkid?a.wkid:JSON.stringify(a.toJSON());c&&(b.lengthUnit=c);e&&(b.geodesic=e);f&&(b.calculationType=h.toJSON(f));return b}});

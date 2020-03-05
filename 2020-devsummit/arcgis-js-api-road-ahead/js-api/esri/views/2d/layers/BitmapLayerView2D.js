@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/decorateHelper ../../../core/tsSupport/declareExtendsHelper ../../../core/accessorSupport/decorators ../engine/BitmapContainer".split(" "),function(h,a,e,f,d,g){Object.defineProperty(a,"__esModule",{value:!0});a.BitmapLayerView2D=function(a){return function(a){function b(){var c=null!==a&&a.apply(this,arguments)||this;c.container=new g.BitmapContainer(c.clips);return c}f(b,a);b.prototype.initialize=function(){var a=this;this.handles.add(this.clips.on("change",
+function(){return a.container.setClips(a.clips)}))};return b=e([d.subclass("esri.views.2d.layers.BitmapLayerView2D")],b)}(d.declared(a))}});

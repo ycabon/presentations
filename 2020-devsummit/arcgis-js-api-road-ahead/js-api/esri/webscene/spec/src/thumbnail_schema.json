@@ -1,0 +1,28 @@
+{
+  "title": "thumbnail",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "description": "Object containing a thumbnail image.",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "The URI pointing to the thumbnail image. Can be a URL or a base64-encoded image."
+    }
+  },
+  "required": [
+    "url"
+  ],
+  "additionalProperties": false,
+  "esriDocumentation": {
+    "examples": [
+      {
+        "title": "url",
+        "code": {
+          "thumbnail": {
+            "url": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAA..."
+          }
+        }
+      }
+    ]
+  }
+}

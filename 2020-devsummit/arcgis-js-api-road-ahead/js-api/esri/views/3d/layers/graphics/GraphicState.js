@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/decorateHelper ../../../../core/tsSupport/declareExtendsHelper ../../../../core/Evented ../../../../core/accessorSupport/decorators".split(" "),function(c,e,d,f,g,b){Object.defineProperty(e,"__esModule",{value:!0});c=function(c){function a(a){a=c.call(this,a)||this;a.tracking=!1;a.displaying=!1;a.isDraped=!1;return a}f(a,c);d([b.property({constructOnly:!0})],a.prototype,"graphic",void 0);d([b.property()],a.prototype,"tracking",void 0);d([b.property()],
+a.prototype,"displaying",void 0);d([b.property()],a.prototype,"isDraped",void 0);return a=d([b.subclass("esri.views.3d.layers.graphics.GraphicState")],a)}(b.declared(g.EventedAccessor));e.GraphicState=c});

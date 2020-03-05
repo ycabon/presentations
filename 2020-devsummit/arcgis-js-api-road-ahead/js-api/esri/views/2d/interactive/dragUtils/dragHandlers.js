@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/maybe ./projectScreenToMap ../../../interactive/dragUtils/dragActions ../../../interactive/dragUtils/dragHandlers ../../../interactive/dragUtils/screenDragToMap".split(" "),function(p,a,h,k,l,m,n){function f(g,b,a,c){void 0===c&&(c=g.spatialReference);var e=d(g,c);return m.createManipulatorDragHandler(b,function(){return e},a)}function d(a,b){return n.createXYConstrainedFromProject(k.createForView(a),b)}Object.defineProperty(a,"__esModule",{value:!0});a.createManipulatorDragHandler2D=
+f;a.createGraphicManipulatorDragHandler2D=function(a,b,d){var c=l.createGraphicDragAction(b.graphic),e=h.expect(b.graphic.geometry).spatialReference;return f(a,b,function(a){c(a);d&&d()},e)};a.createScreenDragToMap2D=d});

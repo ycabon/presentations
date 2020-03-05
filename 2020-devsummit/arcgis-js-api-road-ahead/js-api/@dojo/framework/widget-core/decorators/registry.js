@@ -1,0 +1,3 @@
+//>>built
+(function(a){"object"===typeof module&&"object"===typeof module.exports?(a=a(require,exports),void 0!==a&&(module.exports=a)):"function"===typeof define&&define.amd&&define(["require","exports","./handleDecorator"],a)})(function(a,b){function c(a,b){return d.handleDecorator(function(c,d){c.addDecorator("afterConstructor",function(){var c=this;"string"===typeof a?this.registry.define(a,b):Object.keys(a).forEach(function(b){c.registry.define(b,a[b])})})})}Object.defineProperty(b,"__esModule",{value:!0});
+var d=a("./handleDecorator");b.registry=c;b.default=c});

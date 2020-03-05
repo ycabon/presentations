@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"\u0e01\u0e49_Attachments____________\u0e29\u0e3a",attachmentDetails:"\u0e01\u0e49_Attachment details___________________\u0e29\u0e3a",add:"\u0e01\u0e49_Add_______\u0e29\u0e3a",update:"\u0e01\u0e49_Update_____________\u0e29\u0e3a",cancel:"\u0e01\u0e49_Cancel_____________\u0e29\u0e3a",noTitle:"\u0e01\u0e49_Untitled_________________\u0e29\u0e3a","delete":"\u0e01\u0e49_Delete_____________\u0e29\u0e3a",selectFile:"\u0e01\u0e49_Select file____________\u0e29\u0e3a",changeFile:"\u0e01\u0e49_Change file____________\u0e29\u0e3a",
+noAttachments:"\u0e01\u0e49_No attachments_______________\u0e29\u0e3a",addErrorMessage:"\u0e01\u0e49_Error adding the attachment. Please try again________________________\u0e29\u0e3a.",deleteErrorMessage:"\u0e01\u0e49_Error deleting the attachment. Please try again_________________________\u0e29\u0e3a.",updateErrorMessage:"\u0e01\u0e49_Error updating the attachment. Please try again_________________________\u0e29\u0e3a."});

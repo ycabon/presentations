@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/Logger ../core/object ../core/string ./date ./number".split(" "),function(r,f,n,p,q,g,h){function k(c){switch(typeof c){case "string":return c;case "number":return h.formatNumber(c);case "boolean":return""+c;default:return c instanceof Date?g.formatDate(c):""}}Object.defineProperty(f,"__esModule",{value:!0});var l=n.getLogger("esri.intl");f.substitute=function(c,f,e){void 0===e&&(e={});e=e.format;var m=void 0===e?{}:e;return q.replace(c,function(b){var a;var d,c=b.indexOf(":");
+-1===c?d=b.trim():(d=b.slice(0,c).trim(),a=b.slice(c+1).trim());if(d)if(b=p.getDeepValue(d,f),null==b)a="";else if(d=m[a]||m[d])b:switch(d.type){case "date":a=g.formatDate(b,d.intlOptions);break b;case "number":a=h.formatNumber(b,d.intlOptions);break b;default:l.warn("missing format descriptor for key {key}"),a=k(b)}else if(a)b:switch(a.toLowerCase()){case "dateformat":a=g.formatDate(b);break b;case "numberformat":a=h.formatNumber(b);break b;default:l.warn("inline format is unsupported since 4.12: "+
+a),a=/^(dateformat|datestring)/i.test(a)?g.formatDate(b):/^numberformat/i.test(a)?h.formatNumber(b):k(b)}else a=k(b);else a="";return a})}});

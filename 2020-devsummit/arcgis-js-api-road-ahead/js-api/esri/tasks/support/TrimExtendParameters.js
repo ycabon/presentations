@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../geometry ../../core/JSONSupport ../../core/accessorSupport/decorators ../../core/accessorSupport/ensureType ../../geometry/support/jsonUtils".split(" "),function(b,m,g,e,h,k,d,l,f){b=function(b){function c(a){a=b.call(this,a)||this;a.extendHow="default-curve-extension";a.polylines=null;a.trimExtendTo=null;return a}g(c,b);e([d.property({type:String,json:{write:!0}})],c.prototype,"extendHow",
+void 0);e([d.property({type:[h.Polyline],json:{read:{reader:function(a){return a?a.map(function(a){return f.fromJSON(a)}):null}},write:{writer:function(a,b){b.polylines=a.map(function(a){return a.toJSON()})}}}})],c.prototype,"polylines",void 0);e([d.property({json:{read:{reader:function(a){return a?f.fromJSON(a):null}},write:{writer:function(a,b){b.trimExtendTo=a.toJSON()}}}})],c.prototype,"trimExtendTo",void 0);return c=e([d.subclass("esri.tasks.support.TrimExtendParameters")],c)}(d.declared(k.JSONSupport));
+b.from=l.default(b);return b});

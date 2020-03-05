@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/declareExtendsHelper ../../../core/tsSupport/decorateHelper ../../../core/JSONSupport ../../../core/lang ../../../core/accessorSupport/decorators ./ChartMediaInfoValueSeries".split(" "),function(l,m,f,c,g,h,b,k){return function(e){function a(a){a=e.call(this,a)||this;a.fields=[];a.normalizeField=null;a.series=[];a.tooltipField=null;return a}f(a,e);d=a;a.prototype.clone=function(){return new d({fields:h.clone(this.fields),normalizeField:this.normalizeField,
+tooltipField:this.tooltipField})};var d;c([b.property({type:[String],json:{write:!0}})],a.prototype,"fields",void 0);c([b.property({type:String,json:{write:!0}})],a.prototype,"normalizeField",void 0);c([b.property({type:[k],json:{read:!1}})],a.prototype,"series",void 0);c([b.property({type:String,json:{write:!0}})],a.prototype,"tooltipField",void 0);return a=d=c([b.subclass("esri.popup.content.support.ChartMediaInfoValue")],a)}(b.declared(g.JSONSupport))});

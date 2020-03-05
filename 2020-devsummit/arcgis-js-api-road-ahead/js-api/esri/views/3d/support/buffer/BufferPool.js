@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/PooledArray"],function(e,f,h){Object.defineProperty(f,"__esModule",{value:!0});e=function(){function b(b,a){this._factoryCallback=b;this._lengthCallback=a;this._pool=new Map}b.prototype.acquire=function(d){if(!b.test.disabled){var a=this._pool.get(d);if(a&&0!==a.length)return a.pop()}try{return this._factoryCallback(d)}catch(g){var a=window.performance&&window.performance.memory,c="";a&&(c="\n  totalJSHeapSize: "+a.totalJSHeapSize+", usedJSHeapSize: "+
+a.usedJSHeapSize+", jsHeapSizeLimit: "+a.jsHeapSizeLimit);console.log("Array allocation of size "+d+" failed: "+g+c);throw g;}};b.prototype.release=function(d){if(!b.test.disabled){var a=this._lengthCallback(d),c=this._pool.get(a);c||(c=new h({shrink:!0}),this._pool.set(a,c));c.push(d)}};b.prototype.clear=function(){this._pool.clear()};Object.defineProperty(b.prototype,"test",{get:function(){return{size:this._pool.size}},enumerable:!0,configurable:!0});b.test={disabled:!1};return b}();f.BufferPool=
+e});

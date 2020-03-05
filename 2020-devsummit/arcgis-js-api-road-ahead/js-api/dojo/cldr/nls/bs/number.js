@@ -1,0 +1,2 @@
+//>>built
+define({group:".",decimal:","});

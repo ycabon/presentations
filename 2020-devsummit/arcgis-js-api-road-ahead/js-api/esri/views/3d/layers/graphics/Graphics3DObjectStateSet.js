@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../webgl-engine/lib/Object3DStateSet"],function(a,b,c){Object.defineProperty(b,"__esModule",{value:!0});a=function(){function a(a,b){this.stateType=a;this.objectIdField=b;this.objectStateSet=new c.Object3DStateSet;this.ids=new Set;this.paused=!1}a.prototype.hasGraphic=function(a){return this.objectIdField?this.ids.has(a.graphic.attributes[this.objectIdField]):this.ids.has(a.graphic.uid)};return a}();b.Graphics3DObjectStateSet=a});

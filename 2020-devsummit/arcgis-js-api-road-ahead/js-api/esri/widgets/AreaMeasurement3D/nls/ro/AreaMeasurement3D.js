@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"M\u0103surarea zonei",hint:"\u00cencepe\u0163i s\u0103 m\u0103sura\u0163i f\u0103c\u00e2nd clic \u00een scen\u0103 pentru a plasa primul punct",unsupported:"M\u0103surarea suprafe\u021bei 3D este acceptat\u0103 doar \u00een SceneView.",perimeterLength:"Perimetru",area:"Suprafa\u0163\u0103",unit:"Unitate",notApplicable:"n/a",newMeasurement:"M\u0103surare nou\u0103",units:{metric:"Metric",imperial:"Englez","square-kilometers":"Kilometri p\u0103tra\u021bi","square-meters":"Metri p\u0103tra\u021bi",
+"square-miles":"Mile p\u0103trate","square-inches":"Inci p\u0103tra\u021bi","square-feet":"Picioare p\u0103trate","square-yards":"Yarzi p\u0103tra\u021bi","square-us-feet":"Picioare p\u0103trate (SUA)",acres:"Acri",ares:"Ari",hectares:"Hectare"}});

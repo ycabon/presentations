@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports"],function(b,a){Object.defineProperty(a,"__esModule",{value:!0});a.depthCompareLess={func:513};a.depthCompareAlways={func:519};a.stencilWriteMaskOn={mask:255};a.stencilWriteMaskOff={mask:0};a.renderWhenBitIsNotSet=function(a){return{function:{func:517,ref:a,mask:a},operation:{fail:7680,zFail:7680,zPass:7680}}};a.replaceBitWhenDepthTestPasses=function(a){return{function:{func:519,ref:a,mask:a},operation:{fail:7680,zFail:7680,zPass:7681}}};a.stencilBaseAllZerosParams={function:{func:519,
+ref:2,mask:2},operation:{fail:7680,zFail:7680,zPass:0}};a.stencilToolMaskBaseParams={function:{func:519,ref:2,mask:2},operation:{fail:7680,zFail:7680,zPass:7681}};a.stencilToolMaskOccluderParams={function:{func:514,ref:2,mask:2},operation:{fail:7680,zFail:7680,zPass:7680}};a.stencilToolTransparentOccluderParams={function:{func:517,ref:2,mask:2},operation:{fail:7680,zFail:7680,zPass:7680}}});

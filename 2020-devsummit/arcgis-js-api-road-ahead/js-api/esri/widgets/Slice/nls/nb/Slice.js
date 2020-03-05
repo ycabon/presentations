@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Sektor",cancel:"Avbryt",hint:"Opprett sektorer ved \u00e5 klikke og dra p\u00e5 overflaten i scenen",excludeHint:"Velg et lag i visningen for \u00e5 utelate det fra sektoren",unsupported:"Sektor st\u00f8ttes ikke i MapView.",multipleDisabled:"Bare \u00e9n sektor kan v\u00e6re aktiv om gangen",newSlice:"Ny sektor",excludedLayers:"Utelatte lag",pickLayer:"Velg et lag i visningen",excludeLayer:"Utelat lag fra sektor",includeLayer:"Inkluder lag i sektor",ground:"Bakken"});

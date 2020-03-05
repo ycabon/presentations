@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Alan \u00d6l\u00e7\u00fcm\u00fc",hint:"\u0130lk noktan\u0131z\u0131 yerle\u015ftirmek i\u00e7in haritaya t\u0131klayarak \u00f6l\u00e7\u00fcme ba\u015flay\u0131n",unsupported:"2B mesafe \u00f6l\u00e7\u00fcm\u00fc sadece MapView\u2019da desteklenir.",perimeter:"\u00c7evre",area:"Alan",newMeasurement:"Yeni \u00f6l\u00e7\u00fcm",mode:"Mod",modes:{auto:"Otomatik",planar:"D\u00fczlemsel",geodesic:"Jeodezik"},unit:"Birim",units:{metric:"Metrik",imperial:"\u0130ngiliz","square-kilometers":"Kilometre kare",
+"square-meters":"Metre kare","square-miles":"Mil kare","square-inches":"\u0130n\u00e7 kare","square-feet":"Fit Kare","square-yards":"Yarda kare","square-us-feet":"Fit kare (ABD)",acres:"Akre",ares:"Ar",hectares:"Hektar"}});

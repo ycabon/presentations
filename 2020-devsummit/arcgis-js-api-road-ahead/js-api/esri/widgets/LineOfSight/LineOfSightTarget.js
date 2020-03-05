@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/decorateHelper ../../core/tsSupport/declareExtendsHelper ../../Graphic ../../core/Accessor ../../core/accessorSupport/decorators ../../geometry/Point".split(" "),function(k,l,c,f,g,h,b,d){return function(e){function a(a){a=e.call(this,a)||this;a.location=null;a.intersectedLocation=null;a.intersectedGraphic=null;a.visible=void 0;return a}f(a,e);c([b.property({type:d})],a.prototype,"location",void 0);c([b.property({type:d})],a.prototype,"intersectedLocation",
+void 0);c([b.property({type:g})],a.prototype,"intersectedGraphic",void 0);c([b.property({type:Boolean})],a.prototype,"visible",void 0);return a=c([b.subclass("esri.widgets.lineOfSight.LineOfSightTarget")],a)}(b.declared(h))});

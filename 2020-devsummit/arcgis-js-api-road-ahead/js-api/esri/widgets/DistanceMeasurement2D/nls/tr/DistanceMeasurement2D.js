@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Mesafe \u00d6l\u00e7\u00fcm\u00fc",hint:"\u0130lk noktan\u0131z\u0131 yerle\u015ftirmek i\u00e7in haritaya t\u0131klayarak \u00f6l\u00e7\u00fcme ba\u015flay\u0131n",unsupported:"2B alan \u00f6l\u00e7\u00fcm\u00fc sadece MapView\u2019da desteklenir.",distance:"Mesafe",newMeasurement:"Yeni \u00f6l\u00e7\u00fcm",mode:"Mod",modes:{auto:"Otomatik",planar:"D\u00fczlemsel",geodesic:"Jeodezik"},unit:"Birim",units:{metric:"Metrik",imperial:"\u0130ngiliz",kilometers:"Kilometre",meters:"Metre",
+miles:"Mil",inches:"\u0130n\u00e7",feet:"Fit",yards:"Yarda","nautical-miles":"Deniz mili","us-feet":"Fit (ABD)","degrees-minutes-seconds":"DMS",degrees:"Derece"}});

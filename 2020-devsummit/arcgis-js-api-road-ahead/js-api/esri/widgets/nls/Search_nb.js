@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({"esri/widgets/Search/nls/Search":{widgetLabel:"S\u00f8k",searchButtonTitle:"S\u00f8k",clearButtonTitle:"T\u00f8m s\u00f8k",placeholder:"Finn adresse eller sted",searchIn:"S\u00f8k i",all:"Alle",allPlaceholder:"Finn adresse eller sted",emptyValue:"Skriv inn et s\u00f8keord",untitledResult:"Uten tittel",untitledSource:"Kilde uten tittel",noResults:"Ingen resultater",noResultsFound:"Fant ingen resultater.",noResultsFoundForValue:"Finner ingen resultater for ${value}.",showMoreResults:"Vis flere resultater",
+hideMoreResults:"Skjul",searchResult:"S\u00f8keresultater",moreResultsHeader:"Flere resultater",useCurrentLocation:"Bruk gjeldende lokasjon",_localized:{}},"esri/widgets/Attribution/nls/Attribution":{widgetLabel:"Kildeinformasjon",_localized:{}},"esri/widgets/Compass/nls/Compass":{widgetLabel:"Kompass",reset:"Tilbakestill kompassretning",_localized:{}},"esri/widgets/NavigationToggle/nls/NavigationToggle":{widgetLabel:"Navigasjonsveksling",toggle:"Veksle for \u00e5 panorere eller rotere i 3D",_localized:{}},
+"esri/widgets/Zoom/nls/Zoom":{widgetLabel:"Zoom",zoomIn:"Zoom inn",zoomOut:"Zoom ut",_localized:{}}});

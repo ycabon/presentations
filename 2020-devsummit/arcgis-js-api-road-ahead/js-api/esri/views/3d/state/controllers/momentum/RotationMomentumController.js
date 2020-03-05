@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../../core/tsSupport/extendsHelper ../../../../../core/libs/gl-matrix-2/vec3 ../../../../../core/libs/gl-matrix-2/vec3f64 ./MomentumController ../../utils/navigationUtils ../../../support/geometryUtils".split(" "),function(b,d,e,f,g,h,k,l){Object.defineProperty(d,"__esModule",{value:!0});b=function(b){function c(a,c,d,e){a=b.call(this,a,2)||this;a.momentum=c;a.axis=g.vec3f64.create();a.center=g.vec3f64.create();f.vec3.copy(a.axis,e);f.vec3.copy(a.center,d);return a}
+e(c,b);c.prototype.momentumStep=function(a,b){a=this.momentum.value(a);k.applyRotation(b,this.center,l.axisAngle.wrapAxisAngle(this.axis,a))};return c}(h.MomentumController);d.RotationMomentumController=b});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../Color ../../core/screenUtils ../../core/accessorSupport/ensureType ../../webdoc/support/opacityUtils".split(" "),function(h,c,e,f,d,g){Object.defineProperty(c,"__esModule",{value:!0});c.colorAndTransparencyProperty={type:e,json:{type:[d.Integer],default:null,read:{source:["color","transparency"],reader:function(a,b){a=null!=b.transparency?g.transparencyToOpacity(b.transparency):1;return(b=b.color)&&Array.isArray(b)?new e([b[0]||0,b[1]||0,b[2]||0,a]):null}},write:{target:{color:{type:[d.Integer]},
+transparency:{type:d.Integer}},writer:function(a,b){b.color=a.toJSON().slice(0,3);a=g.opacityToTransparency(a.a);0!==a&&(b.transparency=a)}}}};c.screenSizeProperty={type:Number,cast:f.toPt,json:{write:!0}};c.stipplePatternProperty={type:[Number],cast:function(a){return null!=a?a:Array.isArray(a)?a.map(f.toPt):null},json:{read:!1,write:!1}}});

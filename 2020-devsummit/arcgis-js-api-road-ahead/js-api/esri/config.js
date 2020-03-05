@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","@dojo/framework/has/has","./core/global","./core/object"],function(a,e,c,b,d){c.add("postmessage",!1,!0);a={applicationUrl:b.location&&b.location.href,fontsUrl:"https://static.arcgis.com/fonts",geometryService:null,geometryServiceUrl:"https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",geoRSSServiceUrl:"https://utility.arcgis.com/sharing/rss",kmlServiceUrl:"https://utility.arcgis.com/sharing/kml",portalUrl:"https://www.arcgis.com",workers:{loaderConfig:{has:{},
+paths:{},map:{},packages:[]}},request:{httpsDomains:"arcgis.com arcgisonline.com esrikr.com premiumservices.blackbridge.com esripremium.accuweather.com gbm.digitalglobe.com firstlook.digitalglobe.com msi.digitalglobe.com".split(" "),interceptors:[],maxUrlLength:2E3,proxyRules:[],proxyUrl:null,timeout:6E4,trustedServers:[],useIdentity:!0}};b.esriConfig&&d.deepMerge(a,b.esriConfig,!0);a.request.corsEnabledServers=[];a.request.corsEnabledServers.push=function(){console.warn("[esri.config]","request.corsEnabledServers is not supported and will be removed in a future release. See http://esriurl.com/cors8664");
+return 0};return a});

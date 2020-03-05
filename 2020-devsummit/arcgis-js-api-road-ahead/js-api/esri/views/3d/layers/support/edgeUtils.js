@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/assignHelper ../../../../Color ../../../../core/compilerUtils ../../../../core/maybe ../../../../core/screenUtils ../../../../core/libs/gl-matrix-2/vec4f64".split(" "),function(r,b,d,m,n,f,g,e){function c(a,b){if(f.isNone(a))return null;var c=f.isSome(a.color)?e.vec4f64.fromArray(m.toUnitRGBA(a.color)):e.vec4f64.fromValues(0,0,0,0),h=g.pt2px(a.size),k=g.pt2px(a.extensionLength);switch(a.type){case "solid":return l(d({color:c,size:h,extensionLength:k},
+b));case "sketch":return d({},p,d({color:c,size:h,extensionLength:k},b),{type:"sketch"});default:n.neverReached(a)}}function l(a){return d({},q,a,{type:"solid"})}Object.defineProperty(b,"__esModule",{value:!0});b.createMaterial=function(a,b){return c(a&&a.enabled&&a.edges||null,b)};b.createMaterialFromEdges=c;b.createSolidEdgeMaterial=l;var q={color:e.vec4f64.fromValues(0,0,0,.2),size:1,extensionLength:0,opacity:1,objectTransparency:2},p={color:e.vec4f64.fromValues(0,0,0,.2),size:1,extensionLength:0,
+opacity:1,objectTransparency:2}});

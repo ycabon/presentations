@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../geometry","../../../../Viewpoint","../../ViewState"],function(u,h,p,q,r){Object.defineProperty(h,"__esModule",{value:!0});var a={context:null,drawPhase:1,state:null,stationary:!0,pixelRatio:1,displayLevel:-1,requiredLevel:-1,globalOpacity:1,renderPass:"background",styleLayer:null,styleLayerId:-1,painter:null,glyphMosaic:null,spriteMosaic:null,fadeRecorder:null,driverTestResult:null,profiler:null,renderingOptions:null,timeDelta:-1,timeline:null,hasClipping:!1};
+h.renderVectorTile=function(l,f,g,e,h,b,k,n,m,c){var d=b.adjustLevel(f[0]);a.context=l;a.state=t;a.painter=e;a.glyphMosaic=e.glyphMosaic;a.spriteMosaic=e.spriteMosaic;a.fadeRecorder=e.fadeRecorder;a.pixelRatio=c;a.displayLevel=d;a.requiredLevel=d;e.setContext(l);c=b.getScale(f[0]);b=b.getShift(f,k*c);f=b[0];b=b[1];c=.125*k*c/m;d=g.transforms.dvs;d[0]=c;d[4]=-c;d[6]=-1-f-n[0]*k*2;d[7]=1+b+(1-n[1])*k*2-2;a.state.size[0]=m;a.state.size[1]=m;g.attached||g.attachWithContext(l);g.triangleCount=0;e.drawTile(a,
+g,h)};var t=new r({viewpoint:new q({targetGeometry:new p.Point(0,0),scale:1,rotation:0}),size:[256,256]})});

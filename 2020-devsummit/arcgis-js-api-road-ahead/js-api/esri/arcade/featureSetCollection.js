@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../core/promiseUtils"],function(f,g,e){return function(){function d(){this.declaredRootClass="esri.arcade.featureSetCollection";this._layerById={};this._layerByName={}}d.prototype.add=function(a,c,b){this._layerById[c]=b;this._layerByName[a]=b};d.prototype.featureSetByName=function(a,c,b){void 0===c&&(c=!0);void 0===b&&(b=["*"]);return void 0===this._layerByName[a]?this.resolvePromise(null):this.resolvePromise(this._layerByName[a])};d.prototype.featureSetById=function(a,
+c,b){void 0===c&&(c=!0);void 0===b&&(b=["*"]);return void 0===this._layerById[a]?this.resolvePromise(null):this.resolvePromise(this._layerById[a])};d.prototype.castToText=function(){return"object, FeatureSetCollection"};d.prototype.resolvePromise=function(a){return e.resolve(a)};return d}()});

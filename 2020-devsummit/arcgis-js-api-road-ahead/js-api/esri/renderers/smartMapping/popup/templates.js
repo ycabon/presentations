@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/generatorHelper ../../../core/tsSupport/awaiterHelper ./classBreaks ./heatmap ./predominance ./simple ./uniqueValues".split(" "),function(n,c,d,f,g,h,k,l,m){Object.defineProperty(c,"__esModule",{value:!0});c.getTemplates=function(c){return f(this,void 0,void 0,function(){var a,b,e;return d(this,function(d){a=c.renderer;b=c.layer;return"simple"===a.type?[2,l.getTemplates({renderer:a,layer:b})]:"class-breaks"===a.type?[2,g.getTemplates({renderer:a,layer:b})]:
+"heatmap"===a.type?[2,h.getTemplates({renderer:a,layer:b})]:"unique-value"===a.type?(e=a.authoringInfo&&a.authoringInfo.type,"predominance"===e?[2,k.getTemplates({renderer:a,layer:b})]:[2,m.getTemplates({renderer:a,layer:b})]):[2,null]})})}});

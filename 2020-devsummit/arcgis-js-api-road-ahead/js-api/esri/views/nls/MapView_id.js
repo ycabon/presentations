@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({"esri/widgets/Attribution/nls/Attribution":{widgetLabel:"Atribusi",_localized:{}},"esri/widgets/Compass/nls/Compass":{widgetLabel:"Kompas",reset:"Atur ulang orientasi kompas",_localized:{}},"esri/widgets/NavigationToggle/nls/NavigationToggle":{widgetLabel:"Penyalaan/Pematian Navigasi",toggle:"Beralih ke geser atau putar dalam 3D",_localized:{}},"esri/widgets/Zoom/nls/Zoom":{widgetLabel:"Zoom",zoomIn:"Perbesar",zoomOut:"Perkecil",_localized:{}}});

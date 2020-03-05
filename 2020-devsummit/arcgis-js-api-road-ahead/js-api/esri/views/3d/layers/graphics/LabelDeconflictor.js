@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../core/tsSupport/decorateHelper ../../../../core/tsSupport/declareExtendsHelper ../../../../core/now ../../../../core/accessorSupport/decorators ./Deconflictor".split(" "),function(e,f,g,h,k,c,l){Object.defineProperty(f,"__esModule",{value:!0});e=function(d){function a(){var b=null!==d&&d.apply(this,arguments)||this;b.visibilityGroup=1;b.iconMarginFactor=0;b._lastDeconfliction=0;return b}h(a,d);Object.defineProperty(a.prototype,"slicePlaneViewSpace",{get:function(){return this.parent.slicePlaneViewSpace},
+enumerable:!0,configurable:!0});a.prototype.update=function(b){if(!this.parent.needsUpdate()){var a=k();if(2===b.state||2E3<a-this._lastDeconfliction)this.inherited(arguments,[b]),0===this.state&&(this._lastDeconfliction=a)}};a.prototype.enabledChanged=function(a,c){this.modifyGraphics(c,a.labelsEnabled)};a.prototype.getGraphicsLayers=function(a){return a.labelGraphics};g([c.property({constructOnly:!0})],a.prototype,"parent",void 0);return a=g([c.subclass("esri.views.3d.layers.graphics.LabelDeconflictor")],
+a)}(c.declared(l.Deconflictor));f.LabelDeconflictor=e});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ./core/Warning ./renderers/ClassBreaksRenderer ./renderers/RasterColormapRenderer ./renderers/RasterShadedReliefRenderer ./renderers/RasterStretchRenderer ./renderers/UniqueValueRenderer".split(" "),function(n,a,l,d,e,h,f,g){function k(b,a){if(!b)return null;var c;c=b?m[b.type]||null:null;if(c)return c=new c,c.read(b,a),c;a&&a.messages&&b&&a.messages.push(new l("renderer:unsupported","Renderers of type '"+(b.type||"unknown")+"' are not supported",{definition:b,context:a}));
+return null}Object.defineProperty(a,"__esModule",{value:!0});a.ClassBreaksRenderer=d;a.RasterColormapRenderer=e;a.RasterStretchRenderer=f;a.UniqueValueRenderer=g;a.rasterRendererTypes={key:"type",base:null,typeMap:{"unique-value":g,"class-breaks":d,"raster-colormap":e,"raster-stretch":f,"raster-shaded-relief":h}};var m={uniqueValue:g,classBreaks:d,rasterStretch:f,rasterColormap:e,rasterShadedRelief:h};a.read=k;a.fromJSON=function(a,d){return k(a,d)}});

@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({addBookmark:"\u65b0\u589e\u66f8\u7c64",goToBookmark:"\u79fb\u81f3\u66f8\u7c64",noBookmarksHeading:"\u7121\u66f8\u7c64",noBookmarksDescription:"\u5c07\u66f8\u7c64\u65b0\u589e\u81f3\u60a8\u7684\u5730\u5716\uff0c\u9019\u88e1\u63a5\u8457\u6703\u51fa\u73fe\u9019\u4e9b\u66f8\u7c64\u3002",title:"\u6a19\u984c",addPlaceholder:"\u8f38\u5165\u66f8\u7c64\u6a19\u984c",addingBookmark:"\u6b63\u5728\u65b0\u589e\u66f8\u7c64",widgetLabel:"\u66f8\u7c64"});

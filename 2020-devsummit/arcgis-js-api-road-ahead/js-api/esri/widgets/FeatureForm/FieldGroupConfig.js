@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../core/Accessor ../../core/accessorSupport/decorators ../../core/accessorSupport/decorators/cast ./FieldConfig".split(" "),function(l,m,f,c,g,d,h,k){return function(e){function b(a){a=e.call(this,a)||this;a.description=null;a.fieldConfig=null;a.label=null;a.visibilityExpression=null;return a}f(b,e);b.prototype.castFieldConfig=function(a){return a?a.map(function(a){return a.declaredClass?a:new k(a)}):
+null};c([d.property()],b.prototype,"description",void 0);c([d.property()],b.prototype,"fieldConfig",void 0);c([h.cast("fieldConfig")],b.prototype,"castFieldConfig",null);c([d.property()],b.prototype,"label",void 0);c([d.property()],b.prototype,"visibilityExpression",void 0);return b=c([d.subclass("esri.widgets.FeatureForm.FieldGroupConfig")],b)}(d.declared(g))});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/tsSupport/declareExtendsHelper ../core/tsSupport/decorateHelper ../core/jsonMap ../core/JSONSupport ../core/accessorSupport/decorators".split(" "),function(a,l,g,e,h,k,d){var f=h.strict()({Icon:"icon",Object:"object",Line:"line",Path:"path",Fill:"fill",Extrude:"extrude",Text:"text",Water:"water"});a=function(a){function b(c){c=a.call(this,c)||this;c.enabled=!0;c.type=null;return c}g(b,a);b.prototype.writeEnabled=function(c,a,b){c||(a[b]=c)};e([d.property({type:Boolean,
+json:{read:{source:"enable"},write:{target:"enable"}}})],b.prototype,"enabled",void 0);e([d.writer("enabled")],b.prototype,"writeEnabled",null);e([d.property({type:f.apiValues,readOnly:!0,json:{read:!1,write:{ignoreOrigin:!0,writer:f.write}}})],b.prototype,"type",void 0);return b=e([d.subclass("esri.symbols.Symbol3DLayer")],b)}(d.declared(k.JSONSupport));(a||(a={})).typeJSONDictionary=f;return a});

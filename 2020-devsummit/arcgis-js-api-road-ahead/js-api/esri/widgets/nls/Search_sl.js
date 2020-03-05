@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({"esri/widgets/Search/nls/Search":{widgetLabel:"I\u0161\u010di",searchButtonTitle:"I\u0161\u010di",clearButtonTitle:"Po\u010disti iskanje",placeholder:"Najdi naslov ali kraj",searchIn:"Poi\u0161\u010di v",all:"Vse",allPlaceholder:"Najdi naslov ali kraj",emptyValue:"Vnesite iskalni izraz.",untitledResult:"Neimenovano",untitledSource:"Neimenovan vir",noResults:"Ni rezultatov",noResultsFound:"Ni najdenih rezultatov.",noResultsFoundForValue:"Ni najdenih rezultatov za {value}.",showMoreResults:"Prika\u017ei ve\u010d rezultatov",
+hideMoreResults:"Skrij",searchResult:"Iskani rezultat",moreResultsHeader:"Ve\u010d rezultatov",useCurrentLocation:"Uporabi trenutno lokacijo",_localized:{}},"esri/widgets/Attribution/nls/Attribution":{widgetLabel:"Pripis",_localized:{}},"esri/widgets/Compass/nls/Compass":{widgetLabel:"Kompas",reset:"Ponastavi orientacijo kompasa",_localized:{}},"esri/widgets/NavigationToggle/nls/NavigationToggle":{widgetLabel:"Preklopi navigacijo",toggle:"Preklopi na pomik ali 3D vrtenje",_localized:{}},"esri/widgets/Zoom/nls/Zoom":{widgetLabel:"Pove\u010dava",
+zoomIn:"Pove\u010daj",zoomOut:"Pomanj\u0161aj",_localized:{}}});

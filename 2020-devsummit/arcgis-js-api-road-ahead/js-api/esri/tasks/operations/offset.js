@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/jsonMap","../../geometry/support/jsonUtils"],function(h,c,d,e){Object.defineProperty(c,"__esModule",{value:!0});var f=new d.default({esriGeometryOffsetBevelled:"bevelled",esriGeometryOffsetMitered:"mitered",esriGeometryOffsetRounded:"rounded"}),g=new d.default({9001:"meters",9002:"feet",9036:"kilometers",9093:"miles",109012:"nautical-miles",109001:"yards"});c.offsetToRESTParameters=function(b){var a=b.toJSON();b=a.geometries;var c=a.offsetHow,d=a.offsetUnit,
+a={bevelRatio:a.bevelRatio,offsetDistance:a.offsetDistance};b&&b.length&&(a.geometries=JSON.stringify({geometryType:e.getJsonType(b[0]),geometries:b}),a.sr=JSON.stringify(b[0].spatialReference));c&&(a.offsetHow=f.toJSON(c));d&&(a.offsetUnit=g.toJSON(d));return a}});

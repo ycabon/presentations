@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/extendsHelper ../../../core/tsSupport/decorateHelper ./RasterBitmap ./webgl/TiledDisplayObject".split(" "),function(d,g,h,m,k,l){Object.defineProperty(g,"__esModule",{value:!0});d=function(e){function a(b,a,d,f){void 0===f&&(f=null);var c=e.call(this,b,a,d)||this;b=c.requestRender.bind(c);c.bitmap=new k.RasterBitmap(f,null,null,b);c.bitmap.coordScale=d;c.bitmap.once("isReady",function(){return c.ready()});return c}h(a,e);Object.defineProperty(a.prototype,
+"stencilRef",{get:function(){return this.bitmap.stencilRef},set:function(b){this.bitmap.stencilRef=b},enumerable:!0,configurable:!0});a.prototype.setTransform=function(b,a){e.prototype.setTransform.call(this,b,a);this.bitmap.transforms.dvs=this.transforms.dvs};a.prototype.attach=function(){this.bitmap.stage=this.stage;var a=this.bitmap.attach();a&&(this.bitmap.attached=!0);return a};a.prototype.detach=function(){this.bitmap.detach()};return a}(l.TiledDisplayObject);g.RasterTile=d});

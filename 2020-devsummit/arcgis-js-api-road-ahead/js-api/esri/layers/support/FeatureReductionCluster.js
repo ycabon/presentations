@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/tsSupport/declareExtendsHelper ../../core/tsSupport/decorateHelper ../../PopupTemplate ../../core/JSONSupport ../../core/screenUtils ../../core/accessorSupport/decorators".split(" "),function(b,f,h,e,k,l,g,d){Object.defineProperty(f,"__esModule",{value:!0});b=function(b){function c(a){a=b.call(this,a)||this;a.type="cluster";a.clusterRadius=g.toPt("80px");a.popupTemplate=null;return a}h(c,b);e([d.property({type:["cluster"],readOnly:!0,json:{write:!0}})],c.prototype,
+"type",void 0);e([d.property({type:Number,cast:function(a){return"auto"===a?a:g.toPt(a)},json:{write:!0}})],c.prototype,"clusterRadius",void 0);e([d.property({type:k,json:{read:{source:"popupInfo"},write:{target:"popupInfo"}}})],c.prototype,"popupTemplate",void 0);return c=e([d.subclass("esri.layers.support.FeatureReductionCluster")],c)}(d.declared(l.JSONSupport));f.FeatureReductionCluster=b;f.default=b});

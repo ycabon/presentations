@@ -1,0 +1,85 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="https://casual-effects.com/markdeep/latest/journal.css?">
+
+                        **WebGL-Engine: Render Passes**
+                           Version 0.1, ablumer@esri.com
+
+The system consists of multiple components. Approaching it in a top-down fashion, we have
+the [RenderPassManager](#RenderPassManager), which maintains a set of individual [RenderPasses](#RenderPassClass).
+
+The higher level code can then provide objects implementing `IRenderSubmitSystem` and register them with 
+the [RenderPassManager](#RenderPassManager). The manager will then call back to every submit system, giving 
+them a chance to submit draw calls for the next frame to the appropriate passes.
+
+Finally, when it's time to render a specific pass, the RenderPassManager will dispatch it. 
+
+RenderPassManager
+=================================================================
+
+An instance of this lives on the `RenderView`. It contains a set of all provided [render passes](#RenderPassClass).
+In the final design its responsibility will be to coordinate in what order things get 
+rendered into which render targets. Currently it is implemented as a `RenderPlugin`, called by the legacy
+`Renderer`. The goal is to move more and more render code over to use the `RenderPassManager` and eventually 
+have it replace the `Renderer`.
+
+Exposed passes
+=================================================================
+ShadowMapPass
+:  Renders shadow casting objects. This queue might be dispatched multiple times, once for each shadow map 
+   cascade.
+
+MaterialPass
+:  The main pass for rendering opaque objects. Potentially contains multiple sub-passes for additional
+   render targets, in which case the queue will be dispatched multiple times.
+
+   SubPasses are:
+    - ColorSubPass
+    - DepthSubPass
+    - NormalSubPass
+
+HighlightPass
+:  Special pass for objects rendering into the highlight buffer. This is managed as a separate queue because 
+   typically the number of objects highlighted is far smaller than the number of total objects.
+
+Please note that different passes usually use different `PassParameters`. For example the highlight pass does
+not expose the scene lighting, as it should be irrelevant in that case.
+ 
+RenderPass class
+=================================================================
+At it's most basic, a `RenderPass` is a list of draw calls that can be added to, sorted, and dispatched to
+the GPU.
+
+Submission to a pass is an abstract, highly templated interface, defined in `IRenderPassSubmit`. 
+It contains all information required to later dispatch the draw call to the graphics card:
+- a material (see [ISubmitMaterial](#ISubmitMaterial))
+- a geometry
+- parameters specific to the draw (such as model transforms)
+- a depth hint (for sorting)
+
+ISubmitMaterial
+=================================================================
+
+The main responsibility of `ISubmitMaterial` is that given a set of parameters, it returns a 
+[ShaderTechnique](#ShaderTechnique) suited to the task.
+
+The `passParams` identify and configure the pass to render in.
+The `geometryParams` specify the configuration of the geometry to render, such as vertex attributes present.
+
+ShaderTechnique
+=================================================================
+
+`ShaderTechnique` is a replacement for `GLMaterial`. At it's simplest it is a combination of a `Program` and a 
+`RenderPipelineState`, plus the interface to bind it at various stages during rendering.
+
+The three functions of the binding interface will be called at different granularity:
+- once per pass
+- on every material change
+- on every draw call
+
+A ShaderTechnique is inherently immutable, with its state solely defined by the `Configuration` provided
+during construction.
+
+`ShaderTechniques` are created and destroyed via the `ShaderTechniqueRepository`.
+
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

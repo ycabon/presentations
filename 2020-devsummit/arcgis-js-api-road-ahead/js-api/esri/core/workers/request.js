@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../tsSupport/assignHelper","../Error","../global"],function(q,c,l,m,p){Object.defineProperty(c,"__esModule",{value:!0});var g;c.execute=function(f,b){void 0===b&&(b={});var a=b.responseType;a?"json"!==a&&"text"!==a&&"blob"!==a&&"array-buffer"!==a&&(a="text"):a="json";var c=b&&b.signal;delete b.signal;return p.invokeStaticMessage("request",{url:f,options:b},{signal:c}).then(function(e){var c=e.data,h,k,d;if(c&&("json"===a||"text"===a||"blob"===a)&&(h=new Blob([c]),"json"===
+a||"text"===a)&&(g||(g=new FileReaderSync),k=g.readAsText(h),"json"===a)){try{d=JSON.parse(k||null)}catch(n){throw e=l({},n,{url:f,requestOptions:b}),new m("request:server",n.message,e);}if(d.error)throw e=l({},d.error,{url:f,requestOptions:b}),new m("request:server",d.error.message,e);}switch(a){case "json":break;case "text":d=k;break;case "blob":d=h;break;default:d=c}return{data:d,requestOptions:b,ssl:e.ssl,url:f}})}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../core/tsSupport/extendsHelper"],function(g,h,k){return function(){function b(a){this.fields=a;this._fieldsMap=new Map;this._dateFieldsSet=new Set;this.dateFields=[];if(a){for(var b=[],d=0;d<a.length;d++){var c=a[d],e=c&&c.name;if(e){var f=e.toLowerCase().trim();this._fieldsMap.set(e,c);this._fieldsMap.set(f,c);b.push(f);if("date"===c.type||"esriFieldTypeDate"===c.type)this.dateFields.push(c),this._dateFieldsSet.add(c)}}b.sort();this.uid=b.join(",")}}b.prototype.destroy=
+function(){this._fieldsMap.clear()};b.prototype.has=function(a){return null!=this.get(a)};b.prototype.get=function(a){return null!=a?this._fieldsMap.get(a)||this._fieldsMap.get(a.toLowerCase().trim()):void 0};b.prototype.isDateField=function(a){return this._dateFieldsSet.has(this.get(a))};b.prototype.normalizeFieldName=function(a){if(a=this.get(a))return a.name};return b}()});

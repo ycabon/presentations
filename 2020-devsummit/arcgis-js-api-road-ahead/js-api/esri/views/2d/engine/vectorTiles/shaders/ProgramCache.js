@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../webgl","./Programs"],function(d,e,f,a){Object.defineProperty(e,"__esModule",{value:!0});d=function(){function c(a){this._cache=Array(8);for(var b=0;8>b;b++)this._cache[b]={};this._programRepo=new f.ProgramCache(a)}c.prototype.dispose=function(){this._programRepo&&(this._programRepo.dispose(),this._programRepo=null)};c.prototype.getProgram=function(a,c,d){var b=this._cache[a];b[c]||(a=this._programRepo.getProgram(this._getProgramTemplate(a),d),b[c]=a);return b[c]};
+c.prototype.getProgramAttributes=function(b){switch(b){case 0:return a.background.attributes;case 5:return a.circle.attributes;case 1:return a.fill.attributes;case 4:return a.icon.attributes;case 3:return a.line.attributes;case 2:return a.outline.attributes;case 6:return a.text.attributes;default:return null}};c.prototype._getProgramTemplate=function(b){switch(b){case 0:return a.background;case 5:return a.circle;case 1:return a.fill;case 4:return a.icon;case 3:return a.line;case 2:return a.outline;
+case 6:return a.text;default:return null}};return c}();e.default=d});

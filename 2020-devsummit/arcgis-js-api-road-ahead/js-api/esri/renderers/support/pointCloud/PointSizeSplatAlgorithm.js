@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/tsSupport/declareExtendsHelper ../../../core/tsSupport/decorateHelper ../../../core/accessorSupport/decorators ./PointSizeAlgorithm".split(" "),function(b,a,f,e,d,g){Object.defineProperty(a,"__esModule",{value:!0});b=function(b){function c(){var a=null!==b&&b.apply(this,arguments)||this;a.type="splat";a.scaleFactor=1;return a}f(c,b);a=c;c.prototype.clone=function(){return new a({scaleFactor:this.scaleFactor})};var a;e([d.enumeration.serializable()({pointCloudSplatAlgorithm:"splat"})],
+c.prototype,"type",void 0);e([d.property({type:Number,value:1,nonNullable:!0,json:{write:!0}})],c.prototype,"scaleFactor",void 0);return c=a=e([d.subclass("esri.renderers.support.pointCloud.PointSizeSplatAlgorithm")],c)}(d.declared(g.default));a.PointSizeSplatAlgorithm=b;a.default=b});

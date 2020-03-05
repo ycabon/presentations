@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../../../../core/tsSupport/makeTemplateObjectHelper ../ScreenSpacePass ../../shaderModules/interfaces ../../shaderModules/ShaderBuilder".split(" "),function(h,b,d,e,f,g){Object.defineProperty(b,"__esModule",{value:!0});b.build=function(){var a=new g.ShaderBuilder;a.include(e.ScreenSpacePass);a.fragment.uniforms.add("tex","sampler2D");a.fragment.uniforms.add("color","vec4");a.fragment.code.add(f.glsl(c||(c=d(["\n    void main() {\n      vec4 texColor \x3d texture2D(tex, uv);\n      gl_FragColor \x3d texColor * color;\n    }\n  "],
+["\n    void main() {\n      vec4 texColor \x3d texture2D(tex, uv);\n      gl_FragColor \x3d texColor * color;\n    }\n  "]))));return a};var c});

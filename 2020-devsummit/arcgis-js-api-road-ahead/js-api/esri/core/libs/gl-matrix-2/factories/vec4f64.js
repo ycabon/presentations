@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports"],function(l,a){function b(){return[0,0,0,0]}function d(){return[1,1,1,1]}function f(){return[1,0,0,0]}function g(){return[0,1,0,0]}function h(){return[0,0,1,0]}function k(){return[0,0,0,1]}Object.defineProperty(a,"__esModule",{value:!0});a.create=b;a.clone=function(a){return[a[0],a[1],a[2],a[3]]};a.fromValues=function(a,e,b,c){return[a,e,b,c]};a.fromArray=function(a){for(var e=b(),d=Math.min(4,a.length),c=0;c<d;++c)e[c]=a[c];return e};a.createView=function(a,b){return new Float64Array(a,
+b,4)};a.zeros=function(){return b()};a.ones=d;a.unitX=f;a.unitY=g;a.unitZ=h;a.unitW=k;a.ZEROS=b();a.ONES=d();a.UNIT_X=f();a.UNIT_Y=g();a.UNIT_Z=h();a.UNIT_W=k()});

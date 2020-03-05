@@ -1,0 +1,135 @@
+{
+  "_args": [
+    [
+      "globalize@1.4.0",
+      "C:\\inetpub\\wwwroot\\arcgis-js-api-4"
+    ]
+  ],
+  "_from": "globalize@1.4.0",
+  "_id": "globalize@1.4.0",
+  "_inBundle": false,
+  "_integrity": "sha1-TACnneZ9c5qbf/g7ZrkNAlfCdJM=",
+  "_location": "/globalize",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "globalize@1.4.0",
+    "name": "globalize",
+    "escapedName": "globalize",
+    "rawSpec": "1.4.0",
+    "saveSpec": null,
+    "fetchSpec": "1.4.0"
+  },
+  "_requiredBy": [
+    "/@dojo/framework"
+  ],
+  "_resolved": "https://registry.npmjs.org/globalize/-/globalize-1.4.0.tgz",
+  "_spec": "1.4.0",
+  "_where": "C:\\inetpub\\wwwroot\\arcgis-js-api-4",
+  "author": {
+    "name": "jQuery Foundation and other contributors",
+    "url": "https://github.com/jquery/jquery/blob/master/AUTHORS.txt"
+  },
+  "bugs": {
+    "url": "http://github.com/jquery/globalize/issues"
+  },
+  "commitplease": {
+    "nohook": true
+  },
+  "dependencies": {
+    "cldrjs": "^0.5.0"
+  },
+  "description": "A JavaScript library for internationalization and localization that leverages the official Unicode CLDR JSON data.",
+  "devDependencies": {
+    "cldr-data-downloader": "^0.3.1",
+    "glob": "^7.1.2",
+    "globalize-compiler": "^0.3.0-alpha.6",
+    "grunt": "1.0.1",
+    "grunt-check-dependencies": "1.0.0",
+    "grunt-commitplease": "0.0.6",
+    "grunt-compare-size": "0.4.2",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-connect": "0.8.0",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-contrib-qunit": "2.0.0",
+    "grunt-contrib-requirejs": "1.0.0",
+    "grunt-contrib-uglify": "3.0.1",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-git-authors": "^3.2.0",
+    "grunt-jscs": "1.8.0",
+    "grunt-mocha-test": "^0.13.2",
+    "gzip-js": "0.3.2",
+    "iana-tz-data": ">=2017.0.0",
+    "matchdep": "1.0.1",
+    "mocha": "^3.4.2",
+    "semver": "^5.3.0",
+    "zoned-date-time": "1.0.0"
+  },
+  "files": [
+    "CONTRIBUTING.md",
+    "dist/",
+    "!dist/.build",
+    "doc/",
+    "examples/",
+    "!examples/**/bower_components",
+    "!examples/**/.tmp-globalize-webpack",
+    "!examples/plain-javascript/cldrjs",
+    "!examples/plain-javascript/globalize",
+    "README.md"
+  ],
+  "homepage": "https://github.com/jquery/globalize",
+  "keywords": [
+    "utility",
+    "globalization",
+    "internationalization",
+    "multilingualization",
+    "localization",
+    "g11n",
+    "i18n",
+    "m17n",
+    "L10n",
+    "localize",
+    "format",
+    "parse",
+    "translate",
+    "strings",
+    "numbers",
+    "dates",
+    "times",
+    "calendars",
+    "plural",
+    "plurals",
+    "pluralize",
+    "cultures",
+    "languages",
+    "locales",
+    "Unicode",
+    "CLDR",
+    "JSON"
+  ],
+  "license": "MIT",
+  "main": "./dist/node-main.js",
+  "maintainers": [
+    {
+      "name": "Jörn Zaefferer",
+      "email": "joern.zaefferer@gmail.com",
+      "url": "http://bassistance.de"
+    },
+    {
+      "name": "Rafael Xavier de Souza",
+      "email": "rxaviers@gmail.com",
+      "url": "http://rafael.xavier.blog.br"
+    }
+  ],
+  "name": "globalize",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jquery/globalize.git"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "version": "1.4.0"
+}

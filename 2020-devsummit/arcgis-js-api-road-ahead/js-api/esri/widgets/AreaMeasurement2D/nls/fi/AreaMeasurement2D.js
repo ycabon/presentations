@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Alueen mittaus",hint:"Aloita mittaus napsauttamalla karttaa ja sijoita ensimm\u00e4inen pisteesi",unsupported:"Kaksiulotteista alueen mittausta tuetaan vain MapView-sovelluksessa.",perimeter:"Ymp\u00e4rysmitta",area:"Alue",newMeasurement:"Uusi mittaus",mode:"Tila",modes:{auto:"Autom",planar:"Planaarinen",geodesic:"Geodeettinen"},unit:"Yksikk\u00f6",units:{metric:"Metrij\u00e4rjestelm\u00e4",imperial:"Mailij\u00e4rjestelm\u00e4","square-kilometers":"Neli\u00f6kilometri\u00e4",
+"square-meters":"Neli\u00f6metri\u00e4","square-miles":"Neli\u00f6mailia","square-inches":"Neli\u00f6tuumaa","square-feet":"Neli\u00f6jalkaa","square-yards":"Neli\u00f6jaardia","square-us-feet":"Neli\u00f6jalkaa (Yhdysvallat)",acres:"Eekkeri\u00e4",ares:"Aaria",hectares:"Hehtaaria"}});

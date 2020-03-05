@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../../core/tsSupport/extendsHelper","../../../../core/compilerUtils","../../../input/InputHandler"],function(e,g,h,k,l){Object.defineProperty(g,"__esModule",{value:!0});e=function(e){function f(c,a,d){var b=e.call(this,!0)||this;b.view=c;b.keys=a;b._keysToZoomAction={};b.registerIncoming("key-down",d,function(a){return b._handleKeyDown(a)});a.zoomIn.forEach(function(a){return b._keysToZoomAction[a]=0});a.zoomOut.forEach(function(a){return b._keysToZoomAction[a]=
+1});return b}h(f,e);f.prototype._handleKeyDown=function(c){this._handleKey(c)};f.prototype._handleKey=function(c){var a=c.modifiers;if(!(0<a.size)||a.has("Shift"))if(a=c.data.key,a in this._keysToZoomAction){var a=this._keysToZoomAction[a],d=this.view.mapViewNavigation,b=null;switch(a){case 0:b=d.zoomIn();break;case 1:b=d.zoomOut();break;default:k.neverReached(a);return}d.begin();b.then(function(){return d.end()});c.stopPropagation()}};return f}(l.InputHandler);g.KeyZoom=e});

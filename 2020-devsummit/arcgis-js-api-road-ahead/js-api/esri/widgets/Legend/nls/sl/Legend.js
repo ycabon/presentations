@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.16/esri/copyright.txt for details.
+//>>built
+define({widgetLabel:"Legenda",points:"To\u010dke",lines:"Linije",polygons:"Poligoni",creatingLegend:"Ustvarjanje legende",noLegend:"Ni legende",dotValue:"1 pika \x3d {value} {unit}",currentObservations:"Trenutne ugotovitve",previousObservations:"Prej\u0161nje ugotovitve",high:"Visoko",low:"Nizko",esriMetersPerSecond:"m/s",esriKilometersPerHour:"km/h",esriKnots:"vozlov",esriFeetPerSecond:"\u010devljev/sekundo",esriMilesPerHour:"mi/h",showNormField:"{field} deljeno z {normField}",showNormPct:"{field} kot odstotek skupne vrednosti",
+showRatio:"Razmerje {field} glede na {normField}",showRatioPercent:"{field} kot odstotek {normField}",showRatioPercentTotal:"{field} kot odstotek {field} in {normField}",band0:"band_0",band1:"band_1",band2:"band_2",red:"Rde\u010da",green:"Zelena",blue:"Modra",clusterCountTitle:"\u0160_Number of features___________________\u010d"});

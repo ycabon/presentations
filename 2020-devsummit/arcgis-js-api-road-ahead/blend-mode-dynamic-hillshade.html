@@ -6,7 +6,8 @@
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
   <title>Raster Hillshade</title>
-
+  <script src="https://cdn.jsdelivr.net/npm/suncalc@1.8.0/suncalc.min.js"></script>
+  <script src="./clock.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ycabon/presentations@gh-pages/2020-devsummit/arcgis-js-api-road-ahead/js-api/esri/css/main.css">
   <script src="https://cdn.jsdelivr.net/gh/ycabon/presentations@gh-pages/2020-devsummit/arcgis-js-api-road-ahead/js-api/dojo/dojo.js"></script>
   <style>
@@ -31,6 +32,12 @@
 
     .hidden {
       display: none;
+    }
+
+    #clock {
+      width: 220px;
+      height: 220px;
+      box-shadow: none;
     }
   </style>
 
@@ -95,7 +102,6 @@
 
       const layerView = await view.whenLayerView(worldImagery);
       window.layerView = layerView;
-      layerView.blendMode = "multiply";
 
       view.ui.add("rendererDiv", "top-right");
 
@@ -103,15 +109,19 @@
         if (!layer.loaded) {
           return;
         }
+        layerView.blendMode = "multiply";
         let renderer = layer.renderer.clone();
         // renderer.colorRamp = colorRamp;
         let bandStat = layer.rasterInfo.statistics[0];
         renderer.hillshadeType = hillshadeType;
         switch (hillshadeType) {
           case "traditional":
+            const { altitude, azimuth } = SunCalc.getPosition(clock.time, view.center.latitude, view.center.longitude);
             renderer.zFactor = zFactorSlider.values[0];
-            renderer.altitude = altitudeSlider.values[0];
-            renderer.azimuth = azimuthSlider.values[0];
+            renderer.altitude = altitude * 180.0 / Math.PI;
+            renderer.azimuth = azimuth * 180.0 /  Math.PI;
+            // renderer.altitude = altitudeSlider.values[0];
+            // renderer.azimuth = azimuthSlider.values[0];
             break;
           case "multi-directional":
             renderer.zFactor = zFactorSlider.values[0];
@@ -132,19 +142,20 @@
         zFactorLabel.innerHTML = hillshadeType + " value:";
         switch (hillshadeType) {
           case "traditional":
-            document.getElementById("azimuthLabel").style = "";
-            document.getElementById("azimuth-slider").style = "";
-            document.getElementById("altitudeLabel").style = "";
-            document.getElementById("altitude-slider").style = "";
+            // document.getElementById("azimuthLabel").style = "";
+            // document.getElementById("azimuth-slider").style = "";
+            // document.getElementById("altitudeLabel").style = "";
+            // document.getElementById("altitude-slider").style = "";
+            document.getElementById("clock").style = "";
             break;
           case "multi-directional":
-            document.getElementById("azimuthLabel").style = "display: none;";
-            document.getElementById("azimuth-slider").style = "display: none;";
-            document.getElementById("altitudeLabel").style = "display: none;";
-            document.getElementById("altitude-slider").style = "display: none;";
+            // document.getElementById("azimuthLabel").style = "display: none;";
+            // document.getElementById("azimuth-slider").style = "display: none;";
+            // document.getElementById("altitudeLabel").style = "display: none;";
+            // document.getElementById("altitude-slider").style = "display: none;";
+            document.getElementById("clock").style = "display: none;";
             break;
         }
-        console.log("chaned")
         updateRenderer();
       }
 
@@ -162,49 +173,54 @@
       });
       zFactorSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
 
-      const altitudeSlider = new Slider({
-        container: "altitude-slider",
-        min: 0,
-        max: 90,
-        values: [45],
-        steps: 1,
-        snapOnClickEnabled: false,
-        visibleElements: {
-          labels: true,
-          rangeLabels: true
-        }
-      });
-      altitudeSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+      // const altitudeSlider = new Slider({
+      //   container: "altitude-slider",
+      //   min: 0,
+      //   max: 90,
+      //   values: [45],
+      //   steps: 1,
+      //   snapOnClickEnabled: false,
+      //   visibleElements: {
+      //     labels: true,
+      //     rangeLabels: true
+      //   }
+      // });
+      // altitudeSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
 
-      const azimuthSlider = new Slider({
-        container: "azimuth-slider",
-        min: 0,
-        max: 360,
-        values: [315],
-        steps: 5,
-        snapOnClickEnabled: false,
-        visibleElements: {
-          labels: true,
-          rangeLabels: true
-        }
-      });
-      azimuthSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+      // const azimuthSlider = new Slider({
+      //   container: "azimuth-slider",
+      //   min: 0,
+      //   max: 360,
+      //   values: [315],
+      //   steps: 5,
+      //   snapOnClickEnabled: false,
+      //   visibleElements: {
+      //     labels: true,
+      //     rangeLabels: true
+      //   }
+      // });
 
-      let colorRampCheckBox = document.getElementById("tinted");
-      colorRampCheckBox.addEventListener("click", function(val) {
-        if (!layer.loaded) {
-          return;
-        }
-        let renderer = layer.renderer.clone();
-        renderer.colorRamp = colorRampCheckBox.checked ? colorRamp : null;
-        layer.renderer = renderer;
+      // azimuthSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+
+      var clock = new Clock({
+        el: "clock",
+        skin: "./clock.svg",
+        time: Date.now()
       });
-    })());
+
+      function setDate(time) {
+        updateRenderer();
+      }
+
+      clock.on("time-changing", setDate);
+      setDate(Date.now());
+  })());
   </script>
 </head>
 
 <body>
-  <div id="viewDiv"></div>
+  <div id="viewDiv">
+  </div>
   <div id="rendererDiv" class="esri-widget">
     <h3 class="esri-widget__heading">Shaded Relief Parameters</h3>
 
@@ -216,11 +232,11 @@
     <br />
     <label id="zFactorLabel" class="esri-feature-form__label">Exaggeration Factor:</label>
     <div id="zFactor-slider" class="slider"></div>
-    <label id="altitudeLabel" class="esri-feature-form__label">Sun Altitude:</label>
+    <!-- <label id="altitudeLabel" class="esri-feature-form__label">Sun Altitude:</label>
     <div id="altitude-slider" class="slider"></div>
     <label id="azimuthLabel" class="esri-feature-form__label">Sun Azimuth:</label>
-    <div id="azimuth-slider" class="slider"></div>
-    <input type="checkbox" id="tinted" class="hidden"/><label class="hidden">Tinted hillshade</label>
+    <div id="azimuth-slider" class="slider"></div> -->
+    <div id="clock"></div>
   </div>
 </body>
 

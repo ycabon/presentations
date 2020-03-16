@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Tile Drilling</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/next/esri/themes/dark-blue/main.css"
+    />
+    <script src="https://js.arcgis.com/next/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/Map",
+        "esri/layers/FeatureLayer",
+        "esri/views/MapView",
+        "esri/core/promiseUtils",
+        "esri/widgets/Home",
+        "esri/widgets/Fullscreen"
+      ], function(
+        config,
+        Map,
+        FeatureLayer,
+        MapView,
+        promiseUtils,
+        Home,
+        Fullscreen
+      ) {
+
+        config.request.interceptors.push({
+          urls: new RegExp("\/query\?", "gi"),
+          after: (parameters) => {
+            if (parameters.requestOptions.query.geometry) {
+              view.graphics.push({
+                geometry: {
+                  type: "extent",
+                  ...JSON.parse(parameters.requestOptions.query.geometry)
+                },
+                symbol: {
+                  type: "simple-fill",
+                  //*
+                  style: "none",
+                  outline: {
+                    color: "rgba(255,255,255)",
+                    width: "2px"
+                  }
+                  /*/
+                  style: "solid",
+                  color: "rgba(0,0,0,0.1)"
+                  //*/
+                }
+              });
+            }
+          }
+        });
+
+        // config.request.interceptors.push({
+        //   urls: new RegExp("FeatureServer/0\?", "gi"),
+        //   after: (parameters) => {
+        //     parameters.data.supportedQueryFormats = "JSON";
+        //   }
+        // });
+        
+        //--------------------------------------------------------------------------
+        //
+        //  Setup Map and View
+        //
+        //--------------------------------------------------------------------------
+
+        var layer = new FeatureLayer({
+          portalItem: {
+            id: "dfe2d606134546f5a712e689d76540ac"
+          },
+          definitionExpression: "CNSTRCT_YR > 0",
+          title: "Building Footprints"
+        });
+
+        var map = new Map({
+          basemap: {
+            portalItem: {
+              id: "4f2e99ba65e34bb8af49733d9778fb8e"
+            }
+          },
+          layers: [layer]
+        });
+
+        var view = new MapView({
+          map: map,
+          container: "viewDiv",
+          center: [-73.967569, 40.727724],
+          zoom: 12,
+          constraints: {
+            snapToZoom: false
+          },
+          // This ensures that when going fullscreen
+          // The top left corner of the view extent
+          // stays aligned with the top left corner
+          // of the view's container
+          resizeAlign: "top-left"
+        });
+
+        //--------------------------------------------------------------------------
+        //
+        //  Setup UI
+        //
+        //--------------------------------------------------------------------------
+
+        var applicationDiv = document.getElementById("applicationDiv");
+        var titleDiv = document.getElementById("titleDiv");
+        var animation = null;
+
+        view.ui.empty("top-left");
+        view.ui.add(titleDiv, "top-left");
+        view.ui.add(
+          new Home({
+            view: view
+          }),
+          "top-left"
+        );
+        view.ui.add(
+          new Fullscreen({
+            view: view,
+            element: applicationDiv
+          }),
+          "top-right"
+        );
+
+        // Starts the application by visualizing year 1984
+        setYear(1984);
+
+        //--------------------------------------------------------------------------
+        //
+        //  Methods
+        //
+        //--------------------------------------------------------------------------
+
+        /**
+         * Sets the current visualized construction year.
+         */
+        function setYear(value) {
+          layer.renderer = createRenderer(value);
+        }
+
+        /**
+         * Returns a renderer with a color visual variable driven by the input
+         * year. The selected year will always render buildings built in that year
+         * with a light blue color. Buildings built 20+ years before the indicated
+         * year are visualized with a pink color. Buildings built within that
+         * 20-year time frame are assigned a color interpolated between blue and pink.
+         */
+        function createRenderer(year) {
+          var opacityStops = [
+            {
+              opacity: 1,
+              value: year
+            },
+            {
+              opacity: 0,
+              value: year + 1
+            }
+          ];
+
+          return {
+            type: "simple",
+            symbol: {
+              type: "simple-fill",
+              color: "rgb(0, 0, 0)",
+              outline: null
+            },
+            visualVariables: [
+              {
+                type: "opacity",
+                field: "CNSTRCT_YR",
+                stops: opacityStops,
+                legendOptions: {
+                  showLegend: false
+                }
+              },
+              {
+                type: "color",
+                field: "CNSTRCT_YR",
+                legendOptions: {
+                  title: "Built:"
+                },
+                stops: [
+                  {
+                    value: year,
+                    color: "#0ff",
+                    label: "in " + Math.floor(year)
+                  },
+                  {
+                    value: year - 10,
+                    color: "#f0f",
+                    label: "in " + (Math.floor(year) - 20)
+                  },
+                  {
+                    value: year - 50,
+                    color: "#404",
+                    label: "before " + (Math.floor(year) - 50)
+                  }
+                ]
+              }
+            ]
+          };
+        }
+      });
+    </script>
+
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #applicationDiv {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+        flex: 1 1 auto;
+        order: 1;
+      }
+
+      #titleDiv {
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.2019rem;
+        padding: 10px;
+      }
+
+      #sliderContainer {
+        flex: 0 0 80px;
+        order: 2;
+
+        display: flex;
+        flex-flow: row;
+
+        padding: 0 12px;
+      }
+
+      #sliderValue {
+        flex: 0 0 100px;
+        order: 1;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+
+        font-size: 300%;
+      }
+
+      #sliderInnerContainer {
+        flex: 1 1 auto;
+        order: 2;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
+      }
+
+      #slider {
+        width: 100%;
+      }
+      /**
+    * Play/Stop toggle button
+    */
+
+      #playButton {
+        flex: 0 0 100px;
+        order: 3;
+
+        margin: 20px 0;
+      }
+
+      .toggle-button {
+        display: flex;
+      }
+
+      .toggle-button.toggled .toggle-button-icon {
+        color: #cc1b1b;
+      }
+
+      .toggle-button .toggle-button-icon {
+        color: #1bcc1b;
+      }
+
+      .toggle-button > :nth-child(2) {
+        display: none;
+      }
+
+      .toggle-button.toggled > :nth-child(1) {
+        display: none;
+      }
+
+      .toggle-button.toggled > :nth-child(2) {
+        display: block;
+      }
+      /**
+      * Hover tooltip
+      */
+
+      .tooltip {
+        position: absolute;
+        pointer-events: none;
+        transition: opacity 200ms;
+      }
+
+      .tooltip > div {
+        margin: 0 auto;
+        padding: 12px;
+        border-radius: 4px;
+        box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.75);
+        transform: translate3d(-50%, -125%, 0);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="applicationDiv">
+      <div id="viewDiv">
+        <div id="titleDiv" class="esri-widget">New York Construction</div>
+      </div>
+    </div>
+  </body>
+</html>

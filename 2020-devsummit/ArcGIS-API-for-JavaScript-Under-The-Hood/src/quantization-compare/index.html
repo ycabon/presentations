@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Generalization Explorer</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/next/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/next/"></script>
+
+    <script>
+      require([
+        "esri/core/watchUtils",
+
+        "esri/Map",
+        "esri/layers/Layer",
+        "esri/layers/FeatureLayer",
+        "esri/views/MapView",
+        "esri/views/2d/layers/BaseLayerView2D",
+
+        "esri/layers/support/TileInfo",
+
+        "esri/widgets/Home",
+        "esri/widgets/Slider",
+        "esri/widgets/Fullscreen",
+        "esri/widgets/Swipe"
+      ], (
+        watchUtils,
+        Map,
+        Layer, FeatureLayer,
+        MapView,
+        BaseLayerView2D,
+        TileInfo,
+        Home, Slider, Fullscreen, Swipe
+      ) => (async () => {
+        //--------------------------------------------------------------------------
+        //
+        //  Setup Map and View
+        //
+        //--------------------------------------------------------------------------
+
+        var GeneralizationDemoFeatureLayerView2D = BaseLayerView2D.createSubclass({
+          attach() {
+            watchUtils.on(this, "clips", "change", () => this.requestRender());
+            this.watch(["layer.generalizationMode", "layer.tolerance"], () => {
+              this.needsUpdate = true;
+              this.requestRender();
+            });
+            this.features = [];
+            this.needsUpdate = true;
+          },
+
+          render(renderParameters) {
+            const { state, context } = renderParameters;
+
+            if (renderParameters.stationary) {
+              this.queryFeatures(renderParameters.state);
+            }
+
+            if (!this.featureSet) {
+              return;
+            }
+            
+            const out = [];
+
+            context.strokeStyle = "white";
+            context.fillStyle = "#242424";
+
+            if (this.clips.length) {
+              context.beginPath();
+
+              this.clips.forEach(clip => {
+                const left = typeof clip.left === "number" ? clip.left : (parseFloat(clip.left) / 100 * state.size[0]);
+                const right = typeof clip.right === "number" ? clip.right : (parseFloat(clip.right) / 100 * state.size[0]);
+                const top = typeof clip.top === "number" ? clip.top : (parseFloat(clip.top) / 100 * state.size[1]);
+                const bottom = typeof clip.bottom === "number" ? clip.bottom : (parseFloat(clip.bottom) / 100 * state.size[1]);
+
+                context.rect(
+                  left * state.pixelRatio,
+                  top * state.pixelRatio,
+                  (state.size[0] - right - left) * state.pixelRatio,
+                  (state.size[1] - top - bottom) * state.pixelRatio,
+                );
+              });
+             
+              context.clip();
+            }
+
+            context.beginPath();
+
+            for (const { geometry } of this.featureSet.features) {
+              for (const ring of geometry.rings) {
+                state.toScreen(out, ring[0][0], ring[0][1]);
+                context.moveTo(Math.round(out[0]), Math.round(out[1]));
+
+                for (let i = 1; i < ring.length; i++) {
+                  state.toScreen(out, ring[i][0], ring[i][1]);
+                  context.lineTo(Math.round(out[0]), Math.round(out[1]));
+                }
+              }
+            }
+
+            context.fill();
+            // context.stroke();
+          },
+
+          async queryFeatures(state) {
+            if (!this.needsUpdate) {
+              return;
+            }
+
+            this.needsUpdate = false;
+
+            const { extent, resolution } = state;
+            const tolerance = this.layer.tolerance || resolution;
+            const query = this.layer.generalizationMode === "douglas-peucker"
+              ? {
+                  where: "1=1",
+                  outSpatialReference: extent.spatialReference,
+                  maxAllowableOffset: tolerance,
+                  returnGeometry: true
+                }
+              : {
+                  where: "1=1",
+                  outSpatialReference: extent.spatialReference,
+                  quantizationParameters: {
+                    extent,
+                    tolerance
+                  },
+                  returnGeometry: true
+                };
+
+            const fs = await this.layer.featureLayer.queryFeatures(query);
+
+            if (this.layer.tolerance != undefined && tolerance !== this.layer.tolerance) {
+              // config changed.
+              return;
+            }
+
+            this.featureSet = fs;
+            this.featureSet.unquantize();
+            this.requestRender();
+          }
+
+        });
+
+        var GeneralizationDemoFeatureLayer = Layer.createSubclass({
+          properties: {
+            tolerance: undefined,
+            generalizationMode: "douglas-peucker"
+          },
+          load() {
+            this.addResolvingPromise(this.featureLayer.load())
+          },
+          createLayerView(view) {
+            return new GeneralizationDemoFeatureLayerView2D({
+              layer: this,
+              view
+            });
+          }
+        });
+
+        var generalizationLayer = new GeneralizationDemoFeatureLayer({
+          generalizationMode: "douglas-peucker",
+          featureLayer: new FeatureLayer({
+            portalItem: {
+              id: "e8f85b4982a24210b9c8aa20ba4e1bf7"
+            }
+          })
+        });
+
+        var quantizationLayer = new GeneralizationDemoFeatureLayer({
+          generalizationMode: "quantization",
+          featureLayer: new FeatureLayer({
+            portalItem: {
+              id: "e8f85b4982a24210b9c8aa20ba4e1bf7"
+            }
+          })
+        });
+
+        var map = new Map({
+          layers: [generalizationLayer, quantizationLayer]
+        });
+
+
+        var tileInfos = TileInfo.create({
+          spatialReference: {
+            // NAD_1983_Contiguous_USA_Albers
+            wkid: 5070
+          }
+        });
+
+        view = new MapView({
+          map: map,
+          container: "viewDiv",
+          extent: {
+            xmin: -3094834,
+            ymin: -44986,
+            xmax: 2752687,
+            ymax: 3271654,
+            spatialReference: {
+              wkid: 5070
+            }
+          },
+          zoom: 5,
+          constraints: {
+            snapToZoom: false,
+            lods: tileInfos.lods
+          },
+          spatialReference: {
+            // NAD_1983_Contiguous_USA_Albers
+            wkid: 5070
+          },
+        });
+
+        await view.when();
+
+        //--------------------------------------------------------------------------
+        //
+        //  Setup UI
+        //
+        //--------------------------------------------------------------------------
+        
+        var swipe = new Swipe({
+          view: view,
+          leadingLayers: [generalizationLayer],
+          trailingLayers: [quantizationLayer],
+          direction: "horizontal",
+          position: 50
+        });
+        view.ui.add(swipe);
+
+        var applicationDiv = document.getElementById("applicationDiv");
+        var sliderValue = document.getElementById("sliderValue");
+        
+        var zooms = tileInfos.lods.map(l => l.level);
+        var slider = new Slider({
+          container: "slider",
+          min: zooms[0],
+          max: zooms[zooms.length - 1],
+          layout: "horizontal",
+          steps: zooms,
+          values: [view.zoom],
+          visibleElements: {
+            rangeLabels: true,
+            labels: true
+          }
+        });
+
+        // view.watch("zoom", (value) => slider.values = [value]);
+        slider.on("thumb-drag", (event) => {
+          if (event.state === "stop") {
+            generalizationLayer.tolerance = tileInfos.lods[slider.values[0]].resolution;
+            quantizationLayer.tolerance = tileInfos.lods[slider.values[0]].resolution;
+          }
+        });
+
+        view.ui.empty("top-left");
+        view.ui.add("leftTitleDiv", "top-left");
+        view.ui.add("rightTitleDiv", "top-right");
+        view.ui.add(
+          new Home({
+            view: view
+          }),
+          "top-left"
+        );
+        view.ui.add(
+          new Fullscreen({
+            view: view,
+            element: applicationDiv
+          }),
+          "top-right"
+        );
+      })());
+    </script>
+
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #applicationDiv {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background-color: white;
+      }
+
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+        flex: 1 1 auto;
+        order: 1;
+      }
+
+      #viewDiv {
+        background-color: black;
+      }
+
+      #viewDiv canvas {
+        filter: drop-shadow(0px 0px 6px white);
+      }
+
+      #leftTitleDiv, #rightTitleDiv {
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.2019rem;
+        padding: 10px;
+      }
+
+      #sliderContainer {
+        flex: 0 0 80px;
+        order: 2;
+
+        display: flex;
+        flex-flow: row;
+
+        padding: 0 12px;
+      }
+
+      #sliderValue {
+        flex: 0 0 100px;
+        order: 1;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+
+        font-size: 300%;
+      }
+
+      #sliderInnerContainer {
+        flex: 1 1 auto;
+        order: 2;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
+      }
+
+      #slider {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="applicationDiv">
+      <div id="viewDiv">
+        <div id="leftTitleDiv" class="esri-widget">Generalization</div>
+        <div id="rightTitleDiv" class="esri-widget">Quantization</div>
+      </div>
+      <div id="sliderContainer" class="esri-widget">
+        <div id="sliderInnerContainer">
+          <div id="slider"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

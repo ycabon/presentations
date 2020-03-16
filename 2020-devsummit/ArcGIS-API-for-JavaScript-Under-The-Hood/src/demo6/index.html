@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Attribute driven map - fuel stations</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
+  <link rel="stylesheet" href="../../dist/main.css">
+  <style>
+    html,
+    /* body{
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    } */
+
+    #controls {
+    padding: 10px;
+    min-width: 300px;
+    }
+    .slider {
+        width: 100%;
+        height: 30px;
+    }
+
+    #rampContainer {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .fuel-types {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    .fuel-type {
+      flex-grow: 0.14;
+    }
+  </style>
+  <script src="../dojoConfig.js"></script>
+  <script src="https://js.arcgis.com/4.14/"></script>
+</head>
+<body>
+  <noscript> JavaScript is required in order to use this app </noscript>
+  <div class="app-container">
+    <header class="header">
+      <h2 class="heading">Attribute driven map - fuel stations</h2>
+    </header>
+    <form>
+      Select color ramp:
+      <select id="colorRampSelect">
+        <option value="Galaxy Berries">Galaxy Berries</option>
+        <option value="Fruit Basket">Fruit Basket</option>
+        <option value="Flower Field">Flower Field</option>
+        <option value="Metro Movement">Metro Movement</option>
+        <option value="Mushroom Soup">Mushroom Soup</option>
+        <option value="Olive Harmony">Olive Harmony</option>
+        <option value="Pastel Dreams">Pastel Dreams</option>
+        <option value="Rainforest Frogs">Rainforest Frogs</option>
+      </select>
+    </form>
+    <div id="rampContainer" class="esri-widget" style="padding: 1em;">
+      <div id="fuel-types" class="fuel-types">
+        <div class="fuel-type">ELEC</div>
+        <div class="fuel-type">E85</div>
+        <div class="fuel-type">CNG</div>
+        <div class="fuel-type">LPG</div>
+        <div class="fuel-type">LNG</div>
+        <div class="fuel-type">HY</div>
+        <div class="fuel-type">BD</div>
+     </div>
+   </div>
+    <div id="viewDiv"></div>
+    <div id="controls" class="esri-widget">
+      <div id="widthSlider" class="slider"></div>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Tile Drilling</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/next/esri/themes/dark-blue/main.css"
+    />
+    
+    <script src="https://js.arcgis.com/next/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/core/workers"
+      ], (config, workers) => (
+        async() => {
+          config.workers.loaderConfig = {
+            paths: {
+              workersFolder: window.location.href.replace(/\/[^/]+$/, "/workersFolder")
+            }
+          };
+
+          const connection = await workers.open("workersFolder/Calculator");
+          const answer = await connection.invoke("add", {
+            a: 10,
+            b: 20
+          });
+
+          console.log(answer);
+        }
+      )());
+    </script>
+
+  </head>
+  <body>
+    <div id="applicationDiv">
+      
+    </div>
+  </body>
+</html>

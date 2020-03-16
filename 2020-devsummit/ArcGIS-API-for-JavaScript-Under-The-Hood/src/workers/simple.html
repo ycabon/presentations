@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Basic Worker Communication</title>
+
+    <script>
+      const workerScript = `
+      self.onmessage = (event) => {
+        const { operation, parameters } = event.data;
+
+        let response;
+
+        if (event.data.operation === "hello") {
+          response = hello(...parameters);
+        }
+
+        self.postMessage({ data: response });
+      }
+
+      function hello(name) {
+        return "Hello " + name + " from Worker";
+      }
+      `;
+
+      // Use URL.createObjectURL() to load a script in a worker.
+      // Avoids issues with cross-origin
+      const url = URL.createObjectURL(new Blob([workerScript], { type: "application/javascript" }));
+
+      // Create the worker
+      const worker = new Worker(url);
+
+      // Subscribe to messages from the Worker
+      worker.onmessage = (event) => {
+        console.log(event.data);
+      };
+
+      // Execute "hello" on the worker
+      worker.postMessage({
+        operation: "hello",
+        parameters: ["World"]
+      })
+    </script>
+  </head>
+
+  <body>
+    <div id="applicationDiv">
+      
+    </div>
+  </body>
+</html>

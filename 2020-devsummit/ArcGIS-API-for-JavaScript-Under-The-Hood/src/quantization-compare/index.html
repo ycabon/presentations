@@ -46,6 +46,10 @@
         //--------------------------------------------------------------------------
 
         var GeneralizationDemoFeatureLayerView2D = BaseLayerView2D.createSubclass({
+          properties: {
+            numVertices: 0
+          },
+
           attach() {
             watchUtils.on(this, "clips", "change", () => this.requestRender());
             this.watch(["layer.generalizationMode", "layer.tolerance"], () => {
@@ -145,6 +149,15 @@
 
             this.featureSet = fs;
             this.featureSet.unquantize();
+
+            let numVertices = 0;
+            for (const { geometry } of this.featureSet.features) {
+              for (const ring of geometry.rings) {
+                numVertices += ring.length;
+              }
+            }
+            this.numVertices = numVertices;
+
             this.requestRender();
           }
 
@@ -264,6 +277,8 @@
         view.ui.empty("top-left");
         view.ui.add("leftTitleDiv", "top-left");
         view.ui.add("rightTitleDiv", "top-right");
+        view.ui.add("leftNumVertices", "bottom-left");
+        view.ui.add("rightNumVertices", "bottom-right");
         view.ui.add(
           new Home({
             view: view
@@ -277,6 +292,18 @@
           }),
           "top-right"
         );
+
+        const [generalizationLV, quantizationLV] = await Promise.all([
+          view.whenLayerView(generalizationLayer),
+          view.whenLayerView(quantizationLayer)
+        ]);
+
+        generalizationLV.watch("numVertices", (value) => {
+          document.getElementById("leftNumVertices").innerText = value + " vertices";
+        });
+        quantizationLV.watch("numVertices", (value) => {
+          document.getElementById("rightNumVertices").innerText = value + " vertices";
+        });
       })());
     </script>
 
@@ -316,6 +343,13 @@
 
       #leftTitleDiv, #rightTitleDiv {
         font-weight: 400;
+        font-style: normal;
+        font-size: 1.2019rem;
+        padding: 10px;
+      }
+
+      #leftNumVertices, #rightNumVertices {
+        font-weight: 200;
         font-style: normal;
         font-size: 1.2019rem;
         padding: 10px;
@@ -364,6 +398,8 @@
       <div id="viewDiv">
         <div id="leftTitleDiv" class="esri-widget">Generalization</div>
         <div id="rightTitleDiv" class="esri-widget">Quantization</div>
+        <div id="leftNumVertices" class="esri-widget"></div>
+        <div id="rightNumVertices" class="esri-widget"></div>
       </div>
       <div id="sliderContainer" class="esri-widget">
         <div id="sliderInnerContainer">

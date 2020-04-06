@@ -36,8 +36,5 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.7.4"
-  },
-  "dependencies": {
-    "gl-matrix": "^3.1.0"
   }
 }

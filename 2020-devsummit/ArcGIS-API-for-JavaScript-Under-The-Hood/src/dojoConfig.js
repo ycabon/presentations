@@ -13,7 +13,7 @@ window.dojoConfig = {
     },
     {
       name: "gl-matrix",
-      location: appLocation + "/../../node_modules/gl-matrix",
+      location: appLocation + "/../../src/libs/gl-matrix",
       main: "gl-matrix-min"
     },
     {

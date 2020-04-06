@@ -1,6 +1,7 @@
 # ArcGIS API for JavaScript: A Look Under The Hood
 
 Presentation recorded for DevSummit 2020 by Yann Cabon and Yaron Fine. [Watch it on YouTube](https://www.youtube.com/watch?v=rZwtb2qglT8)
+
 [![ArcGIS API for JavaScript: A Look under the Hood](https://img.youtube.com/vi/rZwtb2qglT8/maxresdefault.jpg)](https://www.youtube.com/watch?v=rZwtb2qglT8)
 
 ## Slides

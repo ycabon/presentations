@@ -42,8 +42,8 @@
 
     <script>
         var map, view, fl1, fl2, fl3, flw1, flw2, flw3,gl, dw, rt, rp, ss, g, ground,
-                srv = "http://scenesample.arcgis.com:6080/arcgis/rest/services/Hosted/",
-                srv2 = "http://services.arcgis.com/VICBscfQATsxnCsz/arcgis/rest/services/";
+                srv = "https://scenesample.arcgis.com:6080/arcgis/rest/services/Hosted/",
+                srv2 = "https://services.arcgis.com/VICBscfQATsxnCsz/arcgis/rest/services/";
 
         require([
             "esri/Map",
@@ -156,7 +156,7 @@
             };
             map.then(function () {
                 //creating RouteTask & Co
-                rt = new RouteTask("http://3dcampus.arcgis.com/arcgis/rest/services/Routing/BuildingQ/NAServer/Route");
+                rt = new RouteTask("https://3dcampus.arcgis.com/arcgis/rest/services/Routing/BuildingQ/NAServer/Route");
                 rp = new RouteParams({
                     stops: new FeatureSet(),
                     returnRoutes: true,

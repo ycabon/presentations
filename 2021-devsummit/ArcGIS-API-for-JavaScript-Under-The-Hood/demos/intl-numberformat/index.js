@@ -45524,6 +45524,771 @@
             jsx("code", { innerHTML: lib.highlightAuto(code).value })));
     }
 
+    const currencies = [
+        {
+            "code": "AED",
+            "name": "UAE Dirham"
+        },
+        {
+            "code": "AFN",
+            "name": "Afghani"
+        },
+        {
+            "code": "ALL",
+            "name": "Lek"
+        },
+        {
+            "code": "AMD",
+            "name": "Armenian Dram"
+        },
+        {
+            "code": "ANG",
+            "name": "Netherlands Antillean Guilder"
+        },
+        {
+            "code": "AOA",
+            "name": "Kwanza"
+        },
+        {
+            "code": "ARS",
+            "name": "Argentine Peso"
+        },
+        {
+            "code": "AUD",
+            "name": "Australian Dollar"
+        },
+        {
+            "code": "AWG",
+            "name": "Aruban Florin"
+        },
+        {
+            "code": "AZN",
+            "name": "Azerbaijan Manat"
+        },
+        {
+            "code": "BAM",
+            "name": "Convertible Mark"
+        },
+        {
+            "code": "BBD",
+            "name": "Barbados Dollar"
+        },
+        {
+            "code": "BDT",
+            "name": "Taka"
+        },
+        {
+            "code": "BGN",
+            "name": "Bulgarian Lev"
+        },
+        {
+            "code": "BHD",
+            "name": "Bahraini Dinar"
+        },
+        {
+            "code": "BIF",
+            "name": "Burundi Franc"
+        },
+        {
+            "code": "BMD",
+            "name": "Bermudian Dollar"
+        },
+        {
+            "code": "BND",
+            "name": "Brunei Dollar"
+        },
+        {
+            "code": "BOB",
+            "name": "Boliviano"
+        },
+        {
+            "code": "BOV",
+            "name": "Mvdol"
+        },
+        {
+            "code": "BRL",
+            "name": "Brazilian Real"
+        },
+        {
+            "code": "BSD",
+            "name": "Bahamian Dollar"
+        },
+        {
+            "code": "BTN",
+            "name": "Ngultrum"
+        },
+        {
+            "code": "BWP",
+            "name": "Pula"
+        },
+        {
+            "code": "BYN",
+            "name": "Belarusian Ruble"
+        },
+        {
+            "code": "BZD",
+            "name": "Belize Dollar"
+        },
+        {
+            "code": "CAD",
+            "name": "Canadian Dollar"
+        },
+        {
+            "code": "CDF",
+            "name": "Congolese Franc"
+        },
+        {
+            "code": "CHE",
+            "name": "WIR Euro"
+        },
+        {
+            "code": "CHF",
+            "name": "Swiss Franc"
+        },
+        {
+            "code": "CHW",
+            "name": "WIR Franc"
+        },
+        {
+            "code": "CLF",
+            "name": "Unidad de Fomento"
+        },
+        {
+            "code": "CLP",
+            "name": "Chilean Peso"
+        },
+        {
+            "code": "CNY",
+            "name": "Yuan Renminbi"
+        },
+        {
+            "code": "COP",
+            "name": "Colombian Peso"
+        },
+        {
+            "code": "COU",
+            "name": "Unidad de Valor Real"
+        },
+        {
+            "code": "CRC",
+            "name": "Costa Rican Colon"
+        },
+        {
+            "code": "CUC",
+            "name": "Peso Convertible"
+        },
+        {
+            "code": "CUP",
+            "name": "Cuban Peso"
+        },
+        {
+            "code": "CVE",
+            "name": "Cabo Verde Escudo"
+        },
+        {
+            "code": "CZK",
+            "name": "Czech Koruna"
+        },
+        {
+            "code": "DJF",
+            "name": "Djibouti Franc"
+        },
+        {
+            "code": "DKK",
+            "name": "Danish Krone"
+        },
+        {
+            "code": "DOP",
+            "name": "Dominican Peso"
+        },
+        {
+            "code": "DZD",
+            "name": "Algerian Dinar"
+        },
+        {
+            "code": "EGP",
+            "name": "Egyptian Pound"
+        },
+        {
+            "code": "ERN",
+            "name": "Nakfa"
+        },
+        {
+            "code": "ETB",
+            "name": "Ethiopian Birr"
+        },
+        {
+            "code": "EUR",
+            "name": "Euro"
+        },
+        {
+            "code": "FJD",
+            "name": "Fiji Dollar"
+        },
+        {
+            "code": "FKP",
+            "name": "Falkland Islands Pound"
+        },
+        {
+            "code": "GBP",
+            "name": "Pound Sterling"
+        },
+        {
+            "code": "GEL",
+            "name": "Lari"
+        },
+        {
+            "code": "GHS",
+            "name": "Ghana Cedi"
+        },
+        {
+            "code": "GIP",
+            "name": "Gibraltar Pound"
+        },
+        {
+            "code": "GMD",
+            "name": "Dalasi"
+        },
+        {
+            "code": "GNF",
+            "name": "Guinean Franc"
+        },
+        {
+            "code": "GTQ",
+            "name": "Quetzal"
+        },
+        {
+            "code": "GYD",
+            "name": "Guyana Dollar"
+        },
+        {
+            "code": "HKD",
+            "name": "Hong Kong Dollar"
+        },
+        {
+            "code": "HNL",
+            "name": "Lempira"
+        },
+        {
+            "code": "HRK",
+            "name": "Kuna"
+        },
+        {
+            "code": "HTG",
+            "name": "Gourde"
+        },
+        {
+            "code": "HUF",
+            "name": "Forint"
+        },
+        {
+            "code": "IDR",
+            "name": "Rupiah"
+        },
+        {
+            "code": "ILS",
+            "name": "New Israeli Sheqel"
+        },
+        {
+            "code": "INR",
+            "name": "Indian Rupee"
+        },
+        {
+            "code": "IQD",
+            "name": "Iraqi Dinar"
+        },
+        {
+            "code": "IRR",
+            "name": "Iranian Rial"
+        },
+        {
+            "code": "ISK",
+            "name": "Iceland Krona"
+        },
+        {
+            "code": "JMD",
+            "name": "Jamaican Dollar"
+        },
+        {
+            "code": "JOD",
+            "name": "Jordanian Dinar"
+        },
+        {
+            "code": "JPY",
+            "name": "Yen"
+        },
+        {
+            "code": "KES",
+            "name": "Kenyan Shilling"
+        },
+        {
+            "code": "KGS",
+            "name": "Som"
+        },
+        {
+            "code": "KHR",
+            "name": "Riel"
+        },
+        {
+            "code": "KMF",
+            "name": "Comorian Franc"
+        },
+        {
+            "code": "KPW",
+            "name": "North Korean Won"
+        },
+        {
+            "code": "KRW",
+            "name": "Won"
+        },
+        {
+            "code": "KWD",
+            "name": "Kuwaiti Dinar"
+        },
+        {
+            "code": "KYD",
+            "name": "Cayman Islands Dollar"
+        },
+        {
+            "code": "KZT",
+            "name": "Tenge"
+        },
+        {
+            "code": "LAK",
+            "name": "Lao Kip"
+        },
+        {
+            "code": "LBP",
+            "name": "Lebanese Pound"
+        },
+        {
+            "code": "LKR",
+            "name": "Sri Lanka Rupee"
+        },
+        {
+            "code": "LRD",
+            "name": "Liberian Dollar"
+        },
+        {
+            "code": "LSL",
+            "name": "Loti"
+        },
+        {
+            "code": "LYD",
+            "name": "Libyan Dinar"
+        },
+        {
+            "code": "MAD",
+            "name": "Moroccan Dirham"
+        },
+        {
+            "code": "MDL",
+            "name": "Moldovan Leu"
+        },
+        {
+            "code": "MGA",
+            "name": "Malagasy Ariary"
+        },
+        {
+            "code": "MKD",
+            "name": "Denar"
+        },
+        {
+            "code": "MMK",
+            "name": "Kyat"
+        },
+        {
+            "code": "MNT",
+            "name": "Tugrik"
+        },
+        {
+            "code": "MOP",
+            "name": "Pataca"
+        },
+        {
+            "code": "MRU",
+            "name": "Ouguiya"
+        },
+        {
+            "code": "MUR",
+            "name": "Mauritius Rupee"
+        },
+        {
+            "code": "MVR",
+            "name": "Rufiyaa"
+        },
+        {
+            "code": "MWK",
+            "name": "Malawi Kwacha"
+        },
+        {
+            "code": "MXN",
+            "name": "Mexican Peso"
+        },
+        {
+            "code": "MXV",
+            "name": "Mexican Unidad de Inversion (UDI)"
+        },
+        {
+            "code": "MYR",
+            "name": "Malaysian Ringgit"
+        },
+        {
+            "code": "MZN",
+            "name": "Mozambique Metical"
+        },
+        {
+            "code": "NAD",
+            "name": "Namibia Dollar"
+        },
+        {
+            "code": "NGN",
+            "name": "Naira"
+        },
+        {
+            "code": "NIO",
+            "name": "Cordoba Oro"
+        },
+        {
+            "code": "NOK",
+            "name": "Norwegian Krone"
+        },
+        {
+            "code": "NPR",
+            "name": "Nepalese Rupee"
+        },
+        {
+            "code": "NZD",
+            "name": "New Zealand Dollar"
+        },
+        {
+            "code": "OMR",
+            "name": "Rial Omani"
+        },
+        {
+            "code": "PAB",
+            "name": "Balboa"
+        },
+        {
+            "code": "PEN",
+            "name": "Sol"
+        },
+        {
+            "code": "PGK",
+            "name": "Kina"
+        },
+        {
+            "code": "PHP",
+            "name": "Philippine Peso"
+        },
+        {
+            "code": "PKR",
+            "name": "Pakistan Rupee"
+        },
+        {
+            "code": "PLN",
+            "name": "Zloty"
+        },
+        {
+            "code": "PYG",
+            "name": "Guarani"
+        },
+        {
+            "code": "QAR",
+            "name": "Qatari Rial"
+        },
+        {
+            "code": "RON",
+            "name": "Romanian Leu"
+        },
+        {
+            "code": "RSD",
+            "name": "Serbian Dinar"
+        },
+        {
+            "code": "RUB",
+            "name": "Russian Ruble"
+        },
+        {
+            "code": "RWF",
+            "name": "Rwanda Franc"
+        },
+        {
+            "code": "SAR",
+            "name": "Saudi Riyal"
+        },
+        {
+            "code": "SBD",
+            "name": "Solomon Islands Dollar"
+        },
+        {
+            "code": "SCR",
+            "name": "Seychelles Rupee"
+        },
+        {
+            "code": "SDG",
+            "name": "Sudanese Pound"
+        },
+        {
+            "code": "SEK",
+            "name": "Swedish Krona"
+        },
+        {
+            "code": "SGD",
+            "name": "Singapore Dollar"
+        },
+        {
+            "code": "SHP",
+            "name": "Saint Helena Pound"
+        },
+        {
+            "code": "SLL",
+            "name": "Leone"
+        },
+        {
+            "code": "SOS",
+            "name": "Somali Shilling"
+        },
+        {
+            "code": "SRD",
+            "name": "Surinam Dollar"
+        },
+        {
+            "code": "SSP",
+            "name": "South Sudanese Pound"
+        },
+        {
+            "code": "STN",
+            "name": "Dobra"
+        },
+        {
+            "code": "SVC",
+            "name": "El Salvador Colon"
+        },
+        {
+            "code": "SYP",
+            "name": "Syrian Pound"
+        },
+        {
+            "code": "SZL",
+            "name": "Lilangeni"
+        },
+        {
+            "code": "THB",
+            "name": "Baht"
+        },
+        {
+            "code": "TJS",
+            "name": "Somoni"
+        },
+        {
+            "code": "TMT",
+            "name": "Turkmenistan New Manat"
+        },
+        {
+            "code": "TND",
+            "name": "Tunisian Dinar"
+        },
+        {
+            "code": "TOP",
+            "name": "Pa’anga"
+        },
+        {
+            "code": "TRY",
+            "name": "Turkish Lira"
+        },
+        {
+            "code": "TTD",
+            "name": "Trinidad and Tobago Dollar"
+        },
+        {
+            "code": "TWD",
+            "name": "New Taiwan Dollar"
+        },
+        {
+            "code": "TZS",
+            "name": "Tanzanian Shilling"
+        },
+        {
+            "code": "UAH",
+            "name": "Hryvnia"
+        },
+        {
+            "code": "UGX",
+            "name": "Uganda Shilling"
+        },
+        {
+            "code": "USD",
+            "name": "US Dollar"
+        },
+        {
+            "code": "USN",
+            "name": "US Dollar (Next day)"
+        },
+        {
+            "code": "UYI",
+            "name": "Uruguay Peso en Unidades Indexadas (UI)"
+        },
+        {
+            "code": "UYU",
+            "name": "Peso Uruguayo"
+        },
+        {
+            "code": "UYW",
+            "name": "Unidad Previsional"
+        },
+        {
+            "code": "UZS",
+            "name": "Uzbekistan Sum"
+        },
+        {
+            "code": "VES",
+            "name": "Bolívar Soberano"
+        },
+        {
+            "code": "VND",
+            "name": "Dong"
+        },
+        {
+            "code": "VUV",
+            "name": "Vatu"
+        },
+        {
+            "code": "WST",
+            "name": "Tala"
+        },
+        {
+            "code": "XAF",
+            "name": "CFA Franc BEAC"
+        },
+        {
+            "code": "XAG",
+            "name": "Silver"
+        },
+        {
+            "code": "XAU",
+            "name": "Gold"
+        },
+        {
+            "code": "XBA",
+            "name": "Bond Markets Unit European Composite Unit (EURCO)"
+        },
+        {
+            "code": "XBB",
+            "name": "Bond Markets Unit European Monetary Unit (E.M.U.-6)"
+        },
+        {
+            "code": "XBC",
+            "name": "Bond Markets Unit European Unit of Account 9 (E.U.A.-9)"
+        },
+        {
+            "code": "XBD",
+            "name": "Bond Markets Unit European Unit of Account 17 (E.U.A.-17)"
+        },
+        {
+            "code": "XCD",
+            "name": "East Caribbean Dollar"
+        },
+        {
+            "code": "XDR",
+            "name": "SDR (Special Drawing Right)"
+        },
+        {
+            "code": "XOF",
+            "name": "CFA Franc BCEAO"
+        },
+        {
+            "code": "XPD",
+            "name": "Palladium"
+        },
+        {
+            "code": "XPF",
+            "name": "CFP Franc"
+        },
+        {
+            "code": "XPT",
+            "name": "Platinum"
+        },
+        {
+            "code": "XSU",
+            "name": "Sucre"
+        },
+        {
+            "code": "XTS",
+            "name": "Codes specifically reserved for testing purposes"
+        },
+        {
+            "code": "XUA",
+            "name": "ADB Unit of Account"
+        },
+        {
+            "code": "XXX",
+            "name": "The codes assigned for transactions where no currency is involved"
+        },
+        {
+            "code": "YER",
+            "name": "Yemeni Rial"
+        },
+        {
+            "code": "ZAR",
+            "name": "Rand"
+        },
+        {
+            "code": "ZMW",
+            "name": "Zambian Kwacha"
+        },
+        {
+            "code": "ZWL",
+            "name": "Zimbabwe Dollar"
+        }
+    ];
+
+    const units = [
+        "acre",
+        "bit",
+        "byte",
+        "celsius",
+        "centimeter",
+        "day",
+        "degree",
+        "fahrenheit",
+        "fluid-ounce",
+        "foot",
+        "gallon",
+        "gigabit",
+        "gigabyte",
+        "gram",
+        "hectare",
+        "hour",
+        "inch",
+        "kilobit",
+        "kilobyte",
+        "kilogram",
+        "kilometer",
+        "liter",
+        "megabit",
+        "megabyte",
+        "meter",
+        "mile",
+        "mile-scandinavian",
+        "milliliter",
+        "millimeter",
+        "millisecond",
+        "minute",
+        "month",
+        "ounce",
+        "percent",
+        "petabyte",
+        "pound",
+        "second",
+        "stone",
+        "terabit",
+        "terabyte",
+        "week",
+        "yard",
+        "year",
+    ];
+
     // locales exposed through the UI
     const locales = new Set([
         "en",
@@ -45535,18 +46300,22 @@
         "es-ES",
         "es-MX",
     ]);
-    // Date to format
-    const date = Date.UTC(2020, 2, 2, 22, 0, 0, 0);
+    const numberToFormat = -12345.6789;
     // Initial selected locale
     let formatLocale = "en-US";
     // Initial selected options
     let formatOptions = {
-        weekday: "long",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
+        style: "decimal",
+        minimumIntegerDigits: 1,
+        // minimumFractionDigits: 0,
+        // maximumFractionDigits: 3,
+        minimumSignificantDigits: 1,
+        maximumSignificantDigits: 21,
+        currency: "USD",
+        currencyDisplay: "symbol",
+        currencySign: "standard",
+        unit: "meter",
+        unitDisplay: "short",
     };
     //Renders the application content
     function render() {
@@ -45559,31 +46328,39 @@
                 delete renderedFormatOptions[key];
             }
         }
+        if (formatOptions.style !== "currency") {
+            delete renderedFormatOptions.currency;
+            delete renderedFormatOptions.currencyDisplay;
+            delete renderedFormatOptions.currencySign;
+        }
+        if (formatOptions.style !== "unit") {
+            delete renderedFormatOptions.unit;
+            delete renderedFormatOptions.unitDisplay;
+        }
         const formattedSnippet = getFormatSnippet(formatLocale, renderedFormatOptions);
         const formattedDate = getFormattedDate(formatLocale, renderedFormatOptions);
-        return (jsx("div", { style: "width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around; align-items: center" },
-            jsx("calcite-tip", { heading: "Intl.DateTimeFormat", theme: "light", nonDismissible: true },
-                renderLocaleSelect(),
-                renderRadioButtonGroup("weekday", ["none", "long", "short", "narrow"], renderedFormatOptions),
-                renderRadioButtonGroup("era", ["none", "long", "short", "narrow"], renderedFormatOptions),
-                renderRadioButtonGroup("year", ["none", "numeric", "2-digit"], renderedFormatOptions),
-                renderRadioButtonGroup("month", ["none", "numeric", "2-digit", "long", "short", "narrow"], renderedFormatOptions),
-                renderRadioButtonGroup("day", ["none", "numeric", "2-digit"], renderedFormatOptions),
-                renderRadioButtonGroup("hour", ["none", "numeric", "2-digit"], renderedFormatOptions),
-                renderRadioButtonGroup("minute", ["none", "numeric", "2-digit"], renderedFormatOptions),
-                renderRadioButtonGroup("second", ["none", "numeric", "2-digit"], renderedFormatOptions),
-                renderRadioButtonGroup("timeZoneName", ["none", "long", "short"], renderedFormatOptions),
-                renderRadioButtonGroup("hour12", ["auto", "true", "false"], renderedFormatOptions)),
-            jsx("div", { style: "display: flex; flex-direction: column;" },
-                jsx("calcite-tip", { heading: "Code", theme: "light", nonDismissible: true },
-                    highlight$1("javascript", formattedSnippet),
-                    jsx("calcite-button", { appearance: "outline", "icon-start": "copyToClipboard", color: "light", scale: "s", onclick: () => copyToClipboard(formattedSnippet) }, "Copy to clipboard")),
-                jsx("calcite-tip", { dir: "ltr", heading: "Result", theme: "light", nonDismissible: true },
-                    jsx("p", { style: "font-size: xxx-large;" }, formattedDate)),
-                jsx("calcite-tip", { dir: "ltr", heading: "Learn More", theme: "light", nonDismissible: true },
-                    jsx("a", { target: "_blank", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat" },
-                        jsx("code", null, "Intl.DateTimeFormat"),
-                        " on MDN")))));
+        return (jsx("calcite-shell", { dir: "ltr", theme: "light" },
+            jsx("header", { slot: "shell-header" },
+                jsx("h2", { style: "margin-left: 30px" }, "Intl.NumberFormat")),
+            jsx("div", { style: "background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around;" },
+                jsx("calcite-tip", { style: "display: flex; flex-direction: column; width: 380px; align-self: stretch", heading: "Options", nonDismissible: true },
+                    renderLocaleSelect(),
+                    renderRadioButtonGroup("notation", ["standard", "scientific", "engineering", "compact"], renderedFormatOptions),
+                    renderNumberInput("minimumIntegerDigits", 1, 21, renderedFormatOptions),
+                    renderRangeInput("significant digits", "minimumSignificantDigits", "maximumSignificantDigits", 1, 21, renderedFormatOptions),
+                    renderRadioButtonGroup("style", ["decimal", "percent", "currency", "unit"], renderedFormatOptions),
+                    renderCurrencyOptions(renderedFormatOptions),
+                    renderUnitOptions(renderedFormatOptions)),
+                jsx("div", { style: "display: flex; flex-direction: column; width: 500px;" },
+                    jsx("calcite-tip", { heading: "Code", nonDismissible: true },
+                        highlight$1("javascript", formattedSnippet),
+                        jsx("calcite-button", { appearance: "outline", "icon-start": "copyToClipboard", color: "light", scale: "s", onclick: () => copyToClipboard(formattedSnippet) }, "Copy to clipboard")),
+                    jsx("calcite-tip", { dir: "ltr", heading: "Result", nonDismissible: true },
+                        jsx("p", { style: "font-size: xx-large;" }, formattedDate)),
+                    jsx("calcite-tip", { dir: "ltr", heading: "Learn More", nonDismissible: true },
+                        jsx("a", { target: "_blank", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat" },
+                            jsx("code", null, "Intl.NumberFormat"),
+                            " on MDN"))))));
     }
     function renderLocaleSelect() {
         return (jsx("calcite-label", { key: "locale" },
@@ -45592,6 +46369,54 @@
                     formatLocale = event.target.selectedOption.value;
                     projector.scheduleRender();
                 }) }, Array.from(locales, (locale) => (jsx("calcite-option", { label: locale, value: locale, selected: formatLocale === locale }))))));
+    }
+    function renderNumberInput(property, min, max, options) {
+        return (jsx("calcite-label", { key: property },
+            property,
+            jsx("calcite-slider", { afterCreate: afterCreateEventHandler("calciteSliderUpdate", (e) => {
+                    updateFormatOptions({
+                        [property]: e.target.value,
+                    });
+                }), min: min, max: max, value: "" + options[property], "page-step": "1", step: "1", snap: true })));
+    }
+    function renderRangeInput(label, minProperty, maxProperty, min, max, options) {
+        return (jsx("calcite-label", { key: label },
+            label,
+            jsx("calcite-slider", { afterCreate: afterCreateEventHandler("calciteSliderUpdate", (e) => {
+                    updateFormatOptions({
+                        [minProperty]: e.target.minValue,
+                        [maxProperty]: e.target.maxValue,
+                    });
+                }), min: min, max: max, "min-value": "" + options[minProperty], "max-value": "" + options[maxProperty], "page-step": "1", step: "1", snap: true })));
+    }
+    function renderCurrencyOptions(options) {
+        if (options.style !== "currency") {
+            return jsx("div", { key: "currency", style: "display: none" });
+        }
+        return (jsx("div", { key: "currency", style: "display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--calcite-ui-border-2)" },
+            jsx("calcite-label", null,
+                "currency",
+                jsx("calcite-select", { scale: "s", afterCreate: afterCreateEventHandler("calciteSelectChange", (event) => {
+                        updateFormatOptions({
+                            currency: event.target.selectedOption.value,
+                        });
+                    }) }, currencies.map(({ code, name }) => (jsx("calcite-option", { label: `${code} - ${name}`, value: code, selected: formatOptions.currency === code }))))),
+            renderRadioButtonGroup("currencyDisplay", ["symbol", "narrowSymbol", "code", "name"], options),
+            renderRadioButtonGroup("currencySign", ["standard", "accounting"], options)));
+    }
+    function renderUnitOptions(options) {
+        if (options.style !== "unit") {
+            return jsx("div", { key: "unit", style: "display: none" });
+        }
+        return (jsx("div", { key: "unit", style: "display: block; padding: 12px; border: 1px solid var(--calcite-ui-border-2)" },
+            jsx("calcite-label", null,
+                "Unit",
+                jsx("calcite-select", { scale: "s", afterCreate: afterCreateEventHandler("calciteSelectChange", (event) => {
+                        updateFormatOptions({
+                            unit: event.target.selectedOption.value,
+                        });
+                    }) }, units.map((unit) => (jsx("calcite-option", { label: unit, value: unit, selected: formatOptions.unit === unit }))))),
+            renderRadioButtonGroup("unitDisplay", ["long", "short", "narrow"], options)));
     }
     function renderRadioButtonGroup(property, values, formatOptions) {
         return (jsx("calcite-label", { key: property },
@@ -45614,9 +46439,16 @@
         projector.scheduleRender();
     }
     function getFormatSnippet(locale, options) {
-        return `new Intl.DateTimeFormat('${locale}', {
+        return `new Intl.NumberFormat('${locale}', {
 ${Object.keys(options)
-        .map((key) => `  ${key}: '${options[key]}'`)
+        .map((key) => {
+        if (typeof options[key] === "string") {
+            return `  ${key}: '${options[key]}'`;
+        }
+        else {
+            return `  ${key}: ${options[key]}`;
+        }
+    })
         .join(",\n")}
 })`;
     }
@@ -45630,7 +46462,7 @@ ${Object.keys(options)
     }
     function getFormattedDate(locale, options) {
         try {
-            return new Intl.DateTimeFormat(locale, options).format(date);
+            return new Intl.NumberFormat(locale, options).format(numberToFormat);
         }
         catch {
             return "";

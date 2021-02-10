@@ -2,6 +2,8 @@ import { createProjector } from "maquette";
 import { jsx } from "maquette-jsx";
 import { afterCreateEventHandler } from "../utils/events";
 import { highlight } from "../utils/highlight";
+import currencies from "./currency";
+import units from "./unit";
 
 // locales exposed through the UI
 const locales = new Set<string>([
@@ -15,36 +17,49 @@ const locales = new Set<string>([
   "es-MX",
 ]);
 
-// Date to format
-const date = Date.UTC(2020, 2, 2, 22, 0, 0, 0);
+const numberToFormat = -12345.6789;
 
 // Initial selected locale
 let formatLocale: string = "en-US";
 
 // Initial selected options
-let formatOptions: Intl.DateTimeFormatOptions = {
-  weekday: "long",
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
+let formatOptions: Intl.NumberFormatOptions = {
+  style: "decimal",
+  minimumIntegerDigits: 1,
+  // minimumFractionDigits: 0,
+  // maximumFractionDigits: 3,
+  minimumSignificantDigits: 1,
+  maximumSignificantDigits: 21,
+  currency: "USD",
+  currencyDisplay: "symbol",
+  currencySign: "standard",
+  unit: "meter",
+  unitDisplay: "short",
 };
 
 //Renders the application content
 function render() {
-  const renderedFormatOptions: Intl.DateTimeFormatOptions = {
+  const renderedFormatOptions: Intl.NumberFormatOptions = {
     ...formatOptions,
   };
 
-  const keys = Object.keys(
-    formatOptions
-  ) as (keyof Intl.DateTimeFormatOptions)[];
+  const keys = Object.keys(formatOptions) as (keyof Intl.NumberFormatOptions)[];
 
   for (const key of keys) {
     if (formatOptions[key] === "none" || formatOptions[key] === "auto") {
-      delete renderedFormatOptions[key as keyof Intl.DateTimeFormatOptions];
+      delete renderedFormatOptions[key as keyof Intl.NumberFormatOptions];
     }
+  }
+
+  if (formatOptions.style !== "currency") {
+    delete renderedFormatOptions.currency;
+    delete renderedFormatOptions.currencyDisplay;
+    delete renderedFormatOptions.currencySign;
+  }
+
+  if (formatOptions.style !== "unit") {
+    delete renderedFormatOptions.unit;
+    delete renderedFormatOptions.unitDisplay;
   }
 
   const formattedSnippet = getFormatSnippet(
@@ -54,92 +69,79 @@ function render() {
   const formattedDate = getFormattedDate(formatLocale, renderedFormatOptions);
 
   return (
-    <div style="width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around; align-items: center">
-      <calcite-tip heading="Intl.DateTimeFormat" theme="light" nonDismissible>
-        {/* <div style="background: white; padding: 12px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3)"> */}
-        {renderLocaleSelect()}
-        {renderRadioButtonGroup(
-          "weekday",
-          ["none", "long", "short", "narrow"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "era",
-          ["none", "long", "short", "narrow"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "year",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "month",
-          ["none", "numeric", "2-digit", "long", "short", "narrow"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "day",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "hour",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "minute",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "second",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "timeZoneName",
-          ["none", "long", "short"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "hour12",
-          ["auto", "true", "false"],
-          renderedFormatOptions
-        )}
-      </calcite-tip>
-      <div style="display: flex; flex-direction: column;">
-        <calcite-tip heading="Code" theme="light" nonDismissible>
-          {highlight("javascript", formattedSnippet)}
-          <calcite-button
-            appearance="outline"
-            icon-start="copyToClipboard"
-            color="light"
-            scale="s"
-            onclick={() => copyToClipboard(formattedSnippet)}
-          >
-            Copy to clipboard
-          </calcite-button>
-        </calcite-tip>
-        <calcite-tip dir="ltr" heading="Result" theme="light" nonDismissible>
-          <p style="font-size: xxx-large;">{formattedDate}</p>
-        </calcite-tip>
+    <calcite-shell dir="ltr" theme="light">
+      <header slot="shell-header">
+        <h2 style="margin-left: 30px">Intl.NumberFormat</h2>
+      </header>
+      <div style="background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around;">
         <calcite-tip
-          dir="ltr"
-          heading="Learn More"
-          theme="light"
+          style="display: flex; flex-direction: column; width: 380px; align-self: stretch"
+          heading="Options"
           nonDismissible
         >
-          <a
-            target="_blank"
-            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat"
-          >
-            <code>Intl.DateTimeFormat</code> on MDN
-          </a>
+          {renderLocaleSelect()}
+          {renderRadioButtonGroup(
+            "notation",
+            ["standard", "scientific", "engineering", "compact"],
+            renderedFormatOptions
+          )}
+          {renderNumberInput(
+            "minimumIntegerDigits",
+            1,
+            21,
+            renderedFormatOptions
+          )}
+          {/* {renderRangeInput(
+            "fraction digits",
+            "minimumFractionDigits",
+            "maximumFractionDigits",
+            0,
+            20,
+            renderedFormatOptions
+          )} */}
+          {renderRangeInput(
+            "significant digits",
+            "minimumSignificantDigits",
+            "maximumSignificantDigits",
+            1,
+            21,
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "style",
+            ["decimal", "percent", "currency", "unit"],
+            renderedFormatOptions
+          )}
+          {renderCurrencyOptions(renderedFormatOptions)}
+          {renderUnitOptions(renderedFormatOptions)}
         </calcite-tip>
+        <div style="display: flex; flex-direction: column; width: 500px;">
+          <calcite-tip heading="Code" nonDismissible>
+            {highlight("javascript", formattedSnippet)}
+            <calcite-button
+              appearance="outline"
+              icon-start="copyToClipboard"
+              color="light"
+              scale="s"
+              onclick={() => copyToClipboard(formattedSnippet)}
+            >
+              Copy to clipboard
+            </calcite-button>
+          </calcite-tip>
+          <calcite-tip dir="ltr" heading="Result" nonDismissible>
+            <p style="font-size: xx-large;">{formattedDate}</p>
+          </calcite-tip>
+          <calcite-tip dir="ltr" heading="Learn More" nonDismissible>
+            <a
+              target="_blank"
+              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat"
+            >
+              <code>Intl.NumberFormat</code> on MDN
+            </a>
+          </calcite-tip>
+        </div>
       </div>
-    </div>
+    </calcite-shell>
   );
 }
 
@@ -169,10 +171,156 @@ function renderLocaleSelect() {
   );
 }
 
-function renderRadioButtonGroup<K extends keyof Intl.DateTimeFormatOptions>(
+function renderNumberInput<K extends keyof Intl.NumberFormatOptions>(
+  property: K,
+  min: number,
+  max: number,
+  options: Intl.NumberFormatOptions
+) {
+  return (
+    <calcite-label key={property}>
+      {property}
+      <calcite-slider
+        afterCreate={afterCreateEventHandler("calciteSliderUpdate", (e) => {
+          updateFormatOptions({
+            [property]: (e.target as HTMLInputElement).value,
+          });
+        })}
+        min={min}
+        max={max}
+        value={"" + options[property]}
+        page-step="1"
+        step="1"
+        snap
+      ></calcite-slider>
+    </calcite-label>
+  );
+}
+
+function renderRangeInput<
+  K1 extends keyof Intl.NumberFormatOptions,
+  K2 extends keyof Intl.NumberFormatOptions
+>(
+  label: string,
+  minProperty: K1,
+  maxProperty: K2,
+  min: number,
+  max: number,
+  options: Intl.NumberFormatOptions
+) {
+  return (
+    <calcite-label key={label}>
+      {label}
+      <calcite-slider
+        afterCreate={afterCreateEventHandler("calciteSliderUpdate", (e) => {
+          updateFormatOptions({
+            [minProperty]: (e.target as any).minValue,
+            [maxProperty]: (e.target as any).maxValue,
+          });
+        })}
+        min={min}
+        max={max}
+        min-value={"" + options[minProperty]}
+        max-value={"" + options[maxProperty]}
+        page-step="1"
+        step="1"
+        snap
+      ></calcite-slider>
+    </calcite-label>
+  );
+}
+
+function renderCurrencyOptions(options: Intl.NumberFormatOptions) {
+  if (options.style !== "currency") {
+    return <div key="currency" style="display: none"></div>;
+  }
+
+  return (
+    <div
+      key="currency"
+      style="display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--calcite-ui-border-2)"
+    >
+      <calcite-label>
+        currency
+        <calcite-select
+          scale="s"
+          afterCreate={afterCreateEventHandler(
+            "calciteSelectChange",
+            (event: any) => {
+              updateFormatOptions({
+                currency: event.target.selectedOption.value,
+              });
+            }
+          )}
+        >
+          {currencies.map(({ code, name }) => (
+            <calcite-option
+              label={`${code} - ${name}`}
+              value={code}
+              selected={formatOptions.currency === code}
+            ></calcite-option>
+          ))}
+        </calcite-select>
+      </calcite-label>
+      {renderRadioButtonGroup(
+        "currencyDisplay",
+        ["symbol", "narrowSymbol", "code", "name"],
+        options
+      )}
+      {renderRadioButtonGroup(
+        "currencySign",
+        ["standard", "accounting"],
+        options
+      )}
+    </div>
+  );
+}
+
+function renderUnitOptions(options: Intl.NumberFormatOptions) {
+  if (options.style !== "unit") {
+    return <div key="unit" style="display: none"></div>;
+  }
+
+  return (
+    <div
+      key="unit"
+      style="display: block; padding: 12px; border: 1px solid var(--calcite-ui-border-2)"
+    >
+      <calcite-label>
+        Unit
+        <calcite-select
+          scale="s"
+          afterCreate={afterCreateEventHandler(
+            "calciteSelectChange",
+            (event: any) => {
+              updateFormatOptions({
+                unit: event.target.selectedOption.value,
+              });
+            }
+          )}
+        >
+          {units.map((unit) => (
+            <calcite-option
+              label={unit}
+              value={unit}
+              selected={formatOptions.unit === unit}
+            ></calcite-option>
+          ))}
+        </calcite-select>
+      </calcite-label>
+      {renderRadioButtonGroup(
+        "unitDisplay",
+        ["long", "short", "narrow"],
+        options
+      )}
+    </div>
+  );
+}
+
+function renderRadioButtonGroup<K extends keyof Intl.NumberFormatOptions>(
   property: K,
   values: string[],
-  formatOptions: Intl.DateTimeFormatOptions
+  formatOptions: Intl.NumberFormatOptions
 ) {
   return (
     <calcite-label key={property}>
@@ -193,7 +341,7 @@ function renderRadioButtonGroup<K extends keyof Intl.DateTimeFormatOptions>(
   );
 }
 
-function radioHandler<K extends keyof Intl.DateTimeFormatOptions>(prop: K) {
+function radioHandler<K extends keyof Intl.NumberFormatOptions>(prop: K) {
   return afterCreateEventHandler("calciteRadioGroupChange", (event: any) => {
     updateFormatOptions({
       [prop]: event.detail,
@@ -201,20 +349,24 @@ function radioHandler<K extends keyof Intl.DateTimeFormatOptions>(prop: K) {
   });
 }
 
-function updateFormatOptions(options: Partial<Intl.DateTimeFormatOptions>) {
+function updateFormatOptions(options: Partial<Intl.NumberFormatOptions>) {
   Object.assign(formatOptions, options);
   projector.scheduleRender();
 }
 
 function getFormatSnippet(
   locale: string,
-  options: Partial<Intl.DateTimeFormatOptions>
+  options: Partial<Intl.NumberFormatOptions>
 ) {
-  return `new Intl.DateTimeFormat('${locale}', {
+  return `new Intl.NumberFormat('${locale}', {
 ${Object.keys(options)
-  .map(
-    (key) => `  ${key}: '${options[key as keyof Intl.DateTimeFormatOptions]}'`
-  )
+  .map((key) => {
+    if (typeof options[key as keyof Intl.NumberFormatOptions] === "string") {
+      return `  ${key}: '${options[key as keyof Intl.NumberFormatOptions]}'`;
+    } else {
+      return `  ${key}: ${options[key as keyof Intl.NumberFormatOptions]}`;
+    }
+  })
   .join(",\n")}
 })`;
 }
@@ -230,10 +382,10 @@ function copyToClipboard(newClip: string) {
 
 function getFormattedDate(
   locale: string,
-  options: Partial<Intl.DateTimeFormatOptions>
+  options: Partial<Intl.NumberFormatOptions>
 ) {
   try {
-    return new Intl.DateTimeFormat(locale, options).format(date);
+    return new Intl.NumberFormat(locale, options).format(numberToFormat);
   } catch {
     return "";
   }

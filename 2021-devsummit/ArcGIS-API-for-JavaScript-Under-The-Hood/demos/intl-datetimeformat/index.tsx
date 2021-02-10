@@ -54,92 +54,92 @@ function render() {
   const formattedDate = getFormattedDate(formatLocale, renderedFormatOptions);
 
   return (
-    <div style="width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around; align-items: center">
-      <calcite-tip heading="Intl.DateTimeFormat" theme="light" nonDismissible>
-        {/* <div style="background: white; padding: 12px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3)"> */}
-        {renderLocaleSelect()}
-        {renderRadioButtonGroup(
-          "weekday",
-          ["none", "long", "short", "narrow"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "era",
-          ["none", "long", "short", "narrow"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "year",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "month",
-          ["none", "numeric", "2-digit", "long", "short", "narrow"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "day",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "hour",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "minute",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "second",
-          ["none", "numeric", "2-digit"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "timeZoneName",
-          ["none", "long", "short"],
-          renderedFormatOptions
-        )}
-        {renderRadioButtonGroup(
-          "hour12",
-          ["auto", "true", "false"],
-          renderedFormatOptions
-        )}
-      </calcite-tip>
-      <div style="display: flex; flex-direction: column;">
-        <calcite-tip heading="Code" theme="light" nonDismissible>
-          {highlight("javascript", formattedSnippet)}
-          <calcite-button
-            appearance="outline"
-            icon-start="copyToClipboard"
-            color="light"
-            scale="s"
-            onclick={() => copyToClipboard(formattedSnippet)}
-          >
-            Copy to clipboard
-          </calcite-button>
+    <calcite-shell dir="ltr" theme="light">
+      <header slot="shell-header">
+        <h2 style="margin-left: 30px">Intl.DateTimeFormat</h2>
+      </header>
+      <div style="background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around; align-items: center">
+        <calcite-tip heading="Options" nonDismissible>
+          {/* <div style="background: white; padding: 12px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3)"> */}
+          {renderLocaleSelect()}
+          {renderRadioButtonGroup(
+            "weekday",
+            ["none", "long", "short", "narrow"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "era",
+            ["none", "long", "short", "narrow"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "year",
+            ["none", "numeric", "2-digit"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "month",
+            ["none", "numeric", "2-digit", "long", "short", "narrow"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "day",
+            ["none", "numeric", "2-digit"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "hour",
+            ["none", "numeric", "2-digit"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "minute",
+            ["none", "numeric", "2-digit"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "second",
+            ["none", "numeric", "2-digit"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "timeZoneName",
+            ["none", "long", "short"],
+            renderedFormatOptions
+          )}
+          {renderRadioButtonGroup(
+            "hour12",
+            ["auto", "true", "false"],
+            renderedFormatOptions
+          )}
         </calcite-tip>
-        <calcite-tip dir="ltr" heading="Result" theme="light" nonDismissible>
-          <p style="font-size: xxx-large;">{formattedDate}</p>
-        </calcite-tip>
-        <calcite-tip
-          dir="ltr"
-          heading="Learn More"
-          theme="light"
-          nonDismissible
-        >
-          <a
-            target="_blank"
-            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat"
-          >
-            <code>Intl.DateTimeFormat</code> on MDN
-          </a>
-        </calcite-tip>
+        <div style="display: flex; flex-direction: column;">
+          <calcite-tip heading="Code" nonDismissible>
+            {highlight("javascript", formattedSnippet)}
+            <calcite-button
+              appearance="outline"
+              icon-start="copyToClipboard"
+              color="light"
+              scale="s"
+              onclick={() => copyToClipboard(formattedSnippet)}
+            >
+              Copy to clipboard
+            </calcite-button>
+          </calcite-tip>
+          <calcite-tip dir="ltr" heading="Result" nonDismissible>
+            <p style="font-size: xx-large;">{formattedDate}</p>
+          </calcite-tip>
+          <calcite-tip dir="ltr" heading="Learn More" nonDismissible>
+            <a
+              target="_blank"
+              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat"
+            >
+              <code>Intl.DateTimeFormat</code> on MDN
+            </a>
+          </calcite-tip>
+        </div>
       </div>
-    </div>
+    </calcite-shell>
   );
 }
 

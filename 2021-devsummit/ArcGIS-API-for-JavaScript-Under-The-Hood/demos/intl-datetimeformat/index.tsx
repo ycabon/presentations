@@ -216,9 +216,13 @@ function getFormatSnippet(
 ) {
   return `new Intl.DateTimeFormat('${locale}', {
 ${Object.keys(options)
-  .map(
-    (key) => `  ${key}: '${options[key as keyof Intl.DateTimeFormatOptions]}'`
-  )
+  .map((key) => {
+    if (typeof options[key as keyof Intl.DateTimeFormatOptions] === "string") {
+      return `  ${key}: '${options[key as keyof Intl.DateTimeFormatOptions]}'`;
+    } else {
+      return `  ${key}: ${options[key as keyof Intl.DateTimeFormatOptions]}`;
+    }
+  })
   .join(",\n")}
 })`;
 }

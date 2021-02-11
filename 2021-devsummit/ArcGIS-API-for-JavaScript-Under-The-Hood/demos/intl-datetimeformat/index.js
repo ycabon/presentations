@@ -45619,7 +45619,14 @@
     function getFormatSnippet(locale, options) {
         return `new Intl.DateTimeFormat('${locale}', {
 ${Object.keys(options)
-        .map((key) => `  ${key}: '${options[key]}'`)
+        .map((key) => {
+        if (typeof options[key] === "string") {
+            return `  ${key}: '${options[key]}'`;
+        }
+        else {
+            return `  ${key}: ${options[key]}`;
+        }
+    })
         .join(",\n")}
 })`;
     }

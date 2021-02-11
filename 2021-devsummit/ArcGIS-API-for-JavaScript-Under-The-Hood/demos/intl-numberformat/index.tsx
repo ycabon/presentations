@@ -73,7 +73,7 @@ function render() {
       <header slot="shell-header">
         <h2 style="margin-left: 30px">Intl.NumberFormat</h2>
       </header>
-      <div style="background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around;">
+      <div style="background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: center;">
         <calcite-tip
           style="display: flex; flex-direction: column; width: 380px; align-self: stretch"
           heading="Options"

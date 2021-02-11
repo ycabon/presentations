@@ -46342,7 +46342,7 @@
         return (jsx("calcite-shell", { dir: "ltr", theme: "light" },
             jsx("header", { slot: "shell-header" },
                 jsx("h2", { style: "margin-left: 30px" }, "Intl.NumberFormat")),
-            jsx("div", { style: "background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around;" },
+            jsx("div", { style: "background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: center;" },
                 jsx("calcite-tip", { style: "display: flex; flex-direction: column; width: 380px; align-self: stretch", heading: "Options", nonDismissible: true },
                     renderLocaleSelect(),
                     renderRadioButtonGroup("notation", ["standard", "scientific", "engineering", "compact"], renderedFormatOptions),

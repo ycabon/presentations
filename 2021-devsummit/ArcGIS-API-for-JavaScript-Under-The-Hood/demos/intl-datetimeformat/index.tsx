@@ -58,8 +58,12 @@ function render() {
       <header slot="shell-header">
         <h2 style="margin-left: 30px">Intl.DateTimeFormat</h2>
       </header>
-      <div style="background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-around; align-items: center">
-        <calcite-tip heading="Options" nonDismissible>
+      <div style="background-color: #f0f0f0; width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: center;">
+        <calcite-tip
+          style="display: flex; flex-direction: column; align-self: stretch"
+          heading="Options"
+          nonDismissible
+        >
           {/* <div style="background: white; padding: 12px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3)"> */}
           {renderLocaleSelect()}
           {renderRadioButtonGroup(
@@ -127,7 +131,7 @@ function render() {
             </calcite-button>
           </calcite-tip>
           <calcite-tip dir="ltr" heading="Result" nonDismissible>
-            <p style="font-size: xx-large;">{formattedDate}</p>
+            <p style="font-size: xx-large; max-width: 400px">{formattedDate}</p>
           </calcite-tip>
           <calcite-tip dir="ltr" heading="Learn More" nonDismissible>
             <a

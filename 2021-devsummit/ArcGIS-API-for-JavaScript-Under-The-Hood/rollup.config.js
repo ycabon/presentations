@@ -7,7 +7,7 @@ const plugins = [
   commonjs(),
   rollupTypescript({
     tsconfig: "./tsconfig.json",
-  })
+  }),
 ];
 
 export default [
@@ -24,6 +24,30 @@ export default [
     plugins,
     output: {
       file: "demos/intl-numberformat/index.js",
+      format: "iife",
+    },
+  },
+  {
+    input: "demos/t9n-1-basis/index.tsx",
+    plugins,
+    output: {
+      file: "demos/t9n-1-basis/index.js",
+      format: "iife",
+    },
+  },
+  {
+    input: "demos/t9n-2-generic-widget/index.tsx",
+    plugins,
+    output: {
+      file: "demos/t9n-2-generic-widget/index.js",
+      format: "iife",
+    },
+  },
+  {
+    input: "demos/t9n-3-decorators/index.tsx",
+    plugins,
+    output: {
+      file: "demos/t9n-3-decorators/index.js",
       format: "iife",
     },
   },

@@ -4,6 +4,7 @@
     "jsxFactory": "jsx",
     "target": "ES2020",
     "strict": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "experimentalDecorators": true
   }
 }

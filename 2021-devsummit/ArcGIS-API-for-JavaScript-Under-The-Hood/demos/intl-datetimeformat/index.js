@@ -45607,8 +45607,12 @@
     }
     function radioHandler(prop) {
         return afterCreateEventHandler("calciteRadioGroupChange", (event) => {
+            let value = event.detail;
+            if (value === "true" || value === "false") {
+                value = value === "true";
+            }
             updateFormatOptions({
-                [prop]: event.detail,
+                [prop]: value,
             });
         });
     }

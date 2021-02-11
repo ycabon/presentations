@@ -199,8 +199,14 @@ function renderRadioButtonGroup<K extends keyof Intl.DateTimeFormatOptions>(
 
 function radioHandler<K extends keyof Intl.DateTimeFormatOptions>(prop: K) {
   return afterCreateEventHandler("calciteRadioGroupChange", (event: any) => {
+    let value = event.detail;
+
+    if (value === "true" || value === "false") {
+      value = value === "true";
+    }
+
     updateFormatOptions({
-      [prop]: event.detail,
+      [prop]: value,
     });
   });
 }

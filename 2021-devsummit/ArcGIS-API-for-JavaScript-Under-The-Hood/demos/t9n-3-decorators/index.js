@@ -886,6 +886,7 @@
     __decorate([
         messageBundle("common")
     ], Application.prototype, "common", void 0);
+    // TypeScript decorators to inject message bundle information
     function messageBundle(bundleName) {
         return (target, propertyKey) => {
             const proto = Object.getPrototypeOf(target);

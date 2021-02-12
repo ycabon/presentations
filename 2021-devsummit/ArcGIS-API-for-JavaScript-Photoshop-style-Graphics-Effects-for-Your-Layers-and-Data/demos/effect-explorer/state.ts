@@ -263,34 +263,41 @@ export function createState(): State {
         title: "Bloom",
         description: "Out of focus",
         map: new WebMap({
-          layers: [
-            new TileLayer({
-              id: "hillshade",
-              portalItem: {
-                id: "1b243539f4514b6ba35e7d995890db1d",
-              },
-            }),
-            new VectorTileLayer({
-              blendMode: "multiply",
-              portalItem: {
-                id: "effe3475f05a4d608e66fd6eeb2113c0",
-              },
-            }),
-          ],
+          portalItem: {
+            id: "c2a3444863f2466aaad9efa6e65063e1"
+          }
         }),
-        layerId: "hillshade",
+        layerId: "Volcanoes_2025",
         effects: [
           {
-            type: "blur",
+            type: "bloom",
             parameters: [
               {
                 type: "range",
-                name: "amount",
+                name: "intensity",
+                value: 0,
+                min: 0,
+                max: 10,
+                snap: 1,
+                unit: "",
+              },
+              {
+                type: "range",
+                name: "radius",
                 value: 0,
                 min: 0,
                 max: 10,
                 snap: 1,
                 unit: "px",
+              },
+              {
+                type: "range",
+                name: "threshold",
+                value: 0,
+                min: 0,
+                max: 1,
+                snap: 1,
+                unit: "",
               },
             ],
           },

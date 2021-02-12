@@ -38,6 +38,11 @@ function setState(props: Partial<State>) {
     view.map = map;
   }
 
+  if (!map.loaded) {
+    map.loadAll().then(() => setState({}));
+    return;
+  }
+
   const layer = view.map.allLayers.find((layer) => layer.id === layerId);
   (layer as any).effect = effectsToString(effect);
 

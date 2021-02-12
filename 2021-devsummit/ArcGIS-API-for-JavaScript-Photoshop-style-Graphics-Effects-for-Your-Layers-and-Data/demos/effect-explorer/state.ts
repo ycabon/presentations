@@ -113,7 +113,7 @@ export function createState(): State {
                 min: 0,
                 max: 200,
                 snap: 1,
-                unit: "deg",
+                unit: "%",
               },
             ],
           },

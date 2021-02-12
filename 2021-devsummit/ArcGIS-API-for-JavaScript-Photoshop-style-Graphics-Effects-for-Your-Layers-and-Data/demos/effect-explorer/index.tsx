@@ -80,15 +80,20 @@ function render() {
           style="padding: 0; margin: 0; height: 100%; width: 100%;"
           afterCreate={createMapView}
         ></div>
-        <div style="position: absolute; bottom: 24px; right: 12px; width: 300px">
-          <calcite-block
-            key={state.selectedFilterConfig}
-            heading="Options"
-            open
-            scale="s"
-          >
-            {renderCurrentFilters(state)}
-          </calcite-block>
+        <div
+          style="
+            position: absolute;
+            bottom: 24px;
+            right: 12px;
+            width: 200px;
+            background-color: var(--calcite-ui-foreground-1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 1px 0 0 var(--calcite-ui-border-1) inset;
+            padding: 24px;
+          "
+        >
+          {renderCurrentFilters(state)}
         </div>
       </div>
     </calcite-shell>
@@ -127,10 +132,15 @@ function renderCurrentFilters(state: State) {
   return effects.map(({ type, parameters }, effectIndex) => {
     return (
       <calcite-label key={`${type}:${effectIndex}`} scale="m">
-        {type}
-        {parameters.map((parameter, parameterIndex) =>
-          renderEffectParameter(parameter, effectIndex, parameterIndex)
-        )}
+        <b>{type}</b>
+        {parameters.length > 1
+          ? parameters.map((parameter, parameterIndex) => (
+              <calcite-label scale="s">
+                {parameter.name}
+                {renderEffectParameter(parameter, effectIndex, parameterIndex)}
+              </calcite-label>
+            ))
+          : renderEffectParameter(parameters[0], effectIndex, 0)}
       </calcite-label>
     );
   });
@@ -149,9 +159,8 @@ function renderEffectParameter(
           max={parameter.max}
           value={"" + parameter.value}
           ticks="0"
-          step="1"
-          snap=""
-          precise=""
+          step={parameter.step}
+          snap={parameter.snap}
           key={`${parameter.type}:${effectIndex}:${parameterIndex}`}
           label-handles=""
           afterCreate={afterCreateEventHandler("calciteSliderUpdate", (e) => {

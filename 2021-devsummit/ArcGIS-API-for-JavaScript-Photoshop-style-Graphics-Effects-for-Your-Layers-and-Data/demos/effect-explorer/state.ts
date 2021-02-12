@@ -13,7 +13,8 @@ export interface RangeEffectParameter {
   value: number;
   min: number;
   max: number;
-  snap: number;
+  step: number;
+  snap: boolean;
   unit: "" | "px" | "%" | "deg";
 }
 
@@ -84,7 +85,8 @@ export function createState(): State {
                 value: 100,
                 min: 0,
                 max: 200,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "%",
               },
             ],
@@ -98,7 +100,8 @@ export function createState(): State {
                 value: 100,
                 min: 0,
                 max: 200,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "%",
               },
             ],
@@ -112,7 +115,8 @@ export function createState(): State {
                 value: 100,
                 min: 0,
                 max: 200,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "%",
               },
             ],
@@ -142,7 +146,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 100,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "%",
               },
             ],
@@ -156,7 +161,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 100,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "%",
               },
             ],
@@ -170,7 +176,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 360,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "deg",
               },
             ],
@@ -201,7 +208,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 100,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "%",
               },
             ],
@@ -215,7 +223,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 360,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "deg",
               },
             ],
@@ -252,7 +261,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 10,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "px",
               },
             ],
@@ -261,7 +271,7 @@ export function createState(): State {
       },
       {
         title: "Bloom",
-        description: "Out of focus",
+        description: "Make features shine bright",
         map: new WebMap({
           portalItem: {
             id: "c2a3444863f2466aaad9efa6e65063e1"
@@ -278,7 +288,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 10,
-                snap: 1,
+                step: 1,
+                snap: false,
                 unit: "",
               },
               {
@@ -287,7 +298,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 10,
-                snap: 1,
+                step: 1,
+                snap: true,
                 unit: "px",
               },
               {
@@ -296,7 +308,8 @@ export function createState(): State {
                 value: 0,
                 min: 0,
                 max: 1,
-                snap: 1,
+                step: 1,
+                snap: false,
                 unit: "",
               },
             ],

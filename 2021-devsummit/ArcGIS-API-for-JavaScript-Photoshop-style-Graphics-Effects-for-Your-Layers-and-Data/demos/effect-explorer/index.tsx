@@ -1,14 +1,9 @@
 import { createProjector, VNode } from "maquette";
 import { jsx } from "maquette-jsx";
 import { afterCreateEventHandler } from "../utils/events";
-import { highlight } from "../utils/highlight";
 
 import MapView from "@arcgis/core/views/MapView";
 import config from "@arcgis/core/config";
-import WebMap from "@arcgis/core/WebMap";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
-import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
-import TileLayer from "@arcgis/core/layers/TileLayer";
 import {
   ColorEffectParameter,
   createState,
@@ -30,21 +25,36 @@ function setState(props: Partial<State>) {
     return;
   }
 
-  const { map, layerId, effects: effect } = state.filterConfigs[
-    state.selectedFilterConfig
+  const selectedFilterConfig = state.selectedFilterConfig;
+
+  const { map, layerId, effects, view: viewConfig } = state.filterConfigs[
+    selectedFilterConfig
   ];
 
   if (view.map !== map) {
     view.map = map;
-  }
 
-  if (!map.loaded) {
-    map.loadAll().then(() => setState({}));
-    return;
+    if (!map.loaded) {
+      map.loadAll().then(async () => {
+        if (state.selectedFilterConfig !== selectedFilterConfig) {
+          return;
+        }
+
+        if (view && viewConfig) {
+          view.goTo(viewConfig, {
+            duration: 2000,
+          });
+        }
+
+        setState({});
+      });
+
+      return;
+    }
   }
 
   const layer = view.map.allLayers.find((layer) => layer.id === layerId);
-  (layer as any).effect = effectsToString(effect);
+  (layer as any).effect = effectsToString(effects);
 
   projector.scheduleRender();
 }
@@ -171,8 +181,8 @@ function renderEffectParameter(
     case "color":
       return (
         <calcite-color
-          hide-hex
-          hide-saved
+          hide-hex=""
+          hide-save=""
           scale="m"
           value={parameter.value}
           appearance="default"
@@ -182,7 +192,7 @@ function renderEffectParameter(
 }
 
 function createMapView(container: HTMLDivElement) {
-  view = new MapView({
+  (window as any).view = view = new MapView({
     container,
     zoom: 3,
     center: [0, 40],

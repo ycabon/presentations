@@ -30,4 +30,18 @@ export default [
       format: "es",
     },
   },
+  {
+    input: "demos/scale-dependent-effect/index.tsx",
+    plugins: [
+      ...plugins,
+      cleaner({
+        targets: ["demos/scale-dependent-effect/dist/"],
+      }),
+    ],
+    preserveEntrySignatures: false,
+    output: {
+      dir: "demos/scale-dependent-effect/dist/",
+      format: "es",
+    },
+  },
 ];

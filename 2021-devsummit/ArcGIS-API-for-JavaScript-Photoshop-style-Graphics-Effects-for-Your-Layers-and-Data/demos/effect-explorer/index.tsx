@@ -11,6 +11,7 @@ import {
   RangeEffectParameter,
   State,
 } from "./state";
+import { highlight } from "../utils/highlight";
 
 config.assetsPath = "https://unpkg.com/@arcgis/core/assets/"; // new URL("../assets/", window.location.href).toString();
 
@@ -50,6 +51,12 @@ function setState(props: Partial<State>) {
       });
 
       return;
+    } else {
+      if (view && viewConfig) {
+        view.goTo(viewConfig, {
+          duration: 2000,
+        });
+      }
     }
   }
 
@@ -91,22 +98,53 @@ function render() {
           afterCreate={createMapView}
         ></div>
         <div
-          style="
-            position: absolute;
-            bottom: 24px;
-            right: 12px;
-            width: 272px;
-            background-color: var(--calcite-ui-foreground-1);
-            display: flex;
-            flex-direction: column;
-            box-shadow: 1px 0 0 var(--calcite-ui-border-1) inset;
-            padding: 12px;
-          "
+          style="position: absolute;
+                 bottom: 24px;
+                 right: 12px;
+                 display: flex;
+                 flex-direction: column;
+                 align-items: flex-end"
         >
-          {renderCurrentFilters(state)}
+          <div
+            style="width: 272px;
+                   background-color: var(--calcite-ui-foreground-1);
+                   box-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+                   padding: 12px;
+                   margin: 6px;"
+          >
+            {renderCurrentFilters(state)}
+          </div>
+          <div
+            style="background-color: var(--calcite-ui-foreground-1);
+                   box-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+                   padding: 12px;
+                   margin: 6px;"
+          >
+            {effectCodeBlock(state)}
+          </div>
         </div>
       </div>
     </calcite-shell>
+  );
+}
+
+function effectCodeBlock(state: State) {
+  const snippet = `layer.effect = '${effectsToString(
+    state.filterConfigs[state.selectedFilterConfig].effects
+  )}';`;
+  return (
+    <div style="display: flex; flex-direction: column">
+      {highlight("javascript", snippet)}
+      <calcite-button
+        appearance="outline"
+        icon-start="copyToClipboard"
+        color="light"
+        scale="s"
+        onclick={() => copyToClipboard(snippet)}
+      >
+        Copy to clipboard
+      </calcite-button>
+    </div>
   );
 }
 
@@ -219,6 +257,15 @@ const observer = new ResizeObserver(
 
 function onPanelCreate(el: Element) {
   observer.observe(el);
+}
+
+function copyToClipboard(newClip: string) {
+  const input = document.createElement("textarea");
+  input.innerText = newClip;
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand("copy");
+  document.body.removeChild(input);
 }
 
 const projector = createProjector();

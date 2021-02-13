@@ -95,12 +95,12 @@ function render() {
             position: absolute;
             bottom: 24px;
             right: 12px;
-            width: 200px;
+            width: 272px;
             background-color: var(--calcite-ui-foreground-1);
             display: flex;
             flex-direction: column;
             box-shadow: 1px 0 0 var(--calcite-ui-border-1) inset;
-            padding: 24px;
+            padding: 12px;
           "
         >
           {renderCurrentFilters(state)}
@@ -182,10 +182,13 @@ function renderEffectParameter(
       return (
         <calcite-color
           hide-hex=""
-          hide-save=""
+          hide-saved=""
           scale="m"
           value={parameter.value}
           appearance="default"
+          afterCreate={afterCreateEventHandler("calciteColorChange", (e) => {
+            updateFilterParameter(parameter, (e.target as any).value);
+          })}
         ></calcite-color>
       );
   }

@@ -62,9 +62,9 @@ export function parameterToString(
   switch (parameter.type) {
     case "range":
       return parameter.value + parameter.unit;
+    case "color":
+      return parameter.value;
   }
-
-  return "";
 }
 
 export function createState(): State {
@@ -324,32 +324,32 @@ export function createState(): State {
               {
                 name: "offset-x",
                 type: "range",
-                min: 0,
-                max: 10,
+                min: -40,
+                max: 40,
                 unit: "px",
                 value: 0,
-                snap: false,
-                step: 0
+                snap: true,
+                step: 1
               },
               {
                 name: "offset-y",
                 type: "range",
-                min: 0,
-                max: 10,
+                min: -40,
+                max: 40,
                 unit: "px",
                 value: 0,
-                snap: false,
-                step: 0
+                snap: true,
+                step: 1
               },
               {
                 name: "blur radius",
                 type: "range",
                 min: 0,
-                max: 10,
+                max: 40,
                 unit: "px",
                 value: 0,
-                snap: false,
-                step: 0
+                snap: true,
+                step: 1
               },
               {
                 name: "color",

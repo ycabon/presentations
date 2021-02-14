@@ -1,75 +1,43 @@
+const { readdirSync } = require("fs");
 import rollupTypescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import cleaner from "rollup-plugin-cleaner";
+import multi from "@rollup/plugin-multi-entry";
 
-const plugins = [
-  nodeResolve(),
-  commonjs(),
-  rollupTypescript({
-    jsx: "react",
-    jsxFactory: "jsx",
-    target: "ES2020",
-    strict: true,
-    moduleResolution: "node",
-  }),
-];
+const getDirectories = (source) =>
+  readdirSync(source, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
 
-export default [
-  {
-    input: "demos/effect-explorer/index.tsx",
-    plugins: [
-      ...plugins,
-      cleaner({
-        targets: ["demos/effect-explorer/dist/"],
-      }),
-    ],
-    preserveEntrySignatures: false,
-    output: {
-      dir: "demos/effect-explorer/dist/",
-      format: "es",
-    },
+const excluded = new Set(["utils", "dist"]);
+
+const applications = getDirectories("./demos")
+  .filter((value) => !excluded.has(value))
+  .map((name) => `demos/${name}/index.tsx`);
+
+export default {
+  input: applications,
+  plugins: [
+    nodeResolve(),
+    commonjs(),
+    rollupTypescript({
+      jsx: "react",
+      jsxFactory: "jsx",
+      target: "ES2020",
+      strict: true,
+      moduleResolution: "node",
+    }),
+    cleaner({
+      targets: [`demos/dist/`],
+    }),
+    multi({
+      exports: true,
+      entryFileName: "index.js",
+    }),
+  ],
+  output: {
+    dir: `demos/dist/`,
+    format: "es",
   },
-  {
-    input: "demos/scale-dependent-effect/index.tsx",
-    plugins: [
-      ...plugins,
-      cleaner({
-        targets: ["demos/scale-dependent-effect/dist/"],
-      }),
-    ],
-    preserveEntrySignatures: false,
-    output: {
-      dir: "demos/scale-dependent-effect/dist/",
-      format: "es",
-    },
-  },
-  {
-    input: "demos/feature-effect/index.tsx",
-    plugins: [
-      ...plugins,
-      cleaner({
-        targets: ["demos/feature-effect/dist/"],
-      }),
-    ],
-    preserveEntrySignatures: false,
-    output: {
-      dir: "demos/feature-effect/dist/",
-      format: "es",
-    },
-  },
-  {
-    input: "demos/feature-effect-scale-dependent/index.tsx",
-    plugins: [
-      ...plugins,
-      cleaner({
-        targets: ["demos/feature-effect-scale-dependent/dist/"],
-      }),
-    ],
-    preserveEntrySignatures: false,
-    output: {
-      dir: "demos/feature-effect-scale-dependent/dist/",
-      format: "es",
-    },
-  },
-];
+};

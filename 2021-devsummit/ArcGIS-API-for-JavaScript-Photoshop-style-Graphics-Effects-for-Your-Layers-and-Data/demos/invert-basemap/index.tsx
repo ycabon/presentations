@@ -31,7 +31,7 @@ export function invertBasemapApplication() {
           position="start"
           afterCreate={onPanelCreate}
         >
-          <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; flex-direction: column; height: 100%">
             <div style="margin-left: 12px; margin-top: 12px">
               <calcite-label layout="inline">
                 Invert

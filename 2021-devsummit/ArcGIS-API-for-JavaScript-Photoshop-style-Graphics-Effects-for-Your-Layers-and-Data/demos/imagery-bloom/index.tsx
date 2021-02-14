@@ -19,7 +19,7 @@ export function imageryBloomApplication() {
   //Renders the application content
   function render() {
     return (
-      <calcite-shell>
+      <calcite-shell theme="dark">
         <header slot="shell-header">
           <h2 style="margin-left: 30px">Bloom on Imagery</h2>
         </header>

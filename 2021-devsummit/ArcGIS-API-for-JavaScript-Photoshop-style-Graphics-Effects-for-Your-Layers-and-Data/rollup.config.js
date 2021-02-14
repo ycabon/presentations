@@ -44,4 +44,32 @@ export default [
       format: "es",
     },
   },
+  {
+    input: "demos/feature-effect/index.tsx",
+    plugins: [
+      ...plugins,
+      cleaner({
+        targets: ["demos/feature-effect/dist/"],
+      }),
+    ],
+    preserveEntrySignatures: false,
+    output: {
+      dir: "demos/feature-effect/dist/",
+      format: "es",
+    },
+  },
+  {
+    input: "demos/feature-effect-scale-dependent/index.tsx",
+    plugins: [
+      ...plugins,
+      cleaner({
+        targets: ["demos/feature-effect-scale-dependent/dist/"],
+      }),
+    ],
+    preserveEntrySignatures: false,
+    output: {
+      dir: "demos/feature-effect-scale-dependent/dist/",
+      format: "es",
+    },
+  },
 ];

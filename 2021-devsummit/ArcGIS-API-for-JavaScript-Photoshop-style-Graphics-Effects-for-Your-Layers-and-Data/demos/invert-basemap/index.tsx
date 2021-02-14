@@ -7,7 +7,6 @@ import config from "@arcgis/core/config";
 import WebMap from "@arcgis/core/WebMap";
 import MapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
-import { getBackgroundColorTheme } from "@arcgis/core/views/support/colorUtils";
 import { debounce } from "@arcgis/core/core/promiseUtils";
 
 export function invertBasemapApplication() {
@@ -15,6 +14,7 @@ export function invertBasemapApplication() {
 
   let map: WebMap;
   let view: MapView;
+  let gallery: BasemapGallery;
   let inverted = false;
   let computedTheme = "light";
 
@@ -31,18 +31,22 @@ export function invertBasemapApplication() {
           position="start"
           afterCreate={onPanelCreate}
         >
-          <calcite-label>
-            <calcite-switch
-              afterCreate={afterCreateEventHandler(
-                "calciteSwitchChange",
-                onInvertSwitchChange
-              )}
-            ></calcite-switch>
-          </calcite-label>
-
-          <div
-            afterCreate={(el: HTMLDivElement) => createBasemapGallery(el)}
-          ></div>
+          <div style="display: flex; flex-direction: column;">
+            <div style="margin-left: 12px; margin-top: 12px">
+              <calcite-label layout="inline">
+                Invert
+                <calcite-switch
+                  afterCreate={afterCreateEventHandler(
+                    "calciteSwitchChange",
+                    onInvertSwitchChange
+                  )}
+                ></calcite-switch>
+              </calcite-label>
+            </div>
+            <div
+              afterCreate={(el: HTMLDivElement) => createBasemapGallery(el)}
+            ></div>
+          </div>
         </calcite-shell-panel>
 
         <div style="padding: 0; margin: 0; height: 100%; width: 100%;">
@@ -63,19 +67,22 @@ export function invertBasemapApplication() {
     view = new MapView({
       container,
       map: map,
-      zoom: 6,
-      center: [2, 46],
+      zoom: 3,
+      center: [0, 40],
       constraints: {
         snapToZoom: false,
-        minScale: 147914381,
       },
     });
+
+    if (gallery) {
+      gallery.view = view;
+    }
 
     updateBasemapEffect();
   }
 
   function createBasemapGallery(container: HTMLDivElement) {
-    const gallery = new BasemapGallery({
+    gallery = new BasemapGallery({
       view,
       container,
     });
@@ -96,7 +103,6 @@ export function invertBasemapApplication() {
       (layer as any).effect = effect;
     });
 
-    computedTheme = await getBackgroundColorTheme(view);
     projector.scheduleRender();
   });
 

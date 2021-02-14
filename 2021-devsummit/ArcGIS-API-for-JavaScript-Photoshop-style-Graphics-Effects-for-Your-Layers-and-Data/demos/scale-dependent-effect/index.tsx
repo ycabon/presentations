@@ -228,7 +228,7 @@ const effectMapping = createMapping<
 //Renders the application content
 function render() {
   return (
-    <calcite-shell>
+    <calcite-shell theme="dark">
       <header slot="shell-header">
         <h2 style="margin-left: 30px">Scale Dependent Effects</h2>
       </header>
@@ -339,7 +339,9 @@ function renderCurrentFilters(state: State) {
     return (
       <div style="display: flex; flex-direction: row;">
         <calcite-label>
-          <span style="padding-left: 12px; padding-top: 12px">Scales</span>
+          <span style="padding-left: 12px; padding-top: 12px">
+            <b>Scales</b>
+          </span>
           <calcite-pick-list
             style="flex: 0 0 100px"
             afterCreate={afterCreateEventHandler(

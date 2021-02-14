@@ -43,72 +43,73 @@ export function imageryBloomApplication() {
     });
 
     const effectImageryLayer = new ImageryLayer({
-        url:
-          "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer",
-        effect: [
+      url:
+        "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer",
+      effect: [
+        {
+          scale: 5_000_000,
+          value: "drop-shadow(1px 1px 2px black) bloom(2 0 0.5)",
+        },
+        {
+          scale: 2_000_000,
+          value:
+            "drop-shadow(0px 0px 0px #ff5722) bloom(0.1 0 0.5) grayscale(0.4)",
+        },
+      ],
+      renderer: new UniqueValueRenderer({
+        field: "Value",
+        uniqueValueInfos: [
           {
-            scale: 5_000_000,
-            value: "drop-shadow(1px 1px 2px black) bloom(2 0 0.5)",
+            value: 24,
+            label: "Developed, High Intensity",
+            symbol: new SimpleFillSymbol({
+              color: "#ffeb3b",
+            }),
           },
           {
-            scale: 2_000_000,
-            value:
-              "drop-shadow(0px 0px 0px #ff5722) bloom(0.1 0 0.5) grayscale(0.4)",
+            value: 23,
+            label: "Developed, Medium Intensity",
+            symbol: new SimpleFillSymbol({
+              color: "#ffc107",
+            }),
+          },
+          {
+            value: 22,
+            label: "Developed, Low Intensity",
+            symbol: new SimpleFillSymbol({
+              color: "#ff9800",
+            }),
           },
         ],
-        renderer: new UniqueValueRenderer({
-          field: "Value",
-          uniqueValueInfos: [
-            {
-              value: 24,
-              label: "Developed, High Intensity",
-              symbol: new SimpleFillSymbol({
-                color: "#ffeb3b",
-              }),
-            },
-            {
-              value: 23,
-              label: "Developed, Medium Intensity",
-              symbol: new SimpleFillSymbol({
-                color: "#ffc107",
-              }),
-            },
-            {
-              value: 22,
-              label: "Developed, Low Intensity",
-              symbol: new SimpleFillSymbol({
-                color: "#ff9800",
-              }),
-            },
-          ],
-        }),
       }),
-      map = new WebMap({
-        basemap: {
-          baseLayers: [
-            new VectorTileLayer({
-              portalItem: {
-                id: "bc83b1329cac47ffbd7f70e734be9083",
-              },
-            }),
-            new FeatureLayer({
-              portalItem: {
-                id: "28da9fa638b74fb295cc07008ef2f14a",
-              },
-              renderer: new SimpleRenderer({
-                symbol: new SimpleFillSymbol({
-                  style: "none",
-                  outline: {
-                    type: "simple-line",
-                    color: "#282828",
-                  },
-                }),
+    });
+
+    map = new WebMap({
+      basemap: {
+        baseLayers: [
+          new VectorTileLayer({
+            portalItem: {
+              id: "bc83b1329cac47ffbd7f70e734be9083",
+            },
+          }),
+          new FeatureLayer({
+            portalItem: {
+              id: "28da9fa638b74fb295cc07008ef2f14a",
+            },
+            renderer: new SimpleRenderer({
+              symbol: new SimpleFillSymbol({
+                style: "none",
+                outline: {
+                  type: "simple-line",
+                  color: "#282828",
+                },
               }),
             }),
-          ],
-        },
-        layers: [noEffectImageryLayer, effectImageryLayer],
-      });
+          }),
+        ],
+      },
+      layers: [noEffectImageryLayer, effectImageryLayer],
+    });
 
     view = new MapView({
       container,

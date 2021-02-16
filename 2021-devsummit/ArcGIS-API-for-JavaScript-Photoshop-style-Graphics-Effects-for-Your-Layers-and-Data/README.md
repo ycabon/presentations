@@ -1,4 +1,4 @@
-# ArcGIS API for JavaScript: A Look Under The Hood
+# ArcGIS API for JavaScript: Photoshop-style Graphics Effects for Your Layers and Data
 
 Presentation recorded for DevSummit 2021 by Undral Batsukh and Yann Cabon
 

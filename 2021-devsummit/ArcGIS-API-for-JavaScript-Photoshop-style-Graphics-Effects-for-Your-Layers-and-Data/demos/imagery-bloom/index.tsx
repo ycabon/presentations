@@ -14,7 +14,7 @@ import ImageryLayer from "@arcgis/core/layers/ImageryLayer";
 import Swipe from "@arcgis/core/widgets/Swipe";
 
 export function imageryBloomApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core/assets/"; // new URL("../assets/", window.location.href).toString();
+  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
 
   //Renders the application content
   function render() {

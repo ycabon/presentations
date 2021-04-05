@@ -10,7 +10,7 @@ import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import { debounce } from "@arcgis/core/core/promiseUtils";
 
 export function invertBasemapApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core/assets/"; // new URL("../assets/", window.location.href).toString();
+  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
 
   let map: WebMap;
   let view: MapView;
@@ -29,7 +29,6 @@ export function invertBasemapApplication() {
         <calcite-shell-panel
           slot="primary-panel"
           position="start"
-          afterCreate={onPanelCreate}
         >
           <div style="display: flex; flex-direction: column; height: 100%">
             <div style="margin-left: 12px; margin-top: 12px">
@@ -109,21 +108,6 @@ export function invertBasemapApplication() {
   function onInvertSwitchChange() {
     inverted = !inverted;
     updateBasemapEffect();
-  }
-
-  // observes the shell panels to adjust the view padding
-  const observer = new ResizeObserver(
-    (entries: ResizeObserverEntry[], observer: ResizeObserver) => {
-      if (view) {
-        view.padding = {
-          left: entries[0]?.contentRect.right,
-        };
-      }
-    }
-  );
-
-  function onPanelCreate(el: Element) {
-    observer.observe(el);
   }
 
   const projector = createProjector();

@@ -10,10 +10,10 @@ const getDirectories = (source) =>
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-const excluded = new Set(["utils", "dist"]);
+const excluded = ["utils", "dist"];
 
 const applications = getDirectories("./demos")
-  .filter((value) => !excluded.has(value))
+  .filter((value) => !excluded.includes(value))
   .map((name) => `demos/${name}/index.tsx`);
 
 export default {

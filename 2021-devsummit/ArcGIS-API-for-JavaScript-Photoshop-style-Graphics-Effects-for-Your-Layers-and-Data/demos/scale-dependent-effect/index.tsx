@@ -23,7 +23,7 @@ import {
 import { highlight } from "../utils/highlight";
 
 export function scaleDependentEffectApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core/assets/"; // new URL("../assets/", window.location.href).toString();
+  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
 
   let view: MapView | undefined;
 
@@ -240,7 +240,6 @@ export function scaleDependentEffectApplication() {
         <calcite-shell-panel
           slot="primary-panel"
           position="start"
-          afterCreate={onPanelCreate}
         >
           {renderFiltersList(state)}
         </calcite-shell-panel>
@@ -445,21 +444,6 @@ ${effects
       },
     });
     setState(state);
-  }
-
-  // observes the shell panels to adjust the view padding
-  const observer = new ResizeObserver(
-    (entries: ResizeObserverEntry[], observer: ResizeObserver) => {
-      if (view) {
-        view.padding = {
-          left: entries[0]?.contentRect.right,
-        };
-      }
-    }
-  );
-
-  function onPanelCreate(el: Element) {
-    observer.observe(el);
   }
 
   function copyToClipboard(newClip: string) {

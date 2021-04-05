@@ -17,7 +17,7 @@ import Slider from "@arcgis/core/widgets/Slider";
 import FeatureEffect from "@arcgis/core/views/layers/support/FeatureEffect";
 
 export function featureEffectScaleDependentApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core/assets/"; // new URL("../assets/", window.location.href).toString();
+  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
 
   type Animation = {
     remove(): void;

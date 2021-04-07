@@ -28,9 +28,6 @@ export default {
       strict: true,
       moduleResolution: "node",
     }),
-    cleaner({
-      targets: [`demos/dist/`],
-    }),
     multi({
       exports: true,
       entryFileName: "index.js",

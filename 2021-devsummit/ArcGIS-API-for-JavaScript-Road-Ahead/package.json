@@ -1,0 +1,27 @@
+{
+  "name": "arcgis-api-for-javascript-road-ahead",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run copy && rollup -c",
+    "start": "npm run copy && rollup -c -w",
+    "copy": "cp -R ./node_modules/@arcgis/core/assets ./demos/dist/assets"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@arcgis/core": "file:arcgis-core-4.20.0-next.20210407.tgz",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-multi-entry": "^4.0.0",
+    "@rollup/plugin-node-resolve": "^11.1.1",
+    "@rollup/plugin-typescript": "^8.1.1",
+    "highlight.js": "^10.6.0",
+    "maquette": "^3.4.1",
+    "maquette-jsx": "^3.0.1",
+    "ncp": "^2.0.0",
+    "rollup": "^2.44.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  }
+}

@@ -2,7 +2,6 @@ const { readdirSync } = require("fs");
 import rollupTypescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import cleaner from "rollup-plugin-cleaner";
 import multi from "@rollup/plugin-multi-entry";
 
 const getDirectories = (source) =>

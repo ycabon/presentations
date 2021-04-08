@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run copy && rollup -c",
     "start": "npm run copy && rollup -c -w",
-    "copy": "cp -R ./node_modules/@arcgis/core/assets ./demos/dist/assets"
+    "copy": "mkdir -p demos/dist && cp -R ./node_modules/@arcgis/core/assets ./demos/dist/assets"
   },
   "author": "",
   "license": "MIT",

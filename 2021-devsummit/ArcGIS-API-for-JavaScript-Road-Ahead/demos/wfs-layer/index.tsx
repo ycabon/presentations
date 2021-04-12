@@ -19,6 +19,7 @@ import {
 } from "@arcgis/core/layers/ogc/wfsUtils";
 
 interface WFSApplicationState {
+  inputUrl?: string;
   serviceUrl?: string;
   getCapabilitiesPromise?: Promise<WFSGetCapabilities>;
   getCapabilities?: WFSGetCapabilities;
@@ -50,7 +51,21 @@ export function wfsApplication() {
     },
   });
 
+
+  // const url = "https://geobretagne.fr/geoserver/ows";
+  // let url = "http://www.cbnbrest.fr/geoserver/diffusion_cbnb/wfs";
+  // let url = "https://geobretagne.fr/geoserver/otb/wfs";
+  // const url = "https://geobretagne.fr/geoserver/brgm/wfs";
+  // const url = "https://geobretagne.fr/geoserver/alti/wfs";
+  // const url =
+  // "http://services.azgs.az.gov/ArcGIS/services/aasggeothermal/AZWellHeaders/MapServer/WFSServer";
+
+  // No object id
+  const url = "https://geobretagne.fr/geoserver/ows";
+
   let state: WFSApplicationState = {
+    inputUrl: url,
+    serviceUrl: undefined,
     graphics: [],
   };
 
@@ -66,6 +81,8 @@ export function wfsApplication() {
   });
 
   function setServiceURL(url: string | undefined): void {
+    state.inputUrl = url;
+
     if (url === state.serviceUrl) {
       return;
     }
@@ -73,7 +90,7 @@ export function wfsApplication() {
     if (!url) {
       state = {
         ...state,
-        serviceUrl: "undefined",
+        serviceUrl: undefined,
         getCapabilitiesPromise: undefined,
       };
 
@@ -113,18 +130,21 @@ export function wfsApplication() {
             }
           ),
         };
+        projector.scheduleRender();
       }
     });
+
+    projector.scheduleRender();
   }
 
-  function onServiceURLChange() {
+  function onGetCapabilitiesClick() {
     const url = elements.serviceUrl?.value;
     setServiceURL(url);
   }
 
   //Renders the application content
   function render() {
-    const { serviceUrl, graphics } = state;
+    const { inputUrl, graphics } = state;
     return (
       <calcite-shell>
         <header slot="shell-header">
@@ -140,15 +160,15 @@ export function wfsApplication() {
                 }
                 type="text"
                 status="idle"
-                value={serviceUrl}
+                value={inputUrl}
               ></calcite-input>
             </calcite-label>
-            <calcite-label scale="s" layout="inline">
-              <calcite-button scale="s" onclick={onServiceURLChange}>
+            <div style="display: flex; flex-direction: row; align-items: center">
+              <calcite-button scale="s" onclick={onGetCapabilitiesClick}>
                 GetCapabilities
               </calcite-button>
-              Layers: {graphics.length}
-            </calcite-label>
+              <p style="padding-left: 12px; font-size: var(--calcite-font-size--2)">Layers: {graphics.length}</p>
+            </div>
           </div>
           <div style="overflow: scroll">{renderLayerList(state)}</div>
         </calcite-shell-panel>
@@ -162,9 +182,13 @@ export function wfsApplication() {
     );
   }
 
-  function renderLayerList(state: WFSApplicationState): VNode {
+  function renderLayerList(state: WFSApplicationState): null | VNode {
     if (state.getCapabilitiesPromise) {
       return <calcite-loader type="indeterminate"></calcite-loader>;
+    }
+
+    if (!state.graphics?.length) {
+      return null;
     }
 
     return (
@@ -215,19 +239,6 @@ export function wfsApplication() {
   function createMapView(container: HTMLDivElement) {
     view.container = container;
   }
-
-  // const url = "https://geobretagne.fr/geoserver/ows";
-  // let url = "http://www.cbnbrest.fr/geoserver/diffusion_cbnb/wfs";
-  // let url = "https://geobretagne.fr/geoserver/otb/wfs";
-  // const url = "https://geobretagne.fr/geoserver/brgm/wfs";
-  // const url = "https://geobretagne.fr/geoserver/alti/wfs";
-  // const url =
-  // "http://services.azgs.az.gov/ArcGIS/services/aasggeothermal/AZWellHeaders/MapServer/WFSServer";
-
-  // No object id
-  const url = "https://geobretagne.fr/geoserver/ows";
-
-  setServiceURL(url);
 
   const projector = createProjector();
   projector.append(document.body, render);

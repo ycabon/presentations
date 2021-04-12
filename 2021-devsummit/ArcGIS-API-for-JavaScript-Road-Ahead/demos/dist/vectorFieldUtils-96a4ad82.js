@@ -1,0 +1,10 @@
+import { r as r$1 } from './_virtual_index-2683c931.js';
+import { u } from './pixelUtils-52fe3f2b.js';
+
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.20/esri/copyright.txt for details.
+*/
+const i=180/Math.PI,n=function(e){return e&&"esri.layers.support.PixelBlock"===e.declaredClass&&e.pixels&&e.pixels.length>0},r=new Map;function o(e,t){return r.get(e)/r.get(t)||1}function a(e){return (450-e)%360}function h(e,t="geographic"){const[n,r]=e,o=Math.sqrt(n*n+r*r);let h=Math.atan2(r,n)*i;return h=(360+h)%360,"geographic"===t&&(h=a(h)),[o,h]}function s(e,t="geographic"){let n=e[1];"geographic"===t&&(n=a(n)),n%=360;const r=e[0];return [r*Math.cos(n/i),r*Math.sin(n/i)]}function l(e,i,r="geographic",o=1){if(!n(e))return e;const{pixels:a,width:l,height:c}=e,p=l*c,u$1=a[0],x=a[1],m=u.createEmptyBand(e.pixelType,p),f=u.createEmptyBand(e.pixelType,p);let d=0;for(let t=0;t<c;t++)for(let e=0;e<l;e++)"vector-uv"===i?([m[d],f[d]]=h([u$1[d],x[d]],r),m[d]*=o):([m[d],f[d]]=s([u$1[d],x[d]],r),m[d]*=o,f[d]*=o),d++;const g=new u({pixelType:e.pixelType,width:e.width,height:e.height,mask:e.mask,validPixelCount:e.validPixelCount,maskIsAlpha:e.maskIsAlpha,pixels:[m,f]});return g.updateStatistics(),g}function c(e,t,i=1){if(1===i||!n(e))return e;const r=e.clone(),{pixels:o,width:a,height:h}=r,s=o[0],l=o[1];let c=0;for(let n=0;n<h;n++)for(let e=0;e<a;e++)"vector-uv"===t?(s[c]*=i,l[c]*=i):s[c]*=i,c++;return r.updateStatistics(),r}function p(t,i,n,r,o){if(!r$1(o)||!o.spatialReference.equals(t.spatialReference))return {extent:t,width:i,height:n,resolution:t.width/i};const a=o.xmin,h=o.ymax;r=Math.max(r||0,30);const s=Math.ceil(i*(1/r)),l=Math.ceil(n*(1/r)),c=((t.xmax-t.xmin)/s+(t.ymax-t.ymin)/l)/2;return t.xmin=a+Math.floor((t.xmin-a)/c)*c,t.xmax=a+Math.ceil((t.xmax-a)/c)*c,t.ymin=h+Math.floor((t.ymin-h)/c)*c,t.ymax=h+Math.ceil((t.ymax-h)/c)*c,{extent:t,width:Math.round(t.width/c),height:Math.round(t.height/c),resolution:c}}r.set("meter-per-second",1),r.set("kilometer-per-hour",.277778),r.set("knots",.514444),r.set("feet-per-second",.3048),r.set("mile-per-hour",.44704);
+
+export { c, l, o, p };

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      Feature Effect - DS2021 - ArcGIS API for JavaScript Photoshop Style
+      Graphics Effects for Your Layers And Data
+    </title>
+
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      .application {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .view {
+        flex: 1 1 auto;
+        order: 1;
+      }
+
+      .sliderContainer {
+        flex: 0 0 80px;
+        order: 2;
+        display: flex;
+        flex-flow: row;
+        padding: 0 12px;
+      }
+
+      .sliderContainer > calcite-button {
+        order: 3;
+      }
+
+      .sliderValue {
+        flex: 0 0 150px;
+        order: 1;
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .sliderInnerContainer {
+        flex: 1 1 auto;
+        order: 2;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
+      }
+
+      .slider {
+        width: 100%;
+      }
+
+      .esri-slider--horizontal .esri-slider__track {
+        height: 2px;
+        width: 95% !important;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@esri/calcite-components@1.0.0-beta.52/dist/calcite/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@esri/calcite-components@1.0.0-beta.52/dist/calcite/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-light.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.18/esri/css/main.css"
+    />
+  </head>
+
+  <body>
+    <script type="module">
+      import { featureEffectApplication } from "../dist/index.js";
+      featureEffectApplication();
+    </script>
+  </body>
+</html>

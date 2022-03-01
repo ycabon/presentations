@@ -1,0 +1,27 @@
+{
+  "name": "arcgis-api-for-javascript-photoshop-style-graphics-effects-for-your-layers-and-data",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node --max-old-space-size=4096 node_modules/rollup/dist/bin/rollup -c",
+    "start": "node --max-old-space-size=4096 node_modules/rollup/dist/bin/rollup -c -w"
+  },
+  "author": "Yann Cabon",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-multi-entry": "^4.0.0",
+    "@rollup/plugin-node-resolve": "^11.1.1",
+    "@rollup/plugin-typescript": "^8.1.1",
+    "ncp": "^2.0.0",
+    "rollup": "^2.39.0",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "@arcgis/core": "^4.22.2",
+    "highlight.js": "^10.7.3",
+    "maquette": "^3.5.1",
+    "maquette-jsx": "^3.0.1"
+  }
+}

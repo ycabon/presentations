@@ -3,7 +3,6 @@ import { jsx } from "maquette-jsx";
 import { afterCreateEventHandler } from "../utils/events";
 
 import MapView from "@arcgis/core/views/MapView";
-import config from "@arcgis/core/config";
 import {
   ColorEffectParameter,
   createState,
@@ -14,8 +13,6 @@ import {
 import { highlight } from "../utils/highlight";
 
 export function effectExplorerApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
-
   let view: MapView | undefined;
 
   let state = createState();
@@ -84,7 +81,7 @@ export function effectExplorerApplication() {
   function render() {
     return (
       <calcite-shell>
-        <header slot="shell-header">
+        <header slot="header">
           <h2 style="margin-left: 30px">Effects Explorer</h2>
         </header>
         <calcite-shell-panel

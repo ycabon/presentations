@@ -9,7 +9,7 @@ const getDirectories = (source) =>
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-const excluded = ["utils", "dist"];
+const excluded = ["utils", "dist"/*, "effect-explorer", "feature-effect", "feature-effect-scale-dependent", "filter-order-matters", "imagery-bloom", "invert-basemap", "scale-dependent-effect"*/];
 
 const applications = getDirectories("./demos")
   .filter((value) => !excluded.includes(value))

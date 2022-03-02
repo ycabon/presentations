@@ -2,8 +2,6 @@ import { createProjector, VNode, createMapping } from "maquette";
 import { jsx } from "maquette-jsx";
 import { afterCreateEventHandler } from "../utils/events";
 
-import config from "@arcgis/core/config";
-
 import WebMap from "@arcgis/core/WebMap";
 import MapView from "@arcgis/core/views/MapView";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
@@ -13,13 +11,11 @@ import { SimpleFillSymbol } from "@arcgis/core/symbols";
 import Swipe from "@arcgis/core/widgets/Swipe";
 
 export function filterOrderMattersApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
-
   //Renders the application content
   function render() {
     return (
       <calcite-shell theme="light">
-        <header slot="shell-header">
+        <header slot="header">
           <h2 style="margin-left: 30px">Order of filter functions matters</h2>
         </header>
         <div style="padding: 0; margin: 0; height: 100%; width: 100%;">

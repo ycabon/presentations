@@ -2,8 +2,6 @@ import { createProjector, VNode, createMapping } from "maquette";
 import { jsx } from "maquette-jsx";
 import { afterCreateEventHandler } from "../utils/events";
 
-import config from "@arcgis/core/config";
-
 import { highlight } from "../utils/highlight";
 
 import { UniqueValueRenderer } from "@arcgis/core/renderers";
@@ -14,26 +12,23 @@ import Map from "@arcgis/core/Map";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import MapView from "@arcgis/core/views/MapView";
 import Slider from "@arcgis/core/widgets/Slider";
-import FeatureEffect from "@arcgis/core/views/layers/support/FeatureEffect";
+import FeatureEffect from "@arcgis/core/layers/support/FeatureEffect";
 
 export function featureEffectApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
-
   type Animation = {
     remove(): void;
   };
 
-  let view: MapView | undefined;
   let slider: Slider;
   let gapValue: number = 50;
   let animation: Animation | null = null;
-  let layerView: any | undefined;
+  let layer: FeatureLayer;
 
   //Renders the application content
   function render() {
     return (
       <calcite-shell>
-        <header slot="shell-header">
+        <header slot="header">
           <h2 style="margin-left: 30px">Feature Effect</h2>
         </header>
         <div style="padding: 0; margin: 0; height: 100%; width: 100%;">
@@ -84,7 +79,7 @@ export function featureEffectApplication() {
   }
 
   function createMapView(container: HTMLDivElement) {
-    const layer = new FeatureLayer({
+    layer = new FeatureLayer({
       portalItem: {
         id: "359bc19d9bbb4f2ba1b2baec7e13e757",
       },
@@ -135,7 +130,7 @@ export function featureEffectApplication() {
       }),
     });
 
-    (window as any).view = view = new MapView({
+    (window as any).view = new MapView({
       map: new Map({
         basemap: {
           portalItem: {
@@ -156,11 +151,7 @@ export function featureEffectApplication() {
       },
     });
 
-    // When the layerview is available, setup hovering interactivity
-    view.whenLayerView(layer).then((lv) => {
-      layerView = lv;
-      setGapValue();
-    });
+    setGapValue();
   }
 
   function createSlider(container: HTMLDivElement) {
@@ -198,9 +189,7 @@ export function featureEffectApplication() {
   function setGapValue(value: number = gapValue) {
     gapValue = value;
     slider?.viewModel.setValue(0, value);
-    if (layerView) {
-      layerView.effect = createEffect(value);
-    }
+    layer.featureEffect = createEffect(value);
     projector.scheduleRender();
   }
 
@@ -263,7 +252,7 @@ export function featureEffectApplication() {
       return Math.round(value * 10) / 10;
     }
 
-    return `  layerView.effect = new FeatureEffect({
+    return `  layer.effect = new FeatureEffect({
     filter: {
       where: "PERCENT_GAP > ${roundToTheTenth(
         gapValue - 1

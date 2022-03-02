@@ -2,16 +2,12 @@ import { createProjector, VNode, createMapping } from "maquette";
 import { jsx } from "maquette-jsx";
 import { afterCreateEventHandler } from "../utils/events";
 
-import config from "@arcgis/core/config";
-
 import WebMap from "@arcgis/core/WebMap";
 import MapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import { debounce } from "@arcgis/core/core/promiseUtils";
 
 export function invertBasemapApplication() {
-  config.assetsPath = "https://unpkg.com/@arcgis/core@4.18.1/assets/"; // new URL("../assets/", window.location.href).toString();
-
   let map: WebMap;
   let view: MapView;
   let gallery: BasemapGallery;
@@ -22,7 +18,7 @@ export function invertBasemapApplication() {
   function render() {
     return (
       <calcite-shell theme={computedTheme}>
-        <header slot="shell-header">
+        <header slot="header">
           <h2 style="margin-left: 30px">Invert Basemap</h2>
         </header>
 

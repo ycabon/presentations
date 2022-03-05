@@ -1,0 +1,533 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      Aggregate Geometries
+    </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/next/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/next/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #rightDiv {
+        padding: 6px;
+        width: 350px;
+        height: 88%;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+      }
+
+      #panelContainer {
+        position: absolute;
+        bottom: 0px;
+        height: 135px;
+       }
+
+      #yearsDivContainer {
+        display: flex;
+        margin-top:20px;
+        flex-basis: fit-content;
+      }
+
+      .years-label {
+        font-size: 30pt;
+        padding-left: 30px;
+        color: #5c5c5c;
+        cursor: pointer;
+        width: 100px;
+        flex-shrink: 2;
+        flex-grow: 2;
+      }
+
+      #genderList {
+        position: absolute;
+        right: 10px;
+        top: 0px;
+        z-index: 99999;
+        overflow: visible;
+      }
+
+      #playButton {
+        width:120px;
+        height: 40px;
+        padding-left: 40px;
+        padding-right: 20px;
+        flex-basis: fit-content;
+      }
+
+      .active-years-label-all {
+        color: #fd491a;
+      }
+      .active-years-label-female {
+        color: #f20dd5
+      }
+      .active-years-label-male {
+        color: #248ddb;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand",
+        "esri/core/watchUtils",
+        "esri/layers/GraphicsLayer"
+      ], (
+        Map,
+        MapView,
+        FeatureLayer,
+        Legend,
+        Expand,
+        watchUtils,
+        GraphicsLayer
+      ) =>
+        (async () => {
+        // variables used to set up renderer and animations
+        let animation = null;
+        let selectedYear = 2000;
+        let selectedGender = "all";
+        let chart;
+        const colors = {
+          all: "#fd491a",
+          female: "#f20dd5",
+          male: "#248ddb"
+        };
+
+        // alcohol consumption data from world bank
+        // mined and combined the data from https://data.worldbank.org/indicator/SH.ALC.PCAP.LI
+        const layer = new FeatureLayer({
+          portalItem: {
+            id: "e834034eef4f49c19a8022738afb879f"
+          },
+          outFields: ["*"],
+          title: "Alcohol consumption per capita - liters",
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-marker",
+              size: "8px",
+              color: "#fd491a",
+              outline: {
+                color: "gray",
+                width: "0.75px"
+              }
+            },
+            visualVariables: [
+              {
+                type: "size",
+                field: "F2000_all",
+                maxDataValue: 40,
+                maxSize: 60,
+                minDataValue: 0,
+                minSize: 6
+              }
+            ]
+          },
+          orderBy: [{ field: "F2000_all" }],
+          effect: "drop-shadow(3px, 3px, 3px, black)",
+          opacity: 0.75,
+          blendMode: "lighten",
+          popupTemplate: {
+            title: "Alcohol consumption per capita by litres",
+            content: [
+              {
+                type: "media",
+                activeMediaInfoIndex: 0,
+                mediaInfos: [
+                  {
+                    title: "<b>Alcohol consumption by year and gender</b>",
+                    type: "column-chart",
+                    value: {
+                      fields: [
+                        "F2000_all",
+                        "F2005_all",
+                        "F2010_all",
+                        "F2015_all",
+                        "F2018_all",
+                        "F2000_male",
+                        "F2005_male",
+                        "F2010_male",
+                        "F2015_male",
+                        "F2018_male",
+                        "F2000_female",
+                        "F2005_female",
+                        "F2010_female",
+                        "F2015_female",
+                        "F2018_female"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 2,
+          padding: {
+            right: 350,
+            bottom: 135
+          },
+          background: {
+            color: "#1d2224"
+          }
+        });
+
+        const legend = new Legend({
+          view
+        });
+        view.ui.add(legend, "bottom-left");
+
+        let layerView  = await view.whenLayerView(layer);
+        await watchUtils.whenFalseOnce(layerView, "updating");
+        updateRenderer(selectedYear, "all");
+
+        const aggregateData = [];
+        async function updateRenderer(year, gender) {
+          const field = `F${year}_${gender}`;
+          const renderer = layer.renderer.clone();
+          renderer.symbol.color = colors[gender];
+          renderer.visualVariables[0].field = field;
+          layer.renderer = renderer;
+          layer.orderBy = [{field: field}];
+          getTop10Consumers(field, `F${year}`);
+          await runStats(field, `F${year}`, gender);
+        }
+
+        async function runStats(field, year, gender) {
+          let consumeStatsByRegion = {
+            onStatisticField: field,
+            outStatisticFieldName: "avgConsumption",
+            statisticType: "avg"
+          };
+          let aggregatedExtent = {
+            statisticType: "envelope-aggregate",
+            outStatisticFieldName: "aggregateExtent",
+          };
+          let aggregatedCenter = {
+            statisticType: "centroid-aggregate",
+            outStatisticFieldName: "goltseg",
+          };
+          let aggregatedConvex = {
+            statisticType: "convex-hull-aggregate",
+            outStatisticFieldName: "hendmeldee",
+          };
+          let query = layerView.createQuery();
+          query.groupByFieldsForStatistics = ["Region"];
+          query.outStatistics = [consumeStatsByRegion, aggregatedExtent, aggregatedCenter, aggregatedConvex];
+          const statsResults = await layerView.queryFeatures(query);
+          let regions = statsResults.features.map(function (feature, i) {
+            return feature.attributes.Region;
+          });
+          let chartData = statsResults.features.map(function (feature, i) {
+            const region = {
+              extent: feature.aggregateGeometries.aggregateExtent,
+              region: feature.attributes.Region
+            };
+            aggregateData.push(region);
+            return feature.attributes.avgConsumption;
+          });
+          updateChart(regions, chartData, gender);
+        }
+
+        function updateChart(regions, chartData, gender) {
+          document.getElementById(
+            "chartTitle"
+          ).innerHTML = `Average consumption by region - ${gender}`;
+          if (!chart) {
+            // Get the canvas element and render the chart in it
+            const canvasElement = document.getElementById("chart");
+
+            chart = new Chart(canvasElement.getContext("2d"), {
+              type: "doughnut",
+              data: {
+                labels: regions,
+                datasets: [
+                  {
+                    backgroundColor: [
+                      "#FD7F6F",
+                      "#7EB0D5",
+                      "#B2E061",
+                      "#BD7EBE",
+                      "#FFB55A",
+                      "#334FFF",
+                      "#B533FF"
+                    ],
+                    borderWidth: 0,
+                    data: chartData
+                  }
+                ]
+              },
+              options: {
+                responsive: false,
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: false
+                }
+              }
+            });
+
+            // use this to zoom to aggregrated geometry
+            canvasElement.onclick = function (evt) {
+              var activePoints = chart.getElementsAtEvent(evt);
+              if (activePoints[0]) {
+                var chartData = activePoints[0]["_chart"].config.data;
+                var idx = activePoints[0]["_index"];
+
+                var label = chartData.labels[idx];
+                var value = chartData.datasets[0].data[idx];
+
+                aggregateData.forEach((data) => {
+                  if (data.region === label) {
+                    view.goTo(data.extent);
+                  }
+                });
+              }
+            };
+          } else {
+            chart.data.datasets[0].data = chartData;
+            chart.update();
+          }
+        }
+
+        function getTop10Consumers(field, year) {
+          const maleField = `${year}_male`;
+          const femaleField = `${year}_female`;
+          const totalField = `${year}_all`;
+          const query = {
+            where: "1=1",
+            orderByFields: [`${field} DESC`],
+            outFields: ["*"]
+          };
+          layerView.queryFeatures(query).then((results) => {
+            document.getElementById("results").innerHTML = "";
+            graphics = results.features;
+            graphics.forEach((result, index) => {
+              if (index < 3) {
+                const attributes = result.attributes;
+                const item = document.createElement("calcite-pick-list-item");
+                item.setAttribute("label", attributes.Country_Name);
+                item.setAttribute("value", index);
+                const total = `Total consumption: ${attributes[totalField]}`;
+                const male = `Male: ${attributes[maleField]}`;
+                const female = `Female: ${attributes[femaleField]}`;
+                const description = total + "\n" + male + "\n" + female;
+                item.setAttribute("description", description);
+                item.addEventListener("click", countryResultClickHandler);
+                document.getElementById("results").appendChild(item);
+              }
+            });
+          });
+        }
+
+        function countryResultClickHandler(event) {
+          const target = event.target;
+          const resultId = target.getAttribute("value");
+
+          // get the graphic corresponding to the clicked zip code
+          const result =
+            resultId && graphics && graphics[parseInt(resultId, 10)];
+
+          if (result) {
+            view.popup.open({
+              features: [result],
+              location: result.geometry
+            });
+          }
+        }
+
+        function startAnimation() {
+          stopAnimation();
+          animation = animate(selectedYear);
+          playButton.classList.add("toggled");
+          playButton.iconStart = "pause";
+          playButton.innerText = "Pause";
+        }
+
+        function stopAnimation() {
+          if (!animation) {
+            return;
+          }
+
+          animation.remove();
+          animation = null;
+          playButton.classList.remove("toggled");
+          playButton.iconStart = "play";
+          playButton.innerText = "Play";
+        }
+
+        function animate(startValue) {
+          let animating = true;
+          let value = startValue;
+
+          const frame = (timestamp) => {
+            if (!animating) {
+              return;
+            }
+            if (value === 2020) {
+              value = 2018;
+            } else if (value > 2020) {
+              value = 2000;
+            }
+
+            updateRenderer(value, genderList.selectedOption.value);
+            updateYearsLabel(value);
+            value += 5;
+
+            // Update at 30fps
+            setTimeout(() => {
+              requestAnimationFrame(frame);
+            }, 1000 / 3);
+          };
+
+          frame();
+
+          return {
+            remove: () => {
+              animating = false;
+            }
+          };
+        }
+
+        const panel = document.getElementById("panelContainer");
+
+        // play button
+        document.getElementById("playButton").addEventListener("click", () => {
+          if (playButton.classList.contains("toggled")) {
+            stopAnimation();
+          } else {
+            startAnimation();
+          }
+        });
+
+        // gender drop down list
+        const genderList = document.getElementById("genderList");
+        genderList.addEventListener("calciteSelectChange", (event) => {
+          selectedGender = genderList.selectedOption.value;
+          updateRenderer(selectedYear, genderList.selectedOption.value);
+          updateYearsLabel(selectedYear);
+        });
+
+        // years used for animation
+        const yearsDiv = document.getElementById("yearsDivContainer");
+        yearsDiv.addEventListener("click", (event) => {
+          updateYearsLabel(event.target.id);
+          updateRenderer(selectedYear, genderList.selectedOption.value);
+        });
+
+        const hoverColors = {
+          all: "#de3002",
+          female: "#cf0bb6",
+          male: "#1f7abd"
+        };
+
+        // change the color scheme of years and play button to match the
+        // color of the renderer
+        function updateYearsLabel(divId) {
+          console.log(divId);
+          const prefix = "active";
+          yearsDiv.querySelectorAll("div").forEach((n) => {
+            const classes = n.className
+              .split(" ")
+              .filter((option) => option.startsWith(prefix));
+            n.classList.remove(classes[0]);
+            playButton.classList.remove(classes[0]);
+          });
+
+          playButton.classList.add(`active-years-label-${selectedGender}`);
+          document.getElementById(divId).classList.add(`active-years-label-${selectedGender}`);
+          if (divId !== "playButton") {
+           selectedYear = divId;
+          }
+          panel.style.setProperty("--calcite-ui-brand", colors[selectedGender]);
+          panel.style.setProperty(
+            "--calcite-ui-brand-hover",
+            hoverColors[selectedGender]
+          );
+        }
+      })());
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+
+    <calcite-panel id="rightDiv" class="calcite-theme-dark">
+      <h3 class="heading" id="chartTitle" slot="header-content">
+        Alcohol consumption by regions and gender
+      </h3>
+      <div id="content">
+        <canvas id="chart" height="250" width="330"></canvas>
+      </div>
+      <calcite-panel id="resultsDiv">
+        <h3 class="heading" id="resultsHeading" slot="header-content">
+          Alcohol consumption by countries - top 3
+        </h3>
+        <div id="results"></div>
+      </calcite-panel>
+    </calcite-panel>
+    <calcite-panel
+      heading="Alcohol consumption by countries"
+      id="panelContainer"
+      class="calcite-theme-dark"
+    >
+      <!-- Years -->
+      <div id="yearsDivContainer">
+        <div id="2000" class="years-label active-years-label-all">2000</div>
+        <div id="2005" class="years-label">2005</div>
+        <div id="2010" class="years-label">2010</div>
+        <div id="2015" class="years-label">2015</div>
+        <div id="2018" class="years-label">2018</div>
+        <calcite-button icon-start="play" id="playButton">Play</calcite-button>
+      </div>
+      <calcite-select id="genderList">
+        <calcite-option value="all" selected>Gender: all</calcite-option>
+        <calcite-option value="female">Gender: female</calcite-option>
+        <calcite-option value="male">Gender: male</calcite-option>
+      </calcite-select>
+    </calcite-panel>
+  </body>
+</html>

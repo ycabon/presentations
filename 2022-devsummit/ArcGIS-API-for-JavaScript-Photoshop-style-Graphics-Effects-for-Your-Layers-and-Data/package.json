@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@arcgis/core": "^4.22.2",
+    "flubber": "^0.4.2",
     "highlight.js": "^10.7.3",
     "maquette": "^3.5.1",
     "maquette-jsx": "^3.0.1"

@@ -251,8 +251,10 @@ export function blendExplorerApplication() {
     });
 
     map.loadAll().then(() => {
-      layer = view.map.layers.getItemAt(0) as __esri.FeatureLayer;
-      layer.blendMode = state.blendMode;
+      if (view) {
+        layer = view.map.layers.getItemAt(0) as __esri.FeatureLayer;
+        layer.blendMode = state.blendMode;
+      }
     });
 
     view.ui.add(new BasemapGallery({ view }), "top-right");

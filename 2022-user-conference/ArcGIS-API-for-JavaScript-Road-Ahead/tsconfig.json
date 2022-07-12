@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "tsx",
+    "target": "ES2020",
+    "strict": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+  }
+}

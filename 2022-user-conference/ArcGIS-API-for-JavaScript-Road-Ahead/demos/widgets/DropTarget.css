@@ -1,0 +1,173 @@
+
+/* overrides */
+.esri-component.widgets-drop-target {
+  user-select: none;
+  pointer-events: none;
+}
+.esri-component.widgets-drop-target--visible {
+  user-select: auto;
+  pointer-events: auto;
+}
+
+.widgets-drop-target {
+  display: flex;
+  flex: 1 1 100%;
+
+  opacity: 0;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.widgets-drop-target--visible {
+  opacity: 1;
+  transition: 500ms all;
+}
+
+.widgets-drop-target--background {
+  flex: 1 1 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widgets-drop-target--modal {
+  display: flex;
+  padding: 12px;
+  flex-direction: column;
+  align-items: stretch;
+
+  background: white;
+  box-shadow: 0px 15px 40px 0px rgba(0, 0, 0, 0.8);
+  border-radius: 2px;
+
+  transform: perspective(1px) translateZ(-0.2px);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 250ms;
+}
+
+ .widgets-drop-target--hover .widgets-drop-target--modal, .widgets-drop-target--dragging .widgets-drop-target--modal {
+  flex: 0 0 400px;
+}
+
+.widgets-drop-target--visible .widgets-drop-target--modal {
+  transform: perspective(1px) translateZ(0px);
+}
+
+.widgets-drop-target--label {
+  order: 1;
+  flex: 0 0 auto;
+  padding: 12px;
+
+  font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.widgets-drop-target--dropbox {
+  order: 2;
+  flex: 1 1 150px;
+
+  border: 3px dashed #CACACA;
+  border-radius: 6px;
+  transition: 250ms all;
+
+  color: #cacaca;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widgets-drop-target--hover .widgets-drop-target--dropbox {
+  border-color: #00c0f0;
+  color: #00c0f0;
+}
+
+.widgets-drop-target--dropboxIcon {
+  pointer-events: none;
+}
+
+.widgets-drop-target--dropbox > span {
+  font-size: 400%;
+}
+
+.widgets-drop-target--loading .widgets-drop-target--label {
+  display: none;
+}
+
+.widgets-drop-target--loading .widgets-drop-target--dropbox {
+  display: none;
+}
+
+.widgets-drop-target--loaderContainer {
+  display: none;
+}
+
+.widgets-drop-target--loading .widgets-drop-target--loaderContainer {
+  display: block;
+  width: 176px;
+  height: 176px;
+}
+
+.widgets-drop-target--loader,
+.widgets-drop-target--loader:before,
+.widgets-drop-target--loader:after {
+  background: #282828;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+.widgets-drop-target--loader {
+  color: #282828;
+  text-indent: -9999em;
+  margin: 88px auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.widgets-drop-target--loader:before,
+.widgets-drop-target--loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+.widgets-drop-target--loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.widgets-drop-target--loader:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}

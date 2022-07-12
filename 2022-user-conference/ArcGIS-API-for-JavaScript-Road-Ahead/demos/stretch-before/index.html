@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>MediaLayer - Stretch Before - Road Ahead</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.24/esri/css/main.css"
+    />
+    <script src="https://js.arcgis.com/4.24/"></script>
+  </head>
+
+  <body>
+    <calcite-shell>
+      <header slot="header">
+        <h2 style="margin-left: 30px">
+          MediaLayer - Stretch in 4.24
+        </h2>
+      </header>
+      <div id="viewDiv"></div>
+    </calcite-shell>
+    <script>
+      require([
+        "esri/Map",
+        "esri/layers/GraphicsLayer",
+        "esri/layers/MediaLayer",
+        "esri/views/MapView",
+        "esri/widgets/Sketch/SketchViewModel",
+      ], (Map, GraphicsLayer, MediaLayer, MapView, SketchViewModel) => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 1920;
+        canvas.height = 1080;
+
+        ctx.lineWidth = 10;
+
+        for (let i = ctx.lineWidth * 4; i < canvas.height; i += ctx.lineWidth * 4) {
+          ctx.moveTo(0, i);
+          ctx.lineTo(canvas.width, i);
+        }
+
+        ctx.strokeRect(ctx.lineWidth / 2, ctx.lineWidth / 2, canvas.width - ctx.lineWidth, canvas.height - ctx.lineWidth);
+        ctx.stroke();
+
+        const spatialReference = { wkid: 0 };
+        const symbol = {
+          type: "simple-marker",
+          color: "black",
+          size: 25,
+          outline: {
+            width: 5,
+            color: "white"
+          }
+        }
+
+        view = new MapView({
+          container: "viewDiv",
+          spatialReference,
+          extent: {
+            xmin: 0,
+            ymin: 0,
+            xmax: canvas.width,
+            ymax: canvas.height,
+            spatialReference
+          },
+          map: new Map({
+            layers: [
+              layer = new MediaLayer({
+                source: [
+                  {
+                    type: "image",
+                    image: canvas,
+                    georeference: {
+                      type: "corners",
+                      topLeft: { x: 0, y: 0, spatialReference },
+                      bottomLeft: { x: 0, y: canvas.height, spatialReference },
+                      topRight: { x: canvas.width, y: 0, spatialReference },
+                      bottomRight: { x: canvas.width, y: canvas.height, spatialReference }
+                    }
+                  }
+                ]
+              }),
+              graphicsLayer = new GraphicsLayer({
+                graphics: [
+                  { geometry: { type: "point", x: 0, y: 0, spatialReference }, symbol, attributes: { name: "topLeft" }},
+                  { geometry: { type: "point", x: 0, y: canvas.height, spatialReference }, symbol, attributes: { name: "bottomLeft" }},
+                  { geometry: { type: "point", x: canvas.width, y: 0, spatialReference }, symbol, attributes: { name: "topRight" }},
+                  { geometry: { type: "point", x: canvas.width, y: canvas.height, spatialReference }, symbol, attributes: { name: "bottomRight" }}
+                ]
+              })
+            ]
+          })
+        });
+
+        view.extent = view.extent.expand(1.5);
+
+        const skvm = new SketchViewModel({
+          view,
+          layer: graphicsLayer,
+          updateOnGraphicClick: true
+        });
+
+        skvm.on("update", () => {
+          const georeference = layer.source.elements.at(0).georeference;
+          const graphics = graphicsLayer.graphics.forEach((graphic) => {
+            georeference[graphic.attributes.name] = graphic.geometry;
+          })
+        })
+      });
+    </script>
+  </body>
+</html>

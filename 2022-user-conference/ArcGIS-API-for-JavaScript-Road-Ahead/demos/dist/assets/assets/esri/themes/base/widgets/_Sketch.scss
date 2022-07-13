@@ -1,0 +1,151 @@
+@mixin sketch() {
+  $border: 1px solid $border-color;
+
+  .esri-sketch {
+    display: flex;
+    flex-flow: column wrap;
+
+    .esri-snapping-controls__panel {
+      display: flex;
+      width: auto;
+    }
+  }
+
+  .esri-sketch__menu-header {
+    margin: $cap-spacing--half;
+    border-bottom: $border;
+    display: flex;
+    align-items: center;
+  }
+
+  .esri-sketch__menu-title {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .esri-sketch__panel {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0;
+  }
+
+  .esri-sketch__info-panel {
+    background-color: $background-color--offset;
+    opacity: 1;
+    transition: opacity 250ms ease-in-out;
+    &:empty {
+      opacity: 0;
+      padding: 0;
+      visibility: hidden;
+    }
+  }
+
+  .esri-sketch__menu-container {
+    background-color: $background-color;
+    display: flex;
+    flex-flow: column;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: $cap-spacing--half;
+  }
+
+  .esri-sketch__section {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0 $side-spacing--half;
+    margin: $cap-spacing--half 0;
+  }
+
+  .esri-sketch__tool-section {
+    border-right: $border;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .esri-sketch__action-toggle--on .esri-sketch__item-action-icon {
+    // Toggle on
+    background-color: $button-color;
+    box-shadow: 0 0 0 1px $button-color;
+
+    &:before {
+      background-color: $interactive-font-color--inverse;
+      left: $toggle-handle-size;
+    }
+  }
+
+  .esri-sketch__feature-count-badge {
+    align-items: center;
+    background: $background-color;
+    border-bottom: $border;
+    border-radius: $border-radius;
+    display: flex;
+    font-size: $font-size--small;
+    justify-content: center;
+    margin: 0;
+    padding: 0.25em 0.75em;
+  }
+
+  [dir="rtl"] {
+    .esri-sketch__tool-section {
+      border-left: $border;
+      border-right: none;
+
+      &:last-child {
+        border: none;
+      }
+    }
+    .esri-expand__content {
+      .esri-sketch--vertical {
+        .esri-sketch__tool-section {
+          border-left: none;
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  .esri-sketch--vertical {
+    flex-direction: row-reverse;
+
+    .esri-sketch__panel {
+      flex-flow: column;
+    }
+    .esri-sketch__section {
+      flex-flow: column;
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: $side-spacing--half;
+      margin-right: $side-spacing--half;
+    }
+    .esri-sketch__tool-section {
+      border-right: none;
+      border-bottom: $border;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    .esri-sketch__info-panel {
+      &:empty {
+        padding: 0;
+      }
+    }
+    .esri-sketch__info-section {
+      margin-top: $cap-spacing--quarter;
+      width: $button-width;
+    }
+    .esri-sketch__menu-container {
+      min-width: 30vh;
+    }
+
+    .esri-selection-toolbar__container {
+      flex-direction: column;
+    }
+  }
+}
+
+@if $include_Sketch == true {
+  @include sketch();
+}

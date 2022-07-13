@@ -1,7 +1,7 @@
 import config from "@arcgis/core/config";
 import {
   property,
-  subclass
+  subclass,
 } from "@arcgis/core/core/accessorSupport/decorators";
 import { on, watch, whenOnce } from "@arcgis/core/core/reactiveUtils";
 import { Point, SpatialReference } from "@arcgis/core/geometry";
@@ -12,13 +12,14 @@ import ControlPointsGeoreference from "@arcgis/core/layers/support/ControlPoints
 import ExtentAndRotationGeoreference from "@arcgis/core/layers/support/ExtentAndRotationGeoreference";
 import ImageElement from "@arcgis/core/layers/support/ImageElement";
 import VideoElement from "@arcgis/core/layers/support/VideoElement";
-import request from "@arcgis/core/request";
 import MapView from "@arcgis/core/views/MapView";
 import WebMap from "@arcgis/core/WebMap";
 import Compass from "@arcgis/core/widgets/Compass";
 import SketchViewModel from "@arcgis/core/widgets/Sketch/SketchViewModel";
 import { tsx } from "@arcgis/core/widgets/support/widget";
 import Widget from "@arcgis/core/widgets/Widget";
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
+import Expand from "@arcgis/core/widgets/Expand";
 import DropTarget from "../widgets/DropTarget";
 
 export function overlayApplication() {
@@ -205,12 +206,20 @@ export function overlayApplication() {
         let element: ImageElement | VideoElement;
 
         if (type === "image") {
-          const url = URL.createObjectURL(file);
-          const image: HTMLImageElement = (
-            await request(url, {
-              responseType: "image",
-            })
-          ).data;
+          const url = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.addEventListener("load", (event: any) => {
+              resolve(event.target.result);
+            });
+            reader.readAsDataURL(file);
+          });
+          const image: HTMLImageElement = await new Promise((resolve) => {
+            const image = document.createElement("img");
+            image.addEventListener("load", (event: any) => {
+              resolve(image);
+            });
+            image.src = url;
+          });
           width = image.naturalWidth;
           height = image.naturalHeight;
           element = new ImageElement({
@@ -220,6 +229,7 @@ export function overlayApplication() {
           const url = URL.createObjectURL(file);
           const video = document.createElement("video");
           video.src = url;
+          video.muted = true;
           await video.play();
           width = video.videoWidth;
           height = video.videoHeight;
@@ -682,6 +692,15 @@ export function overlayApplication() {
 
   // adds the compass to the top left corner of the MapView
   view.ui.add(compass, "top-left");
+
+  const expand = new Expand({
+    view,
+    content: new BasemapGallery({
+      view: view,
+      container: document.createElement("div")
+    })
+  });
+  view.ui.add(expand, "top-right");
 
   const application = new Application({
     container: "application",

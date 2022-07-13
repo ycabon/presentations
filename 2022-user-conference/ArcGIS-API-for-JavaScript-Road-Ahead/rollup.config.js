@@ -1,4 +1,4 @@
-const { readdirSync } = require("fs");
+const { readdirSync, existsSync } = require("fs");
 import rollupTypescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
@@ -9,11 +9,12 @@ const getDirectories = (source) =>
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-const excluded = ["utils", "dist"];
+const excluded = ["utils", "dist", "control-points"];
 
 const applications = getDirectories("./demos")
   .filter((value) => !excluded.includes(value))
-  .map((name) => `demos/${name}/index.tsx`);
+  .map((name) => `demos/${name}/index.tsx`)
+  .filter((name) => existsSync(name));
 
 export default {
   input: applications,

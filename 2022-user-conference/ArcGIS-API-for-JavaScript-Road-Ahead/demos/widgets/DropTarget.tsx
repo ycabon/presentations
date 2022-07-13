@@ -87,7 +87,8 @@ class DropTarget<T = any> extends Widget {
               item: dropped,
             });
           })
-          .catch(() => {
+          .catch((error) => {
+            console.error(error);
             this.state = "ready";
           });
       } else {

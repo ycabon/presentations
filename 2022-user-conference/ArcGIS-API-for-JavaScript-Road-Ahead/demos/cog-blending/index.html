@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>ImageryTileLayer - Cloud Optimized GeoTIFF - Road Ahead</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #rendererDiv {
+        padding: 10px;
+        width: 240px;
+      }
+
+      .slider {
+        height: 40px;
+        width: 100%;
+        background-color: transparent;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.25/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.25/"></script>
+  </head>
+
+  <body class="calcite-theme-light">
+    <calcite-shell>
+      <header slot="header">
+        <h2 style="margin-left: 30px">
+          Road Ahead - ImageryTileLayer - Cloud Optimized GeoTIFF
+        </h2>
+      </header>
+      <div id="viewDiv"></div>
+      <div id="rendererDiv" class="esri-widget">
+        <h3 class="esri-widget__heading">Stretch Rendering Parameters</h3>
+  
+        <label class="esri-feature-form__label">Select stretch type</label>
+        <select id="stretchType" class="esri-input esri-select">
+          <option value="min-max" selected>min-max</option>
+          <option value="standard-deviation">standard deviation</option>
+        </select>
+        <br />
+        <label id="sliderLabel" class="esri-feature-form__label"
+          >min-max value:</label
+        >
+        <div id="value-slider" class="slider"></div>
+        <input type="checkbox" checked onclick="toggleBlendMode(event)" />
+        <label>Toggle blendMode</label>
+      </div>
+    </calcite-shell>
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/GroupLayer",
+        "esri/layers/ImageryTileLayer",
+        "esri/layers/TileLayer",
+        "esri/renderers/RasterStretchRenderer",
+        "esri/widgets/Slider",
+        "esri/widgets/BasemapToggle",
+        "esri/widgets/LayerList"
+      ], (
+        Map,
+        MapView,
+        GroupLayer,
+        ImageryTileLayer,
+        TileLayer,
+        RasterStretchRenderer,
+        Slider,
+        BasemapToggle,
+        LayerList
+      ) =>
+        (async () => {
+          // initial stretch type for the rasterStretchRenderer
+          let stretchType = "min-max";
+
+          const url = new URL("./geotiffs/SRTMCalifornia.tiff", window.location.href).toString()
+
+          // create a ImageryTileLayer from tiled elevation service
+          const layer = new ImageryTileLayer({
+            url: url,
+            title: "World Elevation ImageryTileLayer",
+            blendMode: "destination-in"
+          });
+
+          await layer.load();
+
+          layer.renderer = {
+            type: "raster-stretch",
+            stretchType: "min-max",
+            statistics: [layer.rasterInfo.statistics[0]],
+            numberOfStandardDeviations: 1,
+            colorRamp: {
+              type: "algorithmic",
+              fromColor: [0, 0, 0, 0],
+              toColor: [0, 0, 0, 1]
+            }
+          };
+
+          // Create a group layer containing the imagery tile layer and a tile layer
+          // this group layer is used to isolate the destination-in blendMode from the
+          // rest of the map.
+          const groupLayer = new GroupLayer({
+            title: "Group Layer",
+            layers: [
+              new TileLayer({
+                url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer",
+                listMode: "hide-children"
+              }),
+              layer
+            ]
+          });
+
+          const map = new Map({
+            basemap: "gray-vector",
+            layers: [groupLayer]
+          });
+
+          const view = new MapView({
+            container: "viewDiv",
+            map: map,
+            zoom: 5,
+            center: [-120, 37],
+            constraints: {
+              snapToZoom: false
+            }
+          });
+
+          view.ui.add(
+            new LayerList({
+              view,
+              listItemCreatedFunction(event) {
+                if (event.item.layer === layer) {
+                  document.getElementById("rendererDiv").style.display =
+                    "block";
+                  event.item.panel = {
+                    content: document.getElementById("rendererDiv"),
+                    open: true,
+                    className: "esri-icon-maps"
+                  };
+                }
+                if (event.item.layer === groupLayer) {
+                  event.item.open = true;
+                }
+              }
+            }),
+            "top-right"
+          );
+
+          // This function is called when the layer view is loaded
+          // or when user changes the renderer settings from the UI
+          function updateRenderer() {
+            // clone the layer renderer
+            // layer's renderer needs to be cloned if it changes at runtime
+            const renderer = layer.renderer.clone();
+            renderer.colorRamp = {
+              type: "algorithmic",
+              fromColor: [0, 0, 0, 0],
+              toColor: [0, 0, 0, 1]
+            };
+            const bandStat = layer.rasterInfo.statistics[0];
+            renderer.stretchType = stretchType;
+            switch (stretchType) {
+              case "min-max":
+                renderer.statistics = [
+                  {
+                    min: valueSlider.values[0],
+                    max: valueSlider.values[1],
+                    avg: bandStat.avg,
+                    stdev: bandStat.stddev
+                  }
+                ];
+                break;
+              case "standard-deviation":
+                renderer.numberOfStandardDeviations = valueSlider.values[0];
+                renderer.statistics = [bandStat];
+                break;
+            }
+            // apply the cloned renderer back to the layer's renderer
+            // changes will be immediate
+            layer.renderer = renderer;
+          }
+
+          const sliderLabel = document.getElementById("sliderLabel");
+          const stretchTypeSelect = document.getElementById("stretchType");
+
+          // listen to change event on stretchType dropdown
+          stretchTypeSelect.addEventListener("change", function () {
+            stretchType = stretchTypeSelect.value;
+            changeSliderValues(stretchType);
+          });
+
+          // This function is called when user selects a stretch type
+          // from the dropdown. It sets up raster stretch renderer
+          // parameters corresponding to the selected stretch renderer
+          function changeSliderValues(stretchType) {
+            sliderLabel.innerHTML = `${stretchType} value:`;
+            switch (stretchType) {
+              case "min-max":
+                // code block
+                valueSlider.max = 5000;
+                valueSlider.min = 0;
+                valueSlider.steps = 10;
+                valueSlider.values = [120, 3068];
+                break;
+              case "standard-deviation":
+                valueSlider.min = 1;
+                valueSlider.max = 3;
+                valueSlider.steps = 1;
+                valueSlider.values = [1];
+                break;
+            }
+            updateRenderer();
+          }
+
+          // set up a new slider to change numeric values
+          // corresponding to the stretch renderer parameters
+          const valueSlider = new Slider({
+            container: "value-slider",
+            min: 0,
+            max: 5000,
+            values: [120, 3068],
+            steps: 10,
+            snapOnClickEnabled: false,
+            visibleElements: {
+              labels: true,
+              rangeLabels: true
+            }
+          });
+
+          valueSlider.on(["thumb-change", "thumb-drag"], updateRenderer);
+
+          view.ui.add(
+            new BasemapToggle({
+              view,
+              nextBasemap: "dark-gray-vector"
+            }),
+            "bottom-left"
+          );
+
+          window.toggleBlendMode = (event) => {
+            layer.blendMode = event.target.checked
+              ? "destination-in"
+              : "normal";
+          };
+        })());
+    </script>
+  </body>
+</html>

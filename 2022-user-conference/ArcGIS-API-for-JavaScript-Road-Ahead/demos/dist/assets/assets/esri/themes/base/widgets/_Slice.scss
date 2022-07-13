@@ -1,0 +1,80 @@
+@mixin slice() {
+  .esri-slice {
+    flex-shrink: 0;
+
+    &__container {
+      position: relative;
+      padding: $cap-spacing 0;
+      overflow-y: auto;
+      a {
+        text-decoration: none;
+      }
+    }
+
+    &__hint {
+      padding: 0 $side-spacing;
+      animation: esri-fade-in 250ms ease-in-out;
+    }
+
+    &__hint-text {
+      margin: $cap-spacing 0;
+      padding: 0;
+    }
+
+    &__exclude-button {
+      margin-bottom: $cap-spacing;
+    }
+
+    &__settings {
+      ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        list-style: none;
+      }
+
+      padding: $cap-spacing--half $side-spacing $cap-spacing $side-spacing;
+      animation: esri-fade-in 250ms ease-in-out;
+    }
+
+    &__layer-item {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      gap: $side-spacing--half;
+
+      &__title {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &__cross {
+      color: inherit;
+      position: relative;
+    }
+
+    &__panel--error {
+      color: $font-color--error;
+      padding: 0 $side-spacing;
+      animation: esri-fade-in 250ms ease-in-out;
+    }
+
+    &__actions {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      padding: 0 $side-spacing;
+    }
+  }
+}
+
+@if $include_Slice == true {
+  @include slice();
+}

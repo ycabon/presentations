@@ -168,6 +168,14 @@ export function cogApplication() {
                 "./geotiffs/NDFD_wind.tiff",
                 window.location.href
               ).toString(),
+            }),
+            new ImageryTileLayer({
+              visible: false,
+              title: "Wind speed - Flow",
+              url: new URL(
+                "./geotiffs/NDFD_wind.tiff",
+                window.location.href
+              ).toString(),
               effect: "bloom(1 0 0)",
               renderer: new FlowRenderer({
                 density: 1,
@@ -175,7 +183,7 @@ export function cogApplication() {
                 flowSpeed: 10,
                 trailWidth: "2px",
               })
-            } as any),
+            }),
           ],
         }),
       ],

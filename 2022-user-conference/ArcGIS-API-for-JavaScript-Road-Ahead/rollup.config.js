@@ -9,7 +9,7 @@ const getDirectories = (source) =>
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-const excluded = ["utils", "dist", "control-points"];
+const excluded = ["utils", "dist"];
 
 const applications = getDirectories("./demos")
   .filter((value) => !excluded.includes(value))

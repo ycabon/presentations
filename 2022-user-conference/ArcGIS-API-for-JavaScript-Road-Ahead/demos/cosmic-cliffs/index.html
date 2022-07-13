@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      “Cosmic Cliffs” in the Carina Nebula (NIRCam Image)
+    </title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.24/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.24/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #282828;
+      }
+    </style>
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/MediaLayer",
+        "esri/layers/support/ImageElement",
+        "esri/layers/support/ExtentAndRotationGeoreference",
+        "esri/geometry/Extent"
+      ], (
+        Map,
+        MapView,
+        MediaLayer,
+        ImageElement,
+        ExtentAndRotationGeoreference,
+        Extent
+      ) => {
+
+        const spatialReference = { wkid: 0 };
+
+        // create a video element by setting video param to point to the video file url
+        // set the geographic location of the video file on the map using an extent
+        const element = new ImageElement({
+          image: new URL("./cosmic-cliffs.png", window.location.href).toString(),
+          georeference: new ExtentAndRotationGeoreference({
+            extent: new Extent({
+              xmin: 0,
+              ymin: 0,
+              xmax: 2000,
+              ymax: 1158,
+              spatialReference
+            })
+          })
+        });
+
+        // add the video element to the media layer
+        const layer = new MediaLayer({
+          source: [element],
+          copyright: "NASA",
+          effect: "drop-shadow(0, 10px, 20px, black)"
+        });
+
+        const map = new Map({
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map, 
+          constraints: {
+            snapToZoom: false
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body class="calcite-theme-dark">
+    <calcite-shell>
+      <header slot="header">
+        <h2 style="margin-left: 30px">
+          “Cosmic Cliffs” in the Carina Nebula (NIRCam Image)
+        </h2>
+      </header>
+      <div id="viewDiv"></div>
+    </calcite-shell>
+  </body>
+</html>

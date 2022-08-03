@@ -1,0 +1,9 @@
+import { eA as E, t } from './_virtual_index-9b831d4a.js';
+
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.25/esri/copyright.txt for details.
+*/
+function n(e,t){if(e===t)return !0;if(null==e||null==t)return !1;if(e.length!==t.length)return !1;for(let n=0;n<e.length;n++){const r=e[n],a=t[n];if(r.length!==a.length)return !1;for(let e=0;e<r.length;e++)if(r[e]!==a[e])return !1}return !0}function r(e,t){if(e===t)return !0;if(null==e||null==t)return !1;if(e.length!==t.length)return !1;for(let r=0;r<e.length;r++)if(!n(e[r],t[r]))return !1;return !0}function a(e,n){return !!E(e.spatialReference,n.spatialReference)&&(e.x===n.x&&e.y===n.y&&e.z===n.z&&e.m===n.m)}function i(e,n){return e.hasZ===n.hasZ&&e.hasM===n.hasM&&(!!E(e.spatialReference,n.spatialReference)&&r(e.paths,n.paths))}function s(e,n){return e.hasZ===n.hasZ&&e.hasM===n.hasM&&(!!E(e.spatialReference,n.spatialReference)&&r(e.rings,n.rings))}function u(e,r){return e.hasZ===r.hasZ&&e.hasM===r.hasM&&(!!E(e.spatialReference,r.spatialReference)&&n(e.points,r.points))}function f(e,n){return e.hasZ===n.hasZ&&e.hasM===n.hasM&&(!!E(e.spatialReference,n.spatialReference)&&(e.xmin===n.xmin&&e.ymin===n.ymin&&e.zmin===n.zmin&&e.xmax===n.xmax&&e.ymax===n.ymax&&e.zmax===n.zmax))}function l(t$1,n){if(t$1===n)return !0;if(t(t$1)||t(n))return !1;if(t$1.type!==n.type)return !1;switch(t$1.type){case"point":return a(t$1,n);case"extent":return f(t$1,n);case"polyline":return i(t$1,n);case"polygon":return s(t$1,n);case"multipoint":return u(t$1,n);case"mesh":return !1;default:return}}function o(e,t){if(e===t)return !0;if(!e||!t)return !1;const n=Object.keys(e),r=Object.keys(t);if(n.length!==r.length)return !1;for(const a of n)if(e[a]!==t[a])return !1;return !0}function c(e,t){return e===t||null!=e&&null!=t&&e.objectId===t.objectId&&(!!l(e.geometry,t.geometry)&&!!o(e.attributes,t.attributes))}
+
+export { a, c };

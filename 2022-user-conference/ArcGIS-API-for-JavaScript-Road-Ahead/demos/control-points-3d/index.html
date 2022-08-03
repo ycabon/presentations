@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>MediaLayer - Control Points - Road Ahead</title>
+
+    <style>
+      html,
+      body,
+      #application,
+      #dropTarget {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      calcite-scrim.scrim {
+        backdrop-filter: 4px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@esri/calcite-components/dist/calcite/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.24/esri/css/main.css"
+    />
+    <link rel="stylesheet" href="../widgets/DropTarget.css" />
+  </head>
+
+  <body>
+    <div id="application"></div>
+    <script type="module">
+      import { controlPoints3DApplication } from "../dist/index.js";
+      controlPoints3DApplication();
+    </script>
+  </body>
+</html>

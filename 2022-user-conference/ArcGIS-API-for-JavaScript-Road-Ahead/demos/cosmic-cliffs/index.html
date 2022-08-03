@@ -41,14 +41,16 @@
         "esri/layers/MediaLayer",
         "esri/layers/support/ImageElement",
         "esri/layers/support/ExtentAndRotationGeoreference",
-        "esri/geometry/Extent"
+        "esri/geometry/Extent",
+        "esri/core/reactiveUtils"
       ], (
         Map,
         MapView,
         MediaLayer,
         ImageElement,
         ExtentAndRotationGeoreference,
-        Extent
+        Extent,
+        reactiveUtils
       ) => {
 
         const spatialReference = { wkid: 0 };
@@ -58,6 +60,7 @@
         const element = new ImageElement({
           image: new URL("./cosmic-cliffs.png", window.location.href).toString(),
           georeference: new ExtentAndRotationGeoreference({
+            // rotation: 45,
             extent: new Extent({
               xmin: 0,
               ymin: 0,
@@ -82,10 +85,33 @@
         const view = new MapView({
           container: "viewDiv",
           map: map, 
+          // rotation: 45,
           constraints: {
-            snapToZoom: false
+            snapToZoom: false,
+            // rotationEnabled: false,
+            geometry: new Extent({
+              xmin: 0,
+              ymin: 0,
+              xmax: 2000,
+              ymax: 1158,
+              spatialReference
+            })
           }
         });
+
+        reactiveUtils.watch(
+          () => {
+            const { width: ew, height: eh } = element.georeference.extent;
+            const { width: w, height: h } = view;
+
+            return Math.max(ew / w, eh / h);
+          },
+          (scale) => {
+            if (Number.isFinite(scale)) {
+              view.constraints.minScale = scale;
+            }
+          }
+        );
       });
     </script>
   </head>

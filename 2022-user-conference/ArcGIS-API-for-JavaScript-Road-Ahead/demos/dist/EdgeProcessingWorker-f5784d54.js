@@ -1,0 +1,9 @@
+import { st as A, su as f$1, sv as z, sw as u$1, sx as h, sy as d$1, sz as a } from './_virtual_index-9b831d4a.js';
+
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.25/esri/copyright.txt for details.
+*/
+class o{async extract(e){const t=c(e),n=f$1(t),s=[t.data.buffer];return {result:u(n,s),transferList:s}}async extractComponentsEdgeLocations(t){const r=c(t),i=u$1(r.data,r.skipDeduplicate,r.indices,r.indicesLength),a=h(i,p,g),o=[];return {result:z(a.regular.instancesData,o),transferList:o}}async extractEdgeLocations(t){const r=c(t),i=u$1(r.data,r.skipDeduplicate,r.indices,r.indicesLength),a=h(i,d,g),o=[];return {result:z(a.regular.instancesData,o),transferList:o}}}function c(e){return {data:A.createView(e.dataBuffer),indices:"Uint32Array"===e.indicesType?new Uint32Array(e.indicesBuffer):"Uint16Array"===e.indicesType?new Uint16Array(e.indicesBuffer):void 0,indicesLength:e.indicesLength,writerSettings:e.writerSettings,skipDeduplicate:e.skipDeduplicate}}function u(t,n){n.push(t.regular.lodInfo.lengths.buffer),n.push(t.silhouette.lodInfo.lengths.buffer);return {regular:{instancesData:z(t.regular.instancesData,n),lodInfo:{lengths:t.regular.lodInfo.lengths.buffer}},silhouette:{instancesData:z(t.silhouette.instancesData,n),lodInfo:{lengths:t.silhouette.lodInfo.lengths.buffer}},averageEdgeLength:t.averageEdgeLength}}class l{allocate(e){return d$1.createBuffer(e)}trim(e,t){return e.slice(0,t)}write(e,t,n){e.position0.setVec(t,n.position0),e.position1.setVec(t,n.position1);}}class f{allocate(e){return a.createBuffer(e)}trim(e,t){return e.slice(0,t)}write(e,t,n){e.position0.setVec(t,n.position0),e.position1.setVec(t,n.position1),e.componentIndex.set(t,n.componentIndex);}}const d=new l,p=new f,g={allocate:()=>null,write:()=>{},trim:()=>null};
+
+export { o as default };

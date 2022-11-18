@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@arcgis/core": "file:arcgis-core-4.25.0-next.20220711.tgz",
+    "@arcgis/core": "^4.25.4",
     "@placemarkio/flat-drop-files": "^1.0.2",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-multi-entry": "^4.0.0",

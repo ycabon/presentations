@@ -63,8 +63,12 @@ export function overlayApplication() {
           },
           async (controlPoints) => {
             if (this.georeference) {
+              const oldControlPoints =  this.georeference.controlPoints;
               this.georeference.controlPoints =
                 controlPoints as __esri.ControlPoint[];
+              if (!(this.georeference as any)["coords"]) {
+                this.georeference.controlPoints = oldControlPoints;
+              }
             }
           }
         ),
@@ -484,7 +488,7 @@ export function overlayApplication() {
               slot="contextual-panel"
               position="end"
               height-scale="s"
-              width-scale="l"
+              width-scale="m"
             >
               <calcite-panel heading="Media settings">
                 <div style="display: flex; flex-direction: column;">

@@ -1,0 +1,11 @@
+import { fD as E, m as r, gt as ee, gu as Z, t, gm as jn, fN as x$1, aO as o, aK as n } from './_virtual_index-1ea2035a.js';
+import { a } from './quantityFormatUtils-d7b5c624.js';
+import { i } from './measurementUtils-d2a749ce.js';
+
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.25/esri/copyright.txt for details.
+*/
+var f;function p(t){return m(t,f.Direct)}function h(t){return m(t,f.Horizontal)}function m(n,i$1){const{hasZ:o,spatialReference:c}=n,u=i(c);let l=0;const a$1=Z(u);if(t(a$1))return null;const p=i$1===f.Direct?j:d;for(const r of n.paths){if(r.length<2)continue;const n=r.length-1;for(let e=0;e<n;++e){const n=r[e];U[0]=n[0],U[1]=n[1],U[2]=o?n[2]:0;const i=r[e+1];b[0]=i[0],b[1]=i[1],b[2]=o?i[2]:0;const u=p(U,b,c);if(t(u))return null;l+=u.value;}}return a(l,a$1)}function y(t,n){const{spatialReference:r}=t;return E(r,n.spatialReference)?(U[0]=t.x,U[1]=t.y,U[2]=t.hasZ?t.z:0,b[0]=n.x,b[1]=n.y,b[2]=n.hasZ?n.z:0,j(U,b,r)):null}function R(t,n){const{spatialReference:r}=t;return E(r,n.spatialReference)?(U[0]=t.x,U[1]=t.y,U[2]=t.hasZ?t.z:0,b[0]=n.x,b[1]=n.y,b[2]=n.hasZ?n.z:0,d(U,b,r)):null}function v(t,n){const{spatialReference:r}=t;return E(r,n.spatialReference)?(U[0]=t.x,U[1]=t.y,U[2]=t.hasZ?t.z:0,b[0]=n.x,b[1]=n.y,b[2]=n.hasZ?n.z:0,D(U,b,r)):null}function x(t){return U[0]=t.x,U[1]=t.y,U[2]=t.hasZ?t.z:0,H(U,t.spatialReference)}function j(t,e,i){const o=V(t,e,i,f.Direct);return r(o)?a(o.direct,o.unit):null}function d(t,e,i){const o=V(t,e,i,f.Horizontal);return r(o)?a(o.horizontal,o.unit):null}function D(t,e,i){const o=V(t,e,i,f.Vertical);return r(o)?a(o.verticalSigned,o.unit):null}function H(t,e){const o=ee(e);return r(o)?a(t[2],o):null}function V(n,r,i$1,u){const a=i(i$1),p=Z(a);if(t(p))return null;const h=r[2]-n[2];if(u===f.Vertical)return {verticalSigned:h,unit:p};if(!jn(n,i$1,S,a)||!jn(r,i$1,k,a))return null;if(u===f.Direct){return {direct:x$1(k,S),unit:p}}if(o(M,n[0],n[1],r[2]),!jn(M,i$1,M,a))return null;const m=x$1(M,k);if(u===f.Horizontal)return {horizontal:m,unit:p};return {direct:x$1(k,S),horizontal:m,vertical:Math.abs(h),unit:p}}!function(t){t[t.Direct=0]="Direct",t[t.Horizontal=1]="Horizontal",t[t.Vertical=2]="Vertical";}(f||(f={}));const U=n(),b=n(),S=n(),k=n(),M=n();
+
+export { D, R, d, h, j, p, v, x, y };

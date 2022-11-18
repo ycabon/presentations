@@ -1,0 +1,9 @@
+import { f, E as s, ar as G, ax as L, aq as P, e6 as U } from './_virtual_index-1ea2035a.js';
+
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.25/esri/copyright.txt for details.
+*/
+function n(n,i){const{textureFloat:f$1,colorBufferFloat:s$1}=n.capabilities,u=f$1?.textureFloat,m=f$1?.textureFloatLinear,_=f$1?.textureHalfFloat,p=f$1?.textureHalfFloatLinear,d=f$1?.HALF_FLOAT,x=s$1?.textureFloat,b=s$1?.textureHalfFloat,c=s$1?.floatBlend,{floatBufferBlendWorking:h}=f(n.driverTest);if(!u&&!_)throw new s("heatmap:missing-texture-float","HeatmapRenderer requires WebGL2 or the WebGL1 extension OES_texture_float or OES_texture_half_float.");if(!x&&!b)throw new s("heatmap:missing-color-buffer-float","HeatmapRenderer requires the WebGL extension EXT_color_buffer_float or EXT_color_buffer_half_float or WEBGL_color_buffer_float.");if(!(c&&h||b))throw new s("heatmap:missing-float-blend","HeatmapRenderer requires the WebGL extension EXT_float_blend or EXT_color_buffer_half_float."+(h?"":" This device claims support for EXT_float_blend, but does not actually support it."));const E=u&&x&&c&&h,F=_&&b,R=m,L$1=p,T=!!s$1?.R32F,w=!!s$1?.R16F;if(E&&(R||!L$1))return R||i.warnOnce("Missing WebGL extension OES_texture_float_linear. Heatmap quality may be reduced."),{dataType:G.FLOAT,samplingMode:R?L.LINEAR:L.NEAREST,pixelFormat:T?P.RED:P.RGBA,internalFormat:T?U.R32F:P.RGBA};if(F)return L$1||i.warnOnce("Missing WebGL extension OES_texture_half_float_linear. Heatmap quality may be reduced."),{dataType:d,samplingMode:L$1?L.LINEAR:L.NEAREST,pixelFormat:w?P.RED:P.RGBA,internalFormat:w?U.R16F:P.RGBA};throw new s("heatmap:missing-hardware-support","HeatmapRenderer requires WebGL extensions that allow it to render and blend to float or half float textures.")}
+
+export { n };

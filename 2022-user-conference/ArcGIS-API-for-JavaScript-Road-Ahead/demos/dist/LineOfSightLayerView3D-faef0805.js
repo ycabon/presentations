@@ -1,0 +1,11 @@
+import { b7 as l, eX as w, m as r, E as s, bD as j, es as s$1, gh as p, t, dk as p$1, u as e, y, z as n$1 } from './_virtual_index-1ea2035a.js';
+import { n } from './LayerView3D-c60482d9.js';
+import { u } from './LayerView-04d8537b.js';
+
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.25/esri/copyright.txt for details.
+*/
+const d="analysis-view-handles";let V=class extends(n(u)){constructor(s){super(s),this.type="line-of-sight-3d",this._analysisModule=null;}initialize(){this.handles.add(l((()=>this.layer.analysis),(s=>{this._destroyAnalysisView(),r(s)&&this._createAnalysisView(s);}),w),d);}destroy(){this.handles.remove(d),this._destroyAnalysisView();}async whenAnalysisView(){if(r(this.analysisView))return this.analysisView;if(r(this._createAnalysisViewTask))return this._createAnalysisViewTask.promise;throw new s("layerview:no-analysisview-for-analysis","The analysis has not been set on the LineOfSightLayer of this layer view")}isUpdating(){return r(this._createAnalysisViewTask)||r(this.analysisView)&&this.analysisView.updating}_createAnalysisView(s){const e=j((async i=>(this.analysisView=await this._createAnalysisViewPromise(s,i),this._createAnalysisViewTask===e&&(this._createAnalysisViewTask=null),this.analysisView)));this._createAnalysisViewTask=e;}_destroyAnalysisView(){this.analysisView=s$1(this.analysisView),this._createAnalysisViewTask=p(this._createAnalysisViewTask);}async _createAnalysisViewPromise(s$1,i){let a=this._analysisModule;if(t(a)){const s=await this._loadAnalysisModule();this._analysisModule=s,a=s;}const t$1=new a.default({analysis:s$1,view:this.view,parent:this});if(await t$1.when(),p$1(i))throw t$1.destroy(),new s("layerview:no-analysisview-for-analysis","The analysis has not been added to the LineOfSightLayer of this layer view",{analysis:s$1});return t$1}_loadAnalysisModule(){return import('./LineOfSightAnalysisView3D-c3634114.js')}};e([y()],V.prototype,"type",void 0),e([y()],V.prototype,"layer",void 0),e([y()],V.prototype,"analysisView",void 0),e([y()],V.prototype,"_createAnalysisViewTask",void 0),V=e([n$1("esri.views.3d.layers.LineOfSightLayerView3D")],V);const m=V;
+
+export { m as default };

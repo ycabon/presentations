@@ -1,0 +1,70 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      ImageryTileLayer with COG | Sample | ArcGIS Maps SDK for JavaScript 4.26
+    </title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #infoDiv {
+        padding: 10px;
+        width: 300px;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/Graphic"
+      ], (Map, MapView, ImageryTileLayer, Graphic) => {
+        const layer = new ImageryTileLayer({
+          portalItem: {
+            // id: "6f1300bdf5b446098986e9705a067908"
+            // id: ""
+          }
+        });
+
+        const map = new Map({
+          basemap: "topo-vector",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map
+        });
+
+        // view.whenLayerView(layer).then(() => {
+        //   // zoom to the fullExtent of the layer when layer loads
+        //   view.goTo(layer.fullExtent);
+        // });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

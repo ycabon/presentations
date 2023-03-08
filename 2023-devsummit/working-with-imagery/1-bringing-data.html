@@ -37,14 +37,27 @@
         "esri/Map",
         "esri/views/MapView",
         "esri/layers/ImageryTileLayer",
+        "esri/layers/Layer",
         "esri/Graphic"
-      ], (Map, MapView, ImageryTileLayer, Graphic) => {
+      ], (Map, MapView, ImageryTileLayer, Layer, Graphic) => (async () => {
+
+        const itemId = "6f1300bdf5b446098986e9705a067908";
+        // const itemId = "";
+
+        //*/
         const layer = new ImageryTileLayer({
           portalItem: {
-            // id: "6f1300bdf5b446098986e9705a067908"
-            // id: ""
+            id: itemId
           }
         });
+
+        /*/
+        const layer = await Layer.fromPortalItem({
+          portalItem: {
+            id: itemId
+          }
+        });
+        //*/
 
         const map = new Map({
           basemap: "topo-vector",
@@ -56,11 +69,13 @@
           map: map
         });
 
-        // view.whenLayerView(layer).then(() => {
-        //   // zoom to the fullExtent of the layer when layer loads
-        //   view.goTo(layer.fullExtent);
-        // });
-      });
+        //*/
+        // zoom to the fullExtent of the layer when layer loads
+        const layerView = view.whenLayerView(layer);
+        view.goTo(layer.fullExtent);
+        //*/
+
+      })());
     </script>
   </head>
 

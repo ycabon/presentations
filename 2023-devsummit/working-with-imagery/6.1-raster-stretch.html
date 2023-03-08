@@ -1,0 +1,144 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>6.1-raster-stretch</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-light.min.css" integrity="sha512-WDk6RzwygsN9KecRHAfm9HTN87LQjqdygDmkHSJxVkVI7ErCZ8ZWxP6T8RvBujY1n2/E4Ac+bn2ChXnp5rnnHA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/intellij-light.min.css" integrity="sha512-rxoFrVtnfvSuel468Qr3r4djCRmFKs4DiJXUnOeaA/+uac9DkEOTEhfkcwUNiGTiA4jr6pBvXk6leEhweuGaVg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://jsdev.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://jsdev.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+
+  <script>
+    require([
+      "esri/WebMap",
+      "esri/views/MapView",
+      "esri/layers/TileLayer",
+      "esri/layers/GroupLayer",
+      "esri/layers/ImageryTileLayer",
+      "esri/layers/VectorTileLayer",
+      "esri/widgets/BasemapLayerList"
+    ], function (
+      WebMap,
+      MapView,
+      TileLayer,
+      GroupLayer,
+      ImageryTileLayer,
+      VectorTileLayer,
+      BasemapLayerList
+    ) {
+      map = new WebMap({
+        basemap: {
+          baseLayers: [
+            new TileLayer({
+              portalItem: {
+                id: "1b243539f4514b6ba35e7d995890db1d",
+              },
+              popupEnabled: false,
+            }),
+            new GroupLayer({
+              title: "Stretched Imagery",
+              blendMode: "multiply",
+              effect: "saturate(150%) contrast(110%)",
+              layers: [
+                new TileLayer({
+                  portalItem: {
+                    id: "10df2279f9684e4a9f6a7f08febac2a9",
+                  },
+                  popupEnabled: false,
+                }),
+                new ImageryTileLayer({
+                  url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+                  blendMode: "destination-in",
+                  renderer: {
+                    type: "raster-stretch",
+                    stretchType: "min-max",
+                    statistics: [{ min: 0, max: 4000, avg: 400, stddev: 870 }],
+                    numberOfStandardDeviations: 1,
+                    colorRamp: {
+                      type: "algorithmic",
+                      fromColor: [0, 0, 0, 0.2],
+                      toColor: [0, 0, 0, 1],
+                    },
+                  },
+                  popupEnabled: false,
+                }),
+              ],
+            }),
+            new VectorTileLayer({
+              portalItem: {
+                id: "33064a20de0c48d2bb61efa8faca93a8",
+              },
+              popupEnabled: false,
+            }),
+          ],
+          referenceLayers: [
+            new VectorTileLayer({
+              portalItem: {
+                id: "14fbc125ccc9488888b014db09f35f67",
+              },
+              popupEnabled: false,
+            }),
+          ],
+        },
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        extent: {
+          spatialReference: {
+            latestWkid: 3857,
+            wkid: 102100,
+          },
+          xmin: -14320662.592495825,
+          ymin: 3951845.110633027,
+          xmax: -12805915.254560888,
+          ymax: 5120521.433917372,
+        },
+        constraints: {
+          snapToZoom: false,
+        },
+      });
+
+      view.ui.add(new BasemapLayerList({ view }), "top-right");
+    });
+  </script>
+</html>

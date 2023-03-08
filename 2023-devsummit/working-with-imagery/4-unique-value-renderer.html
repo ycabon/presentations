@@ -1,0 +1,152 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      4-unique-value-renderer
+    </title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/WebMap",
+        "esri/views/MapView",
+        "esri/layers/ImageryLayer",
+        "esri/layers/VectorTileLayer",
+        "esri/layers/FeatureLayer",
+        "esri/renderers/SimpleRenderer",
+        "esri/renderers/UniqueValueRenderer",
+        "esri/symbols/SimpleFillSymbol"
+      ], (
+        WebMap,
+        MapView,
+        ImageryLayer,
+        VectorTileLayer,
+        FeatureLayer,
+        SimpleRenderer, UniqueValueRenderer,
+        SimpleFillSymbol
+      ) => (async () => {
+
+        layer = new ImageryLayer({
+          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer",
+          // renderer: new UniqueValueRenderer({
+          //   field: "Value",
+          //   uniqueValueInfos: [
+          //     {
+          //       value: 24,
+          //       label: "Developed, High Intensity",
+          //       symbol: new SimpleFillSymbol({
+          //         color: "#ffeb3b",
+          //       }),
+          //     },
+          //     {
+          //       value: 23,
+          //       label: "Developed, Medium Intensity",
+          //       symbol: new SimpleFillSymbol({
+          //         color: "#ffc107",
+          //       }),
+          //     },
+          //     {
+          //       value: 22,
+          //       label: "Developed, Low Intensity",
+          //       symbol: new SimpleFillSymbol({
+          //         color: "#ff9800",
+          //       }),
+          //     },
+          //   ],
+          // }),
+        });
+
+        // fetch the raster attribute table:  https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer/rasterAttributeTable
+        // await layer.load();
+        // const rasterAttributeTable = await layer.fetchRasterAttributeTable();
+        // const attributes = rasterAttributeTable.features.map((feature) => feature.attributes);
+        // console.table(attributes);
+        // console.table(attributes, ["Value", "ClassName"]);
+
+        map = new WebMap({
+          basemap: {
+            baseLayers: [
+              new VectorTileLayer({
+                portalItem: {
+                  id: "bc83b1329cac47ffbd7f70e734be9083",
+                },
+              }),
+              new FeatureLayer({
+                portalItem: {
+                  id: "28da9fa638b74fb295cc07008ef2f14a",
+                },
+                renderer: new SimpleRenderer({
+                  symbol: new SimpleFillSymbol({
+                    style: "none",
+                    outline: {
+                      type: "simple-line",
+                      color: "#282828",
+                    },
+                  }),
+                }),
+              }),
+            ],
+          },
+          layers: [layer],
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map,
+          extent: {
+            spatialReference: {
+              wkid: 102003,
+            },
+            xmax: 1874643.2331984383,
+            xmin: -2268085.08383833,
+            ymax: 1306570.485845424,
+            ymin: -962852.3969934431,
+          },
+          constraints: {
+            snapToZoom: false,
+            minScale: 45_000_000,
+          },
+        });
+      })());
+    </script>
+  </head>
+
+  <body>
+    <calcite-panel heading="UniqueValueRenderer">
+      <div
+        style="padding: 0; margin: 0; height: 100%; width: 100%;"
+        id="viewDiv"
+      ></div>
+    </calcite-shell>
+  </body>
+</html>

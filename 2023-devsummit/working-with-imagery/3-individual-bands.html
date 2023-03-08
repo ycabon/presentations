@@ -6,7 +6,7 @@
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
     <title>
-      2-cog
+      3-individual-bands
     </title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
@@ -41,7 +41,7 @@
       ], (Map, MapView, ImageryTileLayer, Graphic) => {
         let spectralChart;
 
-        const layer = new ImageryTileLayer({
+        layer = new ImageryTileLayer({
           url: new URL("./data/landsat8/Boliva_LC08_L1TP_001069_20190719_MS.tiff", window.location.href).toString(),
           bandIds: [3, 2, 1]
         });
@@ -60,11 +60,33 @@
           // zoom to the fullExtent of the layer when layer loads
           view.goTo(layer.fullExtent);
         });
+
+        view.ui.add("infoDiv", "top-right");
+
+        // change the common bandIds combination for the landsat 8 imagery
+        const bandIdsSelect = document.getElementById("bandIdsSelect");
+        bandIdsSelect.addEventListener("change", () => {
+          const bands = bandIdsSelect.value.split(",").map(Number);
+          layer.bandIds = bands;
+        });
       });
     </script>
   </head>
 
   <body>
     <div id="viewDiv"></div>
+    <div id="infoDiv" class="esri-widget">
+      <div id="bandIdsSelectDiv">
+        <h3 class="esri-widget__heading">Change band compositions</h3>
+        <select id="bandIdsSelect" class="esri-input esri-select">
+          <option value="3, 2, 1" selected>4,3,2 - Natural color</option>
+          <option value="6,5,3">7,6,4 - Short-wave infrared</option>
+          <option value="4,3,2">5,4,3 - Color Infrared</option>
+          <option value="5,4,1">6,5,2 - Agriculture</option>
+          <option value="3,2,0">4,3,1 - Bathymetric</option>
+          <option value="6,5,1">7,6,2 - Geology</option>
+        </select>
+      </div>
+    </div>
   </body>
 </html>

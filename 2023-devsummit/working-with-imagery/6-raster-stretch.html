@@ -1,0 +1,430 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>6-raster-stretch</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-light.min.css" integrity="sha512-WDk6RzwygsN9KecRHAfm9HTN87LQjqdygDmkHSJxVkVI7ErCZ8ZWxP6T8RvBujY1n2/E4Ac+bn2ChXnp5rnnHA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/intellij-light.min.css" integrity="sha512-rxoFrVtnfvSuel468Qr3r4djCRmFKs4DiJXUnOeaA/+uac9DkEOTEhfkcwUNiGTiA4jr6pBvXk6leEhweuGaVg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://jsdev.arcgis.com/4.26/esri/themes/dark/main.css"
+    />
+    <script src="https://jsdev.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv {
+        flex-grow: 1;
+      }
+
+      .esri-expand__content--expanded {
+        width: 580;
+      }
+      /**
+  * Hover tooltip
+  */
+      .tooltip {
+        position: absolute;
+        pointer-events: none;
+        transition: opacity 200ms;
+        opacity: 0;
+      }
+
+      .tooltip > div {
+        margin: 0 auto;
+        padding: 12px;
+        border-radius: 4px;
+        box-shadow: 0px 1px 2px rgb(255 255 255 / 30%);
+        transform: translate3d(-50%, -125%, 0);
+        backdrop-filter: contrast(175%) brightness(300%) blur(12px);
+        /* background-color: #222d; */
+        background-color: #0cc6ffcf;
+        color: black;
+        z-index: 9999;
+        font-size: xx-large;
+        font-variant-numeric: tabular-nums;
+        width: 150px;
+        text-align: center;
+      }
+      .esri-expand__content {
+        background-color: white;
+      }
+
+      .codeblock {
+        padding: 0;
+        margin: 0;
+      }
+
+      .codeblock > code {
+        white-space: pre-wrap;
+        overflow: auto;
+        font-size: 16px;
+      }
+
+      .hljs {
+        background: inherit;
+      }
+    </style>
+  </head>
+
+  <body class="calcite-mode-dark">
+    <calcite-shell>
+      <calcite-panel heading="Single band ImageryTileLayer">
+        <div class="content">
+          <div id="viewDiv"></div>
+        </div>
+      </calcite-panel>
+    </calcite-shell>
+  </body>
+
+  <calcite-panel id="codeDiv">
+    <div style="padding: 12px">
+      <calcite-block open>
+        <pre
+          class="codeblock"
+        ><code class="language-javascript">const bandStatistics = layer.rasterInfo.statistics[0];
+
+const renderer = new RasterStretchRenderer({
+  stretchType: "min-max",
+  statistics: [{
+    min: stretchSlider.minValue,
+    max: stretchSlider.maxValue,
+    avg: bandStatistics.avg,
+    stddev: bandStatistics.stddev,
+  }],
+  numberOfStandardDeviations: 1,
+  colorRamp: {
+    type: "algorithmic",
+    fromColor: [0, 0, 0, 0],
+    toColor: [0, 0, 0, 1],
+  },
+});
+
+layer.renderer = renderer;
+        </code></pre>
+        <calcite-fab
+          id="runButton"
+          kind="brand"
+          icon="play-f"
+          scale="l"
+          style="right: 12px; bottom: 12px; position: absolute"
+        ></calcite-fab>
+      </calcite-block>
+      <calcite-label>
+        min-max elevation values
+        <calcite-slider
+          id="stretchSlider"
+          min="0"
+          max="5000"
+          min-value="700"
+          max-value="2000"
+          label-handles
+          precise
+          max-label="5000m"
+          label-ticks
+          min-label="0m"
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label layout="inline">
+        <calcite-checkbox id="blendCheckbox"></calcite-checkbox>
+        Enable blend mode <code>"destination-in"</code>
+      </calcite-label>
+    </div>
+  </calcite-panel>
+
+  <script>
+    require([
+      "esri/core/promiseUtils",
+      "esri/Graphic",
+      "esri/geometry/Extent",
+      "esri/Map",
+      "esri/intl",
+      "esri/views/MapView",
+      "esri/layers/GroupLayer",
+      "esri/layers/TileLayer",
+      "esri/layers/ImageryTileLayer",
+      "esri/layers/GraphicsLayer",
+      "esri/renderers/RasterStretchRenderer",
+      "esri/widgets/Expand"
+    ], (
+      promiseUtils,
+      Graphic,
+      Extent,
+      Map,
+      intl,
+      MapView,
+      GroupLayer,
+      TileLayer,
+      ImageryTileLayer,
+      GraphicsLayer,
+      RasterStretchRenderer,
+      Expand
+    ) =>
+      (async () => {
+        const url =
+          "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer";
+
+        // create a ImageryTileLayer from tiled elevation service
+        const layer = new ImageryTileLayer({
+          url: url,
+          title: "World Elevation ImageryTileLayer",
+        });
+
+        const groupLayer = new GroupLayer({
+          title: "Group Layer",
+          layers: [
+            new TileLayer({
+              url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer",
+              listMode: "hide-children",
+            }),
+            layer,
+          ],
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [groupLayer],
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 2.5,
+          center: [-30, -20],
+          // zoom: 4,
+          // center: [84, 31],
+          constraints: {
+            snapToZoom: false,
+          },
+        });
+
+        view.ui.add(new Expand({
+          content: document.getElementById("codeDiv"),
+          view
+        }), "top-right")
+
+        // view.ui.add(document.getElementById("codeDiv"), "top-right");
+
+        const stretchSlider = document.getElementById("stretchSlider");
+        const blendCheckbox = document.getElementById("blendCheckbox");
+        blendCheckbox.addEventListener("calciteCheckboxChange", () => {
+          layer.blendMode =
+            layer.blendMode === "normal" ? "destination-in" : "normal";
+        });
+
+        function updateRenderer() {
+          const bandStatistics = layer.rasterInfo.statistics[0];
+
+          const renderer = new RasterStretchRenderer({
+            stretchType: "min-max",
+            statistics: [
+              {
+                min: stretchSlider.minValue,
+                max: stretchSlider.maxValue,
+                avg: bandStatistics.avg,
+                stddev: bandStatistics.stddev,
+              },
+            ],
+            numberOfStandardDeviations: 1,
+            colorRamp: {
+              type: "algorithmic",
+              fromColor: [0, 0, 0, 0],
+              toColor: [0, 0, 0, 1],
+            },
+          });
+
+          layer.renderer = renderer;
+        }
+
+        const runButton = document.getElementById("runButton");
+        runButton.addEventListener("click", () => {
+          updateRenderer();
+          stretchSlider.addEventListener("calciteSliderInput", updateRenderer);
+        });
+
+        const tooltip = createTooltip();
+        tooltip.hasData = false;
+
+        const debouncedUpdate = promiseUtils.debounce(async (event) => {
+          const point = view.toMap({ x: event.x, y: event.y });
+          const halfRes = view.resolution / 3;
+          const results = await layer.fetchPixels(
+            new Extent({
+              xmin: point.x - halfRes,
+              ymin: point.y - halfRes,
+              xmax: point.x + halfRes,
+              ymax: point.y + halfRes,
+              spatialReference: view.spatialReference,
+            }),
+            1,
+            1
+          );
+          if (results.pixelBlock) {
+            tooltip.setContent(
+              intl.formatNumber(results.pixelBlock.pixels[0][0], {
+                style: "unit",
+                unit: "meter",
+                unitDisplay: "short",
+                maximumFractionDigits: 0,
+              })
+            );
+            tooltip.hasData = true;
+          } else {
+            tooltip.hasData = false;
+          }
+        });
+
+        let graphic = new Graphic({
+          visible: false,
+          symbol: {
+            type: "simple-marker",
+            color: "cyan",
+            size: "12px",
+            outline: {
+              color: "rgba(0, 128, 128, 0.5)",
+              width: "6px",
+            },
+          },
+        });
+
+        map.layers.add(
+          new GraphicsLayer({
+            graphics: [graphic],
+            effect: "drop-shadow(0px 1px 2px rgb(0, 0, 0, 30%))",
+          })
+        );
+
+        let ctrl = new AbortController();
+
+        view.on("pointer-leave", (event) => {
+          tooltip.enabled = false;
+          // graphic.visible = false;
+        });
+        view.on("pointer-enter", (event) => {
+          tooltip.enabled = true;
+          // graphic.visible = true;
+        });
+
+        view.on("pointer-move", (event) => {
+          tooltip.move({ x: event.x, y: event.y });
+          graphic.geometry = view.toMap({ x: event.x, y: event.y });
+          debouncedUpdate(event).catch((error) => {
+            if (!promiseUtils.isAbortError(error)) {
+              throw error;
+            }
+          });
+        });
+
+        function createTooltip() {
+          const tooltip = document.createElement("div");
+          const style = tooltip.style;
+
+          tooltip.setAttribute("role", "tooltip");
+          tooltip.classList.add("tooltip");
+
+          const textElement = document.createElement("div");
+          textElement.classList.add("esri-widget");
+          tooltip.appendChild(textElement);
+
+          view.surface.insertBefore(tooltip, view.surface.children[0]);
+
+          let x = null;
+          let y = null;
+          let targetX = 0;
+          let targetY = 0;
+          let enabled = false;
+          let hasData = false;
+
+          // move the tooltip progressively
+          function move() {
+            x += (targetX - x) * 0.1;
+            y += (targetY - y) * 0.1;
+
+            if (Math.abs(targetX - x) < 1 && Math.abs(targetY - y) < 1) {
+              x = targetX;
+              y = targetY;
+            } else {
+              requestAnimationFrame(move);
+            }
+
+            style.transform =
+              "translate3d(" + Math.round(x) + "px," + Math.round(y) + "px, 0)";
+          }
+
+          function updateVisibility() {
+            if (hasData && enabled) {
+              style.opacity = 1;
+            } else {
+              style.opacity = 0;
+            }
+          }
+
+          return {
+            move(point) {
+              if (!enabled || x === null) {
+                x = point.x;
+                y = point.y;
+              }
+
+              targetX = point.x;
+              targetY = point.y;
+              move();
+            },
+            setContent: (text) => {
+              textElement.innerHTML = text;
+            },
+            appendContent(content) {
+              textElement.appendChild(content);
+            },
+            set enabled(value) {
+              enabled = value;
+              updateVisibility();
+            },
+            set hasData(value) {
+              hasData = value;
+              updateVisibility();
+            },
+          };
+        }
+
+        hljs.highlightAll();
+      })());
+  </script>
+</html>

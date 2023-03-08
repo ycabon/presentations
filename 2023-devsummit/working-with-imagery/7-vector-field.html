@@ -1,0 +1,103 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      7-vector-field
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #controls {
+        width: 300px;
+        max-height: 90vh;
+        overflow: auto;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/renderers/VectorFieldRenderer",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand"
+      ], function (Map, MapView, ImageryTileLayer, VectorFieldRenderer, Legend, Expand) {
+        layer = new ImageryTileLayer({
+          url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS_Hourly_8_30_2021/ImageServer",
+          title: "Winds",
+          renderer: new VectorFieldRenderer({
+            style: "beaufort-kn", // Beaufort point symbol (knots)
+            flowRepresentation: "flow-from", // show flow to angle for wind direction
+            symbolTileSize: 20, // draw one symbol in every 10x10 pixels
+            visualVariables: [
+              {
+                type: "size",
+                field: "Magnitude", // values read from the first band
+                maxDataValue: 32,
+                maxSize: "100px",
+                minDataValue: 0.04,
+                minSize: "8px"
+              },
+              {
+                type: "rotation",
+                field: "Direction", // values read from the second band
+                rotationType: "geographic"
+              }
+            ]
+          })
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 4,
+          center: [-98, 39]
+        });
+
+        const legendExpand = new Expand({
+          view: view,
+          content: new Legend({ view: view }),
+          expanded: true
+        });
+        view.ui.add(legendExpand, "top-left");
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

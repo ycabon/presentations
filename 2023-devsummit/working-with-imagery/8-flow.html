@@ -1,0 +1,232 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      8-flow
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #controls {
+        width: 300px;
+        max-height: 90vh;
+        overflow: auto;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/renderers/FlowRenderer",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand"
+      ], function (Map, MapView, ImageryTileLayer, FlowRenderer, Legend, Expand) {
+        const layer = new ImageryTileLayer({
+          url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS_Hourly_8_30_2021/ImageServer",
+          title: "Winds",
+          renderer: new FlowRenderer({
+            type: "flow", // autocasts to new FlowRenderer
+            trailWidth: "2px",
+            // color: [50, 120, 240, 1],
+            density: 1,
+            visualVariables: [
+              {
+                type: "color",
+                field: "Magnitude",
+                stops: [
+                  { color: [40, 146, 199, 1], value: 0 },
+                  { color: [160, 194, 155, 1], value: 5 },
+                  { color: [218, 230, 119, 1], value: 10 }
+                ]
+              }
+            ]
+          }),
+          effect: "bloom(1.5, 0.5px, 0)"
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 4,
+          center: [-98, 39]
+        });
+        const legendExpand = new Expand({
+          view: view,
+          content: new Legend({ view: view }),
+          expanded: true
+        });
+        view.ui.add(legendExpand, "top-left");
+        const controlsExpand = new Expand({
+          view: view,
+          content: document.getElementById("controls"),
+          expandIconClass: "esri-icon-sliders-horizontal"
+        });
+        view.ui.add(controlsExpand, "top-right");
+
+        const sliderProps = [
+          "trailWidth",
+          "density",
+          "maxPathLength",
+          "flowSpeed",
+          "trailLength"
+        ];
+        sliderProps.forEach((prop) => {
+          document
+            .getElementById(prop)
+            .addEventListener("calciteSliderChange", updateRenderer);
+        });
+
+        document
+          .getElementById("flowRepresentation")
+          .addEventListener("calciteSegmentedControlChange", updateRenderer);
+        document
+          .getElementById("trailCap")
+          .addEventListener("calciteSegmentedControlChange", updateRenderer);
+        document
+          .getElementById("effectsEnabled")
+          .addEventListener("calciteCheckboxChange", updateEffect);
+
+        function updateEffect(event) {
+          let checkbox = event.target.checked ? "bloom(1.5, 0.5px, 0)" : null;
+          layer.effect = checkbox;
+        }
+
+        function updateRenderer(event) {
+          let propName = event.target.id;
+          let propValue = event.target.value;
+
+          if (propName && propValue != null) {
+            let tempRenderer = layer.renderer.clone();
+
+            tempRenderer[propName] = propValue;
+            layer.renderer = tempRenderer;
+          }
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <calcite-card id="controls" class="calcite-mode-dark">
+      <div slot="title">Controls</div>
+      <calcite-label
+        >Trail width
+        <calcite-slider
+          id="trailWidth"
+          min="0.1"
+          max="10"
+          value="2"
+          step="0.1"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Trail length
+        <calcite-slider
+          id="trailLength"
+          min="0.1"
+          max="200"
+          value="100"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Density
+        <calcite-slider
+          id="density"
+          min="0.1"
+          max="1"
+          value="1"
+          step="0.1"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Flow speed
+        <calcite-slider
+          id="flowSpeed"
+          min="0.1"
+          max="40"
+          value="10"
+          step="0.1"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Maximum path length
+        <calcite-slider
+          id="maxPathLength"
+          min="0.1"
+          max="300"
+          value="200"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Flow representation
+        <calcite-segmented-control id="flowRepresentation">
+          <calcite-segmented-control-item value="flow-to"
+            >To</calcite-segmented-control-item
+          >
+          <calcite-segmented-control-item value="flow-from" checked
+            >From</calcite-segmented-control-item
+          >
+        </calcite-segmented-control>
+      </calcite-label>
+      <calcite-label
+        >Cap style
+        <calcite-segmented-control id="trailCap">
+          <calcite-segmented-control-item value="butt" checked
+            >Butt</calcite-segmented-control-item
+          >
+          <calcite-segmented-control-item value="round"
+            >Round</calcite-segmented-control-item
+          >
+        </calcite-segmented-control>
+        <small
+          >*Round caps are only supported when trail width is greater than
+          3pt</small
+        >
+      </calcite-label>
+      <calcite-label
+        >Effects enabled
+        <calcite-checkbox id="effectsEnabled" checked></calcite-checkbox>
+      </calcite-label>
+    </calcite-card>
+  </body>
+</html>

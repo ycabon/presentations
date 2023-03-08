@@ -70,89 +70,90 @@
           layer.bandIds = bands;
         });
 
-        let chartDiv = document.getElementById("chartDiv");
+      //   let chartDiv = document.getElementById("chartDiv");
 
-        view.on("click", (event) => {
-          view.graphics.removeAll();
-          layer.identify(event.mapPoint).then((results) => {
-            if (results.value) {
-              view.graphics.add(
-                new Graphic({
-                  geometry: event.mapPoint,
-                  symbol: {
-                    type: "simple-marker",
-                    color: "cyan"
-                  }
-                })
-              );
-              // calculate the NDVI value for the clicked location on the image
-              const ndvi =
-                (results.value[4] - results.value[3]) /
-                (results.value[4] + results.value[3]);
-              document.getElementById(
-                "ndviValueDiv"
-              ).innerHTML = `NDVI value: <b>${ndvi.toFixed(3)}</b>`;
+      //   view.on("click", (event) => {
+      //     view.graphics.removeAll();
+      //     layer.identify(event.mapPoint).then((results) => {
+      //       if (results.value) {
+      //         view.graphics.add(
+      //           new Graphic({
+      //             geometry: event.mapPoint,
+      //             symbol: {
+      //               type: "simple-marker",
+      //               color: "cyan"
+      //             }
+      //           })
+      //         );
+      //         // calculate the NDVI value for the clicked location on the image
+      //         const ndvi =
+      //           (results.value[4] - results.value[3]) /
+      //           (results.value[4] + results.value[3]);
+      //         document.getElementById(
+      //           "ndviValueDiv"
+      //         ).innerHTML = `NDVI value: <b>${ndvi.toFixed(3)}</b>`;
 
-              // Update the spectral chart for the clicked location on the image
-              spectralChart.data.datasets[0].data = results.value;
-              spectralChart.update(0);
-              if (chartDiv.style.display === "none") {
-                chartDiv.style.display = "block";
-              }
-            }
-          });
-        });
+      //         // Update the spectral chart for the clicked location on the image
+      //         spectralChart.data.datasets[0].data = results.value;
+      //         spectralChart.update(0);
+      //         if (chartDiv.style.display === "none") {
+      //           chartDiv.style.display = "block";
+      //         }
+      //       }
+      //     });
+      //   });
 
-        createSpectralChart();
-        function createSpectralChart() {
-          const spectralCanvas = document.getElementById("spectral-chart");
-          spectralChart = new Chart(spectralCanvas.getContext("2d"), {
-            type: "line",
-            data: {
-              labels: [
-                "Coastal - 0.45",
-                "Blue - 0.51",
-                "Green - 0.59",
-                "Red - 0.67",
-                "NI - 0.88",
-                "SWI1 - 1.65",
-                "SWI2 - 2.229",
-                "Cirrus - 1.38"
-              ],
-              datasets: [
-                {
-                  borderColor: "rgb(75, 192, 192)",
-                  tension: 0.1
-                }
-              ]
-            },
-            options: {
-              scales: {
-                y: {
-                  title: {
-                    display: true,
-                    text: "DN"
-                  }
-                },
-                x: {
-                  title: {
-                    display: true,
-                    text: "Band Ids - wavelength (micrometer)"
-                  }
-                }
-              },
-              plugins: {
-                legend: {
-                  display: false
-                },
-                title: {
-                  display: true,
-                  text: "Spectral profile"
-                }
-              }
-            }
-          });
-        }
+      //   createSpectralChart();
+
+      //   function createSpectralChart() {
+      //     const spectralCanvas = document.getElementById("spectral-chart");
+      //     spectralChart = new Chart(spectralCanvas.getContext("2d"), {
+      //       type: "line",
+      //       data: {
+      //         labels: [
+      //           "Coastal - 0.45",
+      //           "Blue - 0.51",
+      //           "Green - 0.59",
+      //           "Red - 0.67",
+      //           "NI - 0.88",
+      //           "SWI1 - 1.65",
+      //           "SWI2 - 2.229",
+      //           "Cirrus - 1.38"
+      //         ],
+      //         datasets: [
+      //           {
+      //             borderColor: "rgb(75, 192, 192)",
+      //             tension: 0.1
+      //           }
+      //         ]
+      //       },
+      //       options: {
+      //         scales: {
+      //           y: {
+      //             title: {
+      //               display: true,
+      //               text: "DN"
+      //             }
+      //           },
+      //           x: {
+      //             title: {
+      //               display: true,
+      //               text: "Band Ids - wavelength (micrometer)"
+      //             }
+      //           }
+      //         },
+      //         plugins: {
+      //           legend: {
+      //             display: false
+      //           },
+      //           title: {
+      //             display: true,
+      //             text: "Spectral profile"
+      //           }
+      //         }
+      //       }
+      //     });
+      //   }
       });
     </script>
   </head>
@@ -171,7 +172,8 @@
           <option value="6,5,1">7,6,2 - Geology</option>
         </select>
       </div>
-      <br /><br />
+      
+      <!-- <br /><br />
       <h3 class="esri-widget__heading">Click on the image for more info</h3>
       <br />
       <div id="ndviValueDiv"></div>
@@ -183,7 +185,7 @@
           width="300"
           class="esri-widget"
         ></canvas>
-      </div>
+      </div> -->
     </div>
   </body>
 </html>

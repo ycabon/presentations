@@ -1,0 +1,189 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      ImageryTileLayer with COG | Sample | ArcGIS Maps SDK for JavaScript 4.26
+    </title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #infoDiv {
+        padding: 10px;
+        width: 300px;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/Graphic"
+      ], (Map, MapView, ImageryTileLayer, Graphic) => {
+        let spectralChart;
+
+        const layer = new ImageryTileLayer({
+          url: new URL("./data/landsat8/Boliva_LC08_L1TP_001069_20190719_MS.tiff", window.location.href).toString(),
+          bandIds: [3, 2, 1]
+        });
+
+        const map = new Map({
+          basemap: "topo-vector",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map
+        });
+
+        view.whenLayerView(layer).then(() => {
+          // zoom to the fullExtent of the layer when layer loads
+          view.goTo(layer.fullExtent);
+        });
+
+        view.ui.add("infoDiv", "top-right");
+
+        // change the common bandIds combination for the landsat 8 imagery
+        const bandIdsSelect = document.getElementById("bandIdsSelect");
+        bandIdsSelect.addEventListener("change", () => {
+          const bands = bandIdsSelect.value.split(",").map(Number);
+          layer.bandIds = bands;
+        });
+
+        let chartDiv = document.getElementById("chartDiv");
+
+        view.on("click", (event) => {
+          view.graphics.removeAll();
+          layer.identify(event.mapPoint).then((results) => {
+            if (results.value) {
+              view.graphics.add(
+                new Graphic({
+                  geometry: event.mapPoint,
+                  symbol: {
+                    type: "simple-marker",
+                    color: "cyan"
+                  }
+                })
+              );
+              // calculate the NDVI value for the clicked location on the image
+              const ndvi =
+                (results.value[4] - results.value[3]) /
+                (results.value[4] + results.value[3]);
+              document.getElementById(
+                "ndviValueDiv"
+              ).innerHTML = `NDVI value: <b>${ndvi.toFixed(3)}</b>`;
+
+              // Update the spectral chart for the clicked location on the image
+              spectralChart.data.datasets[0].data = results.value;
+              spectralChart.update(0);
+              if (chartDiv.style.display === "none") {
+                chartDiv.style.display = "block";
+              }
+            }
+          });
+        });
+
+        createSpectralChart();
+        function createSpectralChart() {
+          const spectralCanvas = document.getElementById("spectral-chart");
+          spectralChart = new Chart(spectralCanvas.getContext("2d"), {
+            type: "line",
+            data: {
+              labels: [
+                "Coastal - 0.45",
+                "Blue - 0.51",
+                "Green - 0.59",
+                "Red - 0.67",
+                "NI - 0.88",
+                "SWI1 - 1.65",
+                "SWI2 - 2.229",
+                "Cirrus - 1.38"
+              ],
+              datasets: [
+                {
+                  borderColor: "rgb(75, 192, 192)",
+                  tension: 0.1
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  title: {
+                    display: true,
+                    text: "DN"
+                  }
+                },
+                x: {
+                  title: {
+                    display: true,
+                    text: "Band Ids - wavelength (micrometer)"
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: true,
+                  text: "Spectral profile"
+                }
+              }
+            }
+          });
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="infoDiv" class="esri-widget">
+      <div id="bandIdsSelectDiv">
+        <h3 class="esri-widget__heading">Change band compositions</h3>
+        <select id="bandIdsSelect" class="esri-input esri-select">
+          <option value="3, 2, 1" selected>4,3,2 - Natural color</option>
+          <option value="6,5,3">7,6,4 - Short-wave infrared</option>
+          <option value="4,3,2">5,4,3 - Color Infrared</option>
+          <option value="5,4,1">6,5,2 - Agriculture</option>
+          <option value="3,2,0">4,3,1 - Bathymetric</option>
+          <option value="6,5,1">7,6,2 - Geology</option>
+        </select>
+      </div>
+      <br /><br />
+      <h3 class="esri-widget__heading">Click on the image for more info</h3>
+      <br />
+      <div id="ndviValueDiv"></div>
+      <br />
+      <div id="chartDiv" class="esri-widget" style="display:none">
+        <canvas
+          id="spectral-chart"
+          height="300"
+          width="300"
+          class="esri-widget"
+        ></canvas>
+      </div>
+    </div>
+  </body>
+</html>

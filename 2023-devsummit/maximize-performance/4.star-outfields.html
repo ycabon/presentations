@@ -95,7 +95,8 @@
         "esri/widgets/Histogram",
         "esri/widgets/Slider",
         "esri/widgets/Expand",
-        "esri/core/reactiveUtils"
+        "esri/core/reactiveUtils",
+        "esri/Color"
       ], (
         Map,
         MapView,
@@ -105,7 +106,8 @@
         Histogram,
         Slider,
         Expand,
-        reactiveUtils
+        reactiveUtils,
+        Color
       ) => {
         // Project base layer (world countries) to Equal Earth projection
         const baseLayer = new FeatureLayer({

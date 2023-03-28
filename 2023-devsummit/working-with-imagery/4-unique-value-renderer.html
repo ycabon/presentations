@@ -25,6 +25,11 @@
     />
     <script src="https://js.arcgis.com/4.26/"></script>
 
+    <script type="module">
+      import { installArcGISAPIChromeDevtoolsFormatter } from "https://cdn.jsdelivr.net/npm/arcgis-js-api-devtools/dist/arcgis-js-api-devtools.esm.js";
+      installArcGISAPIChromeDevtoolsFormatter();
+    </script>
+
     <style>
       html,
       body,
@@ -58,32 +63,33 @@
 
         layer = new ImageryLayer({
           url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer",
-          // renderer: new UniqueValueRenderer({
-          //   field: "Value",
-          //   uniqueValueInfos: [
-          //     {
-          //       value: 24,
-          //       label: "Developed, High Intensity",
-          //       symbol: new SimpleFillSymbol({
-          //         color: "#ffeb3b",
-          //       }),
-          //     },
-          //     {
-          //       value: 23,
-          //       label: "Developed, Medium Intensity",
-          //       symbol: new SimpleFillSymbol({
-          //         color: "#ffc107",
-          //       }),
-          //     },
-          //     {
-          //       value: 22,
-          //       label: "Developed, Low Intensity",
-          //       symbol: new SimpleFillSymbol({
-          //         color: "#ff9800",
-          //       }),
-          //     },
-          //   ],
-          // }),
+          effect: "bloom(2px, 1px, 0)",
+          renderer: new UniqueValueRenderer({
+            field: "Value",
+            uniqueValueInfos: [
+              {
+                value: 24,
+                label: "Developed, High Intensity",
+                symbol: new SimpleFillSymbol({
+                  color: "#ffeb3b",
+                }),
+              },
+              {
+                value: 23,
+                label: "Developed, Medium Intensity",
+                symbol: new SimpleFillSymbol({
+                  color: "#ffc107",
+                }),
+              },
+              {
+                value: 22,
+                label: "Developed, Low Intensity",
+                symbol: new SimpleFillSymbol({
+                  color: "#ff9800",
+                }),
+              },
+            ],
+          }),
         });
 
         // fetch the raster attribute table:  https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer/rasterAttributeTable

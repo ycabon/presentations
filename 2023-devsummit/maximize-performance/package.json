@@ -1,0 +1,16 @@
+{
+  "name": "maximize-performance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "longTable": "node ./scripts/generateLongTable.mjs > _longTable.geojson",
+    "wideTable": "node ./scripts/generateWideTable.mjs > _wideTable.geojson"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@arcgis/core": "^4.26.5",
+    "node-fetch": "^3.3.1"
+  }
+}

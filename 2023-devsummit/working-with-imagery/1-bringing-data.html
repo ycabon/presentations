@@ -44,7 +44,7 @@
         const itemId = "6f1300bdf5b446098986e9705a067908";
         // const itemId = "";
 
-        //*/
+        /*/
         const layer = new ImageryTileLayer({
           portalItem: {
             id: itemId
@@ -71,7 +71,7 @@
 
         //*/
         // zoom to the fullExtent of the layer when layer loads
-        const layerView = view.whenLayerView(layer);
+        const layerView = await view.whenLayerView(layer);
         view.goTo(layer.fullExtent);
         //*/
 

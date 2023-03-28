@@ -1,0 +1,276 @@
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      1.update-definition-expression
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <style>
+
+      #containerDiv {
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0;
+      }
+
+      #sliderDiv {
+        height: 100px;
+      }
+
+      #histogram {
+        width: 500px;
+        height: 150px;
+      }
+      .labels {
+        padding: 5px;
+      }
+
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 100px;
+        background-color: white;
+      }
+
+      #sliderContainer {
+        position: absolute;
+        bottom: 0;
+        height: 100px;
+        width: 100%;
+        text-align: center;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/core/promiseUtils",
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Slider"
+      ], (
+        promiseUtils,
+        Map,
+        MapView,
+        FeatureLayer,
+        Slider
+      ) => {
+        // Project base layer (world countries) to Equal Earth projection
+        const baseLayer = new FeatureLayer({
+          portalItem: {
+            id: "2b93b06dc0dc4e809d3c8db5cb96ba69"
+          },
+          legendEnabled: false,
+          popupEnabled: false,
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-fill",
+              color: [200, 200, 200, 0.75],
+              outline: null
+            }
+          }
+        });
+
+        //  Set initial temperature anomaly renderer on layer based
+        // on data recorded for the year 1880
+
+        const layer = new FeatureLayer({
+          portalItem: {
+            id: "184e97dc76ab4a2fb04c1c49cd4d2854"
+          },
+          outFields: ["*"],
+          title: "Temperatures by location (1880 - 2018)",
+          definitionExpression: "YEAR = 1880",
+          renderer: {
+            type: "simple",
+            label: "Observation point",
+            symbol: {
+              type: "simple-marker",
+              style: "diamond",
+              size: "6px",
+              color: [226, 226, 226, 0.75],
+              outline: {
+                color: [255, 255, 255, 0.25],
+                width: "0.75px"
+              }
+            },
+            visualVariables: [
+              {
+                type: "size",
+                valueExpression: `var AbsTEMP = Abs($feature.VALUE)
+                  var vs = $view.scale
+                  var TempSize = when(
+                    AbsTEMP > 5, 35,
+                    AbsTEMP > 4, 30,
+                    AbsTEMP > 2.5, 25,
+                    AbsTEMP > 1, 20,
+                    AbsTEMP > 0.5, 15,
+                    AbsTEMP > 0.01, 12,
+                    AbsTEMP < 0.01, 10,
+                    8
+                  )
+                  when(
+                    vs >=37000000, TempSize,
+                    vs >=18500000, 2 + TempSize,
+                    vs >=9300000, 4 + TempSize,
+                    vs >=4700000, 6 + TempSize,
+                    vs >=2000000, 8 + TempSize,
+                    10 + TempSize
+                  );
+                `,
+                valueExpressionTitle: "Absolute Value",
+                legendOptions: {
+                  showLegend: false
+                },
+                maxDataValue: 35,
+                maxSize: "24px",
+                minDataValue: 10,
+                minSize: "4px"
+              },
+              {
+                type: "color",
+                valueExpression: "$feature.VALUE",
+                valueExpressionTitle: "Temperature Anomaly",
+                stops: [
+                  {
+                    value: -2.5,
+                    color: [5, 112, 176, 0.75],
+                    label: "Less than -2.5 deg C"
+                  },
+                  { value: -1, color: [208, 209, 230, 0.75] },
+                  { value: -0.5, color: [236, 231, 242, 0.75] },
+                  {
+                    value: 0,
+                    color: [226, 226, 226, 0.75],
+                    label: "No difference/No Data"
+                  },
+                  { value: 0.5, color: [254, 232, 200, 0.75] },
+                  { value: 1, color: [253, 212, 158, 0.75] },
+                  {
+                    value: 2.5,
+                    color: [215, 48, 31, 0.75],
+                    label: "More than 2.5 deg C"
+                  }
+                ]
+              }
+            ]
+          }
+        });
+
+        const map = new Map({
+          layers: [baseLayer, layer]
+        });
+
+        const spatialReference = {
+          wkid: 54035
+        };
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          scale: 150000000,
+          center: { x: 0, y: 0, spatialReference: spatialReference },
+          spatialReference: spatialReference,
+          popup: {
+            dockOptions: {
+              position: "top-left"
+            }
+          }
+        });
+
+        // This slider will allow the user to update the renderer based on a
+        // provided year between 1880 and 2018
+
+        const slider = new Slider({
+          min: 1880,
+          max: 2018,
+          values: [1880],
+          visibleElements: {
+            labels: true,
+            rangeLabels: true
+          },
+          labelInputsEnabled: true,
+          precision: 0,
+          steps: 1,
+          container: "sliderDiv"
+        });
+
+        // When the user changes the slider's value,
+        // change the renderer and histogram to reflect
+        // data corresponding to the year indicated on the slider
+        slider.on(["thumb-change", "thumb-drag"], (event) => {
+          updateYearDisplay(event.value);
+          updateDefinitionExpression(event.value);
+        });
+
+        let lv = null;
+
+        // Query all the features in the layer. These will by used
+        // for client-side queries as the user slides the thumb of the slider
+
+        view
+          .whenLayerView(layer)
+          .then((layerView) => {
+            lv = layerView;
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+
+        // Updates the underlying data value driving the expression
+        // based on the given year provided by the slider
+
+        function updateDefinitionExpression(value) {
+          layer.definitionExpression = `YEAR = ${value}`;
+        }
+
+        function updateYearDisplay(year) {
+          const yearElement = document.getElementById("yearDiv");
+          yearElement.innerText = year;
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="containerDiv" class="esri-widget">
+      <div class="esri-widget">
+        <div id="title" class="esri-widget">
+          <h3>Temperature Anomaly (<span id="yearDiv">1880</span>)</h3>
+        </div>
+        <div id="histogram" class="esri-widget"></div>
+        <div class="labels esri-widget">
+          <span style="float: left">-5° C</span>
+          <span style="float: center">0° C</span>
+          <span style="float: right">+5° C</span>
+        </div>
+      </div>
+    </div>
+    <div id="sliderContainer" class="esri-widget">
+      <div id="sliderDiv"></div>
+    </div>
+  </body>
+</html>

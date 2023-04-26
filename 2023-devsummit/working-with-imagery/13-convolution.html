@@ -1,0 +1,350 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Convolution | Stretch</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow-y: scroll;
+      /* --calcite-shell-panel-max-width: 800px; */
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .slider {
+      height: 50px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #identify {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      width: 380px;
+      background-color: gray;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    .chart-legend li span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    pre {
+      margin: 0px;
+    }
+  </style>
+  <script type="module">
+    // recommended to use @arcgis/core or esri-loader
+    const simpleAsyncRequire = (moduleNames) => new Promise((resolve) => require(moduleNames, (...classNames) => resolve(classNames)));
+    async function demo() {
+      const modules = await simpleAsyncRequire([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/support/RasterFunction",
+        "esri/layers/support/rasterFunctionConstants",
+        "esri/layers/ImageryTileLayer",
+        "esri/widgets/Slider"
+      ]);
+      const [
+        Map,
+        MapView,
+        RasterFunction,
+        rasterFunctionConstants,
+        ImageryTileLayer,
+        Slider
+      ] = modules;
+
+      const url = "https://tiledimageservices.arcgis.com/gUR1YWXNyLOlL4Ys/arcgis/rest/services/Landsat7_p45r028/ImageServer";
+
+      // this is essentially a no-op, we use it to compare function impacts
+      const renderer = {
+        dynamicRangeAdjustment: false,
+        type: "raster-stretch",
+        stretchType: "min-max",
+        statistics: [[0, 255, 75, 60], [0, 255, 75, 60], [0, 255, 75, 60]]
+      };
+      const layer = new ImageryTileLayer({
+        url,
+        bandIds: [3, 2, 1],
+        renderer
+      });
+
+      window.layer = layer;
+      const map = new Map({
+        basemap: "streets",
+        layers: [layer]
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        extent: { spatialReference: { wkid: 3857 }, xmin: -13477815.212177236, ymin: 5700885.095617774, xmax: -13345732.02730063, ymax: 5769143.361876345 }
+      });
+      window.view = view;
+
+      const mask = new RasterFunction({
+        functionName: "Mask",
+        functionArguments: { noDataValues: [0] }
+      });
+
+      const cboStretchMethod = document.getElementById("cboStretchMethod");
+      const cboIndexMethod = document.getElementById("cboIndexMethod");
+      cboStretchMethod.addEventListener("change", () => {
+        if (!layer.loaded) {
+          return;
+        }
+        const value = cboStretchMethod.value;
+        switch (value) {
+          case "standard-deviation":
+            layer.rasterFunction = {
+              functionName: "Stretch",
+              functionArguments: {
+                stretchType: rasterFunctionConstants.stretchType.standardDeviation,
+                numberOfStandardDeviations: 2,
+                statistics: [[0, 255, 75, 60], [0, 255, 75, 60], [0, 255, 75, 60]],
+                raster: mask
+              }
+            };
+            break;
+          case value === "min-max":
+            layer.rasterFunction = {
+              functionName: "Stretch",
+              functionArguments: {
+                stretchType: rasterFunctionConstants.stretchType.minMax,
+                statistics: [[0, 255, 75, 60], [0, 255, 75, 60], [0, 255, 75, 60]],
+                raster: mask
+              }
+            };
+            break;
+          case "gamma2":
+            layer.rasterFunction = {
+              functionName: "Stretch",
+              functionArguments: {
+                stretchType: rasterFunctionConstants.stretchType.minMax,
+                useGamma: true,
+                gamma: [2, 2, 2],
+                statistics: [[0, 255, 75, 60], [0, 255, 75, 60], [0, 255, 75, 60]],
+                raster: mask
+              }
+            };
+            break;
+          case "gamma0.5":
+            layer.rasterFunction = {
+              functionName: "Stretch",
+              functionArguments: {
+                stretchType: rasterFunctionConstants.stretchType.minMax,
+                useGamma: true,
+                gamma: [0.5, 0.5, 0.5],
+                statistics: [[0, 255, 75, 60], [0, 255, 75, 60], [0, 255, 75, 60]],
+                raster: mask
+              }
+            };
+            break;
+        }
+      });
+
+      cboIndexMethod.addEventListener("change", () => {
+        if (!layer.loaded) {
+          return;
+        }
+        const value = cboIndexMethod.value;
+        if (value === "-2") {
+          layer.rasterFunction = null;
+        } else if (value === "userDefined") {
+          layer.rasterFunction = {
+            functionName: "Convolution",
+            functionArguments: {
+              type: rasterFunctionConstants.convolutionKernel.userDefined,
+              cols: 3,
+              rows: 3,
+              kernel: [-1, -1, -1, 2, 2, 2, -1, -1, -1],
+              raster: mask
+            }
+          };
+        } else {
+          layer.rasterFunction = {
+            functionName: "Convolution",
+            functionArguments: {
+              type: rasterFunctionConstants.convolutionKernel[value],
+              raster: mask
+            }
+          };
+        }
+      });
+
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+    }
+    demo();
+  </script>
+</head>
+
+<body>
+  <calcite-shell content-behind="true">
+    <div id="viewDiv"></div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <h4 class="esri-widget__heading esri-editor__title titleText" id="app-title">Raster Function: Convolution |
+            Stretch</h4>
+          <br>
+          <br>
+          <div id="stretchDiv">
+            <label id="cboStretchMethodLabel" class="esri-feature-form__label">Choose a stretch method</label>
+            <select id="cboStretchMethod" class="esri-input esri-select">
+              <option value="min-max">min-max</option>
+              <option value="standard-deviation">standard-deviation</option>
+              <option value="gamma2">min-max-gamma2</option>
+              <option value="gamma0.5">min-max-gamma0.5</option>
+            </select>
+            <br>
+          </div>
+          <div id="convolutionDiv">
+            <label id="cboIndexMethodLabel" class="esri-feature-form__label">Choose a convolution kernel</label>
+            <select id="cboIndexMethod" class="esri-input esri-select">
+              <option value="-2">None</option>
+              <option value="smoothArithmeticMean">SmoothArithmeticMean</option>
+              <option value="smoothing3x3">Smoothing3x3</option>
+              <option value="smoothing5x5">Smoothing5x5</option>
+              <option value="sharpen">Sharpen</option>
+              <option value="sharpen2">Sharpen2</option>
+            </select>
+          </div>
+          <br />
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript">
+const mask = new RasterFunction({
+  functionName: "Mask",
+  functionArguments: { noDataValues: [0] }
+});        
+const convolution = new RasterFunction({
+  functionName: "Convolution",
+  functionArguments: {
+    type: rasterFunctionConstants.convolutionKernel.smoothing3x3,
+    raster: mask
+    // for custom kernel
+    // type: rasterFunctionConstants.convolutionKernel.userDefined,
+    // cols: 3,
+    // rows: 3,
+    // kernel: [-1, -1, -1, 2, 2, 2, -1, -1, -1]
+  }
+});
+const layer = new ImageryTileLayer({ url, rasterFunction: convolution });
+
+const stretch = new RasterFunction({
+  functionName: "Stretch",
+  functionArguments: {
+    stretchType: rasterFunctionConstants.stretchType.standardDeviation,
+    numberOfStandardDeviations: 2,
+    statistics: [[0, 255, 75, 60], [0, 255, 75, 60], [0, 255, 75, 60]],
+    min: 0,
+    max: 255,
+    raster: mask
+  }
+});
+const layer = new ImageryTileLayer({ url, rasterFunction: stretch });
+
+</code></pre>
+    </div>
+  </calcite-popover>
+</body>
+
+</html>

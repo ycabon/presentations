@@ -1,0 +1,502 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>
+    Pie chart | Imagery Tile Layer | Sample | ArcGIS API for JavaScript 4.23
+  </title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow-y: scroll;
+      /* --calcite-shell-panel-max-width: 800px; */
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #identify {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      width: 380px;
+      background-color: gray;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    .chart-legend li span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    pre {
+      margin: 0px;
+    }
+  </style>
+  <script type="module">
+    // recommended to use @arcgis/core or esri-loader
+    const simpleAsyncRequire = (moduleNames) => new Promise((resolve) => require(moduleNames, (...classNames) => resolve(classNames)));
+    async function demo() {
+      const [Map, MapView, ImageryTileLayer, FeatureLayer, Graphic, Circle, TileInfo, promiseUtils, Expand] = await simpleAsyncRequire([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/layers/FeatureLayer",
+        "esri/Graphic",
+        "esri/geometry/Circle",
+        "esri/layers/support/TileInfo",
+        "esri/core/promiseUtils",
+        "esri/widgets/Expand"
+      ]);
+      let landCoverChart, pixelValCount, pixelData;
+      let rasterAttributeFeatures = {};
+
+      const map = new Map();
+
+      const lods = TileInfo.create().lods;
+      let lastLod = lods[lods.length - 1].clone();
+      for (let i = 0; i < 3; i++) {
+        lastLod.level++;
+        lastLod.resolution /= 2;
+        lastLod.scale /= 2;
+        lods.push(lastLod);
+        lastLod = lastLod.clone();
+      }
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-80, 40.5],
+        zoom: 12,
+        constraints: {
+          rotationEnabled: false,
+          minScale: 36978595, // U.S.
+          // use AGOL lods for the view
+          lods
+        }
+      });
+
+      // initialize the imagery layer with lerc format
+      const imageryLayer = new ImageryTileLayer("https://tiledimageservices.arcgis.com/gUR1YWXNyLOlL4Ys/arcgis/rest/services/NLCD2001_Tiled/ImageServer");
+
+      map.add(imageryLayer);
+
+      // graphic that will represent one mile buffer as user drags the pointer
+      // over the map to view land cover types within one mile of the pointer
+      const graphic = new Graphic({
+        geometry: null,
+        symbol: {
+          type: "simple-fill",
+          color: null,
+          style: "solid",
+          outline: {
+            color: "blue",
+            width: 2
+          }
+        }
+      });
+      view.graphics.add(graphic);
+
+      view.whenLayerView(imageryLayer).then(layerLoaded);
+      function layerLoaded(layerView) {
+        // watch for the imagery layer view's updating property
+        // to get the updated pixel values
+        layerView.watch("updating", (value) => {
+          pixelData = null;
+          if (!value) {
+            imageryLayer.fetchPixels(view.extent, view.width, view.height).then((result) => pixelData = result);
+          }
+        });
+
+        // when the layer loads, listen to the view's drag and click
+        // events to update the land cover types chart to reflect an
+        // area within 1 mile of the pointer location.
+        removeChartEvents = view.on(["drag", "click"], (event) => {
+          if (pixelData) {
+            event.stopPropagation();
+            getLandCoverPixelInfo(event).then(updateLandCoverChart);
+          }
+        });
+        // raster attributes table returns categorical mapping of pixel values such as class and group
+        const attributesData =
+          imageryLayer.rasterInfo.attributeTable.features;
+
+        // rasterAttributeFeatures will be used to add legend labels and colors for each
+        // land use type
+        for (let index in attributesData) {
+          if (attributesData) {
+            const hexColor = rgbToHex(
+              attributesData[index].attributes.Red,
+              attributesData[index].attributes.Green,
+              attributesData[index].attributes.Blue
+            );
+            rasterAttributeFeatures[attributesData[index].attributes.Value] =
+            {
+              ClassName: attributesData[index].attributes.ClassName,
+              hexColor: hexColor
+            };
+          }
+        }
+        // initialize the land cover pie chart
+        createLandCoverChart();
+      }
+
+      // This function is called as user drags the pointer over or clicks on the view.
+      // Here we figure out which pixels fall within one mile of the
+      // pointer location and update the chart accordingly
+      const getLandCoverPixelInfo = promiseUtils.debounce((event) => {
+        if (!pixelData) {
+          return;
+        }
+        const currentExtent = pixelData.extent;
+        const pixelBlock = pixelData.pixelBlock;
+        const height = pixelBlock.height;
+        const width = pixelBlock.width;
+
+        // map point for the pointer location.
+        const point = event.mapPoint ?? view.toMap({
+          x: event.x,
+          y: event.y
+        });;
+        // pointer x, y in pixels
+        const reqX = Math.ceil(event.x);
+        const reqY = Math.ceil(event.y);
+
+        // calculate how many meters are represented by 1 pixel.
+        const pixelSizeX =
+          Math.abs(currentExtent.xmax - currentExtent.xmin) / width;
+
+        // calculate how many pixels represent one mile
+        const bufferDim = Math.ceil(1609 / pixelSizeX);
+
+        // figure out 2 mile extent around the pointer location
+        const xmin = reqX - bufferDim < 0 ? 0 : reqX - bufferDim;
+        const ymin = reqY - bufferDim < 0 ? 0 : reqY - bufferDim;
+        const startPixel = ymin * width + xmin;
+        const bufferlength = bufferDim * 2;
+        const pixels = pixelBlock.pixels[0];
+        const radius2 = bufferDim * bufferDim;
+        let oneMilePixelValues = [];
+
+        // cover pixels within to 2 mile rectangle
+        if (bufferlength) {
+          for (let i = 0; i <= bufferlength; i++) {
+            for (let j = 0; j <= bufferlength; j++) {
+              // check if the given pixel location is in within one mile of the pointer
+              // add its value to pixelValue.
+              if (Math.pow(i - bufferDim, 2) + Math.pow(j - bufferDim, 2) <= radius2) {
+                const pixelValue = pixels[Math.floor(startPixel + i * width + j)];
+                if (pixelValue != null) {
+                  oneMilePixelValues.push(pixelValue);
+                }
+              }
+            }
+          }
+        } else {
+          oneMilePixelValues.push(pixels[startPixel]);
+        }
+        pixelValCount = {};
+        // get the count of each land type returned within one mile raduis
+        for (let i = 0; i < oneMilePixelValues.length; i++) {
+          pixelValCount[oneMilePixelValues[i]] =
+            1 + (pixelValCount[oneMilePixelValues[i]] || 0);
+        }
+        const circle = new Circle({
+          center: point,
+          radius: bufferDim * pixelSizeX
+        });
+
+        graphic.geometry = circle;
+      });
+
+      // This function is called once pixel values within one mile of the pointer
+      // location are processed and ready for the chart update.
+      function updateLandCoverChart() {
+        landCoverChart.data.datasets[0].data = [];
+        let dataset = [];
+        let landCoverTypeColors = [];
+        let landCoverTypeLabels = [];
+
+        // pixelValCount object contains land cover types and count of pixels
+        // that represent that type in within one mile.
+        for (let index in pixelValCount) {
+          if (index == 0) {
+            landCoverTypeColors.push("rgba(255,255,255,1");
+            landCoverTypeLabels.push("NoData");
+          } else {
+            const color = rasterAttributeFeatures[index].hexColor;
+            landCoverTypeColors.push(color);
+            landCoverTypeLabels.push(
+              rasterAttributeFeatures[index].ClassName
+            );
+          }
+          landCoverChart.data.datasets[0].data.push(pixelValCount[index]);
+        }
+        landCoverChart.data.datasets[0].backgroundColor = landCoverTypeColors;
+        landCoverChart.data.labels = landCoverTypeLabels;
+        landCoverChart.update(0);
+        document.getElementById("chartLegend").innerHTML = landCoverChart.generateLegend();
+      }
+
+      // This function is called when the ImageryLayer is loaded.
+      // It sets up the land cover types chart.
+      function createLandCoverChart() {
+        const landCoverCanvas = document.getElementById("landcover-chart");
+        landCoverChart = new Chart(landCoverCanvas.getContext("2d"), {
+          type: "doughnut",
+          data: {
+            labels: [],
+            datasets: [
+              {
+                data: [],
+                backgroundColor: [],
+                borderColor: "rgb(0, 0, 0, 0, 1)",
+                borderWidth: 0.5
+              }
+            ]
+          },
+          options: {
+            responsive: false,
+            cutoutPercentage: 35,
+            legend: {
+              display: false
+            },
+            title: {
+              display: true,
+              text: ""
+            },
+            plugins: {
+              datalabels: {
+                formatter: (value, ctx) => {
+                  let datasets = ctx.chart.data.datasets;
+                  if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                    let sum = datasets[0].data.reduce((a, b) => {
+                      return a + b;
+                    });
+                    let percentage = Math.round((value / sum) * 100);
+                    if (percentage > 15) {
+                      return percentage + "%";
+                    } else {
+                      return "";
+                    }
+                  } else {
+                    return percentage;
+                  }
+                },
+                color: "#4c4c4c"
+              }
+            }
+          }
+        });
+      }
+
+      function componentToHex(c) {
+        const hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+      }
+
+      function rgbToHex(r, g, b) {
+        return (
+          "#" + componentToHex(r) + componentToHex(g) + componentToHex(b)
+        );
+      }
+
+      const instructionsExpand = new Expand({
+        expandIconClass: "esri-icon-question",
+        expandTooltip: "How to use this sample",
+        view: view,
+        expanded: true,
+        content: `
+        <div style='width:200px; padding:10px; background-color:white'><b>Drag</b> the pointer over the data or <b>click</b> to view the land cover types within 1 mile of the pointer location. <br><br><b>Click</b> the button below to toggle between view panning and the chart.</div>
+        `
+      });
+      view.ui.add(instructionsExpand, "top-left");
+      // Close the 'help' popup when view is focused
+      view.watch("focused", (isFocused) => {
+        if (isFocused) {
+          instructionsExpand.expanded = false;
+        }
+      });
+
+      let chartEnabled = true;
+      let removeChartEvents;
+      const enableChartButton = document.getElementById("enableChart");
+      view.ui.add(enableChartButton, "top-left");
+      enableChartButton.addEventListener("click", () => {
+        chartEnabled = chartEnabled ? false : true;
+        if (chartEnabled) {
+          enableChartButton.classList.add("esri-icon-pie-chart");
+          enableChartButton.classList.remove("esri-icon-pan");
+          removeChartEvents = view.on(["drag", "click"], (event) => {
+            if (pixelData) {
+              event.stopPropagation();
+              getLandCoverPixelInfo(event).then(updateLandCoverChart);
+            }
+          });
+        } else {
+          removeChartEvents.remove();
+          removeChartEvents = null;
+          enableChartButton.classList.remove("esri-icon-pie-chart");
+          enableChartButton.classList.add("esri-icon-pan");
+          graphic.geometry = null;
+        }
+      });
+
+
+
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+    }
+    demo();
+  </script>
+</head>
+
+<body>
+  <calcite-shell content-behind="true">
+    <div id="viewDiv">
+      <div id="height-button" class="esri-widget esri-widget--button
+      esri-interactive" title="Draw a line from base to top of a building">
+        <calcite-icon icon="measure-building-height-top-base"></calcite-icon>
+      </div>
+    </div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <h4 class="esri-widget__heading esri-editor__title titleText" id="app-title">Land Cover Types</h4>
+          <div>Click to view land cover distribution in 1 mile radius</div>
+          <canvas id="landcover-chart" height="300" width="300" class="esri-widget"></canvas>
+          <div id="chartLegend" class="chart-legend esri-widget"></div>
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript">
+// get pixel data when view finishes update
+const pixelData = await imageryLayer.fetchPixels(view.extent, view.width, view.height);
+
+// access land cover categorical information
+const { attributeTable } = layer.rasterInfo;
+
+// distribution in 1 mile radius
+function getLandCoverPixelInfo(event) {
+  const currentExtent = pixelData.extent;
+  const {pixels, height, width} = pixelData.pixelBlock;
+  const pixelSizeX = currentExtent.width / width;
+  const bufferDim = Math.ceil(1609 / pixelSizeX);
+  const band = pixels[0];
+
+  // compute bufferlength (circle's diameter - 2 miles - in amount of pixels)
+  // compute startPixel (start pixel of the bounding square of the 1 mile buffer)
+  ...
+  const pixelValCount = {};
+  for (let i = 0; i &lt;= bufferlength; i++) {
+    for (let j = 0; j &lt;= bufferlength; j++) {
+      if ((Math.pow(i - bufferDim, 2) + Math.pow(j - bufferDim, 2)) &lt;= radius2){
+        const pixelValue = band[Math.floor(startPixel + i * width + j)];
+        pixelValCount[pixelValue] = (pixelValCount[pixelValue] ?? 0) + 1;
+      }
+    }
+  }
+
+  draw(pixelValCount);
+}
+      </code></pre>
+    </div>
+  </calcite-popover>
+  <div id="enableChart" class="esri-widget--button esri-icon-pie-chart" title="Toggle between panning and chart"></div>
+</body>
+
+</html>

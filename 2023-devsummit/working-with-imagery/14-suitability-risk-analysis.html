@@ -1,0 +1,467 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Avalanche rish analysis</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow-y: scroll;
+      /* --calcite-shell-panel-max-width: 800px; */
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #identify {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      width: 380px;
+      background-color: gray;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    pre {
+      margin: 0px;
+    }
+  </style>
+  <script type="module">
+    // recommended to use @arcgis/core or esri-loader
+    const simpleAsyncRequire = (moduleNames) => new Promise((resolve) => require(moduleNames, (...classNames) => resolve(classNames)));
+    async function demo() {
+      const modules = await simpleAsyncRequire([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/support/RasterFunction",
+        "esri/layers/support/rasterFunctionConstants",
+        "esri/layers/ImageryTileLayer"
+      ]);
+      const [Map,
+        MapView,
+        RasterFunction,
+        rasterFunctionConstants,
+        ImageryTileLayer
+      ] = modules;
+      const url = "https://tiledimageservices.arcgis.com/gUR1YWXNyLOlL4Ys/arcgis/rest/services/bigbear_ned/ImageServer";
+
+      const avalancheConfig = {
+        elevation: [1000, 3000],
+        slope: [15, 35],
+        aspect: [210, 360]
+      }
+
+      function createAvalancheFunction(options) {
+        const { elevation, slope, aspect } = avalancheConfig;
+        const elevationLowerThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.greaterThanEqual,
+            rasters: ["$$", elevation[0]]
+          }
+        });
+
+        const elevationUpperThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.lessThanEqual,
+            rasters: ["$$", elevation[1]]
+          }
+        });
+
+        const elevationThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.booleanAnd,
+            rasters: [elevationLowerThresholdFunc, elevationUpperThresholdFunc]
+          }
+        });
+
+        const slopeFunction = new RasterFunction({
+          functionName: "Slope",
+          functionArguments: {
+            zFactor: 1,
+            slopeType: rasterFunctionConstants.slopeType.degree
+          }
+        });
+
+        const slopeLowerThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.greaterThanEqual,
+            rasters: [slopeFunction, slope[0]]
+          }
+        });
+
+        const slopeUpperThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.lessThanEqual,
+            rasters: [slopeFunction, slope[1]]
+          }
+        });
+
+        const slopeThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.booleanAnd,
+            rasters: [slopeLowerThresholdFunc, slopeUpperThresholdFunc]
+          }
+        });
+
+        const aspectFunction = new RasterFunction({
+          functionName: "Aspect",
+          functionArguments: {
+          }
+        });
+
+        const aspectLowerThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.greaterThanEqual,
+            rasters: [aspectFunction, aspect[0]]
+          }
+        });
+
+        const aspectUpperThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.lessThanEqual,
+            rasters: [aspectFunction, aspect[1]]
+          }
+        });
+
+        const aspectThresholdFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.localLogicalOperation.booleanAnd,
+            // "Operation": threshold_aspect[0] < threshold_aspect[1] ? 17 : 19,//boolean and 17 boolean or 19
+            rasters: [aspectLowerThresholdFunc, aspectUpperThresholdFunc]
+          }
+        });
+
+        const riskFunc = new RasterFunction({
+          functionName: "Local",
+          functionArguments: {
+            operation: rasterFunctionConstants.cellStatisticalOperation.sum,
+            rasters: [elevationThresholdFunc, slopeThresholdFunc, aspectThresholdFunc]
+          },
+          outputPixelType: "u8"
+        });
+
+        const colormapFunction = new RasterFunction({
+          functionName: "Colormap",
+          functionArguments: {
+            colormap: [[3, 255, 0, 0]],
+            raster: riskFunc
+          }
+        });
+        return colormapFunction;
+      }
+
+      const layer = new ImageryTileLayer({
+        url,
+        rasterFunction: createAvalancheFunction()
+      });
+      const map = new Map({
+        basemap: "streets",
+        layers: [layer]
+      });
+
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-117.2059, 34.0564],
+        zoom: 10,
+        // limit zoom to source resolution of the elevation to avoid resampling artifacts. fix in future
+        constraints: { maxScale: 36111 }
+      });
+      view.on("click", (event) => {
+        layer.identify(
+          event.mapPoint
+        ).then((results) => {
+          document.getElementById("identify").textContent = `value ${results.value}, processedValue ${results.processedValue}`;
+        });
+      });
+
+      document.getElementById("eleSlider").addEventListener("calciteSliderChange", (evt) => {
+        avalancheConfig.elevation = [evt.target.minValue, evt.target.maxValue];
+        const rasterFunction = createAvalancheFunction();
+        layer.rasterFunction = rasterFunction;
+      });
+      document.getElementById("slopeSlider").addEventListener("calciteSliderChange", (evt) => {
+        avalancheConfig.slope = [evt.target.minValue, evt.target.maxValue];
+        const rasterFunction = createAvalancheFunction();
+        layer.rasterFunction = rasterFunction;
+      });
+      document.getElementById("aspectSlider").addEventListener("calciteSliderChange", (evt) => {
+        avalancheConfig.aspect = [evt.target.minValue, evt.target.maxValue];
+        const rasterFunction = createAvalancheFunction();
+        layer.rasterFunction = rasterFunction;
+      });
+      document.getElementById("opacitySlider").addEventListener("calciteSliderChange", (evt) => {
+        layer.opacity = evt.target.value / 100;
+      });
+      document.getElementById("showElevation").addEventListener("click", (evt) =>
+        layer.rasterFunction = evt.target.checked ? null : createAvalancheFunction()
+      );
+
+
+
+
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+    }
+    demo();
+
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+  </script>
+</head>
+
+<body>
+  <calcite-shell content-behind="true">
+    <div id="viewDiv">
+      <div id="height-button" class="esri-widget esri-widget--button
+      esri-interactive" title="Draw a line from base to top of a building">
+        <calcite-icon icon="measure-building-height-top-base"></calcite-icon>
+      </div>
+    </div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <h4 class="esri-widget__heading esri-editor__title titleText" id="app-title">Interactive avalanche risk
+            analysis</h4>
+          <br>Powered by JS 4.26</br><br />
+          <br>Elevation</br>
+          <calcite-slider min-value="1000" max-value="3000" id="eleSlider" label-handles min="0"
+            max="5000"></calcite-slider>
+          <br>Slope</br>
+          <calcite-slider min-value="15" max-value="30" id="slopeSlider" label-handles min="0"
+            max="90"></calcite-slider>
+          <br>Aspect</br>
+          <calcite-slider min-value="210" max-value="360" id="aspectSlider" label-handles min="0"
+            max="450"></calcite-slider>
+          <br>Opacity</br>
+          <calcite-slider value="100" id="opacitySlider" label-handles min="0" max="100"></calcite-slider>
+          <br />
+          <input type="checkbox" id="showElevation" class="" /><label class="">Show elevation</label>
+          <br />
+
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript">
+function createAvalancheFunction(options) {
+  const { elevation, slope, aspect } = avalancheConfig;
+  const elevationLowerThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.greaterThanEqual,
+      rasters: ["$$", elevation[0]]
+    }
+  });
+
+  const elevationUpperThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.lessThanEqual,
+      rasters: ["$$", elevation[1]]
+    }
+  });
+
+  const elevationThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.booleanAnd,
+      rasters: [elevationLowerThresholdFunc, elevationUpperThresholdFunc]
+    }
+  });
+
+  const slopeFunction = new RasterFunction({
+    functionName: "Slope",
+    functionArguments: {
+      zFactor: 1,
+      slopeType: rasterFunctionConstants.slopeType.degree,
+      raster: "$$"
+    }
+  });
+
+  const slopeLowerThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.greaterThanEqual,
+      rasters: [slopeFunction, slope[0]]
+    }
+  });
+
+  const slopeUpperThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.lessThanEqual,
+      rasters: [slopeFunction, slope[1]]
+    }
+  });
+
+  const slopeThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.booleanAnd,
+      rasters: [slopeLowerThresholdFunc, slopeUpperThresholdFunc]
+    }
+  });
+
+  const aspectFunction = new RasterFunction({
+    functionName: "Aspect",
+    functionArguments: {
+      raster: "$$"
+    }
+  });
+
+  const aspectLowerThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.greaterThanEqual,
+      rasters: [aspectFunction, aspect[0]]
+    }
+  });
+
+  const aspectUpperThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.lessThanEqual,
+      rasters: [aspectFunction, aspect[1]]
+    }
+  });
+
+  const aspectThresholdFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.localLogicalOperation.booleanAnd,
+      rasters: [aspectLowerThresholdFunc, aspectUpperThresholdFunc]
+    }
+  });
+
+  const riskFunc = new RasterFunction({
+    functionName: "Local",
+    functionArguments: {
+      operation: rasterFunctionConstants.cellStatisticalOperation.sum,
+      rasters: [elevationThresholdFunc, slopeThresholdFunc, aspectThresholdFunc]
+    },
+    outputPixelType: "u8"
+  });
+
+  const colormapFunction = new RasterFunction({
+    functionName: "Colormap",
+    functionArguments: {
+      colormap: [[3, 255, 0, 0]],
+      raster: riskFunc
+    }
+  });
+  return colormapFunction;
+}
+      </code></pre>
+    </div>
+  </calcite-popover>
+</body>
+<div id="identify">
+  click a location for risk using finest data
+</div>
+</body>
+
+</html>

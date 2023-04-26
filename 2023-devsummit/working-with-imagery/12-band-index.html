@@ -1,0 +1,603 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Client side raster function support</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      --calcite-shell-panel-max-width: 800px;
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    pre {
+      margin: 0px;
+    }
+
+    #compass-icon {
+      box-shadow: none;
+    }
+
+
+    #chartDiv {
+      padding: 10px;
+      width: 360px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <calcite-shell content-behind="true">
+    <div id="viewDiv">
+    </div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <h4 class="esri-widget__heading esri-editor__title" id="app-title">Vegetation analysis</h4>
+          <br />
+          <div class="esri-widget">
+            Choose a band index
+          </div>
+          <select id="cboIndexMethod" class="esri-select">
+            <option value="original" selected>Original</option>
+            <option value="VARI">Visible Atmospherically Resistant Index (VARI) - r/g/b </option>
+            <option value="NDVI">Normalized Difference Vegetation Index (NDVI) - NIR vs Red </option>
+            <option value="NDMI">Normalized Difference Moisture Index (NDMI) - NIR vs SWIR</option>
+            <option value="NDWI(water bodies)">NDWI for water bodies (Green vs NIR) </option>
+          </select>
+          <br>
+          <div id="chartDiv" class="esri-widget hidden">
+            <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          ">
+              <span style="
+              font-size: 11px;
+              color: #666666;
+              font-weight: bolder;
+              font-family: Arial;
+            " id="indexLabel"></span>
+              <span id="ndviValueDiv" style="
+              font-size: 36px;
+              padding-top: 12px;
+              font-weight: bold;
+              color: #309100;
+              padding-bottom: 8px;
+            "></span>
+            </div>
+            <canvas id="spectral-chart" height="300" width="360" class="esri-widget"></canvas>
+          </div>
+
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript"> 
+const ndvi = new RasterFunction({
+  functionName: "NDVI",
+  functionArguments: {
+    visibleBandID: 3,
+    infraredBandID: 4,
+    scientificOutput: false
+  }
+});
+
+const colormap = new RasterFunction({
+  functionName: "Colormap",
+  functionArguments: {
+    colormapName: NDVI3,
+    raster: ndvi
+  }
+});
+
+const layer = new ImageryTileLayer({
+  url,
+  rasterFunction: colormap
+});
+
+const {value, processedValue} = await layer.identify(location);
+
+        </code></pre>
+    </div>
+  </calcite-popover>
+</body>
+
+<script>
+  require([
+    "esri/intl",
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/support/RasterFunction",
+    "esri/layers/support/rasterFunctionConstants",
+    "esri/layers/GraphicsLayer",
+    "esri/layers/ImageryTileLayer",
+    "esri/Graphic",
+    "esri/core/promiseUtils",
+    "esri/widgets/Expand",
+  ], (
+    intl,
+    Map,
+    MapView,
+    RasterFunction,
+    rasterFunctionConstants,
+    GraphicsLayer,
+    ImageryTileLayer,
+    Graphic,
+    promiseUtils,
+    Expand
+  ) =>
+    (async () => {
+      // useful links
+      // scientific index outputs values between -1.0 and 1.0, which represents vegetation density and vigor. Negative values are mainly generated from clouds, water, and snow, and values near zero are mainly generated from rock and bare soil. Very low values (0.1 and below) of NDVI correspond to barren areas of rock, sand, or snow. Moderate values (0.2 to 0.3) represent shrub and grassland, while high values (0.6 to 0.8) indicate temperate and tropical rainforests.
+
+      // https://pro.arcgis.com/en/pro-app/latest/help/analysis/raster-functions/ndvi-function.htm
+
+      const url = "https://tiledimageservices.arcgis.com/gUR1YWXNyLOlL4Ys/arcgis/rest/services/LC08_L1TP_046028_20220829/ImageServer";
+      let currentIndex = "ndvi";
+
+      const ndvi = new RasterFunction({
+        functionName: "NDVI",
+        functionArguments: {
+          visibleBandID: 3,
+          infraredBandID: 4,
+          scientificOutput: false, // when true -1 to 1
+        },
+      });
+
+      const ndviColorized = new RasterFunction({
+        functionName: "Colormap",
+        functionArguments: {
+          colormapName: rasterFunctionConstants.colormapName.NDVI3,
+          raster: ndvi,
+        },
+      });
+
+      const vari = new RasterFunction({
+        functionName: "BandArithmetic",
+        functionArguments: {
+          method: rasterFunctionConstants.bandIndexType.VARI,
+          bandIndexes: "4 3 2"
+        },
+      });
+
+
+      const stretch = new RasterFunction({
+        functionName: "Stretch",
+        functionArguments: {
+          dynamicRangeAdjustment: false,
+          stretchType: rasterFunctionConstants.stretchType.minMax,
+          useGamma: false,
+          statistics: [[-0.2, 0.2, 0, 0.05]],
+          raster: vari,
+          min: 0,
+          max: 200
+        },
+        outputPixelType: "u8"
+      });
+
+      const variColorized = new RasterFunction({
+        functionName: "Colormap",
+        functionArguments: {
+          colormapName: rasterFunctionConstants.colormapName.NDVI3,
+          raster: stretch,
+        },
+      });
+
+
+      const ndmi = new RasterFunction({
+        functionName: "BandArithmetic",
+        functionArguments: {
+          method: rasterFunctionConstants.bandIndexType.NDMI,
+          bandIndexes: "5 6"
+        },
+      });
+
+      const stretcNDMI = new RasterFunction({
+        functionName: "Stretch",
+        functionArguments: {
+          dynamicRangeAdjustment: false,
+          stretchType: rasterFunctionConstants.stretchType.minMax,
+          useGamma: false,
+          statistics: [[-1, 1, 0, 0.05]],
+          min: 0,
+          max: 200,
+          raster: ndmi
+        },
+        outputPixelType: "u8"
+      });
+
+      const ndmiColorized = new RasterFunction({
+        functionName: "Colormap",
+        functionArguments: {
+          colormapName: rasterFunctionConstants.colormapName.NDVI3,
+          raster: stretcNDMI,
+        },
+      });
+
+
+      const ndwiMcFeeters = new RasterFunction({
+        functionName: "BandArithmetic",
+        functionArguments: {
+          method: rasterFunctionConstants.bandIndexType.NDWI,
+          bandIndexes: "3 5"
+        },
+      });
+
+      const stretcNDWIMcFeeters = new RasterFunction({
+        functionName: "Stretch",
+        functionArguments: {
+          dynamicRangeAdjustment: false,
+          stretchType: rasterFunctionConstants.stretchType.minMax,
+          useGamma: false,
+          statistics: [[-1, 1, 0, 0.05]],
+          min: 0,
+          max: 200,
+          raster: ndwiMcFeeters
+        },
+        outputPixelType: "u8"
+      });
+
+      const ndwiColorizedMcFeeters = new RasterFunction({
+        functionName: "Colormap",
+        functionArguments: {
+          colormapName: rasterFunctionConstants.colormapName.NDVI3,
+          raster: stretcNDWIMcFeeters,
+        },
+      });
+
+
+      const renderer = {
+        type: "raster-stretch",
+        stretchType: "standard-deviation",
+        numberOfStandardDeviations: 2
+      };
+      const layer = new ImageryTileLayer({
+        url,
+        bandIds: [3, 2, 1],
+        renderer
+        // rasterFunction: colormap,
+      });
+
+      const map = new Map({
+        basemap: "topo-vector",
+        layers: [layer],
+      });
+
+      map.basemap.loadAll().then(() => {
+        map.basemap.baseLayers.forEach((layer) => {
+          layer.effect = "grayscale(1) opacity(0.5)";
+        });
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        extent: { "spatialReference": { "latestWkid": 3857, "wkid": 102100 }, "xmin": -13657159.503013758, "ymin": 5690758.849006085, "xmax": -13532462.333830701, "ymax": 5752068.290521089 }
+      });
+
+      const spectralCanvas = document.getElementById("spectral-chart");
+      const chartDiv = document.getElementById("chartDiv");
+      const chart = createSpectralChart(spectralCanvas);
+      let handles = [];
+
+      function addChart() {
+        const debouncedUpdate = promiseUtils.debounce(async (event) => {
+          const point = view.toMap({ x: event.x, y: event.y });
+          const results = await layer.identify(point);
+          if (results.value) {
+            chart.data.datasets[0].data = results.value;
+            chart.update(0);
+            document.getElementById("indexLabel").innerHTML = currentIndex;
+            document.getElementById("ndviValueDiv").innerHTML =
+              intl.formatNumber(results.processedValue / 100 - 1, {
+                minimumFractionDigits: 2
+              });
+            chartDiv.classList.remove("hidden");
+          } else {
+            chartDiv.classList.add("hidden");
+          }
+        });
+
+        let graphic = new Graphic({
+          symbol: {
+            type: "simple-marker",
+            color: "red",
+            size: "12px",
+            outline: {
+              color: "rgba(128, 0, 0, 0.5)",
+              width: "6px",
+            },
+          },
+        });
+
+        map.layers.add(
+          new GraphicsLayer({
+            graphics: [graphic],
+            effect: "drop-shadow(0px 1px 2px rgb(0, 0, 0, 30%))",
+          })
+        );
+
+        let ctrl = new AbortController();
+
+        const handle1 = view.on("pointer-leave", (event) => {
+          // tooltip.enabled = false;
+          graphic.visible = false;
+        });
+        const handle2 = view.on("pointer-enter", (event) => {
+          // tooltip.enabled = true;
+          graphic.visible = true;
+        });
+
+        const handle3 = view.on("pointer-move", (event) => {
+          if (!layer.rasterFunction) {
+            return;
+          }
+          // tooltip.move({ x: event.x, y: event.y });
+          graphic.geometry = view.toMap({ x: event.x, y: event.y });
+          debouncedUpdate(event).catch((error) => {
+            if (!promiseUtils.isAbortError(error)) {
+              throw error;
+            }
+          });
+        });
+
+        handles.push(handle1, handle2, handle3);
+      }
+
+      function createSpectralChart(canvas) {
+        return new Chart(canvas.getContext("2d"), {
+          type: "line",
+          data: {
+            labels: [
+              "Coastal - 0.45",
+              "Blue - 0.51",
+              "Green - 0.59",
+              "Red - 0.67",
+              "NIR - 0.88",
+              "SWIR1 - 1.65",
+              "SWIR2 - 2.229",
+              "Cirrus - 1.38",
+            ],
+            datasets: [
+              {
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.2,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              yAxis: {
+                title: {
+                  display: true,
+                  text: "Digital Number",
+                },
+                min: 4500,
+                max: 22000,
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: "Band Ids - wavelength (micrometer)",
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Spectral profile",
+              },
+            },
+          },
+        });
+      }
+
+      function createTooltip() {
+        const tooltip = document.createElement("div");
+        const style = tooltip.style;
+
+        tooltip.setAttribute("role", "tooltip");
+        tooltip.classList.add("tooltip");
+
+        const textElement = document.createElement("div");
+        textElement.classList.add("esri-widget");
+        tooltip.appendChild(textElement);
+
+        view.surface.insertBefore(tooltip, view.surface.children[0]);
+
+        let x = null;
+        let y = null;
+        let targetX = 0;
+        let targetY = 0;
+        let enabled = false;
+        let hasData = false;
+
+        // move the tooltip progressively
+        function move() {
+          x += (targetX - x) * 0.1;
+          y += (targetY - y) * 0.1;
+
+          if (Math.abs(targetX - x) < 1 && Math.abs(targetY - y) < 1) {
+            x = targetX;
+            y = targetY;
+          } else {
+            requestAnimationFrame(move);
+          }
+
+          style.transform =
+            "translate3d(" + Math.round(x) + "px," + Math.round(y) + "px, 0)";
+        }
+
+        function updateVisibility() {
+          if (hasData && enabled) {
+            style.opacity = 1;
+          } else {
+            style.opacity = 0;
+          }
+        }
+
+        return {
+          move(point) {
+            if (!enabled || x === null) {
+              x = point.x;
+              y = point.y;
+            }
+
+            targetX = point.x;
+            targetY = point.y;
+            move();
+          },
+          setContent: (text) => {
+            textElement.innerHTML = text;
+          },
+          appendContent(content) {
+            textElement.appendChild(content);
+          },
+          set enabled(value) {
+            enabled = value;
+            updateVisibility();
+          },
+          set hasData(value) {
+            hasData = value;
+            updateVisibility();
+          },
+        };
+      }
+
+      const cboIndexMethod = document.getElementById("cboIndexMethod");
+      cboIndexMethod.addEventListener("change", () => {
+        if (!layer.loaded) {
+          return;
+        }
+        currentIndex = cboIndexMethod.value;
+        switch (currentIndex) {
+          case "original":
+            layer.rasterFunction = null;
+            layer.bandIds = [3, 2, 1];
+            layer.renderer = renderer;
+            handles.forEach((handle) => handle?.remove());
+            handles.length = 0;
+            chartDiv.classList.add("hidden");
+            break;
+          case "NDVI":
+          case "NDMI":
+          case "NDWI(water bodies)":
+            // layer.rasterFunction = ndviColorized;
+            layer.rasterFunction = currentIndex === "NDVI"
+              ? ndviColorized
+              : currentIndex === "NDMI"
+                ? ndmiColorized
+                : ndwiColorizedMcFeeters;
+            addChart();
+            break;
+          case "VARI":
+            layer.rasterFunction = variColorized;
+            handles.forEach((handle) => handle?.remove());
+            handles.length = 0;
+            chartDiv.classList.add("hidden");
+            break;
+        }
+      });
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+    })());
+</script>
+
+</html>

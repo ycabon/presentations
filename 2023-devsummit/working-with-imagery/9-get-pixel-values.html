@@ -1,0 +1,430 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Transposed multidimensional ImageryTileLayer | Sample | ArcGIS Maps SDK for JavaScript 4.26</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      /* --calcite-shell-panel-max-width: 800px; */
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    pre {
+      margin: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="timeSlider"></div>
+
+  <calcite-shell content-behind="true">
+    <div id="viewDiv"></div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <div id="app-main" class="tab-content active">
+            <h4 class="esri-widget__heading esri-editor__title" id="app-title">Wind Rose Chart</h4>
+            <div class="esri-widget">
+              NLDAS Daily average wind direction and speed between 1/1/2011 - 12/31/2011
+            </div>
+            <div id="instructionsDiv" class="esri-widget">
+              <h5 class="esri-widget__heading esri-editor__title">Instructions:</h5>
+              <p>Data displays daily average wind direction and speed as recorded on Jan 1, 2011.</p>
+              <p>Use the time slider to animate through time.</p>
+              <p>Click on the wind directions data on the map to see the general wind direction (blew-from) and speed
+                (m/s)
+                for
+                each day of 2011. <br><br>Learn more about <a
+                  href="https://www.epa.gov/sites/default/files/2019-01/documents/how_to_read_a_wind_rose.pdf"
+                  target="_blank">wind rose chart.</a></p>
+            </div>
+            <canvas id="windRose-chart" height="300" width="300" class="esri-widget"></canvas>
+          </div>
+
+
+
+
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript">
+// current slice value
+const { value } = await layer.identify(currentLocation);
+
+
+// get data series for all dimensions
+if (!layer.rasterInfo.hasMultidimensionalTranspose) {
+  return;
+}
+
+const {dataSeries} = await layer.identify(currentLocation,
+    { transposedVariableName: "wind_magdir" }
+  );
+
+const pixelValues = dataSeries
+// general per-band values: value[0], value[1], ...
+  .map(({ value, magdirValue }) =&gt; ...... );
+
+drawWindRose(pixelValues);
+
+      </code></pre>
+    </div>
+  </calcite-popover>
+</body>
+
+<script>
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/ImageryTileLayer",
+    "esri/widgets/Legend",
+    "esri/widgets/TimeSlider",
+    "esri/widgets/Expand"
+  ], (Map, MapView, ImageryTileLayer, Legend, TimeSlider, Expand) =>
+    (async () => {
+      let windRoseChart;
+
+      // create a new instance of an imagery tile layer and apply
+      // VectorFieldRenderer to show the speed and direction of wind
+      const layer = new ImageryTileLayer({
+        url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS2011_daily_wind_magdir/ImageServer",
+        title: "2011 wind - 10 meters above surface",
+        renderer: {
+          type: "vector-field",
+          style: "beaufort-m", // Beaufort point symbol (meters)
+          flowRepresentation: "flow-to",
+          symbolTileSize: 30,
+          visualVariables: [
+            {
+              type: "size",
+              field: "Magnitude", // values read from the first band
+              maxDataValue: 32,
+              maxSize: "60px",
+              minDataValue: 0.04,
+              minSize: "20px"
+            },
+            {
+              type: "rotation",
+              field: "Direction", // values read from the second band
+              rotationType: "geographic" // "arithmetic" is the default
+            }
+          ]
+        }
+      });
+
+      const map = new Map({
+        basemap: "dark-gray-vector",
+        layers: [layer]
+      });
+
+      const view = new MapView({
+        map: map,
+        container: "viewDiv",
+        center: [-85, 40],
+        zoom: 3
+      });
+
+      view.whenLayerView(layer).then(() => {
+        // get all the time dimension values from the service and create an array of dates
+        const windEpochDates = layer.rasterInfo.multidimensionalInfo.variables[0].dimensions[0].values;
+        const windDates = windEpochDates.map(item => new Date(item));
+
+        // time slider widget initialization
+        // users can visualize daily wind information for all the time dimension available
+        const timeSlider = new TimeSlider({
+          container: "timeSlider",
+          mode: "instant",
+          view: view,
+          timeVisible: true,
+          fullTimeExtent: {
+            start: new Date(windDates[0]), // Jan 1, 2011,
+            end: new Date(windDates[windDates.length - 1]) // Dec 31, 2011
+          },
+          // set the stops to match the dates coming from time dimension
+          stops: {
+            dates: windDates
+          }
+        });
+
+        const timeSliderExpand = new Expand({
+          collapsedIconClass: "esri-icon-collapse",
+          expandIconClass: "esri-icon-time-clock",
+          expandTooltip: "TimeSlider",
+          view,
+          content: timeSlider.container,
+          expanded: false
+        });
+        view.ui.add(timeSliderExpand, "bottom-left");
+      });
+
+
+      // Get wind direction and speed info for all the time dimension values available from this
+      // transposed multidimensional service - identify will return 365 values for the each day of 2011
+      view.on("click", (event) => getWindSamples(view.toMap(event)));
+      async function getWindSamples(currentLocation) {
+        if (layer.rasterInfo.hasMultidimensionalTranspose) {
+          // set the transposedVariableName for the identify method. Identify method will return
+          // values for all the slices since multidimensionalDefinition is not defined
+          const results = await layer.identify(currentLocation, {
+            transposedVariableName: "wind_magdir"
+          });
+          if (!results.dataSeries) {
+            return;
+          }
+
+          // first number is the magdirValue array is the wind magnitude
+          // second number is the magdirValue array is the direction the wind blew from.
+          const pixelValues = results.dataSeries.map(({ magdirValue }) => magdirValue);
+
+          //
+          const data = getFrequencies(pixelValues);
+          drawChart(data);
+          document.getElementById("instructionsDiv").style.display = "none";
+        }
+      }
+
+
+      // The layer is displaying the wind data in beaufort meters.
+      // Create wind rose chart based on the layer legend
+      // https://en.wikipedia.org/wiki/Beaufort_scale
+      // https://www.weather.gov/mfl/beaufort
+      const forces = [0.2, 1.8, 3.3, 5.4, 8.5, 11, 14.1, 17.2, 20.8, 24.4, 28.6, 32.7];
+      const forcesLabels = ["0-0.2", "0.2-1.8", "1.8-3.3", "3.3-5.4", "5.4-8.5", "8.5-11", "11-14.1", "14.1-17.2", "17.2-20.8", "20.8-24.4", "24.4-28.6", "28.6-32.7"];
+      const backgroundColor = [
+        "rgb(69,117,181)", //0.2
+        "rgb(101,137,184)", //1.8
+        "rgb(132,158,186)", //3.3
+        "rgb(162,180,189)", //5.4
+        "rgb(192,204,190)", //8.5
+        "rgb(222,227,191)", //11
+        "rgb(255,255,191)", //14.1
+        "rgb(255,220,161)", //17.2
+        "rgb(245,152,105)", //20.8
+        "rgb(237,117,81)", //24.4
+        "rgb(237,117,81)", //28.6
+        "rgb(232,21,21)" //32.7
+      ];
+
+      // this function calculates the percentage of different wind speeds (12 beaufort scales) flew
+      // from 16 different directions.
+      function getFrequencies(data) {
+        const segments = 16;
+        const segmentAngle = 360 / segments;
+        let total = data.length;
+        let windSpeedFrequency = [];
+
+        for (let i = 0; i < segments; i++) {
+          windSpeedFrequency[i] = new Float32Array(12);
+        }
+        // get the beaufort scale meters per second
+        let getBeaufortScale = function (windSpeed) {
+          let scale = 12;
+          for (let i = 0; i < 12; i++) {
+            if (forces[i] >= windSpeed) {
+              scale = i;
+              break;
+            }
+          }
+          return scale;
+        };
+
+        // loop through wind data and set the beaufort wind scale
+        for (let i = 0; i < total; i++) {
+          let monthData = data[i]; // this data returns wind data for each month for given years
+          let direction = monthData[1];
+
+          // check the given direction and identify which sector it belongs to the chart
+          let directionSegment = Math.round((direction + segmentAngle / 2) / segmentAngle);
+          if (directionSegment >= segments) {
+            directionSegment = segments - 1;
+          }
+          const windScale = getBeaufortScale(monthData[0]);
+          if (windScale != 0) {
+            windSpeedFrequency[directionSegment][windScale]++;
+          }
+        }
+
+        // prep the wind rose chart data for the polarArea chart
+        const transposed = _.zip.apply(_, windSpeedFrequency);
+        return transposed;
+      }
+
+      function drawChart(data) {
+        let dataset = [];
+        data.forEach((item, i) => {
+          dataset.push({
+            data: item,
+            backgroundColor: backgroundColor[i],
+            label: forcesLabels[i]
+          });
+        });
+        if (!windRoseChart) {
+          const ctx = document
+            .getElementById("windRose-chart")
+            .getContext("2d");
+          windRoseChart = new Chart(ctx, {
+            type: "polarArea",
+            data: {
+              labels: ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"],
+              datasets: dataset
+            },
+            options: {
+              layout: {
+                padding: 5
+              },
+              legend: {
+                display: false
+              },
+              scale: {
+                angleLines: {
+                  // shows border for angle/sector lines
+                  display: true,
+                  center: true
+                },
+                stacked: true, // stack the bars
+                pointLabels: {
+                  fontSize: 12,
+                  fontColor: "ff0000",
+                  display: true
+                },
+                ticks: {
+                  beginAtZero: true,
+                  callback: (value, data) => {
+                    const percent = Math.round((value * 100) / 365)
+                    return percent + "%";
+                  }
+                }
+              },
+              tooltips: {
+                callbacks: {
+                  label: (tooltipItem, data) => {
+                    var label = data.datasets[tooltipItem.datasetIndex].label || "";
+                    if (label) {
+                      label += ": ";
+                    }
+                    label += Math.round((tooltipItem.value * 100) / 365) + "%";
+                    return label;
+                  }
+                }
+              }
+            }
+          });
+        } else {
+          windRoseChart.data.datasets = [];
+          windRoseChart.data.datasets = dataset;
+          windRoseChart.update();
+        }
+      }
+
+
+
+      // add a legend for the wind direction and speed layer
+      const legendExpand = new Expand({
+        collapsedIconClass: "esri-icon-collapse",
+        expandIconClass: "esri-icon-legend",
+        expandTooltip: "Legend",
+        view,
+        content: new Legend({
+          view
+        }),
+        expanded: false
+      });
+      view.ui.add(legendExpand, "top-left");
+
+
+
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+      // hljs.initLineNumbersOnLoad();
+    })());
+</script>
+
+</html>

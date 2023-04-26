@@ -1,0 +1,392 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Top-up image space | Sample | ArcGIS Maps SDK for JavaScript 4.26</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      --calcite-shell-panel-max-width: 800px;
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    pre {
+      margin: 0px;
+    }
+
+    #compass-icon {
+      box-shadow: none;
+    }
+  </style>
+  <script type="text/javascript">
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/views/draw/Draw",
+      "esri/Graphic",
+      "esri/layers/ImageryLayer",
+    ], function (Map, MapView, Draw, Graphic, ImageryLayer) {
+      let view, draw;
+      const url =
+        "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Oblique/WU_Oblique/ImageServer";
+
+      // imageId will be used to set the mosaic rule on the layer
+      // Initial value to be set when the app loads.
+      let imageId = 690;
+
+      // new imagery layer
+      const layer = new ImageryLayer({
+        url: url,
+        mosaicRule: {
+          method: "lock-raster",
+          operation: "first",
+          lockRasterIds: [imageId]
+        }
+      });
+
+      /**************************
+       * Add imagery layer to map
+       *************************/
+      const map = new Map({
+        layers: [layer]
+      });
+
+      // get the image coordinate system of the specified
+      // image catalog.
+      setViewIcsInfo(imageId);
+
+      // itemIds dropdown lists hard coded raster ids so that users can
+      // display different images from the service.
+      // Raster ids for this service can be found using the link below.
+      // https://sampleserver6.arcgisonline.com/arcgis/rest/services/Oblique/WU_Oblique/ImageServer/query?where=1%3D1&outFields=OBJECTID&returnGeometry=false&f=pjson
+      const itemIds = document.getElementById("itemIds");
+      itemIds.addEventListener("change", (event) => {
+        imageId = itemIds.value;
+
+        // the layer's mosaic rule with the specified raster id
+        layer.mosaicRule = {
+          method: "lock-raster",
+          operation: "first",
+          lockRasterIds: [imageId]
+        };
+
+        // set the view using the ics info returned
+        // for the specified raster id
+        setViewIcsInfo(imageId);
+      });
+      const heightButton = document.getElementById("height-button");
+      const compass = document.getElementById("compass-icon");
+
+      // this function is called when the app loads and
+      // when users makes a new selection for raster ids from
+      // the itemIds dropdown. It will recreate MapView using
+      // ics info returned for the specified raster
+      function setViewIcsInfo(imageId) {
+        // get the image coordinate system of the item in an image service.
+        layer.getCatalogItemICSInfo(imageId).then((info) => {
+          const icsInfo = document.getElementById("icsInfo");
+          const arithmeticAngle = Math.round(info.northDirection);
+          const rotateAngle = (450 - arithmeticAngle) % 360;
+          icsInfo.innerHTML = "Image id: <b>" + imageId
+            + "</b><br/> North direction: <b>"
+            + Math.round(arithmeticAngle) + "</b>";
+          compass.style = `transform: rotate(${rotateAngle}deg)`;
+          // use the short-handed ics representation
+          // server will lookup the spatialReference for the raster
+          const spatialRef = {
+            wkid: 0,
+            imageCoordinateSystem: { id: imageId }
+          };
+
+          // create an extent for the map view using extent info
+          // returned in ics info
+          const viewRect = document.getElementById("viewDiv");
+          const width = viewRect.getBoundingClientRect().width;
+          const height = viewRect.getBoundingClientRect().height;
+          const newExtent = info.icsExtent.clone();
+          const scaleFactor = 8;
+
+          newExtent.xmin = (newExtent.xmin + newExtent.xmax - width * scaleFactor) / 2;
+          newExtent.xmax = newExtent.xmin + width * scaleFactor;
+          newExtent.ymin = (newExtent.ymin + newExtent.ymax - height * scaleFactor) / 2;
+          newExtent.ymax = newExtent.ymin + height * scaleFactor;
+          newExtent.spatialReference = spatialRef;
+
+          // set the view container null so that we can display the selected raster
+          if (view) {
+            view.container = null;
+          }
+          // set the view spatialReference and extent
+          view = new MapView({
+            container: "viewDiv",
+            map: map,
+            spatialReference: spatialRef,
+            extent: newExtent
+          });
+
+          view.ui.add(heightButton, "top-left");
+          view.ui.add(compass, "top-left");
+          draw = new Draw({
+            view: view
+          });
+        });
+      }
+
+      // draw polyline button
+      document.getElementById("height-button").onclick = () => {
+        view.graphics.removeAll();
+        document.getElementById("heightResultDiv").classList.add("hidden");
+
+        // creates and returns an instance of PolyLineDrawAction
+        const action = draw.create("polyline");
+
+        // focus the view to activate keyboard shortcuts for sketching
+        view.focus();
+
+        // listen polylineDrawAction events to give immediate visual feedback
+        // to users as the line is being drawn on the view.
+        action.on(
+          [
+            "vertex-add",
+            "vertex-remove",
+            "cursor-update",
+            "redo",
+            "undo",
+            "draw-complete"
+          ],
+          updateVertices
+        );
+      };
+
+      // Checks if the last vertex is making the line intersect itself.
+      function updateVertices(event) {
+        // create a polyline from returned vertices
+        if (event.vertices.length > 1) {
+          const graphic = createGraphic(event);
+          if (event.type === "vertex-add") {
+            draw.complete();
+            return;
+          }
+          if (event.type === "draw-complete") {
+            const [start, end] = graphic.geometry.paths[0];
+            const params = {
+              fromGeometry: {
+                spatialReference: view.spatialReference,
+                x: start[0],
+                y: start[1]
+              },
+              toGeometry: {
+                spatialReference: view.spatialReference,
+                x: end[0],
+                y: end[1]
+              },
+              operationType: "base-and-top"
+            };
+            layer.measureHeight(params).then((result) => {
+              document.getElementById("heightResultDiv").classList.remove("hidden");
+              const height = result.height.value.toFixed(2);
+              const uncertainty = result.height.uncertainty.toFixed(2);
+              const unit = result.height.unit;
+              document.getElementById("height").innerHTML = `${height}&plusmn;${uncertainty} ${unit}`;
+            });
+          }
+        }
+      }
+
+      // create a new graphic presenting the polyline that is being drawn on the view
+      function createGraphic(event) {
+        const vertices = event.vertices;
+        view.graphics.removeAll();
+
+        // a graphic representing the polyline that is being drawn
+        const graphic = new Graphic({
+          geometry: {
+            type: "polyline",
+            paths: vertices,
+            spatialReference: view.spatialReference
+          },
+          symbol: {
+            type: "simple-line", // autocasts as new SimpleFillSymbol
+            color: [4, 90, 141],
+            width: 4,
+            cap: "round",
+            join: "round"
+          }
+        });
+
+        view.graphics.add(graphic);
+        return graphic;
+      }
+
+
+
+
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+    });
+  </script>
+</head>
+
+<body>
+  <calcite-shell content-behind="true">
+    <div id="viewDiv">
+      <div id="height-button" class="esri-widget esri-widget--button
+      esri-interactive" title="Draw a line from base to top of a building">
+        <calcite-icon icon="measure-building-height-top-base"></calcite-icon>
+      </div>
+      <div id="compass-icon" class="esri-widget esri-widget--button
+      esri-interactive" title="Compass for top-up image space">
+        <calcite-icon icon="compass-needle"></calcite-icon>
+      </div>
+    </div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <h4 class="esri-widget__heading esri-editor__title" id="app-title">Images of St. Louis</h4>
+          <div class="esri-widget">
+            Pick an oblique image to explore places in St. Louis, measure a building's height by drawing a line from the base to the top of a building.
+          </div>
+          <br/> quiz: Where is the century-old Brookings Hall?
+          <br/><br/>
+          <select id="itemIds" class="esri-select">
+            <option value="690" selected>Washington University</option>
+            <option value="1599">Charles A. Shaw Park</option>
+            <option value="883">St. Louis children's hospital</option>
+            <option value="379">St. Louis Galleria</option>
+            <option value="247">County court buildings</option>
+          </select>
+          <br>
+          <div id="imageInfo">
+            <div id="icsInfo" class="esri-widget"></div>
+            <div id="heightResultDiv" class="hidden">
+              <br>Height: <b><span id="height"></span></b></br>
+            </div>
+          </div>
+
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript">
+// setup top-up image space display
+const imageId = 1599;
+const layer = new ImageryLayer({
+  url: url,
+  mosaicRule: {
+    method: "lock-raster",
+    operation: "first",
+    lockRasterIds: [imageId]
+  }
+});
+const { extent, northDirection } = await layer.getCatalogItemICSInfo(imageId);
+const spatialReference = new SpatialReference({imageCoordinateSystem: {icsid: imageId}});
+const map = new Map({ layers: [layer] });
+view = new MapView({
+  map, extent, spatialReference,
+  container: "viewDiv"
+});
+
+// measure a building's height
+const params = {
+  fromGeometry: { spatialReference, x: base[0], y: base[1] },
+  toGeometry: { spatialReference, x: top[0], y: top[1] },
+  operationType: "base-and-top" // base-and-top-shadow, top-and-top-shadow
+};
+const result = await layer.measureHeight(params);
+const {value, uncertainty, unit } = result.height;
+
+      </code></pre>
+    </div>
+  </calcite-popover>
+</body>
+
+</html>

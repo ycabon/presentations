@@ -1,0 +1,268 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Temperature Mask | Sample | ArcGIS Maps SDK for JavaScript 4.26</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.3/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.3/calcite.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow-y: scroll;
+      /* --calcite-shell-panel-max-width: 800px; */
+      /* --calcite-panel-width-multiplier: 2; */
+    }
+
+    #infoDiv {
+      padding: 10px;
+      font-size: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    #timeSlider {
+      width: 400px;
+    }
+
+    #instructionsDiv {
+      margin-top: 40px;
+    }
+
+    .slider {
+      height: 50px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    code {
+      font-size: large;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #identify {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      width: 380px;
+      background-color: gray;
+    }
+
+    calcite-popover {
+      max-height: 100%;
+      overflow-y: auto;
+    }
+
+    .chart-legend li span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    pre {
+      margin: 0px;
+    }
+  </style>
+  <script type="module">
+    // recommended to use @arcgis/core or esri-loader
+    const simpleAsyncRequire = (moduleNames) => new Promise((resolve) => require(moduleNames, (...classNames) => resolve(classNames)));
+    async function demo() {
+      const modules = await simpleAsyncRequire([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/support/RasterFunction",
+        "esri/layers/support/DimensionalDefinition",
+        "esri/layers/ImageryTileLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Slider"
+      ]);
+      const [
+        Map,
+        MapView,
+        RasterFunction,
+        DimensionalDefinition,
+        ImageryTileLayer,
+        Legend,
+        Slider
+      ] = modules;
+
+
+      function createMask(range = [29.9, 35.5]) {
+        return new RasterFunction({
+          functionName: "Mask",
+          functionArguments: {
+            includedRanges: [...range]
+          }
+        });
+      }
+
+      const url = "https://tiledimageservices.arcgis.com/gUR1YWXNyLOlL4Ys/arcgis/rest/services/HYCOM20130317/ImageServer";
+      const layer = new ImageryTileLayer({
+        url,
+        multidimensionalDefinition: [
+          new DimensionalDefinition({ variableName: "salinity", dimensionName: "StdTime", values: [1363478400000] }),
+          new DimensionalDefinition({ variableName: "salinity", dimensionName: "StdZ", values: [0] }),
+        ],
+        rasterFunction: createMask()
+      });
+
+      window.layer = layer;
+      const map = new Map({
+        basemap: "streets",
+        layers: [layer]
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-115, 35],
+        zoom: 5,
+        // renderContext: "webgl2"
+      });
+      window.view = view;
+
+      const legend = new Legend({
+        view: view
+      });
+      view.ui.add(legend, "bottom-left");
+
+      function updateRange() {
+        layer.rasterFunction = createMask([...slider.values]);
+      }
+
+      const slider = new Slider({
+        container: "stretch-slider",
+        min: 29.9,
+        max: 35.5,
+        values: [29.9, 35.5],
+        steps: 0.1,
+        snapOnClickEnabled: false,
+        visibleElements: {
+          labels: true,
+          rangeLabels: true
+        }
+      });
+      slider.on(["thumb-change", "thumb-drag"], updateRange);
+
+
+
+      const actionNodes = document.querySelectorAll("calcite-action");
+      const contentNodes = [document.getElementById("app-code")];
+      document.getElementById("actionBar").addEventListener("click", (evt) => {
+        const actionButton = evt.composedPath().find(({ tagName }) => tagName === "calcite-action".toUpperCase());
+        if (!actionButton) {
+          return;
+        }
+        actionNodes.forEach((node) => {
+          if (node === actionButton) {
+            node.setAttribute("active", "");
+          } else {
+            node.removeAttribute("active");
+          }
+        });
+        const targetName = actionButton.getAttribute("action-target");
+        contentNodes.forEach((node) => {
+          if (node.id === targetName) {
+            node.classList.add("active");
+            node.setAttribute("open", "true");
+          } else {
+            node.classList.remove("active");
+            node.setAttribute("open", "false");
+          }
+        });
+      });
+      hljs.highlightAll();
+    }
+    demo();
+  </script>
+</head>
+
+<body>
+  <calcite-shell content-behind="true">
+    <div id="viewDiv"></div>
+    <calcite-shell-panel slot="panel-end" position="end" id="shell-panel">
+      <calcite-panel>
+        <div id="infoDiv" class="esri-widget">
+          <h4 class="esri-widget__heading esri-editor__title titleText" id="app-title">Raster Function: Mask</h4>
+          <br>
+          <label id="stretchLabel" class="esri-feature-form__label">Data source: HyCOM. Unit: PSU (g/kg). Date: 2013-03-17Z. Use the slider below to filter salinity range.</label>
+          <div id="stretch-slider" class="slider"></div>
+        </div>
+      </calcite-panel>
+      <calcite-action-bar slot="action-bar" id="actionBar">
+        <calcite-action active text="App" icon="apps" action-target="app-main"></calcite-action>
+        <calcite-action text="Code" icon="file-code" action-target="app-code"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+  </calcite-shell>
+  <calcite-popover heading="Code snippet" reference-element="app-title" open="false" pointer-disabled="true"
+    id="app-code" closable>
+    <div>
+      <pre><code class="language-javascript">
+const mask = new RasterFunction({
+  functionName: "Mask",
+  functionArguments: {
+    includedRanges: [29.9, 35.5]
+  }
+});
+
+// check variables/dimensions:
+// layer.rasterInfo.multidimensionalInfo
+const multidimensionalDefinition = [
+  new DimensionalDefinition({
+    variableName: "salinity",
+    dimensionName: "StdTime",
+    values: [1363478400000]
+  }),
+  new DimensionalDefinition({
+    variableName: "salinity",
+    dimensionName: "StdZ",
+    values: [0]
+  }),
+];
+
+const layer = new ImageryTileLayer({
+  url,
+  multidimensionalDefinition,
+  rasterFunction: mask
+});
+
+</code></pre>
+    </div>
+  </calcite-popover>
+</body>
+
+</html>

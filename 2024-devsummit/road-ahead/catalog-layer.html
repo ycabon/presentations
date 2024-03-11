@@ -178,10 +178,10 @@
           "trigger-action",
           async (event) => {
             if (event.action.id === "add-layer") {
-              const layer = await layer.dynamicGroupLayer._createLayer(
-                JSON.parse(event.graphic.attributes.cd_itemsource)
+              const sublayer = await layer.dynamicGroupLayer._createLayer(
+                JSON.parse(view.popup.selectedFeature.attributes.cd_itemsource)
               );
-              map.layers.push(layer);
+              map.layers.push(sublayer);
             }
           }
         );

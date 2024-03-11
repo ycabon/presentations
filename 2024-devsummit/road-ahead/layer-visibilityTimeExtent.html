@@ -1,0 +1,184 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Layer.visibilityTimeExtent</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #timeSlider {
+        position: absolute;
+        left: 5%;
+        right: 5%;
+        bottom: 20px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.30/esri/themes/light/main.css"
+    />
+    <script src="https://jsdev.arcgis.com/4.30/"></script>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/2.6.0/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/2.6.0/calcite.css"
+    />
+
+    <script>
+      require([
+        "esri/core/reactiveUtils",
+        "esri/layers/MediaLayer",
+        "esri/layers/support/ImageElement",
+        "esri/layers/support/ExtentAndRotationGeoreference",
+        "esri/Map",
+        "esri/TimeExtent",
+        "esri/views/MapView",
+        "esri/widgets/LayerList",
+        "esri/widgets/TimeSlider",
+      ], (reactiveUtils, MediaLayer, ImageElement, ExtentAndRotationGeoreference, Map, TimeExtent, MapView, LayerList, TimeSlider) => {
+        const map = new Map({
+          basemap: "topo",
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map,
+          constraints: {
+            snapToZoom: false,
+          },
+          center: [-116.552, 33.821],
+          zoom: 14
+        });
+
+        const layersInfo = [
+          {
+            year: 1975,
+            url: "./layer-visibilityTimeExtent-images/1975.png",
+            extent: {
+              xmin: -12984809.331590625,
+              ymin: 4000550.954230308,
+              xmax: -12964123.560810978,
+              ymax: 4009140.565283843,
+              spatialReference: { wkid: 102100 }
+            }
+          },
+          {
+            year: 1980,
+            url: "./layer-visibilityTimeExtent-images/1980.png",
+            extent: {
+              xmin: -12984809.331590625,
+              ymin: 4000550.954230308,
+              xmax: -12964123.560810978,
+              ymax: 4009140.565283843,
+              spatialReference: { wkid: 102100 }
+            }
+          },
+          {
+            year: 1988,
+            url: "./layer-visibilityTimeExtent-images/1988.png",
+            extent: {
+              xmin: -12984809.331590625,
+              ymin: 4000550.954230308,
+              xmax: -12964123.560810978,
+              ymax: 4009140.565283843,
+              spatialReference: { wkid: 102100 }
+            }
+          },
+          {
+            year: 1996,
+            url: "./layer-visibilityTimeExtent-images/1996.png",
+            extent: {
+              xmin: -12984809.331590625,
+              ymin: 4000550.954230308,
+              xmax: -12964123.560810978,
+              ymax: 4009140.565283843,
+              spatialReference: { wkid: 102100 }
+            }
+          }
+        ]
+
+        layersInfo.forEach(li => {
+          li.layer = new MediaLayer({
+            title: li.year.toString(),
+            source: new ImageElement({
+              image: li.url,
+              georeference: new ExtentAndRotationGeoreference({
+                extent: li.extent
+              })
+            })
+          });
+          map.layers.push(li.layer);
+        });
+
+        const minYear = Math.min(...layersInfo.map(li => li.year));
+        const maxYear = Math.max(...layersInfo.map(li => li.year));
+        const timeExtent = new TimeExtent({
+          start: new Date(""+minYear),
+          end: new Date(""+maxYear),
+        }).expandTo("years");
+
+        const timeSlider = new TimeSlider({
+          fullTimeExtent: timeExtent,
+          timeExtent,
+          container: "timeSlider",
+          stops: {
+            interval: {
+              value: 1,
+              unit: "years"
+            }
+          }
+        });
+
+        reactiveUtils.watch(() => timeSlider.timeExtent, (value) => {
+          const start = value.start.getFullYear();
+          const end = value.end.getFullYear();
+          
+          layersInfo.forEach(li => {
+            li.layer.maxScale = li.year >= start && li.year <= end ? 0 : Infinity;
+          });
+        });
+
+        view.ui.add(new LayerList({ view }), "top-right");
+
+      });
+    </script>
+  </head>
+
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo
+          slot="logo"
+          heading="Layer.visibilityTimeExtent"
+          description="Esri Developer Summit 2024"
+          icon=""
+        ></calcite-navigation-logo>
+      </calcite-navigation>
+      <div id="viewDiv">
+        <div id="timeSlider"></div>
+      </div>
+      <!-- <calcite-shell-panel
+        slot="panel-bottom"
+        layout="horizontal"
+        position="end"
+        id="shell-panel-start"
+      ></calcite-shell-panel> -->
+    </calcite-shell>
+  </body>
+</html>

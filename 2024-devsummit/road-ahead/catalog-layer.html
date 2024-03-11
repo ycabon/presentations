@@ -1,0 +1,213 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>CatalogLayer</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #timeSlider {
+        position: absolute;
+        left: 5%;
+        right: 5%;
+        bottom: 20px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.30/esri/themes/light/main.css"
+    />
+    <script src="https://jsdev.arcgis.com/4.30/"></script>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/2.6.0/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/2.6.0/calcite.css"
+    />
+
+    <script>
+      require([
+        "esri/core/reactiveUtils",
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/CatalogLayer",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/LayerList",
+        "esri/popup/FieldInfo",
+        "esri/popup/content/FieldsContent",
+        "esri/widgets/TimeSlider",
+        "esri/smartMapping/renderers/type",
+        "esri/smartMapping/support/adapters/FeatureLayerAdapter"
+      ], (reactiveUtils, Map, MapView, CatalogLayer, FeatureLayer, LayerList, FieldInfo, FieldsContent, TimeSlider, type, FeatureLayerAdapter) => {
+        const map = new Map({
+          basemap: "dark-gray",
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map,
+          constraints: {
+            snapToZoom: false,
+          },
+        });
+
+        layer = new CatalogLayer({
+          portalItem: {
+            id: "8c5fdbf80d7546968e7efc9d6e19b1d9",
+          },
+          definitionExpression: "Hurricane_Name <> ''",
+        });
+
+        layer.load().then(async () => {
+          view.extent = layer.fullExtent.expand(1.2);
+          
+          const result = await type.createRenderer({
+            view,
+            field: "Hurricane_Name",
+            layer: new FeatureLayerAdapter({
+              layer: new FeatureLayer({
+                url: layer.url
+              })
+            })
+          });
+          result.renderer.uniqueValueInfos.forEach((uvi) => {
+            uvi.symbol.outline.color = uvi.symbol.color.clone();
+            uvi.symbol.color.a = 0.1;
+          })
+          layer.footprintLayer.renderer = result.renderer;
+
+          const timeSlider = new TimeSlider({
+            fullTimeExtent: layer.timeInfo.fullTimeExtent.expandTo("hours"),
+            timeExtent: layer.timeInfo.fullTimeExtent.expandTo("hours"),
+            container: "timeSlider",
+            timeVisible: true,
+            stops: {
+              interval: {
+                value: 1,
+                unit: "hours"
+              }
+            }
+          });
+          reactiveUtils.watch(() => timeSlider.timeExtent, (value) => {
+            let start = value.start.toISOString();
+            start = start.replaceAll("T", " ").substring(0, start.length - 5);
+            let end = value.end.toISOString();
+            end = end.replaceAll("T", " ").substring(0, end.length - 5);
+            layer.definitionExpression = `Hurricane_Name <> '' AND ${layer.timeInfo.startField} >= DATE '${start}' AND ${layer.timeInfo.endField} <= DATE '${end}'`;
+            // view.allLayerViews.find((lv) => lv.layer === layer).footprintLayerView.featureEffect = {
+            //   filter: {
+            //     where: `${layer.timeInfo.startField} >= DATE '${start}' AND ${layer.timeInfo.endField} <= DATE '${end}'` 
+            //   },
+            //   excludedEffect: "blur(8px) grayscale"
+            // }
+          });
+          map.layers.push(layer);
+
+          layer.footprintLayer.popupTemplate = {
+            title: "{cd_itemname}",
+            actions: [
+              {
+                type: "button",
+                id: "add-layer",
+                icon: "add-layer",
+                title: "Add layer",
+              },
+            ],
+            content: [
+              new FieldsContent({
+                title: "User defined fields",
+                fieldInfos: [
+                  new FieldInfo({
+                    fieldName: "Hurricane_Name",
+                    label: "Hurricane Name"
+                  }),
+                  new FieldInfo({
+                    fieldName: "Start_Date",
+                    label: "Start Date",
+                    format: {
+                      dateFormat: "short-date-short-time",
+                    },
+                  }),
+                  new FieldInfo({
+                    fieldName: "End_Date",
+                    label: "End Date",
+                    visible: true,
+                    format: {
+                      dateFormat: "short-date-short-time",
+                    },
+                  }),
+                ],
+              }),
+              new FieldsContent({
+                title: "Catalog fields",
+                fieldInfos: [
+                  new FieldInfo({
+                    fieldName: "cd_itemtype",
+                    label: "Item Type"
+                  }),
+                  new FieldInfo({
+                    fieldName: "cd_itemsource",
+                    label: "Item Source"
+                  })
+                ],
+              }),
+            ],
+          };
+          layer.dynamicGroupLayer.visible = false;
+        });
+
+        view.ui.add(new LayerList({ view }), "top-right");
+
+        reactiveUtils.on(
+          () => view.popup,
+          "trigger-action",
+          async (event) => {
+            if (event.action.id === "add-layer") {
+              const layer = await layer.dynamicGroupLayer._createLayer(
+                JSON.parse(event.graphic.attributes.cd_itemsource)
+              );
+              map.layers.push(layer);
+            }
+          }
+        );
+      });
+    </script>
+  </head>
+
+  <body>
+    <calcite-shell>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo
+          slot="logo"
+          heading="CatalogLayer"
+          description="Esri Developer Summit 2024"
+          icon="catalog-dataset"
+        ></calcite-navigation-logo>
+      </calcite-navigation>
+      <div id="viewDiv">
+        <div id="timeSlider"></div>
+      </div>
+      <!-- <calcite-shell-panel
+        slot="panel-bottom"
+        layout="horizontal"
+        position="end"
+        id="shell-panel-start"
+      ></calcite-shell-panel> -->
+    </calcite-shell>
+  </body>
+</html>

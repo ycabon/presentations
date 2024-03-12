@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){function g(a,b){for(const c of a.allSublayers.items)if((a="building-component"===c.type?c.getFieldDomain?.(b):null)&&"coded-value"===a.type)return a;return null}function h(a,b){a=a.summaryStatistics?.fields??[];const c=b.toLowerCase();return a.find(e=>e.modelName?.toLowerCase()===c)??null}const k=a=>b=>{const c=a.toLowerCase();return b.sublayers.find(e=>e.modelName?.toLowerCase()===c)??null},l=k("fullmodel"),m=k("overview");d.findFieldCodedValueDomain=g;d.findFieldInfoByModelName=
+function(a,b){b=h(a,b);if(null==b)return null;const c=b.fieldName;if(null==c||!c)return null;a=g(a,c);const e=new Map;for(const f of b.mostFrequentValues??[])"number"===typeof f&&e.set(f,null!=a?a.getName(f):String(f));return{fieldName:c,fieldValueMap:e}};d.findFieldStatisticsByModelName=h;d.findFullModelSublayer=l;d.findOverviewSublayer=m;d.showFullModel=function(a){const b=l(a);null!=b&&(b.visible=!0);a=m(a);null!=a&&(a.visible=!1)};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

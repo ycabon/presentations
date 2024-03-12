@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../request","../core/urlUtils","./utils","../symbols/CIMSymbol"],function(f,g,h,k,l){f.generateSymbol=async function(c,b,d){c=k.parseUrl(c);var a=b.svgImage;b=new FormData;if("FormData"in globalThis&&"HTMLFormElement"in globalThis)if(a instanceof FormData){var e=a.get("svgImage");b.append("svgImage",e,e.name)}else a instanceof HTMLFormElement&&(e=(new FormData(a)).get("svgImage"),b.append("svgImage",e,e.name));"string"===typeof a&&(a=new Blob([a.trim()],{type:"image/svg+xml"}),
+b.append("svgImage",a,"symbol.svg"));b.append("f","json");d={...d,method:"post",body:b};c=h.join(c.path,"generateSymbol");({data:d}=await g(c,d));return{symbol:new l({data:{type:"CIMSymbolReference",symbol:d}})}};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

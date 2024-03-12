@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/has","../../../input/InputHandler"],function(f,k,g){var e;(function(a){a[a.IN=0]="IN";a[a.OUT=1]="OUT"})(e||={});class h extends g.InputHandler{constructor(a,b,d){super(!0);this.view=a;this.keys=b;this._keysToZoomAction={};this.registerIncoming("key-down",d,c=>this._handleKeyDown(c));b.zoomIn.forEach(c=>this._keysToZoomAction[c]=e.IN);b.zoomOut.forEach(c=>this._keysToZoomAction[c]=e.OUT)}_handleKeyDown(a){this._handleKey(a)}_handleKey(a){var b=a.modifiers;if(!(0<
+b.size)||b.has("Shift"))if({key:b}=a.data,b in this._keysToZoomAction){b=this._keysToZoomAction[b];var {mapViewNavigation:d}=this.view,c=null;switch(b){case e.IN:c=d.zoomIn();break;case e.OUT:c=d.zoomOut();break;default:return}d.begin();c.then(()=>d.end());a.stopPropagation()}}}f.KeyZoom=h;Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

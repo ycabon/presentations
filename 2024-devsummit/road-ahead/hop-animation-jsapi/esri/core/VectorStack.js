@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ./nextTick ./libs/gl-matrix-2/factories/mat3f64 ./libs/gl-matrix-2/factories/mat4f64 ./libs/gl-matrix-2/factories/quatf64 ./libs/gl-matrix-2/factories/vec2f64 ./libs/gl-matrix-2/factories/vec3f64 ./libs/gl-matrix-2/factories/vec4f64".split(" "),function(c,d,e,f,g,h,k,l){class a{constructor(b){this._create=b;this._items=[];this._itemsPtr=0}get(){0===this._itemsPtr&&d.nextTick(()=>this._reset());this._itemsPtr>=this._items.length&&this._items.push(this._create());return this._items[this._itemsPtr++]}_reset(){const b=
+2*this._itemsPtr;this._items.length>b&&(this._items.length=b);this._itemsPtr=0}static createVec2f64(){return new a(h.create)}static createVec3f64(){return new a(k.create)}static createVec4f64(){return new a(l.create)}static createMat3f64(){return new a(e.create)}static createMat4f64(){return new a(f.create)}static createQuatf64(){return new a(g.create)}get test(){return{length:this._items.length}}}c.VectorStack=a;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

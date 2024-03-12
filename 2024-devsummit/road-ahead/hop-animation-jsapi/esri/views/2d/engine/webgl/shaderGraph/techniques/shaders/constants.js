@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(a){a.RotationType=void 0;var b=a.RotationType||(a.RotationType={});b[b.Geographic=0]="Geographic";b[b.Arithmatic=1]="Arithmatic";a.attrVvColor=1;a.attrVvOpacity=2;a.attrVvRotation=3;a.attrVvSize=0;a.bitsetFillPatternHeightIsCompressed=5;a.bitsetFillPatternWidthIsCompressed=6;a.bitsetFillRandomPatternOffset=2;a.bitsetGenericConsiderAlphaOnly=4;a.bitsetGenericLockColor=1;a.bitsetLineIsSdf=3;a.bitsetLineScaleDash=2;a.bitsetMarkerAlignmentMap=0;a.bitsetMarkerOutlineAllowColorOverride=
+2;a.bitsetMarkerScaleSymbolsProportionally=3;a.bitsetTextIsBackground=0;a.bitsetTextIsLineLabel=4;a.bitsetTextIsMapAligned=3;a.bitsetTypeFillOutline=0;a.c256ToRad=3.14159265359/128;a.cDegToRad=3.14159265359/180;a.cRadToDeg=57.29577950560105;a.epsilon=1E-5;a.epsilonHitTest=.05;a.extrudeScalePlacementPadding=.25;a.fillPositionPrecision=1;a.maxFilterCount=2;a.maxRepresentableInt=16777216;a.maxSdfDistance=8;a.nanMagicNumber=1E-30;a.offsetPrecision=.125;a.outlineScale=.2;a.placementPadding=8;a.positionPrecision=
+.125;a.sdfFontSize=24;a.softEdgeRatio=1;a.thinLineHalfWidth=1;a.thinLineWidthFactor=1.1;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

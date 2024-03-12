@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./enums","./TextureDescriptor"],function(d,a,f){class e extends f.TextureDescriptor{constructor(b,c){super();this.context=b;Object.assign(this,c);switch(this.internalFormat){case a.SizedPixelFormat.R16F:case a.SizedPixelFormat.R16I:case a.SizedPixelFormat.R16UI:case a.SizedPixelFormat.R32F:case a.SizedPixelFormat.R32I:case a.SizedPixelFormat.R32UI:case a.SizedPixelFormat.R8_SNORM:case a.SizedPixelFormat.R8:case a.SizedPixelFormat.R8I:case a.SizedPixelFormat.R8UI:this.pixelFormat=
+a.PixelFormat.RED}}static validate(b,c){return new e(b,c)}}d.ValidatedTextureDescriptor=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

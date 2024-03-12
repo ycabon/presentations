@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/object ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../support/OrderByInfo".split(" "),function(d,e,h,k,q,r,t,l,f){function m(a,b,c){if(!a)return null;a=a.find(g=>!!g.field);if(!a)return null;b=new f;b.read(a,c);return[b]}function n(a,b,c,g){(a=a.find(p=>!!p.field))&&h.setDeepValue(c,[a.toJSON()],b)}d.OrderedLayer=a=>{a=class extends a{constructor(){super(...arguments);
+this.orderBy=null}};e.__decorate([k.property({type:[f],json:{origins:{"web-scene":{write:!1,read:!1}},read:{source:"layerDefinition.orderBy",reader:m},write:{target:"layerDefinition.orderBy",writer:n}}})],a.prototype,"orderBy",void 0);return a=e.__decorate([l.subclass("esri.layers.mixins.OrderedLayer")],a)};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

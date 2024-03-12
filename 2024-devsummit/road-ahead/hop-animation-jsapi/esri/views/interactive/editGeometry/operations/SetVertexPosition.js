@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(c){class d{constructor(a,b,e){this._editGeometry=a;this._vertex=b;this._pos=e}apply(){const a=null==this._originalPosition;a&&(this._originalPosition=this._vertex.pos);this._apply(a?"apply":"redo")}undo(){this._vertex.pos=this._originalPosition;this._editGeometry.notifyChanges({operation:"undo",updatedVertices:[this._vertex]})}accumulate(a){return a instanceof d&&a._vertex===this._vertex?(this._pos=a._pos,this._apply("apply"),!0):!1}_apply(a){this._vertex.pos=this._pos;
+this._editGeometry.components.forEach(b=>b.unnormalizeVertexPositions());this._editGeometry.notifyChanges({operation:a,updatedVertices:[this._vertex]})}}c.SetVertexPosition=d;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

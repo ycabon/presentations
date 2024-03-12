@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/arrayUtils ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/has ../../core/accessorSupport/decorators/subclass ../../geometry/support/jsonUtils".split(" "),function(b,f,a,d,g,m,h,k){a=class extends a.JSONSupport{constructor(c){super(c);this.offsetUnit=this.offsetHow=this.offsetDistance=this.geometries=this.bevelRatio=null}};b.__decorate([d.property({type:Number,json:{write:!0}})],a.prototype,
+"bevelRatio",void 0);b.__decorate([d.property({json:{read:{reader:c=>c?c.map(e=>k.fromJSON(e)).filter(f.isSome):null},write:{writer:(c,e)=>{e.geometries=c?.map(l=>l.toJSON())??null}}}})],a.prototype,"geometries",void 0);b.__decorate([d.property({type:Number,json:{write:!0}})],a.prototype,"offsetDistance",void 0);b.__decorate([d.property({type:String,json:{write:!0}})],a.prototype,"offsetHow",void 0);b.__decorate([d.property({type:String,json:{write:!0}})],a.prototype,"offsetUnit",void 0);a=b.__decorate([h.subclass("esri.rest.support.OffsetParameters")],
+a);a.from=g.ensureType(a);return a});

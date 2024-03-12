@@ -1,0 +1,1 @@
+{"hint":"マップで始点となる位置をクリックし、計測を開始します","mode":"モード","modes":{"auto":"自動","planar":"平面","geodesic":"測地線"},"newMeasurement":"新しい計測","perimeter":"周長","unit":"単位","unsupported":"MapView で 2D の面積計測はサポートされていません。","widgetLabel":"エリアの計測"}

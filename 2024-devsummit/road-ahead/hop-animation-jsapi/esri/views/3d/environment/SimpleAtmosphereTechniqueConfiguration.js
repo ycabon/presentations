@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../chunks/tslib.es6","../webgl-engine/core/shaderTechnique/ShaderTechniqueConfiguration","../webgl-engine/materials/DefaultTechniqueConfiguration"],function(b,d,e,f){b.SimpleAtmosphereGeometry=void 0;(function(a){a[a.Cone=0]="Cone";a[a.Cylinder=1]="Cylinder";a[a.Underground=2]="Underground";a[a.COUNT=3]="COUNT"})(b.SimpleAtmosphereGeometry||(b.SimpleAtmosphereGeometry={}));class c extends f.DefaultTechniqueConfiguration{constructor(){super(...arguments);this.geometry=b.SimpleAtmosphereGeometry.Cone}}
+d.__decorate([e.parameter({count:b.SimpleAtmosphereGeometry.COUNT})],c.prototype,"geometry",void 0);b.SimpleAtmosphereTechniqueConfiguration=c;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

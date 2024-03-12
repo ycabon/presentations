@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../geometry/Extent ../../geometry/Point ./PlacesParameters".split(" "),function(b,c,a,l,m,e,f,g,h){var d;a=d=class extends h{constructor(k){super(k);this.extent=this.categoryIds=null;this.offset=0;this.pageSize=10;this.point=null;this.radius=1E3;this.searchText=null}clone(){return new d({apiKey:this.apiKey,url:this.url,
+categoryIds:this.categoryIds?.slice()??null,extent:this.extent?.clone()??null,offset:this.offset,pageSize:this.pageSize,point:this.point?.clone()??null,radius:this.radius,searchText:this.searchText})}};b.__decorate([c.property()],a.prototype,"categoryIds",void 0);b.__decorate([c.property({type:f})],a.prototype,"extent",void 0);b.__decorate([c.property()],a.prototype,"offset",void 0);b.__decorate([c.property()],a.prototype,"pageSize",void 0);b.__decorate([c.property({type:g})],a.prototype,"point",
+void 0);b.__decorate([c.property()],a.prototype,"radius",void 0);b.__decorate([c.property()],a.prototype,"searchText",void 0);return a=d=b.__decorate([e.subclass("esri.rest.support.PlacesQueryParameters")],a)});

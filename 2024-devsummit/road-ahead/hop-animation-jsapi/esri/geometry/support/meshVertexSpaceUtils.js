@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../core/libs/gl-matrix-2/math/mat4 ../../core/libs/gl-matrix-2/factories/mat4f64 ../Point ./MeshGeoreferencedVertexSpace ../../chunks/vec3".split(" "),function(d,f,g,h,k,l){function e(a){return null!=a.origin}const m=g.create();d.isRelativeVertexSpace=e;d.toRelativeVertexSpace=function(a){var {vertexSpace:c}=a;if(null!=c.origin)return a.clone();({anchor:c}=a);var b=c.clone();c=f.fromTranslation(m,[-b.x,-b.y,-b.z]);b=new k({origin:[b.x,b.y,b.z]});a=a.cloneWithVertexSpace(b);({position:b}=
+a.vertexAttributes);a.vertexAttributes.position=l.transformMat4(new Float64Array(b.length),b,c);a.vertexAttributesChanged();return a};d.vertexSpaceOriginToPoint=function(a,c){if(!e(a))return null;const [b,n,p]=a.origin;return new h({x:b,y:n,z:p,spatialReference:c})};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

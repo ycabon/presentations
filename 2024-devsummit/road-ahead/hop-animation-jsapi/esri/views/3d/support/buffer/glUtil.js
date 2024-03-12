@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../webgl/enums","../../../webgl/VertexElementDescriptor"],function(d,a,g){const h={u8:a.DataType.UNSIGNED_BYTE,u16:a.DataType.UNSIGNED_SHORT,u32:a.DataType.UNSIGNED_INT,i8:a.DataType.BYTE,i16:a.DataType.SHORT,i32:a.DataType.INT,f32:a.DataType.FLOAT};d.glLayout=function(c,k=0){const l=c.stride;return Array.from(c.fields.keys()).map(e=>{const b=c.fields.get(e),m=b.constructor.ElementCount;var f=h[b.constructor.ElementType];if(!f)throw Error("BufferType not supported in WebGL");
+return new g.VertexElementDescriptor(e,m,f,b.offset,l,!(!b.optional||!b.optional.glNormalized),k)})};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

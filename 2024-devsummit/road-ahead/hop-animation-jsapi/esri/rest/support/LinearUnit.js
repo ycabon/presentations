@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/jsonMap ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(c,b,a,d,g,h,k,e){b=new b.JSONMap({esriMeters:"meters",esriFeet:"feet",esriKilometers:"kilometers",esriMiles:"miles",esriNauticalMiles:"nautical-miles",esriYards:"yards"},{ignoreUnknown:!1});a=class extends a.JSONSupport{constructor(f){super(f);this.distance=0;
+this.units=null}};c.__decorate([d.property({json:{write:!0}})],a.prototype,"distance",void 0);c.__decorate([d.property({json:{read:b.read,write:b.write}})],a.prototype,"units",void 0);return a=c.__decorate([e.subclass("esri.rest.support.LinearUnit")],a)});

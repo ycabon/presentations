@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../request","../../core/urlUtils","../utils"],function(e,f,g,c){e.getVersion=async function(b,a,d){b=c.parseUrl(b);d=c.asValidOptions(b.query,{query:c.encode({f:"json"}),...d});a.startsWith("{")&&(a=a.slice(1,-1));a=g.join(b.path,"versions",a);({data:a}=await f(a,d));const {versionName:h,versionGuid:k,...l}=a;return{...l,versionIdentifier:{name:h,guid:k}}};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

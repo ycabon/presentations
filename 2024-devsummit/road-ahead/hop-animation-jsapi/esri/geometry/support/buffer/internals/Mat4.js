@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(f){class g{constructor(b,a,c=0,d,e){this.TypedArrayConstructor=b;this.elementCount=16;b=this.TypedArrayConstructor;void 0===d&&(d=16*b.BYTES_PER_ELEMENT);const h=0===a.byteLength?0:c;this.typedBuffer=null==e?new b(a,h):new b(a,h,(e-c)/b.BYTES_PER_ELEMENT);this.typedBufferStride=d/b.BYTES_PER_ELEMENT;this.count=Math.ceil(this.typedBuffer.length/this.typedBufferStride);this.stride=this.typedBufferStride*this.TypedArrayConstructor.BYTES_PER_ELEMENT}sliceBuffer(b,a,c=this.count-
+a){a=this.typedBuffer.byteOffset+a*this.stride;return new b(this.buffer,a,this.stride,a+c*this.stride)}getMat(b,a){b*=this.typedBufferStride;for(let c=0;16>c;c++)a[c]=this.typedBuffer[b++];return a}setMat(b,a){b*=this.typedBufferStride;for(let c=0;16>c;c++)this.typedBuffer[b++]=a[c]}get(b,a){return this.typedBuffer[b*this.typedBufferStride+a]}set(b,a,c){this.typedBuffer[b*this.typedBufferStride+a]=c}copyFrom(b,a,c){const d=this.typedBuffer,e=a.typedBuffer;b*=this.typedBufferStride;a=c*a.typedBufferStride;
+for(c=0;16>c;++c)d[b++]=e[a++]}get buffer(){return this.typedBuffer.buffer}}g.ElementCount=16;f.BufferViewMat4Impl=g;Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../Collection ../collectionUtils ../has ../Logger ../accessorSupport/decorators/property ../RandomLCG ../accessorSupport/decorators/subclass".split(" "),function(c,f,e,g,l,m,h,n,k){c.OwningCollection=class extends e{constructor(a){super(a);this.addHandles([this.on("before-add",b=>{null==b.item&&b.preventDefault()}),this.on("after-add",b=>this._own(b.item)),this.on("after-remove",b=>this._release(b.item))])}get owner(){return this._get("owner")}set owner(a){a!==
+this._get("owner")&&(this._releaseAll(),this._set("owner",a),this._ownAll())}_ownAll(){for(const a of this.items)this._own(a)}_releaseAll(){for(const a of this.items)this._release(a)}_createNewInstance(a){return this.itemType?new (e.ofType(this.itemType.Type))(a):new e(a)}};f.__decorate([h.property()],c.OwningCollection.prototype,"owner",null);c.OwningCollection=f.__decorate([k.subclass("esri.core.support.OwningCollection")],c.OwningCollection);c.owningCollectionProperty=function(a,b){return{type:a,
+cast:g.castForReferenceSetter,set(d){d=g.referenceSetter(d,this._get(b),a);d.owner=this;this._set(b,d)}}};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

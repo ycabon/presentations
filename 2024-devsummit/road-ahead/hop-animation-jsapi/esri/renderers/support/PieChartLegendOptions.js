@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/Clonable ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,c,d,e,g,h,k,f){a.PieChartLegendOptions=class extends c.ClonableMixin(d.JSONSupport){constructor(){super(...arguments);this.title=null}};b.__decorate([e.property({type:String,json:{write:!0}})],a.PieChartLegendOptions.prototype,"title",void 0);a.PieChartLegendOptions=
+b.__decorate([f.subclass("esri.renderers.support.PieChartLegendOptions")],a.PieChartLegendOptions);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

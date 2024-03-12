@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+const n=[["binary","application/octet-stream","bin",""]];function t(n,t){return null!=c(t.name,n?.supportedFormats??[])}function r(n,t){if(!n)return!1;const r=a(t,n.supportedFormats??[]);return null!=r&&n.editFormats.includes(r)}function e(n){return i(n?.supportedFormats??[]).flatMap(d).map((n=>`.${n}`))}function o(n,t){return f(function(n,t){const r=n.toLowerCase();return i(t).find((n=>p(n)===r))}(n,t))}function u(n,t){return f(c(n,t))}function s(n,t){return p(function(n,t){return i(t).find((t=>f(t)===n))}(n,t))}function a(n,t){return u(n.name,t)??o(n.type,t)}function i(t){return[...n,...t]}function c(n,t){const r=n.toLowerCase();return i(t).find((n=>d(n).some((n=>r.endsWith(n)))))}function f(n){return n?.[0]}function p(n){return n?.[1].toLowerCase()}function d(n){return n?.[2].split(",").map((n=>n.toLowerCase()))??[]}function l(n){return n.tables?.find((n=>"assetMaps"===n.role))}export{o as a,u as b,l as c,s as d,e,t as f,a as g,r as i};

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./ASourceChunk"],function(c,d){class e extends d.ASourceChunk{constructor(a,b,f,g){super();this._reader=a;this._queryJSON=b;this._page=f;this._end=g;this.chunkId=`${this._page}${this.end?"e":""}`}get reader(){return this._reader}get first(){return 0===this._page}get end(){return this._end}get queryInfo(){return{type:"snapshot",chunkId:this.chunkId,queryJSON:this._queryJSON,page:this._page,size:this.size(),end:this.end}}getTileReader(a){const b=this.queryFeaturesInBounds(a.bounds);
+b.setTransformForDisplay(a.transform);return b}}c.FeatureSnapshotSourceChunk=e;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

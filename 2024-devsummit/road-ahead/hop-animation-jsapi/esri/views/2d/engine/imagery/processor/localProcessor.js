@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./utils"],function(d){const f={vsPath:"raster/rfx/vs",fsPath:"raster/rfx/local",attributes:new Map([["a_position",0],["a_texcoord",1]])};return{createProgram:function(a){const {painter:b,rasterFunction:c}=a,{imageCount:g,operationName:h,rasters:k,isOutputRounded:l}=c.parameters;a=[h.toLowerCase()];2===g&&a.push("twoImages");const e=k.filter(m=>"Constant"===m.name);e.length&&(a.push("oneConstant"),2===e.length&&a.push("twoConstant"));l&&a.push("roundOutput");return b.materialManager.getProgram(f,
+a)},bindTextureAndUniforms:function(a,b,c){d.setMultipleImageTextures(a,b,c);d.setCoordsAndTransforms(b);({domainRange:a}=a.rasterFunction.parameters);b.setUniform2fv("u_domainRange",a)}}});

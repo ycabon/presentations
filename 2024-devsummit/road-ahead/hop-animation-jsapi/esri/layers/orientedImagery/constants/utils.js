@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./wkid"],function(b,c){function e(a){return c.horizontalWkidHeightUnitFeet.includes(a)?"feet":"meters"}b.getHeightModel=function(a,d){return c.ellipsoidalWkid.includes(a)||4326===d?"ellipsoidal":"gravity-related-height"};b.getHorizontalUnit=e;b.getVerticalUnit=function(a,d){return"number"===typeof a?c.verticalWkidHeightUnitFeet.includes(a)?"feet":"meters":e(d)};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(h){class m{constructor(a){this._readFile=a}resolveIncludes(a){return this._resolve(a)}_resolve(a,b=new Map){if(b.has(a))return b.get(a);const c=this._read(a);if(!c)throw Error(`cannot find shader file ${a}`);const k=/^[^\S\n]*#include\s+<(\S+)>[^\S\n]?/gm;let d=k.exec(c);const l=[];for(;null!=d;)l.push({path:d[1],start:d.index,length:d[0].length}),d=k.exec(c);let g=0,e="";l.forEach(f=>{e+=c.slice(g,f.start);e+=b.has(f.path)?"":this._resolve(f.path,b);g=f.start+f.length});
+e+=c.slice(g);b.set(a,e);return e}_read(a){return this._readFile(a)}}h.ShaderCompiler=m;Object.defineProperty(h,Symbol.toStringTag,{value:"Module"})});

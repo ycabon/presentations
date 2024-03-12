@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Collection ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(b,e,c,g,h,k,f){return a=>{a=class extends a{constructor(...d){super(...d);this.selectedDimension=this.tool=this.analysis=null;this.interactive=!1;this.visible=null}get results(){return new e}createLengthDimensions(d){throw Error("Method not implemented.");}};b.__decorate([c.property({constructOnly:!0})],
+a.prototype,"view",void 0);b.__decorate([c.property({constructOnly:!0,nonNullable:!0})],a.prototype,"analysis",void 0);b.__decorate([c.property()],a.prototype,"tool",void 0);b.__decorate([c.property({readOnly:!0})],a.prototype,"results",null);b.__decorate([c.property()],a.prototype,"selectedDimension",void 0);b.__decorate([c.property()],a.prototype,"interactive",void 0);b.__decorate([c.property()],a.prototype,"visible",void 0);return a=b.__decorate([f.subclass("esri.views.analysis.DimensionAnalysisView")],
+a)}});

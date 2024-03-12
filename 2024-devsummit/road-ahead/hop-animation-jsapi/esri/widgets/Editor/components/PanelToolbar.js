@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["require","exports","./Settings","../../../chunks/componentsUtils","../../support/jsxFactory"],function(k,b,f,l,c){const g={base:"esri-editor__panel-toolbar"};b.PanelToolbar=function({editorViewModel:d,messagesCommon:a,visibleElements:h}){const {sketchViewModel:e}=d;return c.tsx("div",{class:g.base,key:"panel-toolbar"},c.tsx(f.Settings,{editorViewModel:d,messagesCommon:a,visibleElements:h}),h.undoRedoButtons?[c.tsx("calcite-button",{alignment:"center",appearance:"transparent",disabled:!e?.canUndo(),
+iconStart:"undo",key:"undo-button",kind:"neutral",label:a.undo,onclick:()=>e?.undo(),scale:"l"},a.undo),c.tsx("calcite-button",{alignment:"center",appearance:"transparent",disabled:!e?.canRedo(),iconStart:"redo",key:"redo-button",kind:"neutral",label:a.redo,onclick:()=>e?.redo(),scale:"l"},a.redo)]:null)};b.css=g;b.loadPanelToolbarComponents=()=>Promise.all([l.loadCalciteComponents({button:()=>new Promise((d,a)=>k(["../../../chunks/calcite-button"],d,a))}),f.loadSettingsComponents()]);Object.defineProperty(b,
+Symbol.toStringTag,{value:"Module"})});

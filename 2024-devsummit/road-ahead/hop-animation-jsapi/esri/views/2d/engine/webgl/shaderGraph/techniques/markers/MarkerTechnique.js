@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../enums ../featureTechniqueUtils ../Technique ./MarkerShader ../mesh/MeshWriterRegistry".split(" "),function(e,g,c,h,k,l){class m extends h.Technique{constructor(){super(...arguments);this.meshWriter=l.meshWriterRegistry.MarkerMeshWriter;this.shaders={geometry:new k.MarkerShader};this.symbologyPlane=g.FeatureSymbologyDrawOrder.MARKER}render(a,b){const {context:f,painter:d}=a;d.setShader({shader:this.shaders.geometry,uniforms:{...c.resolveDynamicUniforms(a,b.target,b.instance.getInput().geometry),
+...c.getFeatureUniforms(a,b.target),mosaicInfo:d.textureManager.getMosaicInfo(f,b.textureKey,!0)},defines:{...c.getSelectionDefines(a)},optionalAttributes:b.instance.optionalAttributes,useComputeBuffer:c.isHittest(a)});d.setPipelineState(c.getFeaturePipelineState(a));d.submitDraw(f,b)}}e.MarkerTechnique=m;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

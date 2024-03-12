@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../../chunks/tslib.es6 ../../../../geometry ../../../../Viewpoint ../../../../core/Accessor ../../../../core/accessorSupport/decorators/property ../../../../core/has ../../../../core/Logger ../../../../core/RandomLCG ../../../../core/accessorSupport/decorators/subclass ../../../../core/libs/gl-matrix-2/math/vec2 ../../../../core/libs/gl-matrix-2/factories/vec2f64 ../../viewpointUtils ../../../../geometry/Point".split(" "),function(d,b,m,n,k,u,v,w,p,e,f,g,q){const h=f.create(),l=f.create();
+b=class extends n{constructor(a){super(a);this._previousCenter=f.create();this.viewpoint=new m({targetGeometry:new q,scale:0,rotation:0})}begin(a,c){this.navigation.begin();e.set(this._previousCenter,c.center.x,c.center.y)}update(a,c){const {state:{size:r,padding:t}}=a;e.set(h,c.center.x,c.center.y);g.getAnchor(l,r,t);a.viewpoint=g.rotateBy(this.viewpoint,a.state.paddedViewState.viewpoint,g.angleBetween(l,this._previousCenter,h));e.copy(this._previousCenter,h)}end(){this.navigation.end()}};d.__decorate([k.property()],
+b.prototype,"viewpoint",void 0);d.__decorate([k.property()],b.prototype,"navigation",void 0);return b=d.__decorate([p.subclass("esri.views.2d.actions.Rotate")],b)});

@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../core/urlUtils"],function(b,d){const e=new Set(["elevation3d.arcgis.com","js.arcgis.com","jsdev.arcgis.com","jsqa.arcgis.com","static.arcgis.com"]);b.isApiKey=function(a){return!!a&&4<a.length&&a.startsWith("AAPK")};b.supportsApiKey=function(a){const c=d.getOrigin(a,!0);return c?c.endsWith(".arcgis.com")&&!e.has(c)&&!a.endsWith("/sharing/rest/generateToken"):!1};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

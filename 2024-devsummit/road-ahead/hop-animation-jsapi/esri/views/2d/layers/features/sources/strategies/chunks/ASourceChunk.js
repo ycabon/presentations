@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../FeatureSpatialIndex","../../../aggregation/GeohashSpatialIndex","../../../aggregation/GridSpatialIndex","../../../support/FeatureSetReaderIndirect"],function(c,d,e,f,g){class h{size(){return this.reader.getSize()}get fields(){return this.reader.fields}invalidate(){this._gridIndexHash=this._gridIndex=this._spatialIndex=this._geohashIndexHash=this._geohashIndex=null}queryFeaturesInBounds(a){a=this._getSpatialIndex().search(a);return g.FeatureSetReaderIndirect.from(this.reader,
+a)}getGeohashIndex(a){const b=JSON.stringify(a);b!==this._geohashIndexHash&&(this._geohashIndexHash=b,this._geohashIndex=new e.GeohashSpatialIndex(a),this._geohashIndex.insert(this.reader));return this._geohashIndex}getGridIndex(a){const b=JSON.stringify(a);b!==this._gridIndexHash&&(this._gridIndexHash=b,this._gridIndex=new f.GridSpatialIndex(a),this._gridIndex.insert(this.reader));return this._gridIndex}_getSpatialIndex(){this._spatialIndex||(this._spatialIndex=d.FeatureSpatialIndex.fromReader(this.reader));
+return this._spatialIndex}}c.ASourceChunk=h;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{s}from"../config.js";class t{constructor(t,o={ignoreUnknown:!1,useNumericKeys:!1}){this._jsonToAPI=t,this._options=o,this.apiValues=[],this.jsonValues=[],this._apiToJSON=this._invertMap(t),this.apiValues=this._getKeysSorted(this._apiToJSON),this.jsonValues=this._getKeysSorted(this._jsonToAPI),this.read=s=>this.fromJSON(s),this.write=(t,o,i)=>{const n=this.toJSON(t);void 0!==n&&s(i,n,o)},this.write.isJSONMapWriter=!0}toJSON(s){if(null==s)return null;if(this._apiToJSON.hasOwnProperty(s)){const t=this._apiToJSON[s];return this._options.useNumericKeys?+t:t}return this._options.ignoreUnknown?void 0:s}fromJSON(s){return null!=s&&this._jsonToAPI.hasOwnProperty(s)?this._jsonToAPI[s]:this._options.ignoreUnknown?void 0:s}_invertMap(s){const t={};for(const o in s)t[s[o]]=o;return t}_getKeysSorted(s){const t=[];for(const o in s)t.push(o);return t.sort(),t}}function o(){return function(s,o){return new t(s,{ignoreUnknown:!0,...o})}}export{t as J,o as s};

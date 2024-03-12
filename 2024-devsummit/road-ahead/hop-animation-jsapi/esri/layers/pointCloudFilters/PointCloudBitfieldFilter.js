@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/lang ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/accessorSupport/decorators/enumeration ../../core/accessorSupport/decorators/subclass ./PointCloudFilter".split(" "),function(b,d,e,f,g,h,a){var c;a=c=class extends a{constructor(k){super(k);this.requiredSetBits=this.requiredClearBits=null;this.type="bitfield"}clone(){return new c({field:this.field,requiredClearBits:d.clone(this.requiredClearBits),requiredSetBits:d.clone(this.requiredSetBits)})}};
+b.__decorate([e.property({type:[f.Integer],json:{write:{enabled:!0,overridePolicy(){return{enabled:!0,isRequired:!this.requiredSetBits}}}}})],a.prototype,"requiredClearBits",void 0);b.__decorate([e.property({type:[f.Integer],json:{write:{enabled:!0,overridePolicy(){return{enabled:!0,isRequired:!this.requiredClearBits}}}}})],a.prototype,"requiredSetBits",void 0);b.__decorate([g.enumeration({pointCloudBitfieldFilter:"bitfield"})],a.prototype,"type",void 0);return a=c=b.__decorate([h.subclass("esri.layers.pointCloudFilters.PointCloudBitfieldFilter")],
+a)});

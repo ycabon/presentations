@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../../../core/string"],function(l,m){function f(a,b,d,e,g,h,k){if(a.primitiveName===b)for(const c in a)if(c===d){b=e?.readWithDefault(g,h,a[c]&&k);"text"===a.type&&(b=b.toString());a[c]=b;return}if("type"in a&&null!=a.type)switch(a.type){case "CIMPointSymbol":case "CIMLineSymbol":case "CIMPolygonSymbol":if(a.symbolLayers)for(const c of a.symbolLayers)f(c,b,d,e,g,h,k);break;case "CIMHatchFill":a.lineSymbol&&f(a.lineSymbol,b,d,e,g,h,k);break;case "CIMSolidStroke":case "CIMSolidFill":case "CIMVectorMarker":if("CIMVectorMarker"===
+a.type&&a.markerGraphics)for(const c of a.markerGraphics)f(c,b,d,e,g,h,k),f(c.symbol,b,d,e,g,h,k)}}l.applyComputedValue=f;l.vertexLayoutHash=function(a){a=a.map(({name:b,count:d,type:e})=>`${b}.${d}.${e}`).join(",");return m.numericHash(a)};Object.defineProperty(l,Symbol.toStringTag,{value:"Module"})});

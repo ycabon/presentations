@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ./intl/date ./intl/number ./intl/substitute ./intl/locale ./intl/messages ./intl/t9n ./assets".split(" "),function(a,b,e,g,c,d,f,h){d.registerMessageBundleLoader(f.createJSONLoader({pattern:"esri/",location:h.getAssetUrl}));a.convertDateFormatToIntlOptions=b.convertDateFormatToIntlOptions;a.formatDate=b.formatDate;a.formatDateOnly=b.formatDateOnly;a.formatTimeOnly=b.formatTimeOnly;a.formatTimestamp=b.formatTimestamp;a.convertNumberFormatToIntlOptions=e.convertNumberFormatToIntlOptions;
+a.formatNumber=e.formatNumber;a.substitute=g.substitute;a.getLocale=c.getLocale;a.onLocaleChange=c.onLocaleChange;a.prefersRTL=c.prefersRTL;a.setLocale=c.setLocale;a.fetchMessageBundle=d.fetchMessageBundle;a.normalizeMessageBundleLocale=d.normalizeMessageBundleLocale;a.registerMessageBundleLoader=d.registerMessageBundleLoader;a.createJSONLoader=f.createJSONLoader;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

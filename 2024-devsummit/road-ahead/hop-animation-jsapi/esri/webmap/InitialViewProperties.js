@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ../Viewpoint ../core/Accessor ../core/Clonable ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/RandomLCG ../core/accessorSupport/decorators/subclass ../geometry/SpatialReference ../time/timeZoneUtils ../webdoc/RangeInfo ./background/ColorBackground".split(" "),function(b,d,a,e,c,n,p,q,f,g,h,k,l){a=class extends e.ClonableMixin(a){constructor(m){super(m);this.spatialReference=this.rangeInfo=this.background=null;this.timeZone=h.system;this.viewpoint=
+null}};b.__decorate([c.property({type:l})],a.prototype,"background",void 0);b.__decorate([c.property({type:k})],a.prototype,"rangeInfo",void 0);b.__decorate([c.property({type:g})],a.prototype,"spatialReference",void 0);b.__decorate([c.property({nonNullable:!0})],a.prototype,"timeZone",void 0);b.__decorate([c.property({type:d})],a.prototype,"viewpoint",void 0);return a=b.__decorate([f.subclass("esri.webmap.InitialViewProperties")],a)});

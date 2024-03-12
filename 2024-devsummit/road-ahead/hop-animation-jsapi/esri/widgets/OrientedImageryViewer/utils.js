@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./constants"],function(b,c){b.calculateDirection=function(a){return 135<=Math.abs(a)?"WEST":-45>a&&-135<a?"SOUTH":45>=a?"EAST":"NORTH"};b.calculateSegment=function(a,d){a=a/d*c.sectorsRadii[2];return a<=c.sectorsRadii[0]?"NEAR":a<=c.sectorsRadii[1]?"":"FAR"};b.isGraphic=function(a){return"esri.Graphic"===a?.declaredClass};b.isSceneView=function(a){return"3d"===a?.type};b.isTifOrMrf=function(a){return/.*.(tif|mrf)$/i.test(a??"")};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

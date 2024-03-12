@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,c,f,g,h,e){var d;a=d=class extends a.JSONSupport{constructor(){super(...arguments);this.displayCount=this.ageReceived=this.age=null;this.maxObservations=1}clone(){return new d({age:this.age,ageReceived:this.ageReceived,displayCount:this.displayCount,maxObservations:this.maxObservations})}};
+b.__decorate([c.property({type:Number,json:{write:!0}})],a.prototype,"age",void 0);b.__decorate([c.property({type:Number,json:{write:!0}})],a.prototype,"ageReceived",void 0);b.__decorate([c.property({type:Number,json:{write:!0}})],a.prototype,"displayCount",void 0);b.__decorate([c.property({type:Number,json:{write:!0}})],a.prototype,"maxObservations",void 0);return a=d=b.__decorate([e.subclass("esri.layers.support.PurgeOptions")],a)});

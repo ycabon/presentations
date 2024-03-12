@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../geometry ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/reader ../../core/accessorSupport/decorators/subclass ../../geometry/support/jsonUtils ../../geometry/Point".split(" "),function(b,e,a,c,m,n,p,f,g,h,k){a=class extends a.JSONSupport{constructor(){super(...arguments);this.center=this.area=this.length=this.geometry=null}readCenter(d,l){d.spatialReference||
+(d={...d,spatialReference:l.Shape.spatialReference});return k.fromJSON(d)}};b.__decorate([c.property({types:e.geometryTypes,json:{name:"Shape",read:h.fromJSON,write:!0}})],a.prototype,"geometry",void 0);b.__decorate([c.property({json:{name:"Length",write:!0}})],a.prototype,"length",void 0);b.__decorate([c.property({json:{name:"Area",write:!0}})],a.prototype,"area",void 0);b.__decorate([c.property({json:{name:"Center",write:!0}})],a.prototype,"center",void 0);b.__decorate([f.reader("center")],a.prototype,
+"readCenter",null);return a=b.__decorate([g.subclass("esri.rest.support.MeasureAreaFromImageResult")],a)});

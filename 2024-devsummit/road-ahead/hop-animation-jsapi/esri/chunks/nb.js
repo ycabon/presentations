@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./calcite-input-time-picker"],function(a,c){var b={name:"nb",weekdays:"s\u00f8ndag mandag tirsdag onsdag torsdag fredag l\u00f8rdag".split(" "),weekdaysShort:"s\u00f8. ma. ti. on. to. fr. l\u00f8.".split(" "),weekdaysMin:"s\u00f8 ma ti on to fr l\u00f8".split(" "),months:"januar februar mars april mai juni juli august september oktober november desember".split(" "),monthsShort:"jan. feb. mars april mai juni juli aug. sep. okt. nov. des.".split(" "),ordinal:function(d){return d+
+"."},weekStart:1,yearStart:4,formats:{LT:"HH:mm",LTS:"HH:mm:ss",L:"DD.MM.YYYY",LL:"D. MMMM YYYY",LLL:"D. MMMM YYYY [kl.] HH:mm",LLLL:"dddd D. MMMM YYYY [kl.] HH:mm"},relativeTime:{future:"om %s",past:"%s siden",s:"noen sekunder",m:"ett minutt",mm:"%d minutter",h:"en time",hh:"%d timer",d:"en dag",dd:"%d dager",M:"en m\u00e5ned",MM:"%d m\u00e5neder",y:"ett \u00e5r",yy:"%d \u00e5r"}};c.d.locale(b,null,!0);a.default=b;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

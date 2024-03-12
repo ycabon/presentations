@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../request","../../core/Error","../utils","./support/ValidateNetworkTopologyResult"],function(f,g,k,d,l){f.submitValidateNetworkTopologyJob=async function(c,a,b){if(!a.gdbVersion)throw new k("submit-validate-network-topology-job:missing-gdb-version","version is missing");c=d.parseUrl(c);const e=a.toJSON();a.validationSet&&(e.validationSet=JSON.stringify(a.validationSet));a=d.asValidOptions(c.query,{query:d.encode({...e,returnEdits:!0,async:!0,f:"json"}),...b,method:"post"});
+({data:a}=await g(`${c.path}/validateNetworkTopology`,a));return a?a.statusUrl:null};f.validateNetworkTopology=async function(c,a,b){c=d.parseUrl(c);const e=a.toJSON();a.validationSet&&(e.validationSet=JSON.stringify(a.validationSet));a=d.encode({...c.query,...e,returnEdits:!0,f:"json"});b=d.asValidOptions(a,{...b,method:"post"});({data:b}=await g(`${c.path}/validateNetworkTopology`,b));b=l.fromJSON(b);b.serviceEdits=b.serviceEdits?.map(h=>({layerId:h.id,editedFeatures:h.editedFeatures}))??[];return b};
+Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

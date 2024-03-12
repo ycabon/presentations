@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../featureTechniqueUtils ../Technique ../line/utils ../mesh/MeshWriterRegistry ../shaders/OutlineFillShader".split(" "),function(e,b,f,g,h,k){class l extends f.Technique{constructor(){super(...arguments);this.meshWriter=h.meshWriterRegistry.OutlineFillMeshWriter;this.shaders={geometry:new k.OutlineFillShader}}render(a,c){const {context:m,painter:d,pixelRatio:n}=a;d.setShader({shader:this.shaders.geometry,uniforms:{...b.resolveDynamicUniforms(a,c.target,c.instance.getInput().geometry),
+...b.getFeatureUniforms(a,c.target),antialiasingControls:g.getAntialiasingControls(n)},defines:{...b.getSelectionDefines(a)},optionalAttributes:c.instance.optionalAttributes,useComputeBuffer:b.isHittest(a)});d.setPipelineState(b.getFeaturePipelineState(a));d.submitDraw(m,c)}}e.OutlineFillTechnique=l;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

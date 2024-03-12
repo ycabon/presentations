@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(c){c.getDrawHelpMessage=function(b,a){switch(b){case "point":case "multipoint":return"point";case "polyline":return 2>(null!=a&&"polyline"===a.type&&a.paths.length?a.paths[0].length:0)?"polylineZeroVertices":"polylineOneVertex";case "polygon":return b=null!=a&&"polygon"===a.type&&a.rings.length?a.rings[0].length:0,b=3>b?"polylineZeroVertices":4>b?"polygonOneVertex":"polygonTwoVertices",b}};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

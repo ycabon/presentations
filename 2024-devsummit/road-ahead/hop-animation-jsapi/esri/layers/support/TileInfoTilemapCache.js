@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../core/Error","../../core/promiseUtils"],function(k,e){class l{constructor(b,c=0,d=b.lods[b.lods.length-1].level){this.tileInfo=b;this.minLOD=c;this.maxLOD=d;b.lodAt(c)||(this.minLOD=b.lods[0].level);b.lodAt(d)||(this.maxLOD=b.lods[b.lods.length-1].level)}get effectiveMinLOD(){return this.minLOD??this.tileInfo.lods[0].level}get effectiveMaxLOD(){return this.maxLOD??this.tileInfo.lods[this.tileInfo.lods.length-1].level}getAvailability(b,c,d){const a=this.tileInfo?.lodAt(b);return!a||b<
+this.minLOD||b>this.maxLOD?"unavailable":a.cols&&a.rows?d>=a.cols[0]&&d<=a.cols[1]&&c>=a.rows[0]&&c<=a.rows[1]?"unknown":"unavailable":"unknown"}async fetchAvailability(b,c,d,a){await e.waitTick(a);a=this.getAvailability(b,c,d);if("unavailable"===a)throw new k("tile-map:tile-unavailable","Tile is not available",{level:b,row:c,col:d});return a}async fetchAvailabilityUpsample(b,c,d,a,f){await e.waitTick(f);a.level=b;a.row=c;a.col=d;const h=this.tileInfo;h.updateTileInfo(a);return this.fetchAvailability(b,
+c,d,f).catch(g=>{if(e.isAbortError(g))throw g;if(h.upsampleTile(a))return this.fetchAvailabilityUpsample(a.level,a.row,a.col,a,f);throw g;})}}return l});

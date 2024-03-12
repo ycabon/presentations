@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../chunks/tslib.es6 ./Accessor ./accessorSupport/DefaultsStore ./accessorSupport/defaultsStoreUtils ./accessorSupport/read ./accessorSupport/utils ./accessorSupport/write ./accessorSupport/decorators/subclass".split(" "),function(d,f,k,l,m,n,p,q,g){const h=b=>{b=class extends b{constructor(...a){super(...a);a=p.getProperties(this);const c=a.store,e=new l.DefaultsStore;a.store=e;m.setupConstructedDefaults(a,c,e)}read(a,c){n.read(this,a,c)}write(a,c){return q.write(this,a??{},c)}toJSON(a){return this.write({},
+a)}static fromJSON(a,c){if(a){if(a.declaredClass)throw Error("JSON object is already hydrated");var e=new this;e.read(a,c);a=e}else a=null;return a}};b=f.__decorate([g.subclass("esri.core.JSONSupport")],b);b.prototype.toJSON.isDefaultToJSON=!0;return b};d.JSONSupport=class extends h(k){};d.JSONSupport=f.__decorate([g.subclass("esri.core.JSONSupport")],d.JSONSupport);d.JSONSupportMixin=h;d.isSerializable=function(b){return b&&"object"===typeof b&&"toJSON"in b&&"function"===typeof b.toJSON};Object.defineProperty(d,
+Symbol.toStringTag,{value:"Module"})});

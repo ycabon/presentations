@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./calcite-input-time-picker"],function(d,f){function a(c,g,b){b=h[b];Array.isArray(b)&&(b=b[g?0:1]);return b.replace("%d",c)}var h={s:"ein paar Sekunden",m:["eine Minute","einer Minute"],mm:"%d Minuten",h:["eine Stunde","einer Stunde"],hh:"%d Stunden",d:["ein Tag","einem Tag"],dd:["%d Tage","%d Tagen"],M:["ein Monat","einem Monat"],MM:["%d Monate","%d Monaten"],y:["ein Jahr","einem Jahr"],yy:["%d Jahre","%d Jahren"]},e={name:"de-ch",weekdays:"Sonntag Montag Dienstag Mittwoch Donnerstag Freitag Samstag".split(" "),
+weekdaysShort:"So Mo Di Mi Do Fr Sa".split(" "),weekdaysMin:"So Mo Di Mi Do Fr Sa".split(" "),months:"Januar Februar M\u00e4rz April Mai Juni Juli August September Oktober November Dezember".split(" "),monthsShort:"Jan. Feb. M\u00e4rz Apr. Mai Juni Juli Aug. Sep. Okt. Nov. Dez.".split(" "),ordinal:function(c){return c+"."},weekStart:1,formats:{LT:"HH:mm",LTS:"HH:mm:ss",L:"DD.MM.YYYY",LL:"D. MMMM YYYY",LLL:"D. MMMM YYYY HH:mm",LLLL:"dddd, D. MMMM YYYY HH:mm"},relativeTime:{future:"in %s",past:"vor %s",
+s:a,m:a,mm:a,h:a,hh:a,d:a,dd:a,M:a,MM:a,y:a,yy:a}};f.d.locale(e,null,!0);d.default=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

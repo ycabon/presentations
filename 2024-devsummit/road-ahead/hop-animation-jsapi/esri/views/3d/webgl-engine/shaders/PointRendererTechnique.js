@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/shaderTechnique/ReloadableShaderModule ../core/shaderTechnique/ShaderTechnique ../lib/DefaultVertexAttributeLocations ../lib/Program ../lib/StencilUtils ../../../../chunks/PointRenderer.glsl ../../../webgl/enums ../../../webgl/renderState".split(" "),function(g,e,h,k,l,m,f,n,p,b){class c extends k.ShaderTechnique{constructor(a,d,q){super(a,d,q)}initializeProgram(a){return new m.Program(a.rctx,c.shader.get().build(this.configuration),l.Default3D)}initializePipeline(){return b.makePipelineState({depthTest:{func:p.CompareFunction.LESS},
+depthWrite:b.defaultDepthWriteParams,colorWrite:b.defaultColorWriteParams,stencilWrite:this.configuration.hasOccludees?f.stencilWriteMaskOn:null,stencilTest:this.configuration.hasOccludees?f.stencilBaseAllZerosParams:null})}}c.shader=new h.ReloadableShaderModule(n.PointRendererShader,()=>new Promise((a,d)=>g(["./PointRenderer.glsl"],a,d)));e.PointRendererTechnique=c;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

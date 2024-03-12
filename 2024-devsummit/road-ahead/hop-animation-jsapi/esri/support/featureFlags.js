@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../core/has"],function(a,b){const e=()=>b.add("enable-feature:direct-3d-object-feature-layer-display",!0,!0,!0),c=()=>b.add("enable-feature:direct-3d-object-feature-layer-display",!1,!0,!0),f=()=>b.add("enable-i3s-patching",!0,!0,!0),d=()=>b.add("enable-i3s-patching",!1,!0,!0),g=(h="i3s-patching")=>{d();c();b.add("enable-feature:SceneLayer-editing",!0,!0,!0);switch(h){case "feature-layer-view":e();break;case "i3s-patching":f()}};g("i3s-patching");a.direct3DObjectFeatureLayerDisplayEnabled=
+()=>!!b("enable-feature:direct-3d-object-feature-layer-display");a.disableDirect3DObjectFeatureLayerDisplay=c;a.disableI3SPatching=d;a.disableIDBCache=()=>b.add("disable-feature:idb-cache",!0,!0,!0);a.disableSceneLayerEditing=()=>{d();c();b.add("enable-feature:SceneLayer-editing",!1,!0,!0)};a.enableDirect3DObjectFeatureLayerDisplay=e;a.enableI3SPatching=f;a.enableSceneLayerEditing=g;a.enableWebStyleForceWOSR=()=>!!b("enable-feature:force-wosr");a.i3sPatchingEnabled=()=>!!b("enable-i3s-patching");
+a.sceneLayerEditingEnabled=()=>!!b("enable-feature:SceneLayer-editing");Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

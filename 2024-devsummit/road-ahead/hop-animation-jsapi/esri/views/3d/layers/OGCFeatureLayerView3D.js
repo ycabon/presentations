@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/Error ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ./FeatureLayerViewBase3D ../../layers/OGCFeatureLayerView".split(" "),function(b,c,d,a,h,k,e,f,g){a=class extends g(f){constructor(){super(...arguments);this.type="ogc-feature-3d"}initialize(){this.layer.serviceSupportsSpatialReference(this.view.spatialReference)||this.addResolvingPromise(Promise.reject(new c("layerview:spatial-reference-incompatible",
+"The spatial references supported by this OGC layer are incompatible with the spatial reference of the view",{layer:this.layer})))}};b.__decorate([d.property()],a.prototype,"layer",void 0);return a=b.__decorate([e.subclass("esri.views.3d.layers.OGCFeatureLayerView3D")],a)});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./utils"],function(d,e){d.aspect=function(a){const {raster:b,outputPixelType:c}=a;return e.createRasterFunction("Aspect",{raster:b},c)};d.curvature=function(a){const {raster:b,zFactor:c,outputPixelType:f="unknown"}=a;return e.createRasterFunction("Curvature",{raster:b,curvatureType:"standard"===a.curvatureType?0:"platform"===a.curvatureType?1:2,zFactor:c},f)};d.slope=function(a){const {raster:b,zFactor:c,removeEdgeEffect:f,outputPixelType:k="unknown"}=a,h="degree"===a.slopeType?
+1:"percent-rise"===a.slopeType?2:3,g={raster:b,slopeType:h,zFactor:c,removeEdgeEffect:f};3===h&&(g.psPower=a.pixelSizePower,g.psZFactor=a.pixelSizeZFactor);return e.createRasterFunction("Slope",g,k)};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

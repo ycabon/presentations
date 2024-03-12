@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/PooledArray"],function(e,g){class d{constructor(b,a){this._factoryCallback=b;this._lengthCallback=a;this._pool=new Map}acquire(b){if(!d.test.disabled){var a=this._pool.get(b);if(a&&0!==a.length)return a.pop()}try{return this._factoryCallback(b)}catch(c){a=window.performance&&window.performance.memory;let f="";a&&(f=`\n  totalJSHeapSize: ${a.totalJSHeapSize}, usedJSHeapSize: ${a.usedJSHeapSize}, jsHeapSizeLimit: ${a.jsHeapSizeLimit}`);console.log("Array allocation of size "+
+b+" failed: "+c+f);throw c;}}release(b){if(!d.test.disabled){var a=this._lengthCallback(b),c=this._pool.get(a);c||(c=new g({shrink:!0}),this._pool.set(a,c));c.push(b)}}clear(){this._pool.clear()}get test(){return{size:this._pool.size}}}d.test={disabled:!1};e.BufferPool=d;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

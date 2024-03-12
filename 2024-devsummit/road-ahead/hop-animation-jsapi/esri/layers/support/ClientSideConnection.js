@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../geometry/support/zscale ./StreamConnection".split(" "),function(b,d,e,m,n,p,f,g,h){b.ClientSideConnection=class extends h{constructor(a){super({});this.connectionStatus="connected";this.errorString=null;const {geometryType:c,spatialReference:k,sourceSpatialReference:l}=a;this._featureZScaler=g.getGeometryZScaler(c,
+l,k)}normalizeCtorArgs(){return{}}updateCustomParameters(a){}sendMessageToSocket(a){}sendMessageToClient(a){if("type"in a)switch(a.type){case "features":case "featureResult":for(const c of a.features)null!=this._featureZScaler&&this._featureZScaler(c.geometry),this.onFeature(c)}this.onMessage(a)}};d.__decorate([e.property()],b.ClientSideConnection.prototype,"connectionStatus",void 0);d.__decorate([e.property()],b.ClientSideConnection.prototype,"errorString",void 0);b.ClientSideConnection=d.__decorate([f.subclass("esri.layers.support.ClientSideConnection")],
+b.ClientSideConnection);Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

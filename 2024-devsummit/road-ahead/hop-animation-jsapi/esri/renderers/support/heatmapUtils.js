@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/mathUtils","../../core/screenUtils","../../chunks/vec42","../../core/libs/gl-matrix-2/factories/vec4f64"],function(e,m,l,n,p){function q(a,c,f,h){let {color:k,ratio:g}=c,{color:b,ratio:d}=f;d===g&&(1===d?g-=1E-6:d+=1E-6);c=m.clamp((h-g)/(d-g),0,1);n.lerp(a,k.toArray(),b.toArray(),c)}e.createValueFunction=function(a){return"function"===typeof a?a:a?c=>+c[a]:()=>1};e.evaluateDensityKernel=function(a,c,f){a=Math.sqrt(a**2+c**2)/f;return 1<a?0:3/(Math.PI*f**2)*(1-a**2)**
+2};e.gaussianBlurRadiusPxToKernelDensityRadiusPt=function(a){return l.px2pt(2.4*a)};e.generateGradient=function(a){const c=new Uint8ClampedArray(2048);a=a.filter(({ratio:b})=>0<=b&&1>=b).sort((b,d)=>b.ratio-d.ratio).map(({color:b,ratio:d})=>({color:b,ratio:Math.max(d,.001)}));if(1>a.length)return c;let f=a[0],h=a[0],k=1;const g=p.create();for(let b=0;512>b;b++){const d=(b+.5)/512;for(;d>h.ratio&&k<a.length;)f=h,h=a[k++];q(g,f,h,d);c.set(g,4*b)}return c};e.kernelDensityRadiusPtToGaussianBlurRadiusPx=
+function(a){return l.pt2px(a)/2.4};e.magicKernelDensityRadiusInflationFactor=2.4;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

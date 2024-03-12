@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../executionError","../../chunks/languageUtils","./fieldStats"],function(m,n,k,l){function h(f,g,c,a){if(1===a.length){if(k.isArray(a[0]))return l.calculateStat(f,a[0],-1);if(k.isImmutableArray(a[0]))return l.calculateStat(f,a[0].toArray(),-1)}return l.calculateStat(f,a,-1)}m.registerFunctions=function(f,g){f.stdev=function(c,a){return g(c,a,(d,e,b)=>h("stdev",d,e,b))};f.variance=function(c,a){return g(c,a,(d,e,b)=>h("variance",d,e,b))};f.average=function(c,a){return g(c,a,(d,e,
+b)=>h("mean",d,e,b))};f.mean=function(c,a){return g(c,a,(d,e,b)=>h("mean",d,e,b))};f.sum=function(c,a){return g(c,a,(d,e,b)=>h("sum",d,e,b))};f.min=function(c,a){return g(c,a,(d,e,b)=>h("min",d,e,b))};f.max=function(c,a){return g(c,a,(d,e,b)=>h("max",d,e,b))};f.distinct=function(c,a){return g(c,a,(d,e,b)=>h("distinct",d,e,b))};f.count=function(c,a){return g(c,a,(d,e,b)=>{k.pcCheck(b,1,1,c,a);if(k.isArray(b[0])||k.isString(b[0]))return b[0].length;if(k.isImmutableArray(b[0]))return b[0].length();throw new n.ArcadeExecutionError(c,
+n.ExecutionErrorCodes.InvalidParameter,a);})}};Object.defineProperty(m,Symbol.toStringTag,{value:"Module"})});

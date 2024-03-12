@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{R as e,b as s,i as r}from"../core/Accessor.js";class t{constructor(r,t){this._owner=t,this._properties={},this._afterDispatchHandle=null;for(const s in r){const t=r[s],o=new e(t,void 0,void 0,2,2);this._properties[s]={pool:o,acquired:[]}}this._afterDispatchHandle=s((()=>this._release()))}destroy(){this._afterDispatchHandle&&(this._afterDispatchHandle.remove(),this._afterDispatchHandle=null);for(const e in this._properties){const s=this._properties[e];for(const e of s.acquired)r(e)||s.pool.release(e);s.pool.destroy(),s.pool=null,s.acquired=null}this._properties=null,this._owner=null}get(e){const s=this._owner._get(e),r=this._properties[e];let t=r.pool.acquire();for(r.acquired.push(t);t===s;)r.acquired.push(t),t=r.pool.acquire();return t}_release(){for(const e in this._properties){const s=this._properties[e];let t=0;for(const e of s.acquired)r(e)?s.acquired[t++]=e:s.pool.release(e);s.acquired.length=t}}}export{t as P};

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../core/libs/gl-matrix-2/math/quat ../../core/libs/gl-matrix-2/factories/quatf64 ../../core/libs/gl-matrix-2/factories/vec3f64 ../../core/libs/gl-matrix-2/math/common ../../chunks/vec32".split(" "),function(k,e,f,g,h,b){const a=g.create(),l=f.create(),m=f.create(),n=f.create(),p=g.fromValues(0,0,1),q=g.fromValues(0,1,0),r=g.fromValues(1,0,0);k.computeNormalFromOrientationTilt=function(c,d){e.setAxisAngle(m,p,h.toRadian(c-270));e.setAxisAngle(n,q,h.toRadian(d-90));e.multiply(l,m,
+n);b.copy(a,r);b.transformQuat(a,a,l);b.normalize(a,a);return[a[0],a[1],a[2]]};k.computeOrientationTiltFromNormal=function(c){b.copy(a,c);b.normalize(a,a);c=Math.atan2(a[1],a[0]);var d=e.setAxisAngle(f.create(),p,-c);b.transformQuat(a,a,d);d=-1*Math.atan2(a[2],a[0]);return[h.toDegree(c)+270,h.toDegree(d)+90]};Object.defineProperty(k,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../input/DragEventSeparator","../../../input/InputHandler"],function(e,f,g){class h extends g.InputHandler{constructor(c){super(!0);this.view=c;this.registerIncoming("drag",b=>this._handleDrag(b));this.registerIncoming("pointer-down",()=>this._stopMomentumNavigation());const d=this.view.mapViewNavigation;this._dragEventSeparator=new f.DragEventSeparator({start:(b,a)=>{d.pinch.begin(this.view,a.data);a.stopPropagation()},update:(b,a)=>{d.pinch.update(this.view,a.data);a.stopPropagation()},
+end:(b,a)=>{d.pinch.end(this.view);a.stopPropagation()},condition:b=>2<=b})}_handleDrag(c){this._dragEventSeparator.handle(c)}_stopMomentumNavigation(){this.view.mapViewNavigation.pinch.stopMomentumNavigation()}}e.PinchRotateAndZoom=h;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

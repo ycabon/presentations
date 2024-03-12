@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/JSONSupport ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/enumeration ../../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,d,h,k,l,e,f){var c;a=c=class extends a.JSONSupport{constructor(g){super(g);this.type="rainy";this.precipitation=this.cloudCover=.5}clone(){return new c({cloudCover:this.cloudCover,precipitation:this.precipitation})}};
+b.__decorate([e.enumeration({rainy:"rainy"})],a.prototype,"type",void 0);b.__decorate([d.property({type:Number,nonNullable:!0,range:{min:0,max:1},json:{write:!0}})],a.prototype,"cloudCover",void 0);b.__decorate([d.property({type:Number,nonNullable:!0,range:{min:0,max:1},json:{write:!0}})],a.prototype,"precipitation",void 0);return a=c=b.__decorate([f.subclass("esri.views.3d.environment.RainyWeather")],a)});

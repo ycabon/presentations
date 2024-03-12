@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./brushes","./webgl/enums","./webgl/WGLContainer"],function(c,d,e,f){class g extends f{constructor(){super(...arguments);this._hasCrossfade=!1}get requiresDedicatedFBO(){return super.requiresDedicatedFBO||this._hasCrossfade}beforeRender(a){super.beforeRender(a);this._manageFade()}prepareRenderPasses(a){const b=a.registerRenderPass({name:"bitmap",brushes:[d.brushes.bitmap],target:()=>this.children,drawPhase:e.WGLDrawPhase.MAP});return[...super.prepareRenderPasses(a),b]}_manageFade(){2<=
+this.children.reduce((a,b)=>a+(b.inFadeTransition?1:0),0)?(this.children.forEach(a=>a.blendFunction="additive"),this._hasCrossfade=!0):(this.children.forEach(a=>a.blendFunction="standard"),this._hasCrossfade=!1)}}c.BitmapContainer=g;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

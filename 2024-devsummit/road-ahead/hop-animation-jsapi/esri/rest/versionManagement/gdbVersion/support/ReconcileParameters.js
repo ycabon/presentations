@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../../chunks/tslib.es6 ../../../../core/jsonMap ../../../../core/JSONSupport ../../../../core/accessorSupport/decorators/property ../../../../core/accessorSupport/ensureType ../../../../core/RandomLCG ../../../../core/has ../../../../core/accessorSupport/decorators/subclass".split(" "),function(c,b,a,d,g,k,l,h){var e;b=new b.JSONMap({byObject:"by-object",byAttribute:"by-attribute"});a=e=class extends a.JSONSupport{static from(f){return g.ensureClass(e,f)}constructor(f){super(f);this.sessionId=
+void 0;this.abortIfConflicts=!1;this.conflictDetection=null;this.withPost=!1}};c.__decorate([d.property({type:String,json:{write:!0}})],a.prototype,"sessionId",void 0);c.__decorate([d.property({type:Boolean,json:{write:!0}})],a.prototype,"abortIfConflicts",void 0);c.__decorate([d.property({type:b.apiValues,json:{type:b.jsonValues,read:b.read,write:b.write}})],a.prototype,"conflictDetection",void 0);c.__decorate([d.property({type:Boolean,json:{write:!0}})],a.prototype,"withPost",void 0);return a=e=
+c.__decorate([h.subclass("esri.rest.versionManagement.gdbVersion.support.ReconcileParameters")],a)});

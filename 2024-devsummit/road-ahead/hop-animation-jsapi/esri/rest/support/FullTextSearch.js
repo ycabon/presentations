@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Clonable ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,d,c,g,h,k,e){a=class extends a.ClonableMixin(d.JSONSupport){constructor(f){super(f);this.searchType=this.searchTerm=this.operator=this.onFields=null}};b.__decorate([c.property({type:[String],json:{write:{enabled:!0,overridePolicy(){return{enabled:null!=this.onFields&&
+0<this.onFields.length}}}}})],a.prototype,"onFields",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"operator",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"searchTerm",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"searchType",void 0);return a=b.__decorate([e.subclass("esri.rest.support.FullTextSearch")],a)});

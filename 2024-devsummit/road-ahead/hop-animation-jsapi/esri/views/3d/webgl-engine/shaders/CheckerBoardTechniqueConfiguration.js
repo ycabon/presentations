@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../chunks/tslib.es6","../core/shaderTechnique/ShaderTechniqueConfiguration","../lib/TransparencyPassType","../materials/DefaultTechniqueConfiguration"],function(d,b,c,e,f){class a extends f.DefaultTechniqueConfiguration{constructor(){super(...arguments);this.transparencyPassType=e.TransparencyPassType.NONE;this.transparent=!1;this.writeDepth=!0;this.cullAboveGround=this.multipassEnabled=this.polygonOffset=!1}}b.__decorate([c.parameter({count:e.TransparencyPassType.COUNT})],
+a.prototype,"transparencyPassType",void 0);b.__decorate([c.parameter()],a.prototype,"transparent",void 0);b.__decorate([c.parameter()],a.prototype,"writeDepth",void 0);b.__decorate([c.parameter()],a.prototype,"polygonOffset",void 0);b.__decorate([c.parameter()],a.prototype,"multipassEnabled",void 0);b.__decorate([c.parameter()],a.prototype,"cullAboveGround",void 0);b.__decorate([c.parameter({constValue:!1})],a.prototype,"occlusionPass",void 0);d.CheckerBoardTechniqueConfiguration=a;Object.defineProperty(d,
+Symbol.toStringTag,{value:"Module"})});

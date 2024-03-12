@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../core/maybe ../../engine/AFeatureContainer ../../engine/webgl/enums ../../engine/webgl/shaderGraph/techniques/GraphicInstanceStore ./GraphicBoundsRenderer".split(" "),function(c,e,f,g,h,k){class l extends f.AFeatureContainer{constructor(a){super(a);this._instanceStore=new h.GraphicInstanceStore;this.checkHighlight=()=>!0}destroy(){super.destroy();this._boundsRenderer=e.destroyMaybe(this._boundsRenderer)}get instanceStore(){return this._instanceStore}enableRenderingBounds(a){this._boundsRenderer=
+new k(a);this.requestRender()}get hasHighlight(){return this.checkHighlight()}onTileData(a,b){a.onMessage(b);this.contains(a)||this.addChild(a);this.requestRender()}_renderChildren(a,b){a.selection=b;for(const d of this.children)d.visible&&d.getDisplayList(a.drawPhase,this._instanceStore,g.FeatureBatchingStrategy.STRICT_ORDER)?.render(a)}}c.AGraphicContainer=l;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

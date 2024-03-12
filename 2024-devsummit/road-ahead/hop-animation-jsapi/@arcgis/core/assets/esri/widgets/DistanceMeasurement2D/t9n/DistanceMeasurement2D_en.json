@@ -1,0 +1,1 @@
+{"distance":"Distance","hint":"Start to measure by clicking in the map to place your first point","mode":"Mode","modes":{"auto":"Auto","planar":"Planar","geodesic":"Geodesic"},"newMeasurement":"New measurement","unit":"Unit","unsupported":"2D distance measurement is only supported in MapView.","widgetLabel":"Distance Measurement"}

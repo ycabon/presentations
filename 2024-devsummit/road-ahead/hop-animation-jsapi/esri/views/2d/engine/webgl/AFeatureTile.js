@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../core/libs/gl-matrix-2/math/mat2d ../../../../core/libs/gl-matrix-2/factories/mat2df32 ../../../../core/libs/gl-matrix-2/math/mat3 ../../../../core/libs/gl-matrix-2/factories/mat3f32 ./definitions ./TiledDisplayObject".split(" "),function(g,h,k,l,m,n,q){class r extends q.TiledDisplayObject{constructor(b,a,c,d){super(b,a,c,d,n.tileSize,n.tileSize)}destroy(){super.destroy()}setTransform(b){var a=this.resolution/b.resolution,c=this.transforms.tileMat3;const [d,p]=b.toScreenNoRotation([0,
+0],[this.x,this.y]);var e=this.width/this.rangeX*a;a*=this.height/this.rangeY;l.set(c,e,0,0,0,a,0,d,p,1);l.multiply(this.transforms.displayViewScreenMat3,b.displayViewMat3,c);c=this.transforms.labelMat2d;const f=window.devicePixelRatio;e=h.set(k.create(),e*f,0,0,a*f,d*f,p*f);h.multiply(c,b.viewMat2d,e)}_createTransforms(){return{labelMat2d:k.create(),tileMat3:m.create(),displayViewScreenMat3:m.create()}}}g.AFeatureTile=r;Object.defineProperty(g,Symbol.toStringTag,{value:"Module"})});

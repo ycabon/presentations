@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../widgetUtils"],function(d,e){function f(b){return function(a,...g){const c=a?.type;a instanceof KeyboardEvent||"keyup"===c||"keydown"===c||"keypress"===c?e.isActivationKey(a.key)&&(a.preventDefault(),a.stopPropagation(),a.target.click()):b.call(this,a,...g)}}d.accessibleHandler=function(){return function(b,a){if(!b[a])throw new TypeError(`Cannot auto bind undefined function '${String(a)}'`);return{value:f(b[a])}}};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../lang","./utils"],function(d,g,h){function e(a){let b=a.constructor.__accessorMetadata__;const c=Object.prototype.hasOwnProperty.call(a.constructor,"__accessorMetadata__");if(!b)b={},Object.defineProperty(a.constructor,"__accessorMetadata__",{value:b,enumerable:!1,configurable:!0,writable:!0});else if(!c){b=Object.create(b);for(const f in b)b[f]=g.clone(b[f]);Object.defineProperty(a.constructor,"__accessorMetadata__",{value:b,enumerable:!1,configurable:!0,writable:!0})}return a.constructor.__accessorMetadata__}
+function k(a){return l.test(a)?"replace":"merge"}const l=/^(?:[^.]+\.)?(?:value|type|(?:json\.type|json\.origins\.[^.]\.type))$/;d.getPropertiesMetadata=e;d.getPropertyMetadata=function(a,b){a=e(a);let c=a[b];c||=a[b]={};return c};d.mergeProperty=function(a,b){return h.merge(a,b,k)};d.setPropertyMetadata=function(a,b,c){e(a)[b]=c};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

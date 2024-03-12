@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../request ../../../core/Error ../../utils ./serverVersionUtils ./support/PostResult".split(" "),function(e,k,g,f,l,m){const d=new Map;e.post=async function(a,b,c,n){d.has(a)||await l.addServerVersion(d,a);if(11.1>=(d.get(a)?.serverVersion??0))throw new g("post:enterprise-version","versioning API requires ArcGIS Enterprise version 11.2 or higher");if(!b)throw new g("post:missing-guid","guid for version is missing");a=f.parseUrl(a);const h=c.toJSON();c.rows&&(h.rows=JSON.stringify(c.rows));
+c=f.asValidOptions(a.query,{query:f.encode({...h,f:"json"}),...n,method:"post"});b.startsWith("{")&&(b=b.slice(1,-1));({data:b}=await k(`${a.path}/versions/${b}/post`,c));return m.fromJSON(b)};e.serverVersionCacheMap=d;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

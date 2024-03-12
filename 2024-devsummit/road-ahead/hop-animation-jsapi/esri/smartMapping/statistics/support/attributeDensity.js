@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../support/arcadeOnDemand"],function(y){function r(a,n,d){return null!=a&&isFinite(a)&&((n??!0)||0!==a)&&((d??!0)||0<=a)}return async function(a){const {features:n,attributes:d,includeZeros:t,includeNegatives:u,view:e}=a;let v=a=0,k=Infinity,l=-Infinity;var f=null;const w=new Map;for(var g=0;g<d.length;g++){var {valueExpression:b}=d[g];b&&(f||({arcadeUtils:f}=await y.loadArcade()),w.set(g,f.createFunction(b)))}g=e?f?.getViewInfo({viewingMode:"2d"===e.type?"map":e.viewingMode,scale:e.scale,
+spatialReference:e.spatialReference}):null;for(const p of n){var c=p.geometry;b=p.attributes;if(c&&(c=c.extent)&&(c=c.width*c.height,0<c)){let q=0;const z=f?.createExecContext(p,g,e?.timeZone);for(let m=0;m<d.length;m++){const {field:x,valueExpression:A}=d[m];var h=null;x?h=b[x]:A&&(h=w.get(m),h=f.executeFunction(h,z));r(h,t,u)&&(q+=h||0)}r(q,t,u)&&(b=q/c,++a,v+=b,b<k&&(k=b),b>l&&(l=b))}}return{minDensity:Infinity!==k?k:null,maxDensity:-Infinity!==l?l:null,avgDensity:a?v/a:null}}});

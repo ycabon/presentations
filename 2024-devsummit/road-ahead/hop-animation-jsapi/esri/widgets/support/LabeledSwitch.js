@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../chunks/componentsUtils","./widgetUtils","./jsxFactory"],function(d,e,k,n,c){e.LabeledSwitch=function({checked:b,disabled:a,hint:g,key:f,label:h,onChange:l}){return c.tsx("calcite-label",{class:"esri-labeled-switch__label",disabled:a,key:f,layout:"inline-space-between",scale:"s"},c.tsx("div",{class:"esri-labeled-switch__label-content",key:"label-content"},g?c.tsx(c.tsxFragment,null,c.tsx("div",null,h),c.tsx("calcite-icon",{class:"esri-labeled-switch__icon",icon:"information",
+id:f,scale:"s"}),c.tsx("calcite-tooltip",{class:"esri-labeled-switch__tooltip",referenceElement:f},g)):h),c.tsx("calcite-switch",{checked:b,disabled:a,scale:"s",onCalciteSwitchChange:m=>l(m.target.checked)}))};e.loadLabeledSwitchComponents=()=>Promise.all([k.loadCalciteComponents({icon:()=>new Promise((b,a)=>d(["../../chunks/calcite-icon"],b,a)),label:()=>new Promise((b,a)=>d(["../../chunks/calcite-label"],b,a)),switch:()=>new Promise((b,a)=>d(["../../chunks/calcite-switch"],b,a)),tooltip:()=>new Promise((b,
+a)=>d(["../../chunks/calcite-tooltip"],b,a))})]);Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

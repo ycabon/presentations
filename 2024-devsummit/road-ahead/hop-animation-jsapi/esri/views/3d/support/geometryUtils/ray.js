@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../core/screenUtils ../../../../core/libs/gl-matrix-2/math/vec2 ../../../../chunks/vec32 ../../../../geometry/support/ray ../../../../geometry/support/vectorStacks".split(" "),function(e,f,h,g,p,d){function k(a,c,b){return l(a,a.screenToRender(c,f.castRenderScreenPointArray3(d.sv3d.get())),b)}function l(a,c,b){const m=f.castRenderScreenPointArray3(h.copy(d.sv3d.get(),c));m[2]=0;if(!a.unprojectFromRenderScreen(m,b.origin))return null;c=f.castRenderScreenPointArray3(h.copy(d.sv3d.get(),
+c));c[2]=1;a=a.unprojectFromRenderScreen(c,d.sv3d.get());if(null==a)return null;g.subtract(b.direction,a,b.origin);return b}function n(a,c,b){g.copy(b.origin,a.eye);c=g.set(d.sv3d.get(),c[0],c[1],1);a=a.unprojectFromRenderScreen(c,d.sv3d.get());if(null==a)return null;g.subtract(b.direction,a,b.origin);return b}e.fromRender=l;e.fromRenderAtEye=n;e.fromScreen=k;e.fromScreenAtEye=function(a,c,b){return n(a,a.screenToRender(c,f.castRenderScreenPointArray3(d.sv3d.get())),b)};e.fromScreenNormalized=function(a,
+c,b=p.create()){k(a,f.screenPointObjectToArray(c),b);g.normalize(b.direction,b.direction);return b};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

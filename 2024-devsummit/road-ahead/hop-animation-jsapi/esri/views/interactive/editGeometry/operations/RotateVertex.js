@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/arrayUtils","../../../../core/libs/gl-matrix-2/math/vec2","./UpdateVertices"],function(d,f,g,c){class e{constructor(a,b,h=c.AccumulationType.CUMULATIVE){this.origin=a;this.angle=b;this._accumulationType=h}_rotate(a,b){g.rotate(a.pos,a.pos,this.origin,b)}apply(a){this._rotate(a,this.angle)}undo(a){this._rotate(a,-this.angle)}canAccumulate(a){return a instanceof e&&f.equals(this.origin,a.origin)}accumulate(a,b){this._rotate(a,b._accumulationType===c.AccumulationType.REPLACE?
+b.angle-this.angle:b.angle)}accumulateParams(a){this.angle=a._accumulationType===c.AccumulationType.REPLACE?a.angle:this.angle+a.angle}}d.RotateVertex=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

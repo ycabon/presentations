@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/shaderTechnique/ReloadableShaderModule ../../core/shaderTechnique/ShaderTechnique ../Program ./bufferLayouts ../../../../../chunks/EdgeShader.glsl ../../../../webgl/enums ../../../../webgl/renderState".split(" "),function(f,e,g,h,k,l,m,a,b){class d extends h.ShaderTechnique{initializeProgram(c){return new k.Program(c.rctx,d.shader.get().build(this.configuration),l.EdgeShaderAttributeLocations)}initializePipeline(c){return c.blendMinMax?b.makePipelineState({blending:b.separateBlendingParams(a.BlendFactor.ONE,
+a.BlendFactor.ONE,a.BlendFactor.ZERO,a.BlendFactor.ONE,a.BlendOperation.ADD,c.blendMinMax.MAX),depthTest:{func:a.CompareFunction.LEQUAL},colorWrite:b.defaultColorWriteParams}):b.makePipelineState({depthTest:{func:a.CompareFunction.LEQUAL},depthWrite:b.defaultDepthWriteParams,colorWrite:b.defaultColorWriteParams})}}d.shader=new g.ReloadableShaderModule(m.EdgeShader,()=>new Promise((c,n)=>f(["../../shaders/sources/edgeRenderer/EdgeShader.glsl"],c,n)));e.EdgeShaderTechnique=d;Object.defineProperty(e,
+Symbol.toStringTag,{value:"Module"})});

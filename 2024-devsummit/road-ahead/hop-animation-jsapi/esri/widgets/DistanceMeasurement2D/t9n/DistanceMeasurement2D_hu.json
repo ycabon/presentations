@@ -1,0 +1,1 @@
+{"distance":"Távolság","hint":"A mérést úgy kell elkezdeni, hogy bele kell kattintani a térképbe az első pont elhelyezéséhez","mode":"Mód","modes":{"auto":"Automatikus","planar":"Síkbeli","geodesic":"Geodéziai"},"newMeasurement":"Új mérés","unit":"Mértékegység","unsupported":"A 2D távolság mérését csak a MapView támogatja.","widgetLabel":"Távolságmérés"}

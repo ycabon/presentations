@@ -1,0 +1,1 @@
+{"hint":"Per iniciar la mesura, feu clic al mapa i col·loqueu el primer punt","mode":"Mode","modes":{"auto":"Automàtic","planar":"Pla","geodesic":"Geodèsic"},"newMeasurement":"Mesura nova","perimeter":"Perímetre","unit":"Unitat","unsupported":"La mesura d'àrea 2D només s'admet al MapView.","widgetLabel":"Mesura d'àrea"}

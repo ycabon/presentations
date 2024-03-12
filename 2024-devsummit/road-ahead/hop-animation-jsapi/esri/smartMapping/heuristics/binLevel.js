@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../core/Error"],function(d){async function e(a){if(!a.view)throw new d("bin-level:missing-parameters","'view' parameter is required");await a.view.when();return{...a}}const f=[{scale:565,level:9},{scale:9028,level:8},{scale:72224,level:7},{scale:288896,level:6},{scale:2311163,level:5},{scale:18489298,level:4},{scale:73957191,level:3},{scale:295828764,level:2}];return async function(a){({view:a}=await e(a));let b=2;for(const c of f)if(!(c.scale<a.scale)){b=c.level;break}return b}});

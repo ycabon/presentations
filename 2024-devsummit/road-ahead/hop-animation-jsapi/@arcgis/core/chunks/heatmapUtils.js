@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{c as t}from"./mathUtils.js";import{p as o,a as r}from"./screenUtils.js";import{l as n}from"./vec4.js";import{c as a}from"./vec4f64.js";const s=2.4;function i(t){return o(2.4*t)}function c(t){return r(t)/2.4}function e(o,r,a,s){let{color:i,ratio:c}=r,{color:e,ratio:f}=a;if(f===c){const t=1e-6;1===f?c-=t:f+=t}const l=t((s-c)/(f-c),0,1);n(o,i.toArray(),e.toArray(),l)}function f(t){const o=new Uint8ClampedArray(2048);if(t=t.filter((({ratio:t})=>t>=0&&t<=1)).sort(((t,o)=>t.ratio-o.ratio)).map((({color:t,ratio:o})=>({color:t,ratio:Math.max(o,.001)}))),t.length<1)return o;let r=t[0],n=t[0],s=1;const i=a();for(let a=0;a<512;a++){const c=(a+.5)/512;for(;c>n.ratio&&s<t.length;)r=n,n=t[s++];e(i,r,n,c),o.set(i,4*a)}return o}function l(t,o,r){const n=Math.sqrt(t**2+o**2)/r;return n>1?0:3/(Math.PI*r**2)*(1-n**2)**2}function m(t){return"function"==typeof t?t:t?o=>+o[t]:()=>1}export{f as a,m as c,l as e,i as g,c as k,s as m};

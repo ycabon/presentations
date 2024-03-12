@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../geometry/support/aaBoundingRect","../webgl-engine/lib/LocalOriginFactory"],function(d,c,e){class f{constructor(){this._extent=c.create();this.resolution=0;this.renderLocalOrigin=e.fromValues(0,0,0,"O");this.mapUnitsPerPixel=this.pixelRatio=1;this.canvasGeometries=new g}get extent(){return this._extent}setupGeometryViewsCyclical(a){this.setupGeometryViewsDirect();var b=.001*a.range;if(this._extent[0]-b<=a.min){const h=this.canvasGeometries.extents[this.canvasGeometries.numViews++];
+c.offset(this._extent,a.range,0,h)}this._extent[2]+b>=a.max&&(b=this.canvasGeometries.extents[this.canvasGeometries.numViews++],c.offset(this._extent,-a.range,0,b))}setupGeometryViewsDirect(){this.canvasGeometries.numViews=1;c.copy(this.canvasGeometries.extents[0],this._extent)}hasSomeSizedView(){for(let a=0;a<this.canvasGeometries.numViews;a++){const b=this.canvasGeometries.extents[a];if(b[0]!==b[2]&&b[1]!==b[3])return!0}return!1}}class g{constructor(){this.extents=[c.create(),c.create(),c.create()];
+this.numViews=0}}d.Overlay=f;d.OverlayStretch=1.3;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

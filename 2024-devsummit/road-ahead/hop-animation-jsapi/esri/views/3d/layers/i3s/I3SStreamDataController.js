@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/promiseUtils"],function(f,g){class h{constructor(a,d,b){this._requester=a;this._customParameters=d;this._apiKey=b;this._activeRequests=new Set}get busy(){return this._requester.busy}request(a,d,b){const e=new AbortController;b=g.onAbortOrThrow(b,()=>e.abort());a=this._requester.request(a,d,{signal:e.signal,query:{...this._customParameters,token:this._apiKey}});const c={response:a,abortController:e,abortHandle:b};this._activeRequests.add(c);g.always(a,()=>{c.abortController=
+null;c.abortHandle?.remove();c.abortHandle=null;this._activeRequests.delete(c)});return a}cancelAll(){this._activeRequests.forEach(a=>{a.abortController?.abort();a.abortController=null;a.abortHandle?.remove()});this._activeRequests.clear()}}f.I3SStreamDataController=h;Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

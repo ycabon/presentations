@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(function(){let b=0;class d{static fromGE(a){const c=new d;c._wkt=a.wkt;c._wkid=a.wkid;c._isInverse=a.isInverse;return c}constructor(a){this.uid=b++;a?(this._wkt=null!=a.wkt?a.wkt:null,this._wkid=null!=a.wkid?a.wkid:-1,this._isInverse=null!=a.isInverse?!0===a.isInverse:!1):(this._wkt=null,this._wkid=-1,this._isInverse=!1)}get wkt(){return this._wkt}set wkt(a){this._wkt=a;this.uid=b++}get wkid(){return this._wkid}set wkid(a){this._wkid=a;this.uid=b++}get isInverse(){return this._isInverse}set isInverse(a){this._isInverse=
+a;this.uid=b++}getInverse(){const a=new d;a._wkt=this.wkt;a._wkid=this._wkid;a._isInverse=!this.isInverse;return a}}return d});

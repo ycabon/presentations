@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../graph/glsl"],function(d,e){function f(a){return null!=a.visualVariableSizeMinMaxValue||null!=a.visualVariableSizeScaleStops||null!=a.visualVariableSizeStops||null!=a.visualVariableSizeUnitValue}d.getVisualVariableColor=function(a,b,c,g=new e.Bool(!1)){if(null==a.visualVariableColor)return c;b=a.storage.getColorValue(b);return a.visualVariableColor.getColor(b,c,g)};d.getVisualVariableOpacity=function(a,b){if(null==a.visualVariableOpacity)return new e.Float(1);b=a.storage.getOpacityValue(b);
+return a.visualVariableOpacity.getOpacity(b)};d.getVisualVariableRotation=function(a,b){if(null==a.visualVariableRotation)return e.Mat3.identity();b=a.storage.getRotationValue(b);return a.visualVariableRotation.getVVRotationMat3(b)};d.getVisualVariableSize=function(a,b,c){return f(a)?(b=a.storage.getSizeValue(b),a.visualVariableSizeMinMaxValue?.getSize(b,c)??a.visualVariableSizeScaleStops?.getSizeForViewScale(a.view.currentScale)??a.visualVariableSizeStops?.getSize(b,c)??a.visualVariableSizeUnitValue?.getSize(b,
+c)):c};d.hasVisualVariableSize=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

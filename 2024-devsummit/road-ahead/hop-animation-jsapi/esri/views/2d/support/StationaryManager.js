@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../chunks/tslib.es6 ../../../core/Accessor ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,d,c,f,g,h,e){a.StationaryManager=class extends d{constructor(){super(...arguments);this._timer=void 0}get stationary(){return!this._timer}flip(){this._timestamp=performance.now();null==this._timer&&(this._timer=setInterval(()=>{160<=performance.now()-
+this._timestamp&&this.clear()},160))}clear(){this._timer&&(clearInterval(this._timer),this._timer=void 0)}};b.__decorate([c.property()],a.StationaryManager.prototype,"_timer",void 0);b.__decorate([c.property()],a.StationaryManager.prototype,"stationary",null);a.StationaryManager=b.__decorate([e.subclass("esri.views.2d.support.StationaryManager")],a.StationaryManager);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

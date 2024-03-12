@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../engine/Bitmap","../../engine/BitmapContainer"],function(f,h,k){class l extends k.BitmapContainer{constructor(b){super();this.requestRender=this.requestRender.bind(this);this._layerView=b;this._canvas=document.createElement("canvas");this._context=this._canvas.getContext("2d");this._bitmap=new h.Bitmap(this._canvas);this.addChild(this._bitmap)}doRender(b){b.painter.setPipelineState(null);const a=b.state,g=this._createCustomRenderParams(b);var c=this._canvas;const d=this._bitmap,
+e=window.devicePixelRatio;c.width=a.size[0]*e;c.height=a.size[1]*e;d.resolution=a.resolution;c=a.clone();c.pixelRatio=e;d.pixelRatio=e;g.state=c;d.x=a.viewpoint.targetGeometry.x-Math.abs(a.extent.xmax-a.extent.xmin)/2;d.y=a.viewpoint.targetGeometry.y+Math.abs(a.extent.ymax-a.extent.ymin)/2;this._layerView.render(g);d.rotation=a.rotation;d.invalidateTexture();super.doRender({...b,state:c})}_createCustomRenderParams(b){return{globalOpacity:b.globalOpacity,state:b.state,stationary:b.stationary,pixelRatio:window.devicePixelRatio,
+context:this._context}}}f.Display=l;Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../core/screenUtils","./featureReductionUtils","../../support/visualVariableSimpleUtils"],function(c,d,e,f){function g(a){return b=>d.pt2px(f.getSizeForValueSimple(b,a))}c.createLabelVVEvaluator=function(a){a=null!=a&&"visualVariables"in a&&a.visualVariables;if(!a)return null;for(const b of a)if("size"===b.type)return g(b);return null};c.getFeatureReductionDeconflictionEnabled=function(a,b){a=e.getEffectiveFeatureReduction(a,b);if(a?.labelsVisible&&a.labelingInfo?.length)return a.labelingInfo.every(h=>
+"none"!==h.deconflictionStrategy)};c.getLayerDeconflictionEnabled=function(a){return(a.labelsVisible&&a.labelingInfo?.every(b=>"none"!==b.deconflictionStrategy))??!1};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

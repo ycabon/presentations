@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/jsonMap ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/enumeration ../../../core/accessorSupport/decorators/reader ../../../core/accessorSupport/decorators/subclass ./BaseFunctionArguments".split(" "),function(b,a,d,m,n,p,g,h,k,l){var c;const e=new a.JSONMap({0:"standard",1:"platform",2:"profile"},{useNumericKeys:!0});a=c=class extends l{constructor(){super(...arguments);
+this.curvatureType="standard";this.zFactor=1}readCurvatureType(q,f){return e.fromJSON(f.type??f.curvatureType??0)}clone(){return new c({curvatureType:this.curvatureType,zFactor:this.zFactor,raster:this.raster})}};b.__decorate([d.property({json:{write:{target:"type"}}}),g.enumeration(e)],a.prototype,"curvatureType",void 0);b.__decorate([h.reader("curvatureType",["type","curvatureType"])],a.prototype,"readCurvatureType",null);b.__decorate([d.property({type:Number,json:{write:!0}})],a.prototype,"zFactor",
+void 0);return a=c=b.__decorate([k.subclass("esri.layers.support.rasterFunctions.CurvatureFunctionArguments")],a)});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../../request","../../../../core/maybe","../../../../core/promiseUtils","../../tiling/TileKey"],function(e,f,g,h){class k{constructor(a,b){this._tilemap=a;this._tileIndexUrl=b}destroy(){this._tilemap=f.destroyMaybe(this._tilemap);this._tileIndexPromise=null}async fetchTileIndex(a){this._tileIndexPromise||(this._tileIndexPromise=e(this._tileIndexUrl,{query:{...a?.query}}).then(b=>b.data.index));return this._tileIndexPromise}dataKey(a,b){const {level:l,row:m,col:n}=a,c=new h(a);return this._tilemap.fetchAvailabilityUpsample(l,
+m,n,c,b).then(()=>{c.world=a.world;return c}).catch(d=>{if(g.isAbortError(d))throw d;return null})}}return k});

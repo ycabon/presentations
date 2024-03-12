@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../chunks/tslib.es6 ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ../../Widget ../css ./LegendItem ../../support/widgetUtils ../../support/jsxFactory".split(" "),function(a,b,d,q,r,t,g,h,k,l,u,f){a.Legend=class extends h{constructor(){super(...arguments);this._expandedLine=null}render(){const {profiles:c,messages:m,effectiveUnits:n,_expandedLine:p}=this;return f.tsx("div",
+{class:k.legendCss.base},c.map(e=>f.tsx(l.LegendItem,{checkboxVisible:1<c.length,effectiveUnits:n,expanded:e===p,line:e,messages:m,onExpandedToggle:()=>this._onExpandedToggle(e)})))}_onExpandedToggle(c){this._expandedLine=c===this._expandedLine?null:c}};b.__decorate([d.property()],a.Legend.prototype,"effectiveUnits",void 0);b.__decorate([d.property()],a.Legend.prototype,"messages",void 0);b.__decorate([d.property()],a.Legend.prototype,"profiles",void 0);b.__decorate([d.property()],a.Legend.prototype,
+"_expandedLine",void 0);a.Legend=b.__decorate([g.subclass("esri.widgets.ElevationProfile.components.Legend")],a.Legend);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

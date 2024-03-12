@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ../core/screenUtils ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/RandomLCG ../core/accessorSupport/decorators/enumeration ../core/accessorSupport/decorators/subclass ./Symbol".split(" "),function(b,c,d,a,k,l,e,f,g){a=class extends g{constructor(h){super(h);this.type="simple-line";this.width=.75}hash(){return`${this.type}.${this.width}`}};b.__decorate([e.enumeration({esriSLS:"simple-line"},{readOnly:!0})],a.prototype,"type",void 0);b.__decorate([d.property({type:Number,
+cast:c.toPt,json:{write:!0}})],a.prototype,"width",void 0);return a=b.__decorate([f.subclass("esri.symbols.LineSymbol")],a)});

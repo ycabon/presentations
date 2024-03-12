@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./utils","../../portal/support/portalItemUtils"],function(d,f,c){function g(a){return{isValid:"stream"===a.type&&!!a.url&&!a.webSocketUrl,errorMessage:"Stream layer should be created using a url to a stream service"}}function h(a){a=a.layerJSON;return Promise.resolve(a&&Object.keys(a).length?a:null)}async function l(a,b){const {parsedUrl:e,title:m,fullExtent:k}=a;b.url=e.path;b.title||(b.title=m);b.extent=null;null!=k&&(b.extent=await c.getWGS84ExtentForItem(k));c.removeTypeKeyword(b,
+c.typeKeyword.METADATA);c.addTypeKeyword(b,c.typeKeyword.SINGLE_LAYER)}d.save=async function(a,b){return f.save({layer:a,itemType:"Stream Service",additionalItemType:"Feed",validateLayer:g,createItemData:h,errorNamePrefix:"stream-layer-save"},b)};d.saveAs=async function(a,b,e){return f.saveAs({layer:a,itemType:"Stream Service",validateLayer:g,createItemData:h,errorNamePrefix:"stream-layer-save-as",newItem:b,setItemProperties:l},e)};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

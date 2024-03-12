@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../core/CollectionFlattener"],function(d,e){d.createFlattenedTablesCollection=function(c){return new e({getCollections:()=>[c.tables,c.layers],getChildrenFunction:a=>{const b=[];"tables"in a&&b.push(a.tables);"layers"in a&&b.push(a.layers);return b},itemFilterFunction:a=>{const b=a.parent;return!!b&&"tables"in b&&b.tables.includes(a)}})};d.destroyMap=function(c){for(const a of c.values())a?.destroy();c.clear()};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

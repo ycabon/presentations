@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/mathUtils","./FilteredFiniteDifference","./Momentum"],function(d,f,e,g){class h{constructor(a=2.5,b=.01,c=.95,k=12){this._minimumInitialVelocity=a;this._stopVelocity=b;this._friction=c;this._maxVelocity=k;this.enabled=!0;this.value=new e.FilteredFiniteDifference(.8);this.time=new e.FilteredFiniteDifference(.3)}add(a,b){if(this.enabled&&null!=b){if(this.time.hasLastValue()){if(.01>this.time.computeDelta(b))return;if(this.value.hasFilteredDelta()){const c=this.value.computeDelta(a);
+0>this.value.filteredDelta*c&&this.value.reset()}}this.time.update(b);this.value.update(a)}}reset(){this.value.reset();this.time.reset()}evaluateMomentum(){if(!this.enabled||!this.value.hasFilteredDelta()||!this.time.hasFilteredDelta())return null;let a=this.value.filteredDelta/this.time.filteredDelta;a=f.clamp(a,-this._maxVelocity,this._maxVelocity);return Math.abs(a)<this._minimumInitialVelocity?null:this.createMomentum(a,this._stopVelocity,this._friction)}createMomentum(a,b,c){return new g.Momentum(a,
+b,c)}}d.MomentumEstimator=h;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

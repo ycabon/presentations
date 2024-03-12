@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../../chunks/tslib.es6 ../../../../../core/accessorSupport/decorators/property ../../../../../core/has ../../../../../core/Logger ../../../../../core/RandomLCG ../../../../../core/accessorSupport/decorators/subclass ../../../../../chunks/vec32 ../../../../../core/libs/gl-matrix-2/factories/vec3f64 ../../../camera/constraintUtils/InteractionType ./MomentumController ../../utils/navigationUtils".split(" "),function(b,e,h,r,t,u,k,d,f,l,m,n){const p=f.create(),c=f.create();b.PanSphericalMomentumController=
+class extends m.MomentumController{constructor(a){super(a);this.interactionType=l.InteractionType.PAN}momentumStep(a,g){const q=this.momentum.value1(a);a=this.momentum.value2(a);d.copy(c,g.eye);d.normalize(c,c);d.cross(this.momentum.axis2,c,this.momentum.axis1);n.applyRotationWithTwoAxes(g,p,this.momentum.axis1,q,this.momentum.axis2,a)}};e.__decorate([h.property({constructOnly:!0})],b.PanSphericalMomentumController.prototype,"momentum",void 0);b.PanSphericalMomentumController=e.__decorate([k.subclass("esri.views.3d.state.controllers.momentum.PanSphericalMomentumController")],
+b.PanSphericalMomentumController);Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

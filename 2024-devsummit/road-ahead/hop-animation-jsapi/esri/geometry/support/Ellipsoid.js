@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(a){class b{constructor(c,d,e,f){this.semiMajorAxis=c;this.flattening=d;this.outerAtmosphereRimWidth=e;this.semiMinorAxis=this.semiMajorAxis*(1-this.flattening);this.halfSemiMajorAxis=this.semiMajorAxis/2;this.halfCircumference=Math.PI*this.semiMajorAxis;this.metersPerDegree=this.halfCircumference/180;this.inverseFlattening=1/(1-this.flattening)-1;this.eccentricitySquared=f||2*this.flattening-this.flattening*this.flattening;this.meanRadiusSemiAxes=(2*this.semiMajorAxis+
+this.semiMinorAxis)/3}get radius(){return this.semiMajorAxis}}const g=new b(6378137,1/298.257223563,3E5,.006694379990137799),h=new b(3396190,.005886007555525457,23E4),k=new b(1737400,0,0);a.Ellipsoid=b;a.earth=g;a.mars=h;a.moon=k;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

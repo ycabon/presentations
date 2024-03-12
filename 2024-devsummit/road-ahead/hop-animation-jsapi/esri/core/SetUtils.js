@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){function e(a,b){if(!b)return a;for(const c of b)a.add(c);return a}function f(a,b){const c=new Set;e(c,a);e(c,b);return c}function g(a,b){const c=new Set;for(const h of b)a.has(h)&&c.add(h);return c}function k(a,b){a=new Set(a);for(const c of b)a.delete(c);return a}d.addMany=e;d.difference=k;d.equals=function(a,b){if(null==a&&null==b)return!0;if(null==a||null==b||a.size!==b.size)return!1;for(const c of a)if(!b.has(c))return!1;return!0};d.intersection=g;d.isSubsetOf=function(a,
+b){if(!a||!b)return!1;if(a===b)return!0;for(const c of a)if(!b.has(c))return!1;return!0};d.last=function(a){let b;for(b of a);return b};d.someSet=function(a,b){for(const c of a.entries())if(b(c[0]))return!0;return!1};d.symmetricDifference=function(a,b){return k(f(a,b),g(a,b))};d.union=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

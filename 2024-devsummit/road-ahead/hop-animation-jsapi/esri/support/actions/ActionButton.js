@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./ActionBase".split(" "),function(c,d,a,h,k,e,f){var b;a=b=class extends f{constructor(g){super(g);this.image=null;this.type="button"}clone(){return new b({active:this.active,className:this.className,disabled:this.disabled,icon:this.icon,id:this.id,indicator:this.indicator,title:this.title,visible:this.visible,image:this.image})}};
+c.__decorate([d.property()],a.prototype,"image",void 0);return a=b=c.__decorate([e.subclass("esri.support.Action.ActionButton")],a)});

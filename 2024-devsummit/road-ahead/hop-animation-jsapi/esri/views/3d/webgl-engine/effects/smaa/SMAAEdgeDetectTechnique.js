@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../../core/shaderTechnique/ReloadableShaderModule ../../core/shaderTechnique/ShaderTechnique ../../lib/DefaultVertexAttributeLocations ../../lib/Program ../../../../../chunks/EdgeDetect.glsl ../../../../webgl/renderState".split(" "),function(e,c,f,g,h,k,l,d){class a extends g.ShaderTechnique{initializeProgram(b){return new k.Program(b.rctx,a.shader.get().build(),h.Default3D)}initializePipeline(){return d.makePipelineState({colorWrite:d.defaultColorWriteParams})}}a.shader=new f.ReloadableShaderModule(l.EdgeDetect,
+()=>new Promise((b,m)=>e(["../../shaders/EdgeDetect.glsl"],b,m)));c.SMAAEdgeDetectTechnique=a;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

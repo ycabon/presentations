@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../DisplayObject ../../DisplayEntity ../../cpuMapped/MappedMesh ../../util/Reader ../../util/serializationUtils".split(" "),function(c,h,k,l,m,n){class d extends h.DisplayObject{static fromMeshData(a,b){const e=new Map;for(const f of a.data){const g=new l.MappedMesh(b);g.append(f);e.set(f.instanceId,g)}a=new m(a.entities);a=n.deserializeList(a,k,{})??[];return new d(a,e)}constructor(a,b){super();this.displayObjects=a;this._instanceIdToMesh=b}destroy(){for(const a of this._instanceIdToMesh.values())a.destroy();
+this._instanceIdToMesh.clear()}getMesh(a){return this._instanceIdToMesh.get(a)}_createTransforms(){throw Error("Method not implemented.");}}c.TestDisplayObject=d;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

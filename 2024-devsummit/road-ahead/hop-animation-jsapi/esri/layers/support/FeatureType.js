@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Clonable ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/reader ../../core/accessorSupport/decorators/subclass ../../core/accessorSupport/decorators/writer ./domains ./FeatureTemplate".split(" "),function(c,a,h,e,q,r,t,k,l,m,n,p){a=class extends a.ClonableMixin(h.JSONSupport){constructor(b){super(b);this.templates=this.domains=this.name=this.id=
+null}readDomains(b){const f={};for(const d of Object.keys(b))f[d]=n.fromJSON(b[d]);return f}writeDomains(b,f){const d={};for(const g of Object.keys(b))b[g]&&(d[g]=b[g]?.toJSON());f.domains=d}};c.__decorate([e.property({json:{write:!0}})],a.prototype,"id",void 0);c.__decorate([e.property({json:{write:!0}})],a.prototype,"name",void 0);c.__decorate([e.property({json:{write:!0}})],a.prototype,"domains",void 0);c.__decorate([k.reader("domains")],a.prototype,"readDomains",null);c.__decorate([m.writer("domains")],
+a.prototype,"writeDomains",null);c.__decorate([e.property({type:[p],json:{write:!0}})],a.prototype,"templates",void 0);return a=c.__decorate([l.subclass("esri.layers.support.FeatureType")],a)});

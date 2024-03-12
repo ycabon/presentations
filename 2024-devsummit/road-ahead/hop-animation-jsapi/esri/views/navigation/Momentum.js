@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){class e{constructor(a,b,c){this._initialVelocity=a;this._stopVelocity=b;this._friction=c;this._duration=Math.abs(Math.log(Math.abs(this._initialVelocity)/this._stopVelocity)/Math.log(1-this._friction))}get duration(){return this._duration}isFinished(a){return a>this.duration}get friction(){return this._friction}value(a){return this.valueFromInitialVelocity(this._initialVelocity,a)}valueDelta(a,b){const c=this.value(a);return this.value(a+b)-c}valueFromInitialVelocity(a,
+b){b=Math.min(b,this.duration);const c=1-this.friction;return a*(c**b-1)/Math.log(c)}}d.Momentum=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("./chunks/tslib.es6 ./core/Clonable ./core/accessorSupport/decorators/property ./core/has ./core/Logger ./core/RandomLCG ./core/accessorSupport/decorators/subclass".split(" "),function(c,a,d,f,g,h,e){a=class extends a.Clonable{constructor(b){super(b);this.column=this.row=0;this.columns=this.rows=1}equals(b){return null==b?!1:this.row===b.row&&this.rows===b.rows&&this.column===b.column&&this.columns===b.columns}};c.__decorate([d.property({type:Number,nonNullable:!0,json:{read:!1,write:!1}})],
+a.prototype,"row",void 0);c.__decorate([d.property({type:Number,nonNullable:!0,json:{read:!1,write:!1}})],a.prototype,"column",void 0);c.__decorate([d.property({type:Number,nonNullable:!0,json:{read:!1,write:!1}})],a.prototype,"rows",void 0);c.__decorate([d.property({type:Number,nonNullable:!0,json:{read:!1,write:!1}})],a.prototype,"columns",void 0);return a=c.__decorate([e.subclass("esri.CameraLayout")],a)});

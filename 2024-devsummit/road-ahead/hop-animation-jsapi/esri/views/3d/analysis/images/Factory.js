@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./generateTextures","./heading-rotate-svg","./tilt-rotate-svg","../../webgl-engine/lib/Texture"],function(c,g,k,l,h){c.getRotateHeadingTexture=function(d,e){const {accentColor:a,contrastColor:b,preMultiplyAlpha:f}=e;return d.fromData(`heading-rotate:[accent:${a},contrast:${b},size:${64}]`,()=>new h.Texture(g.generateStyledTexture(k,{accentColor:a,contrastColor:b,size:64}),{mipmap:!0,reloadable:!0,preMultiplyAlpha:f}))};c.getTiltRotateTexture=function(d,e){const {accentColor:a,contrastColor:b,
+preMultiplyAlpha:f}=e;return d.fromData(`tilt-rotate:[accent:${a},contrast:${b},size:${64}]`,()=>new h.Texture(g.generateStyledTexture(l,{accentColor:a,contrastColor:b,size:64}),{mipmap:!0,reloadable:!0,preMultiplyAlpha:f}))};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

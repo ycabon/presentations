@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../layers/support/TileInfo","./TileInfoView","./TileKey"],function(g,h,e){class k extends h{constructor(){super(...arguments);this._fullCacheLodInfos=null;this._levelByScale={}}getTileParentId(a){a=e.pool.acquire(a);const b=0===a.level?null:e.getId(a.level-1,a.row>>1,a.col>>1,a.world);e.pool.release(a);return b}getTileCoverage(a,b,d=!0,c){a=super.getTileCoverage(a,b,d,c);if(!a)return a;const l=1<<a.lodInfo.level;a.spans=a.spans.filter(f=>0<=f.row&&f.row<l);return a}scaleToLevel(a){this._fullCacheLodInfos||
+this._initializeFullCacheLODs(this._lodInfos);if(this._levelByScale[a])return this._levelByScale[a];var b=this._fullCacheLodInfos;if(a>b[0].scale)return b[0].level;let d;for(let c=0;c<b.length-1;c++)if(d=b[c+1],a>d.scale)return b=b[c],b.level+(b.scale-a)/(b.scale-d.scale);return b[b.length-1].level}_initializeFullCacheLODs(a){a=0===a[0].level?a.map(b=>({level:b.level,resolution:b.resolution,scale:b.scale})):g.create({size:this.tileInfo.size[0],spatialReference:this.tileInfo.spatialReference}).lods.map(b=>
+({level:b.level,resolution:b.resolution,scale:b.scale}));for(let b=0;b<a.length;b++)this._levelByScale[a[b].scale]=a[b].level;this._fullCacheLodInfos=a}}return k});

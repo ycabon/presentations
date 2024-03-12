@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../enums ../featureTechniqueUtils ../Technique ./utils ../mesh/MeshWriterRegistry ../shaders/LineShader".split(" "),function(e,f,b,g,h,k,l){class m extends g.Technique{constructor(){super(...arguments);this.meshWriter=k.meshWriterRegistry.LineMeshWriter;this.shaders={geometry:new l.LineShader};this.symbologyPlane=f.FeatureSymbologyDrawOrder.LINE}render(a,c){const {context:n,painter:d,pixelRatio:p}=a;d.setShader({shader:this.shaders.geometry,uniforms:{...b.resolveDynamicUniforms(a,
+c.target,c.instance.getInput().geometry),...b.getFeatureUniforms(a,c.target),antialiasingControls:h.getAntialiasingControls(p)},defines:{...b.getSelectionDefines(a)},optionalAttributes:c.instance.optionalAttributes,useComputeBuffer:b.isHittest(a)});d.setPipelineState(b.getFeaturePipelineState(a));d.submitDraw(n,c)}}e.LineTechnique=m;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

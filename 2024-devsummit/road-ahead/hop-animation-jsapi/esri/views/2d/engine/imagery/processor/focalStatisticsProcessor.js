@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./utils"],function(d){const e={vsPath:"raster/rfx/vs",fsPath:"raster/rfx/focalstatistics",attributes:new Map([["a_position",0],["a_texcoord",1]])};return{createProgram:function(a,b){const {painter:c,rasterFunction:f}=a,{kernelRows:g,kernelCols:h,fillNoDataOnly:k,statisticsType:l}=f.parameters;a=[{name:"rows",value:g},{name:"cols",value:h},l];k&&a.push("fill");return c.materialManager.getProgram(e,a)},bindTextureAndUniforms:function(a,b,c){d.setSingleImageTextures(a,b,c);d.setCoordsAndTransforms(b);
+b.setUniform2fv("u_srcImageSize",[c.width,c.height]);({clampRange:a}=a.rasterFunction.parameters);b.setUniform2fv("u_clampRange",a)}}});

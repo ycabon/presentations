@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../geometry ../../core/Clonable ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../core/accessorSupport/decorators/writer ../../geometry/support/jsonUtils".split(" "),function(b,g,a,h,c,n,p,q,k,l,e){a=class extends a.ClonableMixin(h.JSONSupport){constructor(){super(...arguments);this.rasterId=this.geometry=null;this.visibleOnly=!1}writeGeometry(d,
+f,m){null!=d&&(f.geometryType=e.getJsonType(d),f[m]=JSON.stringify(d))}};b.__decorate([c.property({types:g.geometryTypes,json:{read:e.fromJSON,write:!0}})],a.prototype,"geometry",void 0);b.__decorate([l.writer("geometry")],a.prototype,"writeGeometry",null);b.__decorate([c.property({json:{write:!0}})],a.prototype,"rasterId",void 0);b.__decorate([c.property({json:{name:"options.VisibleOnly",write:!0}})],a.prototype,"visibleOnly",void 0);return a=b.__decorate([k.subclass("esri.rest.support.MapToImageParameters")],
+a)});

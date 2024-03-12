@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/quantityFormatUtils ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(b,g,h,n,p,q,r,k,d,l,t,c){b.TooltipContentTransformAbsolute=class extends l.TooltipContent{_renderContent(){const {info:a}=this,
+{visibleElements:e}=a,f=this._messagesTooltip.sketch,m=this._formatters;return c.tsx(c.tsxFragment,null,e.orientation&&null!=a.orientation?c.tsx(d.TooltipField,{key:"orientation",title:f.orientation,value:h.formatAngle(a.orientation,a.rotationType,a.orientationPrecision)}):null,e.size&&null!=a.size?c.tsx(d.TooltipField,{key:"size",title:f.size,value:m.length(a.size,a.sizeUnit,a.sizePrecision)}):null)}};b.TooltipContentTransformAbsolute=g.__decorate([k.subclass("esri.views.interactive.tooltip.content.TooltipContentTransformAbsolute")],
+b.TooltipContentTransformAbsolute);Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

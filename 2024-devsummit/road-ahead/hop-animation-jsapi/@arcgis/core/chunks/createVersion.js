@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import r from"../request.js";import{p as o,a as s,e}from"./utils7.js";import"../config.js";import"../core/lang.js";import"../kernel.js";import"../core/urlUtils.js";import"../core/Error.js";import"./Logger.js";import"../core/JSONSupport.js";import"./tslib.es6.js";import"../core/Accessor.js";import"../core/Handles.js";import"./maybe.js";import"../core/accessorSupport/decorators/subclass.js";import"./metadata.js";import"./utils.js";import"./handleUtils.js";import"./tracking.js";import"./ensureType.js";import"../core/accessorSupport/decorators/property.js";import"./ObservableBase.js";import"../core/scheduling.js";import"../core/promiseUtils.js";async function t(t,i,p){const m=o(t),a=i.toJSON(),c=s(m.query,{query:e({...a,f:"json"}),...p,authMode:"immediate",method:"post"}),j=`${m.path}/create`,{data:n}=await r(j,c),{versionName:u,versionGuid:l,...d}=n.versionInfo;return{...d,versionIdentifier:{name:u,guid:l}}}export{t as createVersion};

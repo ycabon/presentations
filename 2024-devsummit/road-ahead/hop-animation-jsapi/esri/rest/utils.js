@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../config ../kernel ../core/lang ../core/urlUtils ../support/apiKeyUtils".split(" "),function(e,g,l,m,n,p){function h(a,c,k){const f={};for(const d in a)if("declaredClass"!==d){var b=a[d];null!=b&&"function"!==typeof b&&(Array.isArray(b)?f[d]=b.map(q=>h({item:q},c,k).item):"object"===typeof b?b.toJSON?(b=b.toJSON(k?.[d]),f[d]=c?b:JSON.stringify(b)):f[d]=c?b:JSON.stringify(b):f[d]=b)}return f}e.asValidOptions=function(a,c){return c?{...c,query:{...(a??{}),...c.query}}:{query:a}};e.encode=
+h;e.getToken=function(a,c){return a?p.supportsApiKey(a)&&(c||g.apiKey)?c||g.apiKey:l.id?.findCredential(a)?.token:null};e.parseUrl=function(a){return"string"===typeof a?n.urlToObject(a):m.clone(a)};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

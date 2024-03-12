@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/accessorSupport/decorators/property ../../../../core/has ../../../../core/Logger ../../../../core/RandomLCG ../../../../core/accessorSupport/decorators/subclass ../../../../core/libs/gl-matrix-2/factories/mat4f64 ./Camera".split(" "),function(a,b,c,g,h,k,d,e,f){a.CascadeCamera=class extends f.Camera{constructor(){super(...arguments);this._projectionMatrix=e.create()}get projectionMatrix(){return this._projectionMatrix}};b.__decorate([c.property()],
+a.CascadeCamera.prototype,"_projectionMatrix",void 0);b.__decorate([c.property({readOnly:!0})],a.CascadeCamera.prototype,"projectionMatrix",null);a.CascadeCamera=b.__decorate([d.subclass("esri.views.3d.webgl-engine.lib.CascadeCamera")],a.CascadeCamera);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

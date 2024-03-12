@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./utils","../../../../webgl/rasterUtils"],function(f,d){const h={vsPath:"raster/common",fsPath:"raster/hillshade",attributes:new Map([["a_position",0],["a_texcoord",1]])};return{createProgram:function(b,a,c){const {colormap:e}=a.symbolizerParameters;c=c?[]:f.getProjectionDefines(a.transformGrid);a=f.getInterpolationDefines(a.interpolation,!0,b.context);a=[...c,...a];null!=e&&a.push("applyColormap");b=b.painter.materialManager.getProgram(h,a);return{defines:a,program:b}},bindTextureAndUniforms:function(b,
+a,c,e,k=!1){const {names:l,textures:m}=c.getTextures({useProcessedTexture:k});d.setTextures(b.context,a,l,m);d.setUniforms(a,e,c.commonUniforms);a.setUniformMatrix3fv("u_dvsMat3",c.transforms.displayViewScreenMat3);b=c.symbolizerParameters;const {colormap:g,colormapOffset:n}=b;null!=g&&(c=d.getColormapUniforms(g,n),d.setUniforms(a,e,c));b=d.getShadedReliefUniforms(b);d.setUniforms(a,e,b)}}});

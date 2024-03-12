@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./Settings"],function(b,c){class d{constructor(a){this._createCamera=a;this.compared={sourceZoom:0,targetZoom:0,pan:0,rotate:0};this.settings={desiredScreenFlow:c.defaultSettings.desiredScreenFlow};this.source=a();this.target=a()}clone(){const a=new d(this._createCamera);a.copyFrom(this);return a}copyFrom(a){this.update(a.source,a.target,a.settings)}update(a,e,f){this.source!==a&&this.source.copyFrom(a);this.target!==e&&this.target.copyFrom(e);this.compared=this.source.compareTo(this.target,
+this.compared);this.settings.desiredScreenFlow=null!=f.desiredScreenFlow?f.desiredScreenFlow:c.defaultSettings.desiredScreenFlow;this.desiredPixelFlow=this.settings.desiredScreenFlow*this.target.size;this.halfWindowSize=this.target.size/2}halfWindowPanAtZoom(a){a=this.target.pixelsPerPanAtZoom(a);return this.halfWindowSize/a}get hasZoom(){return 1E-5<Math.abs(this.compared.sourceZoom-this.compared.targetZoom)}get hasPan(){return 1E-9<this.compared.pan}get hasRotate(){return 1E-9<this.compared.rotate}}
+b.Definition=d;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

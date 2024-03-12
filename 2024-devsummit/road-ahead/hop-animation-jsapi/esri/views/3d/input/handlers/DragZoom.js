@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../core/screenUtils ../../state/controllers/global/ZoomController ../../state/controllers/local/ZoomController ../../../input/InputHandler ../../../input/handlers/support".split(" "),function(d,e,f,g,h,k){class l extends h.InputHandler{constructor(b,a,c){super(!0);this._view=b;this.pointerAction=a;this.registerIncoming("drag",c,m=>this._handleDrag(m))}_handleDrag(b){const a=b.data;if(!(1<a.pointers.size)&&k.eventMatchesMousePointerAction(b.data,this.pointerAction)){var c=
+e.createScreenPointArray(a.center.x,a.center.y);switch(a.action){case "start":this._cameraController&&(this._cameraController.end(),this._cameraController=null);this._cameraController=this._view.state.isGlobal?new f.ZoomController({view:this._view}):new g.ZoomController({view:this._view});this._view.state.switchCameraController(this._cameraController);this._cameraController.begin(c);break;case "update":this._cameraController&&this._cameraController.update(c);break;case "end":this._cameraController&&
+(this._cameraController.end(),this._cameraController=null)}b.stopPropagation()}}}d.DragZoom=l;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

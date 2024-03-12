@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/shaderTechnique/ReloadableShaderModule ../core/shaderTechnique/ShaderTechnique ../lib/DefaultVertexAttributeLocations ../lib/Program ../../../../chunks/HUDCompositing.glsl ../../../webgl/renderState".split(" "),function(d,c,e,f,g,h,k,l){class a extends f.ShaderTechnique{initializeProgram(b){return new h.Program(b.rctx,a.shader.get().build(),g.Default3D)}initializePipeline(){return l.makePipelineState({colorWrite:{r:!1,g:!0,b:!1,a:!1}})}}a.shader=new e.ReloadableShaderModule(k.HUDCompositing,
+()=>new Promise((b,m)=>d(["./HUDCompositing.glsl"],b,m)));c.HUDCompositingTechnique=a;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

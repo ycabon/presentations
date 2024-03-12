@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/shaderLibrary/attributes/NormalAttribute.glsl ../core/shaderLibrary/shading/Normals.glsl ../core/shaderTechnique/ReloadableShaderModule ./DefaultMaterialTechnique ../../../../chunks/RealisticTree.glsl".split(" "),function(e,d,f,g,h,k,l){class c extends k.DefaultMaterialTechnique{initializeConfiguration(b,a){super.initializeConfiguration(b,a);a.hasMetallicRoughnessTexture=!1;a.hasEmissionTexture=!1;a.hasOcclusionTexture=!1;a.hasNormalTexture=!1;a.hasModelTransformation=
+!1;a.normalType=f.NormalType.Attribute;a.doubleSidedMode=g.NormalsDoubleSidedMode.WindingOrder;a.hasVertexTangents=!1}initializeProgram(b){return this._initializeProgram(b,c.shader)}}c.shader=new h.ReloadableShaderModule(l.RealisticTree,()=>new Promise((b,a)=>e(["./RealisticTree.glsl"],b,a)));d.RealisticTreeTechnique=c;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ./Bloom ./Blur ./Colorize ./DropShadow ./Opacity".split(" "),function(c,f,g,h,k,l){const m={colorize:()=>new h.Colorize,blur:()=>new g.Blur,bloom:()=>new f.Bloom,opacity:()=>new l.Opacity,"drop-shadow":()=>new k.DropShadow};class n{constructor(){this._effectMap=new Map}dispose(){this._effectMap.forEach(a=>a.dispose());this._effectMap.clear()}getPostProcessingEffects(a){if(!a||0===a.length)return[];const d=[];for(const e of a){a:switch(a=e.type,a){case "bloom":case "blur":case "opacity":case "drop-shadow":break a;
+default:a="colorize"}let b=this._effectMap.get(a);b||(b=m[a](),this._effectMap.set(a,b));d.push({postProcessingEffect:b,effect:e})}return d}}c.EffectManager=n;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

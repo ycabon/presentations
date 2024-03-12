@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../shaderGraph/techniques/mesh/createMeshWriter","./Matcher"],function(d,f,g){class e extends g.FeatureMatcher{static async fromDictionaryRenderer(b,a,c){return new e(b,a,c)}constructor(b,a,c){super();this._storage=b;this._schema=a;this._viewParams=c;this._hashToGroup=new Map}get fieldMap(){return this._schema.fieldMap}async fetchResources(b,a){a=a.getCursor();const c=[];for(;a.next();)c.push(this._updateMeshWriterGroup(b,a));await Promise.all(c)}match(b,a){b=b.getAttributeHash();
+return this._hashToGroup.get(b)}async _updateMeshWriterGroup(b,a){var c=a.readLegacyFeatureForDisplay();a=a.getAttributeHash();!this._hashToGroup.has(a)&&(this._hashToGroup.set(a,null),c=await b.fetchDictionaryResourceImmediate({type:"dictionary-request",feature:c}))&&(b=await f.createMeshWriterGroupFromSchema(this._storage,b,c.meshes,this._viewParams),this._hashToGroup.set(a,b))}}d.DictionaryMatcher=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

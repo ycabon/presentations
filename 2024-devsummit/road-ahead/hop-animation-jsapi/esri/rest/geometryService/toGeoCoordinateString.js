@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../request","../../geometry/support/spatialReferenceUtils","../utils","./units"],function(e,g,h,f,k){e.toGeoCoordinateString=async function(c,a,d){const b={};b.sr=null!=a.sr&&"object"===typeof a.sr?h.srToRESTValue(a.sr):a.sr;b.coordinates=JSON.stringify(a.coordinates);b.conversionType=k.conversionTypeKebabDict.toJSON(a.conversionType||"mgrs");b.conversionMode=a.conversionMode;b.numOfDigits=a.numOfDigits;b.rounding=a.rounding;b.addSpaces=a.addSpaces;c=f.parseUrl(c);d=f.asValidOptions({...c.query,
+f:"json",...b},d);return g(c.path+"/toGeoCoordinateString",d).then(({data:l})=>l.strings)};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

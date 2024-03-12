@@ -1,0 +1,1 @@
+{"distance":"距離","hint":"マップで始点となる位置をクリックし、計測を開始します","mode":"モード","modes":{"auto":"自動","planar":"平面","geodesic":"測地線"},"newMeasurement":"新しい計測","unit":"単位","unsupported":"MapView で 2D の距離計測はサポートされていません。","widgetLabel":"距離の計測"}

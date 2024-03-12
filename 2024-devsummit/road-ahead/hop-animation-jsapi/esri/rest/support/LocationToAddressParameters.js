@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../geometry ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/RandomLCG ../../core/has ../../core/accessorSupport/decorators/subclass ./commonProperties ../../geometry/Point ../../geometry/SpatialReference".split(" "),function(c,a,e,d,f,n,p,g,h,k,l){a=class extends e.JSONSupport{constructor(b){super(b);this.outSpatialReference=this.locationType=this.location=this.apiKey=null}};c.__decorate([d.property(h.apiKey)],
+a.prototype,"apiKey",void 0);c.__decorate([d.property({type:k,json:{write:{writer:(b,m)=>{b=b?b.clone().normalize():null;m.location=void 0!==b?b:null}}}})],a.prototype,"location",void 0);c.__decorate([d.property({type:String,json:{write:!0}})],a.prototype,"locationType",void 0);c.__decorate([d.property({type:l,json:{read:{source:"outSR"},write:{target:"outSR"}}})],a.prototype,"outSpatialReference",void 0);a=c.__decorate([g.subclass("esri.rest.support.LocationToAddressParameters")],a);a.from=f.ensureType(a);
+return a});

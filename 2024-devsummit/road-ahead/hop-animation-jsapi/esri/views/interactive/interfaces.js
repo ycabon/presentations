@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(b){b.EditableFlag=void 0;(function(a){a[a.USER=0]="USER";a[a.MANAGER=1]="MANAGER"})(b.EditableFlag||(b.EditableFlag={}));b.ManipulatorStateFlags=void 0;(function(a){a[a.None=0]="None";a[a.Unfocused=1]="Unfocused";a[a.Focused=2]="Focused";a[a.Unselected=4]="Unselected";a[a.Selected=8]="Selected";a[a.All=15]="All"})(b.ManipulatorStateFlags||(b.ManipulatorStateFlags={}));b.ManipulatorStateCustomFlags=void 0;(function(a){a[a.None=0]="None";a[a.Custom1=16]="Custom1";a[a.Custom2=
+32]="Custom2";a[a.Custom3=64]="Custom3";a[a.Custom4=128]="Custom4";a[a.Custom5=256]="Custom5";a[a.Custom6=512]="Custom6";a[a.Custom7=1024]="Custom7";a[a.Custom8=2048]="Custom8";a[a.Custom9=4096]="Custom9";a[a.Custom10=8192]="Custom10";a[a.Custom11=16384]="Custom11";a[a.Custom12=32768]="Custom12";a[a.All=65520]="All"})(b.ManipulatorStateCustomFlags||(b.ManipulatorStateCustomFlags={}));Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

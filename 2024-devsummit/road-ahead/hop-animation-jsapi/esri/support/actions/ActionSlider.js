@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./ActionBase".split(" "),function(b,c,a,h,k,e,f){var d;a=d=class extends f{constructor(g){super(g);this.displayValueEnabled=!1;this.max=1;this.min=0;this.step=.1;this.type="slider";this.value=null}clone(){return new d({active:this.active,className:this.className,disabled:this.disabled,id:this.id,indicator:this.indicator,
+title:this.title,visible:this.visible,displayValueEnabled:this.displayValueEnabled,max:this.max,min:this.min,step:this.step,value:this.value})}};b.__decorate([c.property()],a.prototype,"displayValueEnabled",void 0);b.__decorate([c.property()],a.prototype,"max",void 0);b.__decorate([c.property()],a.prototype,"min",void 0);b.__decorate([c.property()],a.prototype,"step",void 0);b.__decorate([c.property()],a.prototype,"value",void 0);return a=d=b.__decorate([e.subclass("esri.support.Action.ActionSlider")],
+a)});

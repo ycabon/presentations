@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ./ClipArea".split(" "),function(b,c,a,h,k,e,f){var d;a=d=class extends f{constructor(g){super(g);this.type="rect";this.bottom=this.top=this.right=this.left=null}clone(){return new d({left:this.left,right:this.right,top:this.top,bottom:this.bottom})}commitVersionProperties(){this.commitProperty("left");this.commitProperty("right");
+this.commitProperty("top");this.commitProperty("bottom")}};b.__decorate([c.property({type:[Number,String],json:{write:!0}})],a.prototype,"left",void 0);b.__decorate([c.property({type:[Number,String],json:{write:!0}})],a.prototype,"right",void 0);b.__decorate([c.property({type:[Number,String],json:{write:!0}})],a.prototype,"top",void 0);b.__decorate([c.property({type:[Number,String],json:{write:!0}})],a.prototype,"bottom",void 0);return a=d=b.__decorate([e.subclass("esri.views.layers.support.ClipRect")],
+a)});

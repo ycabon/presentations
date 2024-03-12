@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./InteractiveElement ./inputs/AttachmentInput".split(" "),function(b,c,a,k,l,e,f,g){var d;a=d=class extends f{constructor(h){super(h);this.input=this.editableExpression=this.attachmentKeyword=null;this.type="attachment"}clone(){return new d({attachmentKeyword:this.attachmentKeyword,description:this.description,editableExpression:this.editableExpression,
+input:this.input,label:this.label,visibilityExpression:this.visibilityExpression})}};b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"attachmentKeyword",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"editableExpression",void 0);b.__decorate([c.property({type:g,json:{read:{source:"inputType"},write:{target:"inputType"}}})],a.prototype,"input",void 0);b.__decorate([c.property({type:["attachment"],json:{read:!1,write:!0}})],a.prototype,"type",void 0);
+return a=d=b.__decorate([e.subclass("esri.form.elements.AttachmentElement")],a)});

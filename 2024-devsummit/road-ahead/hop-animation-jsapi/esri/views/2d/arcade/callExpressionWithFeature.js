@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../core/Error","../../../core/Logger","../../../geometry/support/quantizationUtils"],function(l,k,g){function m(f){const b={};switch(f){case "esriGeometryPoint":return(c,a,e,d)=>g.unquantizePoint(a,b,c,e,d);case "esriGeometryPolygon":return(c,a,e,d)=>g.unquantizePolygon(a,b,c,e,d);case "esriGeometryPolyline":return(c,a,e,d)=>g.unquantizePolyline(a,b,c,e,d);case "esriGeometryMultipoint":return(c,a,e,d)=>g.unquantizeMultipoint(a,b,c,e,d);default:return k.getLogger("esri.views.2d.support.arcadeOnDemand").error(new l("mapview-arcade",
+`Unable to handle geometryType: ${f}`)),c=>c}}const h=new Map;return function(f,b,c,a,e){if(null==f)return null;if(f.referencesGeometry()&&e){const {transform:d,hasZ:n,hasM:p}=e;h.has(a)||h.set(a,m(a));a=h.get(a)(b.geometry,d,n,p);b={...b,geometry:a}}b=f.repurposeFeature(b);try{return f.evaluate({...c,$feature:b},f.services)}catch(d){return k.getLogger("esri.views.2d.support.arcadeOnDemand").warn("Feature arcade evaluation failed:",d),null}}});

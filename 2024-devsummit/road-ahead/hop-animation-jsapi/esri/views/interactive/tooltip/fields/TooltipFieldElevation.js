@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/quantityUtils ../../../../core/accessorSupport/decorators/property ../../../../core/has ../../../../core/Logger ../../../../core/RandomLCG ../../../../core/accessorSupport/decorators/subclass ./TooltipField".split(" "),function(b,f,d,g,l,m,n,h,k){b.TooltipFieldElevation=class extends k.TooltipField{constructor(e){super(e);this.mode="absolute-height"}normalizeCtorArgs(e){return{name:"elevation",actual:d.zeroMeters,createQuantity:(a,c)=>
+d.createLength(a,c.inputUnitInfos.verticalLength.unit),toInputUnits:(a,c)=>d.toUnit(a,c.inputUnitInfos.verticalLength.unit),format:(a,c)=>c.formatters.verticalLength(a),suffix:a=>a.inputUnitInfos.verticalLength.abbreviation,title:a=>a.messages.sketch.elevation,unlockOnVertexPlacement:!1,...e}}};f.__decorate([g.property()],b.TooltipFieldElevation.prototype,"mode",void 0);b.TooltipFieldElevation=f.__decorate([h.subclass("esri.views.interactive.tooltip.fields.TooltipFieldElevation")],b.TooltipFieldElevation);
+Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

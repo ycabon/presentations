@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./mathUtils"],function(d,h){function f(a){for(const b in a){const c=a[b];c instanceof Function&&(a[b]=c.bind(a))}return a}class e{constructor(a,b){this.min=a;this.max=b;this.range=b-a}ndiff(a,b=0){return Math.ceil((a-b)/this.range)*this.range+b}_normalize(a,b,c,g=0,k=!1){c-=g;c<a?c+=this.ndiff(a-c):c>b&&(c-=this.ndiff(c-b));k&&c===b&&(c=a);return c+g}normalize(a,b=0,c=!1){return this._normalize(this.min,this.max,a,b,c)}clamp(a,b=0){return h.clamp(a-b,this.min,this.max)+b}monotonic(a,
+b,c){return a<b?b:b+this.ndiff(a-b,c)}minimalMonotonic(a,b,c){return this._normalize(a,a+this.range,b,c)}center(a,b,c){b=this.monotonic(a,b,c);return this.normalize((a+b)/2,c)}diff(a,b,c){return this.monotonic(a,b,c)-a}shortestSignedDiff(a,b){a=this.normalize(a);b=this.normalize(b);const c=b-a;a=b<a?this.minimalMonotonic(a,b)-a:b-this.minimalMonotonic(b,a);return Math.abs(c)<Math.abs(a)?c:a}contains(a,b,c){b=this.minimalMonotonic(a,b);c=this.minimalMonotonic(a,c);return c>a&&c<b}}const l=f(new e(0,
+2*Math.PI)),m=f(new e(-Math.PI,Math.PI)),n=f(new e(0,360));d.Cyclical=e;d.cyclical2PI=l;d.cyclicalDegrees=n;d.cyclicalPI=m;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

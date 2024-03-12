@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{_ as r}from"./tslib.es6.js";import{JSONSupport as o}from"../core/JSONSupport.js";import{property as s}from"../core/accessorSupport/decorators/property.js";import"../core/lang.js";import"./Logger.js";import{subclass as e}from"../core/accessorSupport/decorators/subclass.js";import"../core/Accessor.js";import"../core/Handles.js";import"./maybe.js";import"./metadata.js";import"./utils.js";import"./handleUtils.js";import"./ObservableBase.js";import"./tracking.js";import"../core/scheduling.js";import"../core/promiseUtils.js";import"../core/Error.js";import"../config.js";import"./ensureType.js";let t=class extends o{constructor(r){super(r),this.versionName=void 0,this.sessionId=void 0}};r([s({type:String,json:{write:!0}})],t.prototype,"versionName",void 0),r([s({type:String,json:{write:!0}})],t.prototype,"sessionId",void 0),t=r([e("esri.rest.versionManagement.support.DeleteVersionParameters")],t);const i=t;export{i as default};

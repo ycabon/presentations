@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/typedArrayUtil","../../../../geometry/support/Indices","../../../webgl/enums"],function(k,m,l,f){k.convertPrimitiveToTriangles=function(a,d){switch(d){case f.PrimitiveType.TRIANGLES:return a="number"===typeof a?l.getContinuousIndexArray(a):m.isUint8Array(a)?new Uint16Array(a):a,a;case f.PrimitiveType.TRIANGLE_STRIP:d="number"===typeof a?a:a.length;if(3>d)a=[];else{d-=2;var c=l.newIndexArray(3*d);if("number"===typeof a){a=0;for(var b=0;b<d;b+=1)0===b%2?(c[a++]=b,
+c[a++]=b+1):(c[a++]=b+1,c[a++]=b),c[a++]=b+2}else{b=0;for(var e=0;e<d;e+=1)0===e%2?(c[b++]=a[e],c[b++]=a[e+1]):(c[b++]=a[e+1],c[b++]=a[e]),c[b++]=a[e+2]}a=c}return a;case f.PrimitiveType.TRIANGLE_FAN:d="number"===typeof a?a:a.length;if(3>d)a=new Uint16Array(0);else{d-=2;c=65536>=d?new Uint16Array(3*d):new Uint32Array(3*d);if("number"===typeof a)for(a=0,b=0;b<d;++b)c[a++]=0,c[a++]=b+1,c[a++]=b+2;else{b=a[0];e=a[1];var g=0;for(let h=0;h<d;++h){const n=a[h+2];c[g++]=b;c[g++]=e;e=c[g++]=n}}a=c}return a}};
+Object.defineProperty(k,Symbol.toStringTag,{value:"Module"})});

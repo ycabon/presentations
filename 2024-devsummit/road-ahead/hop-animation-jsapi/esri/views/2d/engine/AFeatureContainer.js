@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./webgl/AttributeStoreView","./webgl/TileContainer"],function(b,c,d){class e extends d{constructor(a){super(a);this._statisticsByLevel=new Map;this.attributeView=new c.AttributeStoreView}destroy(){this.children.forEach(a=>a.destroy());this.removeAllChildren();this.attributeView.destroy()}doRender(a){a.context.capabilities.enable("textureFloat");a.context.capabilities.enable("vao");super.doRender(a)}createRenderParams(a){a=super.createRenderParams(a);a.attributeView=this.attributeView;
+a.instanceStore=this._instanceStore;a.statisticsByLevel=this._statisticsByLevel;return a}}b.AFeatureContainer=e;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

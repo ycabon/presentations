@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./materialUtils".split(" "),function(a,d,e,f,k,l,m,g,h){var b;a.Symbol3DMaterial=b=class extends e.JSONSupport{constructor(c){super(c);this.color=null}clone(){const c={color:null!=this.color?this.color.clone():null};return new b(c)}};d.__decorate([f.property(h.colorAndTransparencyProperty)],
+a.Symbol3DMaterial.prototype,"color",void 0);a.Symbol3DMaterial=b=d.__decorate([g.subclass("esri.symbols.support.Symbol3DMaterial")],a.Symbol3DMaterial);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(d,b,c,f,g,h,e){d.CameraInfoMixin=a=>{a=class extends a{constructor(){super(...arguments);this.cols=this.rows=this.pixelSize=this.focalLength=this.model=this.make=null}};b.__decorate([c.property({json:{write:!0}})],a.prototype,"make",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,
+"model",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"focalLength",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"pixelSize",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"rows",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"cols",void 0);return a=b.__decorate([e.subclass("esri.rest.support.CameraInfoMixin")],a)};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

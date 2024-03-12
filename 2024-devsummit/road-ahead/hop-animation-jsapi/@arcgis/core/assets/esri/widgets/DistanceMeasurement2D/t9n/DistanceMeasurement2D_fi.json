@@ -1,0 +1,1 @@
+{"distance":"Etäisyys","hint":"Aloita mittaus napsauttamalla karttaa ja sijoita ensimmäinen pisteesi","mode":"Tila","modes":{"auto":"Autom","planar":"Planaarinen","geodesic":"Geodeettinen"},"newMeasurement":"Uusi mittaus","unit":"Yksikkö","unsupported":"Kaksiulotteista etäisyyden mittausta tuetaan vain MapView-sovelluksessa.","widgetLabel":"Etäisyyden mittaus"}

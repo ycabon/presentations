@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(a){function e(){return[0,0]}function f(b){return[b[0],b[1]]}function g(b,c){return[b,c]}function h(b,c=[0,0]){const v=Math.min(2,b.length);for(let d=0;d<v;++d)c[d]=b[d];return c}function k(b,c){return new Float64Array(b,c,2)}function l(){return[0,0]}function m(){return[1,1]}function n(){return[1,0]}function p(){return[0,1]}const q=[0,0],r=[1,1],t=[1,0],u=[0,1],w=Object.freeze(Object.defineProperty({__proto__:null,ONES:r,UNIT_X:t,UNIT_Y:u,ZEROS:q,clone:f,create:e,createView:k,
+fromArray:h,fromValues:g,ones:m,unitX:n,unitY:p,zeros:l},Symbol.toStringTag,{value:"Module"}));a.ONES=r;a.UNIT_X=t;a.UNIT_Y=u;a.ZEROS=q;a.clone=f;a.create=e;a.createView=k;a.fromArray=h;a.fromValues=g;a.ones=m;a.unitX=n;a.unitY=p;a.vec2f64=w;a.zeros=l;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

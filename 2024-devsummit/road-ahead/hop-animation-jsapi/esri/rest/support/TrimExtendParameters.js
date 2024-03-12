@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../geometry ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/RandomLCG ../../core/has ../../core/accessorSupport/decorators/subclass ../../geometry/support/jsonUtils ../../geometry/Polyline".split(" "),function(d,b,g,e,h,n,p,k,f,l){b=class extends g.JSONSupport{constructor(a){super(a);this.extendHow="default-curve-extension";this.trimExtendTo=this.polylines=null}};d.__decorate([e.property({type:String,
+json:{write:!0}})],b.prototype,"extendHow",void 0);d.__decorate([e.property({type:[l],json:{read:{reader:a=>a?a.map(c=>f.fromJSON(c)):null},write:{writer:(a,c)=>{c.polylines=a.map(m=>m.toJSON())}}}})],b.prototype,"polylines",void 0);d.__decorate([e.property({json:{read:{reader:a=>a?f.fromJSON(a):null},write:{writer:(a,c)=>{c.trimExtendTo=a.toJSON()}}}})],b.prototype,"trimExtendTo",void 0);b=d.__decorate([k.subclass("esri.rest.support.TrimExtendParameters")],b);b.from=h.ensureType(b);return b});

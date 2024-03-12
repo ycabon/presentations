@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Collection ../../core/lang ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/accessorSupport/decorators/subclass ./BuildingFilterAuthoringInfo ./BuildingFilterAuthoringInfoBlock".split(" "),function(b,c,f,e,k,l,g,a,h){var d;c=c.ofType(h);a=d=class extends a{constructor(){super(...arguments);this.type="checkbox"}clone(){return new d({filterBlocks:f.clone(this.filterBlocks)})}};b.__decorate([e.property({type:["checkbox"]})],
+a.prototype,"type",void 0);b.__decorate([e.property({type:c,json:{write:!0}})],a.prototype,"filterBlocks",void 0);return a=d=b.__decorate([g.subclass("esri.layers.support.BuildingFilterAuthoringInfoCheckbox")],a)});

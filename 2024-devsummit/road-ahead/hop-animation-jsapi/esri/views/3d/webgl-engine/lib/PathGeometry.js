@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./ContentObjectType","./Geometry"],function(b,c,d){class e extends d.Geometry{constructor(a,f,g,h,k,l){super(a,f,null,c.ContentObjectType.Mesh,l);this.path=g;this.geometrySR=h;this.stencilWidth=k}}b.UpVectorAlignment=void 0;(function(a){a[a.World=0]="World";a[a.Path=1]="Path"})(b.UpVectorAlignment||(b.UpVectorAlignment={}));b.PathGeometry=e;b.isPathGeometry=function(a){return"path"in a};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

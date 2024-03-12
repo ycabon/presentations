@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../core/ByteSizeUnit","../layers/support/LayerViewPerformanceInfo","./LayerPerformanceInfo"],function(c,d,e){class f{constructor(a){this.usedMemory=this.totalMemory=0;this.quality=1;this.edgesMemory=this.terrainMemory=this.load=0;this.layerPerformanceInfos=[];this.fboMemory=this.cachedMemory=0;if(null!=a.resourceController){const b=a.resourceController.memoryController;this.totalMemory=(b.maxMemory??0)*c.ByteSizeUnit.MEGABYTES;this.usedMemory=Math.round(b.usedMemory*this.totalMemory);
+this.quality=a.quality;this.load=a.resourceController.scheduler.load;this.cachedMemory=b.usedCacheMemory}this.terrainMemory=a.basemapTerrain?.usedMemory??0;this.edgesMemory=a._stage.renderer.usedMemory.edges??0;this.fboMemory=a._stage.renderer.usedMemory.fbos??0;a.allLayerViews.items.forEach(b=>{d.isPerformanceInfoLayerView(b)&&this.layerPerformanceInfos.push(new e(b))});this.layerPerformanceInfos.sort((b,g)=>g.memory-b.memory)}}return f});

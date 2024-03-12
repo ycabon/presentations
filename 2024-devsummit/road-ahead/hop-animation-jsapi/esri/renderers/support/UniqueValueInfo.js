@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./commonProperties".split(" "),function(b,a,c,h,k,l,g,f){var d;a=d=class extends a.JSONSupport{constructor(e){super(e);this.value=this.symbol=this.label=this.description=null}clone(){return new d({value:this.value,description:this.description,label:this.label,symbol:this.symbol?this.symbol.clone():
+null})}getMeshHash(){const e=JSON.stringify(this.symbol?.toJSON());return`${this.value}.${e}`}};b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"description",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"label",void 0);b.__decorate([c.property(f.requiredRendererSymbolProperty)],a.prototype,"symbol",void 0);b.__decorate([c.property(f.uniqueValueProperty)],a.prototype,"value",void 0);return a=d=b.__decorate([g.subclass("esri.renderers.support.UniqueValueInfo")],
+a)});

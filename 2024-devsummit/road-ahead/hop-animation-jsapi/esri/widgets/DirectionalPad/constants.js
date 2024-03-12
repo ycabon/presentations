@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(a){const b=[-45,0,45,-90,90,-135,180,135],c=[...b,-180];a.directionalPadAngles=b;a.directionalPadArrows={0:{label:"north",iconName:"chevron-up"},45:{label:"northEast",iconName:"chevron-up-right"},90:{label:"east",iconName:"chevron-right"},135:{label:"southEast",iconName:"chevron-down-right"},180:{label:"south",iconName:"chevron-down"},"-135":{label:"southWest",iconName:"chevron-down-left"},"-90":{label:"west",iconName:"chevron-left"},"-45":{label:"northWest",iconName:"chevron-up-left"}};
+a.directionalPadCenterAngle="";a.directionalPadCyclicalAngles=c;a.directionalPadMoveOnceDuration=200;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

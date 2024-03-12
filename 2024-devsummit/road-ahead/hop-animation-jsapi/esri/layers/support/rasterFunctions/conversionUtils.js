@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../PixelBlock","../rasterFormats/pixelRangeUtils"],function(p,k,x){p.grayscale=function(d,b,c){const {pixels:q,width:e,height:l,mask:y,bandMasks:r}=d;var f=e*l;const m=r?.length?k.combineBandMasks(r):y,z=Math.min(b.length,q.length),t=c.startsWith("f");d=!t&&c!==d.pixelType;const [u,v]=x.getPixelValueRange(c);f=k.createEmptyBand(c,f);for(let n=0;n<l;n++){let g=n*e;for(let w=0;w<e;w++,g++)if(!m||m[g]){let a=0;for(let h=0;h<z;h++)a+=b[h]*q[h][g];t||(a=Math.round(a),d&&(a=a>v?v:a<u?
+u:a));f[g]=a}}b=new k({width:e,height:l,pixels:[f],pixelType:c,mask:m});b.updateStatistics();return b};Object.defineProperty(p,Symbol.toStringTag,{value:"Module"})});

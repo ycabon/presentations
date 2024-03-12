@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../support/requestPresets"],function(d,e){class f{constructor(){this._serviceMetadatas=new Map;this._itemDatas=new Map}async fetchServiceMetadata(a,b){const c=this._serviceMetadatas.get(a);if(c)return c;b=await e.fetchArcGISServiceJSON(a,b);this._serviceMetadatas.set(a,b);return b}async fetchItemData(a){const {id:b}=a;if(!b)return null;const {_itemDatas:c}=this;if(c.has(b))return c.get(b);a=await a.fetchData();c.set(b,a);return a}async fetchCustomParameters(a,b){return(a=await this.fetchItemData(a))&&
+"object"===typeof a&&(b?b(a):a.customParameters)||null}}d.LayerLoadContext=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../request","../urlUtils"],function(e,f,g){e.staticWorkerMessages={async request(b,a){const d=b.options,c=d.responseType;d.signal=a?.signal;d.responseType="native"===c||"native-request-init"===c?"native-request-init":c&&["blob","json","text"].includes(c)&&g.getInterceptor(b.url)?.after?c:"array-buffer";b=await f(b.url,d);a={data:b.data,httpStatus:b.httpStatus,ssl:b.ssl};switch(b.requestOptions?.responseType){case "native-request-init":return delete a.data.signal,a;case "blob":a.data=
+await a.data.arrayBuffer();break;case "json":a.data=(new TextEncoder).encode(JSON.stringify(a.data)).buffer;break;case "text":a.data=(new TextEncoder).encode(a.data).buffer}return{result:a,transferList:[a.data]}}};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

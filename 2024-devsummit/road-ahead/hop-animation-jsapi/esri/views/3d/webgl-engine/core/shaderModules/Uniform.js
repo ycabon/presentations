@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../shaderTechnique/BindType"],function(d,a){class e{constructor(b,f,g,c,h=null){this.name=b;this.type=f;this.arraySize=h;this.bind={[a.BindType.Pass]:null,[a.BindType.Draw]:null};if(c)switch(g){case a.BindType.Pass:this.bind[a.BindType.Pass]=c;break;case a.BindType.Draw:this.bind[a.BindType.Draw]=c}}equals(b){return this.type===b.type&&this.name===b.name&&this.arraySize===b.arraySize}}d.Uniform=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

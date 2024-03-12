@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/unitUtils","../../../chunks/vec32","../../../core/libs/gl-matrix-2/factories/vec3f64","../../../support/elevationInfoUtils"],function(n,k,v,w,p){const h=w.create();n.getDrawMeshHelpMessage=function(d,b){var e=d?.geometry;if(d&&"mesh"===e?.type&&b){var {renderCoordsHelper:q,elevationProvider:x}=b,{camera:r}=b.state,{extent:a}=e,{center:t,spatialReference:f}=a,g=k.getMetersPerUnitForSR(f),c=k.getMetersPerVerticalUnitForSR(f),y=k.getMetersPerUnitForSR(q.spatialReference),
+u=(a.zmax??0)*c;e=u-(a.zmin??0)*c;g=Math.max(a.width*g,a.height*c,e)/y;var {x:l,y:m}=t;a=t.z??0;v.set(h,l,m,a);q.toRenderCoords(h,f,h);g/=r.computeScreenPixelSizeAt(h);if(g>1*r.width)return"meshTooClose";if(20>g)return"meshTooFar";d=p.getGraphicEffectiveElevationInfo(d);({absoluteZ:b}=p.zValueInAbsoluteHeightMode(l,m,u,f,b,d));c*=x.getElevation(l,m,a,f,"ground")??0;return b<c+.1*e?"meshUnderground":"mesh"}};Object.defineProperty(n,Symbol.toStringTag,{value:"Module"})});

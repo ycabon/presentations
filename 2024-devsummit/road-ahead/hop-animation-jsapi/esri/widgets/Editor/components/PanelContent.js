@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../chunks/componentsUtils","../../support/widgetUtils","../../support/jsxFactory"],function(f,c,g,h,e){const d={base:"esri-editor__panel-content",message:"esri-editor__panel-content__message",section:"esri-editor__panel-content__section",sectionGroup:"esri-editor__panel-content__section__group",scrimContainer:"esri-editor__panel-content__scrim-container"};c.PanelContent=function(a,...b){return e.tsx("div",{class:h.classes(d.base,a?.showScrimOverlay?d.scrimContainer:
+void 0),key:a?.key??"panel-content"},...b,a?.showScrimOverlay?e.tsx("calcite-scrim",null):void 0)};c.PanelContentMessage=function(a,...b){return e.tsx("div",{class:d.message,"data-testid":"panel-content-message",key:a?.key??"panel-content-message"},...b)};c.PanelContentSection=function(a,...b){return e.tsx("div",{class:d.section,key:a?.key??"panel-content-section"},...b)};c.PanelContentSectionGroup=function(a,...b){return e.tsx("div",{class:d.sectionGroup,key:a?.key??"panel-content-section-group"},
+...b)};c.css=d;c.loadPanelContentComponents=()=>g.loadCalciteComponents({scrim:()=>new Promise((a,b)=>f(["../../../chunks/calcite-scrim"],a,b))});Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

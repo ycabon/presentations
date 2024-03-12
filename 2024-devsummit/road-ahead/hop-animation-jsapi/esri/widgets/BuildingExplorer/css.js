@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../support/legacyIcon"],function(a,b){a.css={base:"esri-building-explorer",widgetIcon:b.legacyIcon.organization,panelError:"esri-building-explorer__panel--error",loadingContainer:"esri-building-explorer__loading-container",content:"esri-building-explorer__content",section:"esri-building-explorer__section",levels:"esri-building-explorer__levels",phases:"esri-building-explorer__phases",disciplines:"esri-building-explorer__disciplines"};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

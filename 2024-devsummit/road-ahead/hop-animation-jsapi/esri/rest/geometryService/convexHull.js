@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../request","../../geometry/support/jsonUtils","../utils","./utils"],function(d,g,h,e,k){d.convexHull=async function(a,b,c){const f=b[0].spatialReference;a=e.parseUrl(a);b={...a.query,f:"json",sr:JSON.stringify(f.toJSON()),geometries:JSON.stringify(k.encodeGeometries(b))};c=e.asValidOptions(b,c);return g(a.path+"/convexHull",c).then(({data:l})=>h.fromJSON(l.geometry).set({spatialReference:f}))};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

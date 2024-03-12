@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/accessorSupport/PropertyOrigin"],function(f,g){function h(d,b){if(!d?.length||null==b)return!0;b=b.slice().reverse().flatten(({sublayers:e})=>e&&e.toArray().reverse()).map(e=>e.id).toArray();if(d.length>b.length)return!1;let c=0;const a=b.length;for(const {id:e}of d){for(;c<a&&b[c]!==e;)c++;if(c>=a)return!1}return!0}f.isExportDynamic=function(d,b,c){return d.some(a=>{const e=a.source;return!(!e||"map-layer"===e.type&&e.mapLayerId===a.id&&(null==e.gdbVersion||e.gdbVersion===
+c))||a.originIdOf("renderer")>g.OriginId.SERVICE||a.originIdOf("labelingInfo")>g.OriginId.SERVICE||a.originIdOf("opacity")>g.OriginId.SERVICE||a.originIdOf("labelsVisible")>g.OriginId.SERVICE})?!0:!h(d,b)};f.isSublayerOverhaul=function(d){return!!d&&d.some(b=>null!=b.minScale||null!=b.layerDefinition?.minScale)};f.shouldWriteSublayerStructure=function(d,b,c){return b.flatten(({sublayers:a})=>a).length!==d.length||d.some(a=>a.originIdOf("minScale")>c||a.originIdOf("maxScale")>c||a.originIdOf("renderer")>
+c||a.originIdOf("labelingInfo")>c||a.originIdOf("opacity")>c||a.originIdOf("labelsVisible")>c||a.originIdOf("source")>c)?!0:!h(d,b)};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{f as n,a as t}from"./vec3f64.js";import{m as r}from"./dehydratedPoint.js";import{g as e,a as o,b as u}from"./elevationInfoUtils.js";function a(t,r,e){return n(t,r,e)}function i(n){return n}function l(n){return n}function s(t,r,e){return n(t,r,e)}function f(n){return t(n)}function c(n,t,{coordinateHelper:r,elevationInfo:e}){return n?d(r.vectorToDehydratedPoint(n,v),t,e):null}function d(t,r,u){if(null==t)return null;if(null==r)return n(t.x,t.y,t.z??0);if("2d"===r.type)return n(t.x,t.y,0);const a=e(r,t,u,o)??0;return n(t.x,t.y,a)}function m(n,t){return r(n[0],n[1],n[2],t)}function p(n,t,{z:e,m:a},i){const{spatialReference:l,elevationInfo:s}=i;let f;f=null==e&&null==a?void 0:null==t||"2d"===t.type?e??void 0:u(t,n,l,o,s)??0;const c=r(n[0],n[1],f,l);return null!=a&&(c.m=a,c.hasM=!0),c}const v=r(0,0,0,null);export{l as a,i as b,a as c,f as d,c as e,s as f,d as g,p as h,m as t};

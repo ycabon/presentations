@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/has","../../../../core/mathUtils","../../../../core/time"],function(d,g,h,a){class k{constructor(){this._step=e;this._dilation=1;this._firstIdleTime=a.Milliseconds(0)}frame(c,b){b?0===this._firstIdleTime&&(this._firstIdleTime=a.Milliseconds(performance.now())):this._firstIdleTime=a.Milliseconds(0);if(g("disable-feature:high-quality-idle"))this._dilation=1;else{b=b?performance.now()-this._firstIdleTime:0;if(b>=f+l){this._step=a.Milliseconds(Infinity);this._dilation=
+1;return}this._dilation=b>=f?10:1}c=h.clamp(c/.5,e,m);this._step=Infinity===this._step?a.Milliseconds(c):a.Milliseconds(.9*this._step+c*(1-.9))}get value(){return this._step}get timeDilation(){return this._dilation}clear(){this._step=this._firstIdleTime=a.Milliseconds(0)}}const f=a.Milliseconds(12E4),l=a.Milliseconds(1E4),e=a.Milliseconds(1E3),m=a.Milliseconds(1E3/30);d.AnimationTimeStep=k;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ../core/JSONSupport ../core/lang ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/accessorSupport/decorators/subclass ./widgets/FloorFilter ./widgets/Range ./widgets/TimeSlider".split(" "),function(b,a,e,c,m,n,f,g,h,k){var d;a=d=class extends a.JSONSupport{constructor(l){super(l);this.floorFilter=this.timeSlider=this.range=null}clone(){return new d(e.clone({range:this.range,timeSlider:this.timeSlider,floorFilter:this.floorFilter}))}};b.__decorate([c.property({type:h,
+json:{write:!0}})],a.prototype,"range",void 0);b.__decorate([c.property({type:k,json:{write:!0}})],a.prototype,"timeSlider",void 0);b.__decorate([c.property({type:g,json:{write:!0}})],a.prototype,"floorFilter",void 0);return a=d=b.__decorate([f.subclass("esri.webdoc.Widgets")],a)});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(e){class f{constructor(a,b,c=0,d,g){this.TypedArrayConstructor=a;this.elementCount=1;a=this.TypedArrayConstructor;void 0===d&&(d=a.BYTES_PER_ELEMENT);const h=0===b.byteLength?0:c;this.typedBuffer=null==g?new a(b,h):new a(b,h,(g-c)/a.BYTES_PER_ELEMENT);this.stride=d;this.typedBufferStride=d/a.BYTES_PER_ELEMENT;this.count=Math.ceil(this.typedBuffer.length/this.typedBufferStride)}sliceBuffer(a,b,c=this.count-b){b=this.typedBuffer.byteOffset+b*this.stride;return new a(this.buffer,
+b,this.stride,b+c*this.stride)}get(a){return this.typedBuffer[a*this.typedBufferStride]}set(a,b){this.typedBuffer[a*this.typedBufferStride]=b}get buffer(){return this.typedBuffer.buffer}}f.ElementCount=1;e.BufferViewScalarImpl=f;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../shaderGraph/techniques/mesh/createMeshWriter","./Matcher"],function(f,h,k){class g extends k.FeatureMatcher{static async fromLabelSchema(a,b,c,d){c=c.classes.map(async e=>{const l=await h.createMeshWriterGroupFromSchema(a,b,e.meshes,d);return{minScale:e.minScale,maxScale:e.maxScale,meshes:l,expression:null,where:await a.createWhereClause(e.where)}});c=await Promise.all(c);return new g(c)}constructor(a){super();this._labels=a}match(a,b){if(!this._labels.length)return null;b=this._getLabels(b.$view.scale);
+const c=[];for(const d of b)d.where&&!d.where(a)||c.push(...d.meshes);return c}_getLabels(a){return this._labels.filter(b=>this._validForTileScale(b,a))}_validForTileScale(a,b){return(!a.minScale||a.minScale>=b-b/4)&&(!a.maxScale||a.maxScale<=b+b/2)}}f.LabelMatcher=g;Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

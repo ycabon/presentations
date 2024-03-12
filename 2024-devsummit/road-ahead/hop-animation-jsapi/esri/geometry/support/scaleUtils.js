@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/mathUtils","../../core/unitUtils"],function(d,f,e){function g(a,b){b=e.getMetersPerUnitForSR(b);return a/(b*e.inchesPerMeter*96)}d.getExtentForScale=function(a,b){const c=a.extent;a=a.width-(a.padding?a.padding.left+a.padding.right:0);b=g(b,c.spatialReference);return c.clone().expand(b*a/c.width)};d.getResolutionForScale=g;d.getResolutionInMetersForScale=function(a){return a/(96*e.inchesPerMeter)};d.getScale=function(a,b){b=b||a.extent;a=a.width;const c=e.getMetersPerUnitForSR(b?.spatialReference);
+return b&&a?b.width/a*c*e.inchesPerMeter*96:0};d.getScaleForResolution=function(a,b){b=e.getMetersPerUnitForSR(b);return a*b*e.inchesPerMeter*96};d.isInScaleRange=function(a,b,c){if(b=0===b||f.floatEqualAbsolute(a,b)||a<b)b=0===c||f.floatEqualAbsolute(a,c)||a>c;return b};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

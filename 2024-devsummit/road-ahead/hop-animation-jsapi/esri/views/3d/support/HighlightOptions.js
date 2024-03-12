@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../Color ../../../core/Accessor ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ../webgl-engine/effects/highlight/HighlightDefaults".split(" "),function(b,e,a,c,g,h,k,f,d){a=class extends a{constructor(){super(...arguments);this.color=d.defaultColor.clone();this.haloColor=null;this.haloOpacity=d.defaultHaloOpacity;this.fillOpacity=d.defaultFillOpacity;
+this.shadowOpacity=d.defaultShadowOpacity;this.shadowColor=d.defaultShadowColor.clone();this.shadowDifference=d.defaultShadowDifference}};b.__decorate([c.property({type:e})],a.prototype,"color",void 0);b.__decorate([c.property({type:e})],a.prototype,"haloColor",void 0);b.__decorate([c.property()],a.prototype,"haloOpacity",void 0);b.__decorate([c.property()],a.prototype,"fillOpacity",void 0);b.__decorate([c.property()],a.prototype,"shadowOpacity",void 0);b.__decorate([c.property({type:e})],a.prototype,
+"shadowColor",void 0);b.__decorate([c.property()],a.prototype,"shadowDifference",void 0);return a=b.__decorate([f.subclass("esri.views.3d.support.HighlightOptions")],a)});

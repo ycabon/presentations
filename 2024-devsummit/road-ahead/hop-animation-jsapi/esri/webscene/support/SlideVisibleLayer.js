@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/JSONSupport ../../core/lang ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,e,f,d,g,h){var c;a.SlideVisibleLayer=c=class extends e.JSONSupport{constructor(k){super(k);this.id="";this.sublayerIds=null}clone(){return new c({id:this.id,sublayerIds:f.clone(this.sublayerIds)})}};b.__decorate([d.property({type:String,json:{write:!0}})],a.SlideVisibleLayer.prototype,
+"id",void 0);b.__decorate([d.property({type:[g.Integer],json:{read:{source:"subLayerIds"},write:{target:"subLayerIds"}}})],a.SlideVisibleLayer.prototype,"sublayerIds",void 0);a.SlideVisibleLayer=c=b.__decorate([h.subclass("esri.webscene.support.SlideVisibleLayer")],a.SlideVisibleLayer);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

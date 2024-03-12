@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Evented ../../../../core/accessorSupport/decorators/property ../../../../core/has ../../../../core/Logger ../../../../core/RandomLCG ../../../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,d,c,g,h,k,e){a.GraphicState=class extends d.EventedAccessor{constructor(f){super(f);this.isDraped=this.displaying=this.tracking=!1}};b.__decorate([c.property({constructOnly:!0})],a.GraphicState.prototype,"graphic",void 0);b.__decorate([c.property()],
+a.GraphicState.prototype,"tracking",void 0);b.__decorate([c.property()],a.GraphicState.prototype,"displaying",void 0);b.__decorate([c.property()],a.GraphicState.prototype,"isDraped",void 0);a.GraphicState=b.__decorate([e.subclass("esri.views.3d.layers.graphics.GraphicState")],a.GraphicState);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

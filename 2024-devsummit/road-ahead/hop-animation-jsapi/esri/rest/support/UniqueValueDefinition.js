@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/enumeration ../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,d,g,h,k,e,f){a=class extends a.JSONSupport{constructor(c){super(c);this.type="unique-value-definition";this.fieldDelimiter=this.attributeField3=this.attributeField2=this.attributeField=null}get uniqueValueFields(){const c=[];
+this.attributeField&&c.push(this.attributeField);this.attributeField2&&c.push(this.attributeField2);this.attributeField3&&c.push(this.attributeField3);return c}};b.__decorate([e.enumeration({uniqueValueDef:"unique-value-definition"})],a.prototype,"type",void 0);b.__decorate([d.property()],a.prototype,"attributeField",void 0);b.__decorate([d.property()],a.prototype,"attributeField2",void 0);b.__decorate([d.property()],a.prototype,"attributeField3",void 0);b.__decorate([d.property({json:{write:!0}})],
+a.prototype,"fieldDelimiter",void 0);b.__decorate([d.property({json:{write:!0}})],a.prototype,"uniqueValueFields",null);return a=b.__decorate([f.subclass("esri.rest.support.UniqueValueDefinition")],a)});

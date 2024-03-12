@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/RandomLCG ../core/accessorSupport/decorators/enumeration ../core/accessorSupport/decorators/subclass ./Symbol3DLayer ./edges/utils ./support/Symbol3DMaterial".split(" "),function(b,c,a,m,n,e,f,g,h,k){var d;a=d=class extends g{constructor(l){super(l);this.type="extrude";this.size=1;this.material=null;this.castShadows=!0;this.edges=null}clone(){return new d({edges:this.edges&&this.edges.clone(),
+enabled:this.enabled,material:null!=this.material?this.material.clone():null,castShadows:this.castShadows,size:this.size})}};b.__decorate([e.enumeration({Extrude:"extrude"},{readOnly:!0})],a.prototype,"type",void 0);b.__decorate([c.property({type:Number,json:{write:{enabled:!0,isRequired:!0}},nonNullable:!0})],a.prototype,"size",void 0);b.__decorate([c.property({type:k.Symbol3DMaterial,json:{write:!0}})],a.prototype,"material",void 0);b.__decorate([c.property({type:Boolean,nonNullable:!0,json:{write:!0,
+default:!0}})],a.prototype,"castShadows",void 0);b.__decorate([c.property(h.symbol3dEdgesProperty)],a.prototype,"edges",void 0);return a=d=b.__decorate([f.subclass("esri.symbols.ExtrudeSymbol3DLayer")],a)});

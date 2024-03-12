@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(function(){function b(a){let d="";for(let e=0;e<a;e++)d+=(65536*(1+Math.random())|0).toString(16).substring(1);return d}const f=RegExp("^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$","i");class c{constructor(a){this._value="";if(!a)throw new TypeError("Invalid argument; `value` has no value.");this._value=c.EMPTY;a&&a instanceof c?this._value=a.toString():a&&"[object String]"===Object.prototype.toString.call(a)&&c.isGuid(a)&&(this._value=a)}equals(a){return c.isGuid(a)&&this._value===
+a}isEmpty(){return this._value===c.EMPTY}toString(){return this._value}toJSON(){return this._value}static isGuid(a){return a&&(a instanceof c||f.test(a.toString()))}static create(){return new c([b(2),b(1),b(1),b(1),b(3)].join("-"))}static raw(){return[b(2),b(1),b(1),b(1),b(3)].join("-")}}c.EMPTY="00000000-0000-0000-0000-000000000000";return c});

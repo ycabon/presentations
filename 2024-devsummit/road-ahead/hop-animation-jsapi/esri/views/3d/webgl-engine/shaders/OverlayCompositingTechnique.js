@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/shaderTechnique/ReloadableShaderModule ../core/shaderTechnique/ShaderTechnique ../lib/DefaultVertexAttributeLocations ../lib/Program ../../../../chunks/OverlayCompositing.glsl ../../../webgl/enums ../../../webgl/renderState".split(" "),function(f,d,g,h,k,l,m,e,a){class b extends h.ShaderTechnique{initializeProgram(c){return new l.Program(c.rctx,b.shader.get().build(),k.Default3D)}initializePipeline(){return a.makePipelineState({blending:a.simpleBlendingParams(e.BlendFactor.ONE,
+e.BlendFactor.ONE_MINUS_SRC_ALPHA),colorWrite:a.defaultColorWriteParams})}}b.shader=new g.ReloadableShaderModule(m.OverlayCompositing,()=>new Promise((c,n)=>f(["./OverlayCompositing.glsl"],c,n)));d.OverlayCompositingTechnique=b;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/typedArrayUtil"],function(c,d){c.newUintArray=function(a,b=!1){return a<=d.nativeArrayMaxSize?b?Array(a).fill(0):Array(a):new Uint32Array(a)};c.uintArrayFrom=function(a){return(d.isArray(a)?a.length:a.byteLength/8)<=d.nativeArrayMaxSize?Array.from(a):new Uint32Array(a)};c.uintSubArray=function(a,b,e){return Array.isArray(a)?a.slice(b,b+e):a.subarray(b,b+e)};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(function(){class d{constructor(a,c,b){this.pixelBlock=a;this.extent=c;this.originalPixelBlock=b}get width(){return null!=this.pixelBlock?this.pixelBlock.width:0}get height(){return null!=this.pixelBlock?this.pixelBlock.height:0}render(a){var c=this.pixelBlock;if(null!=c){var b=this.filter({extent:this.extent,pixelBlock:this.originalPixelBlock??c});null!=b.pixelBlock&&(b.pixelBlock.maskIsAlpha&&(b.pixelBlock.premultiplyAlpha=!0),c=b.pixelBlock.getAsRGBA(),b=a.createImageData(b.pixelBlock.width,
+b.pixelBlock.height),b.data.set(c),a.putImageData(b,0,0))}}getRenderedRasterPixels(){const a=this.filter({extent:this.extent,pixelBlock:this.pixelBlock});if(null==a.pixelBlock)return null;a.pixelBlock.maskIsAlpha&&(a.pixelBlock.premultiplyAlpha=!0);return{width:a.pixelBlock.width,height:a.pixelBlock.height,renderedRasterPixels:new Uint8Array(a.pixelBlock.getAsRGBA().buffer)}}}return d});

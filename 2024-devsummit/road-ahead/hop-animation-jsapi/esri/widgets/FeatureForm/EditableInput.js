@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../layers/support/layerUtils ./featureFormUtils ./InputBase".split(" "),function(c,d,b,l,m,f,g,h,k){b=class extends k{constructor(a){super(a);this.arcadeEditType="NA";this.editableExpressionExecutor=null}get editable(){return this.layerAllowsEdits?this.evaluatedEditableExpression??!0:!1}get evaluatedEditableExpression(){const {editableExpressionExecutor:a}=
+this;return null!=a?!!a.lastEvaluatedValue:null}get layerAllowsEdits(){var {layer:a}=this;if(!a)return!1;var e=g.getEffectiveLayerCapabilities(a);a=e?.operations.supportsEditing;e=h.capabilitiesAllowEditType(e,this.arcadeEditType);return!(!a||!e)}};c.__decorate([d.property()],b.prototype,"arcadeEditType",void 0);c.__decorate([d.property()],b.prototype,"editable",null);c.__decorate([d.property()],b.prototype,"editableExpressionExecutor",void 0);c.__decorate([d.property()],b.prototype,"evaluatedEditableExpression",
+null);c.__decorate([d.property()],b.prototype,"layerAllowsEdits",null);return b=c.__decorate([f.subclass("esri.widgets.FeatureForm.EditableInput")],b)});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(a){a.css={base:"esri-popup",main:"esri-popup__main-container",shadow:"esri-popup--shadow",isDocked:"esri-popup--is-docked",isDockedTopLeft:"esri-popup--is-docked-top-left",isDockedTopCenter:"esri-popup--is-docked-top-center",isDockedTopRight:"esri-popup--is-docked-top-right",isDockedBottomLeft:"esri-popup--is-docked-bottom-left",isDockedBottomCenter:"esri-popup--is-docked-bottom-center",isDockedBottomRight:"esri-popup--is-docked-bottom-right",alignTopCenter:"esri-popup--aligned-top-center",
+alignBottomCenter:"esri-popup--aligned-bottom-center",alignTopLeft:"esri-popup--aligned-top-left",alignBottomLeft:"esri-popup--aligned-bottom-left",alignTopRight:"esri-popup--aligned-top-right",alignBottomRight:"esri-popup--aligned-bottom-right",pointer:"esri-popup__pointer",pointerDirection:"esri-popup__pointer-direction"};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

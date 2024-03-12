@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../core/libs/gl-matrix-2/factories/vec3f64","../../../../../geometry/support/meshVertexSpaceUtils"],function(g,e,m){function n(a){let d=a.geometry,c=null;return{undo(b){c=b.geometry;b.geometry=d},redo(b){d=b.geometry;b.geometry=c}}}function p(a,d,c){let b=d?.clone(),h=e.clone(c.origin),k=null,l=null;return{undo:f=>{k=a.transform?.clone();l=e.clone(c.origin);a.transform=b;a.vertexSpace.origin=h;f.notifyMeshTransformChanged()},redo:f=>{b=a.transform?.clone();h=e.clone(c.origin);
+a.transform=k;a.vertexSpace.origin=l;f.notifyMeshTransformChanged()}}}function q(a){let d=a.vertexAttributes.clonePositional(),c;return{undo:b=>{c=a.vertexAttributes.clonePositional();a.vertexAttributes=d;b.notifyGeometryChanged()},redo:b=>{d=a.vertexAttributes.clonePositional();a.vertexAttributes=c;b.notifyGeometryChanged()}}}g.createGraphicGeometryUndoRecord=function(a){null!=a.geometry&&"mesh"===a.geometry.type?(a=a.geometry,a=m.isRelativeVertexSpace(a.vertexSpace)?p(a,a.transform,a.vertexSpace):
+q(a)):a=n(a);return a};Object.defineProperty(g,Symbol.toStringTag,{value:"Module"})});

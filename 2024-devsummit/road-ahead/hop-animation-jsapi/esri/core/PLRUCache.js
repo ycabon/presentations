@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(g){class k{constructor(a){this._size=a;this._levels=Math.log2(this._size);this._index=new Uint8Array(Math.ceil(a/8));this._data=Array(a);this._lookupTable=new Map}with(a,b){return this.has(b)?this.get(b):this.set(b,a(b))}has(a){return this._lookupTable.has(a)}get(a){a=this._lookupTable.get(a);a=null!=a?this._getData(a):null;return"object"===typeof a?a:null}set(a,b){const c=this._freeIndex();a=this._data[c]=null!=b?b:a;this._lookupTable.set("object"===typeof a?a.cacheKey:
+a,c);return b}clear(){for(var a=0;a<this._index.length;a++)this._index[a]=0;for(a=0;a<this._data.length;a++)this._data[a]=null;this._lookupTable.clear()}_getData(a){let b=Math.floor(((1<<this._levels)-1+a)/2);for(let d=this._levels-1;0<=d;d--){var c=this._index;const e=Math.floor(b/8);c[e]|=1<<b-8*e;b=Math.floor(b/2)}return this._data[a]}_freeIndex(){var a=0,b=0;for(var c=0;c<this._levels;c++){b=this._index;const e=Math.floor(a/8);var d=a-8*e;const h=b[e],f=1<<d;d=(h&f)>>d;b[e]=h&~f|f*(1-d);b=d;a=
+2*a+1+b}a-=(1<<this._levels)-1;(c=this._data[a])&&this._lookupTable.delete("object"===typeof c?c.cacheKey:c);return a}}g.PLRUCache=k;Object.defineProperty(g,Symbol.toStringTag,{value:"Module"})});

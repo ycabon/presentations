@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../input/DragEventSeparator","../../../input/InputHandler","../../../input/handlers/support"],function(d,e,f,g){class h extends f.InputHandler{constructor(c,b,a){super(!0);this.view=c;this.pointerAction=b;this.registerIncoming("drag",a,k=>this._handleDrag(k));this.registerIncoming("pointer-down",()=>this.stopMomentumNavigation())}onInstall(c){super.onInstall(c);this._dragEventSeparator=new e.DragEventSeparator({start:(b,a)=>{this.view.mapViewNavigation.pan.begin(this.view,
+a.data);a.stopPropagation()},update:(b,a)=>{this.view.mapViewNavigation.pan.update(this.view,a.data);a.stopPropagation()},end:(b,a)=>{this.view.mapViewNavigation.pan.end(this.view,a.data);a.stopPropagation()},condition:(b,a)=>1===b&&g.eventMatchesPointerAction(a.data,this.pointerAction)})}_handleDrag(c){const b=this.view.mapViewNavigation;b.pinch.zoomMomentum||b.pinch.rotateMomentum?this.stopMomentumNavigation():this._dragEventSeparator.handle(c)}stopMomentumNavigation(){this.view.mapViewNavigation.pan.stopMomentumNavigation()}}
+d.DragPan=h;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

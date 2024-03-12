@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./calcite-input-time-picker"],function(a,c){var b={name:"ro",weekdays:"Duminic\u0103 Luni Mar\u021bi Miercuri Joi Vineri S\u00e2mb\u0103t\u0103".split(" "),weekdaysShort:"Dum Lun Mar Mie Joi Vin S\u00e2m".split(" "),weekdaysMin:"Du Lu Ma Mi Jo Vi S\u00e2".split(" "),months:"Ianuarie Februarie Martie Aprilie Mai Iunie Iulie August Septembrie Octombrie Noiembrie Decembrie".split(" "),monthsShort:"Ian. Febr. Mart. Apr. Mai Iun. Iul. Aug. Sept. Oct. Nov. Dec.".split(" "),weekStart:1,
+formats:{LT:"H:mm",LTS:"H:mm:ss",L:"DD.MM.YYYY",LL:"D MMMM YYYY",LLL:"D MMMM YYYY H:mm",LLLL:"dddd, D MMMM YYYY H:mm"},relativeTime:{future:"peste %s",past:"acum %s",s:"c\u00e2teva secunde",m:"un minut",mm:"%d minute",h:"o or\u0103",hh:"%d ore",d:"o zi",dd:"%d zile",M:"o lun\u0103",MM:"%d luni",y:"un an",yy:"%d ani"},ordinal:function(d){return d}};c.d.locale(b,null,!0);a.default=b;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

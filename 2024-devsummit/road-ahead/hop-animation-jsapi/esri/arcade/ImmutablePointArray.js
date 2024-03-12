@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./ImmutableArray","../geometry/Point"],function(h,f){class g extends h{constructor(b,a,c,d,e,k){super(b);this._lazyPt=[];this._hasM=this._hasZ=!1;this._spRef=a;this._hasZ=c;this._hasM=d;this._cacheId=e;this._partId=k}get(b){if(void 0===this._lazyPt[b]){const a=this._elements[b];if(void 0===a)return;const c=this._hasZ,d=this._hasM;let e=null;e=c&&!d?new f(a[0],a[1],a[2],void 0,this._spRef):d&&!c?new f(a[0],a[1],void 0,a[2],this._spRef):c&&d?new f(a[0],a[1],a[2],a[3],this._spRef):new f(a[0],
+a[1],this._spRef);e.cache._arcadeCacheId=this._cacheId.toString()+"-"+this._partId.toString()+"-"+b.toString();this._lazyPt[b]=e}return this._lazyPt[b]}equalityTest(b){return b===this?!0:null===b||!1===b instanceof g?!1:b.getUniqueHash()===this.getUniqueHash()}getUniqueHash(){return this._cacheId.toString()+"-"+this._partId.toString()}}return g});

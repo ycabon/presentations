@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../support/requestPresets"],function(f,g){function m(a){return"Feature Layer"===a.type||"Oriented Imagery Layer"===a.type}function n(a){return"Table"===a.type}function h(a){a.layers=a.layers?.filter(m);a.tables=a.tables?.filter(n)}function k(a){a.type||(a.type="Feature Layer")}function l(a){a.type||(a.type="Table")}f.fetchFeatureService=async function(a,b){const {loadContext:d,...e}=b||{},c=d?await d.fetchServiceMetadata(a,e):await g.fetchArcGISServiceJSON(a,e);c.layers?.forEach(k);
+c.tables?.forEach(l);h(c);b={serviceJSON:c};if(10.5>(c.currentVersion??0))return b;a=`${a}/layers`;a=d?await d.fetchServiceMetadata(a,e):await g.fetchArcGISServiceJSON(a,e);a.layers?.forEach(k);a.tables?.forEach(l);h(a);b.layersJSON={layers:a.layers,tables:a.tables};return b};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

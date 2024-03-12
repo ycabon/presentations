@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/accessorSupport/decorators/property ../../../../core/has ../../../../core/Logger ../../../../core/RandomLCG ../../../../core/accessorSupport/decorators/subclass ../css ../../../../widgets/Widget ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(a,b,c,n,p,q,f,g,h,r,e){const d=`${g.base}-field`;var k=`${d}--input`,l=`${d}__title`,m=`${d}__value`;a.TooltipField=class extends h{constructor(){super(...arguments);
+this.hidden=!1;this.mode="feedback"}render(){return e.tsx("div",{class:this.classes({[d]:!0,[k]:"input"===this.mode})},e.tsx("div",{class:l},this.title),e.tsx("div",{class:m},this.value))}};b.__decorate([c.property()],a.TooltipField.prototype,"hidden",void 0);b.__decorate([c.property()],a.TooltipField.prototype,"mode",void 0);b.__decorate([c.property()],a.TooltipField.prototype,"title",void 0);b.__decorate([c.property()],a.TooltipField.prototype,"value",void 0);a.TooltipField=b.__decorate([f.subclass("esri.views.interactive.tooltip.components.TooltipField")],
+a.TooltipField);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

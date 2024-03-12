@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/arrayUtils ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/has ../../core/accessorSupport/decorators/subclass ../../geometry/support/jsonUtils".split(" "),function(d,g,a,e,k,m,l,h){a=class extends a.JSONSupport{constructor(b){super(b);this.relationParameter=this.relation=this.geometries2=this.geometries1=null}};d.__decorate([e.property({json:{read:{reader:b=>b?b.map(c=>h.fromJSON(c)).filter(g.isSome):
+null},write:{writer:(b,c)=>{c.geometries1=b?.map(f=>f.toJSON())??null}}}})],a.prototype,"geometries1",void 0);d.__decorate([e.property({json:{read:{reader:b=>b?b.map(c=>h.fromJSON(c)).filter(g.isSome):null},write:{writer:(b,c)=>{c.geometries2=b?.map(f=>f.toJSON())??null}}}})],a.prototype,"geometries2",void 0);d.__decorate([e.property({type:String,json:{write:!0}})],a.prototype,"relation",void 0);d.__decorate([e.property({type:String,json:{write:!0}})],a.prototype,"relationParameter",void 0);a=d.__decorate([l.subclass("esri.rest.support.RelationParameters")],
+a);a.from=k.ensureType(a);return a});

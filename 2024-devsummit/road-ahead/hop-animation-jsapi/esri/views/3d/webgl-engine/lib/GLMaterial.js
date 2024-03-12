@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./basicInterfaces"],function(b){class c{constructor(a){this._material=a.material;this._techniqueRepository=a.techniqueRep;this._output=a.output}dispose(){this._techniqueRepository.release(this._technique)}get technique(){return this._technique}get _stippleTextureRepository(){return this._techniqueRepository.constructionContext.stippleTextureRepository}get _markerTextureRepository(){return this._techniqueRepository.constructionContext.markerTextureRepository}ensureTechnique(a,d){return this._technique=
+this._techniqueRepository.releaseAndAcquire(a,this._material.getConfiguration(this._output,d),this._technique)}ensureResources(a){return b.ResourceState.LOADED}}return c});

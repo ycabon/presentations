@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../geometry/Extent ./TileInfo".split(" "),function(c,a,d,k,l,m,f,g,h){var e;a=e=class extends a.JSONSupport{constructor(b){super(b);this.tileInfo=this.id=this.fullExtent=null}clone(){const b=new e;this.hasOwnProperty("fullExtent")&&(b.fullExtent=this.fullExtent&&this.fullExtent.clone());this.hasOwnProperty("id")&&
+(b.id=this.id);this.hasOwnProperty("tileInfo")&&(b.tileInfo=this.tileInfo&&this.tileInfo.clone());return b}};c.__decorate([d.property({type:g,json:{read:{source:"fullExtent"}}})],a.prototype,"fullExtent",void 0);c.__decorate([d.property({type:String,json:{read:{source:"id"}}})],a.prototype,"id",void 0);c.__decorate([d.property({type:h,json:{read:{source:"tileInfo"}}})],a.prototype,"tileInfo",void 0);return a=e=c.__decorate([f.subclass("esri.layer.support.TileMatrixSet")],a)});

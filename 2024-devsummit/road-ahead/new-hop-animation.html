@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta name="description" content="" />
+    <title>ArcGIS Play</title>
+
+    <link
+      rel="stylesheet"
+      href="./hop-animation-jsapi/esri/css/main.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/calcite-components/2.2.0/calcite.css"
+    />
+
+    <style>
+      html {
+        font-family: "Avenir Next";
+      }
+
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #inputs {
+        width: 300px;
+        padding: 10px;
+      }
+
+      calcite-chip[selected] {
+        --calcite-ui-border-1: var(--calcite-ui-brand);
+      }
+
+      calcite-chip-group {
+        margin: 1rem auto 0.5rem;
+      }
+    </style>
+
+    <script src="./hop-animation-jsapi/init.js"></script>
+
+    <script
+      src="https://js.arcgis.com/calcite-components/2.2.0/calcite.esm.js"
+      type="module"
+    ></script>
+
+    <script
+      src="https://js.arcgis.com/calcite-components/2.2.0/calcite.js"
+      nomodule
+    ></script>
+  </head>
+  <body>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.9.2/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.9.2/calcite.css"
+    />
+    <div id="viewDiv"></div>
+    <calcite-panel id="inputs">
+      <calcite-label for="easing-choice"
+        >Easing Function:
+        <calcite-select id="easing-choice">
+          <calcite-option value="easing">easing</calcite-option>
+          <calcite-option value="linear">linear</calcite-option>
+          <calcite-option value="ease">ease</calcite-option>
+          <calcite-option value="ease-in">ease-in</calcite-option>
+          <calcite-option value="ease-out">ease-out</calcite-option>
+          <calcite-option value="ease-in-out">ease-in-out</calcite-option>
+        </calcite-select>
+      </calcite-label>
+      <calcite-label for="easing-choice"
+        >Duration (ms):
+        <calcite-input-text
+          id="duration"
+          placeholder="Enter duration in ms"
+        ></calcite-input-text>
+      </calcite-label>
+      <calcite-label
+        >Speed Factor:
+        <calcite-input-text
+          id="speedFactor"
+          placeholder="Enter speed factor"
+        ></calcite-input-text>
+      </calcite-label>
+      <calcite-label
+        >Max Duration (ms):
+        <calcite-input-text
+          id="maxDuration"
+          placeholder="Enter max duration in ms"
+          value="10000"
+        ></calcite-input-text>
+      </calcite-label>
+      <calcite-label
+        >Min Duration (ms):
+        <calcite-input-text
+          id="minDuration"
+          placeholder="Enter min duration in ms"
+        ></calcite-input-text>
+      </calcite-label>
+      <calcite-chip-group id="center-chips" selection-mode="single-persist">
+        <calcite-chip
+          appearance="outline-fill"
+          selected=""
+          value="-73.774532,-52.523944"
+          >Go to Alacalufes</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="-149.889003,61.215128"
+          >Go to Anchorage</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="18.418871,-33.921862"
+          >Go to Cape Town</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="9.698203,4.052407"
+          >Go to Douala</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="-78.901118,35.995793"
+          >Go to Durham</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="-77.079514,-12.092973"
+          >Go to Lima</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="-0.369892,43.295202"
+          >Go to Pau</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="141.354012,43.060806"
+          >Go to Sapporo</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="103.850678,1.291059"
+          >Go to Singapore</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="44.799541,41.694055"
+          >Go to Tbilisi</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="18.960486,69.651890"
+          >Go to Tromsø</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="106.916944,47.918801"
+          >Go to Ulaanbaatar</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="-123.116627,49.288830"
+          >Go to Vancouver</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="174.781335,-41.290366"
+          >Go to Wellington</calcite-chip
+        >
+        <calcite-chip appearance="outline-fill" value="114.306631,30.595476"
+          >Go to Wuhan</calcite-chip
+        >
+      </calcite-chip-group>
+    </calcite-panel>
+
+    <script>
+      require([
+        "esri/identity/OAuthInfo",
+        "esri/identity/IdentityManager",
+        "esri/views/View",
+      ], function (OAuthInfo, IdentityManager, View) {
+        IdentityManager.registerOAuthInfos([
+          new OAuthInfo({
+            appId: "RKNJfdy3Vn6nlmKm",
+            popup: true,
+            popupCallbackUrl: "/arcgis-play/dist/oauth-callback-api.html",
+          }),
+        ]);
+
+        if ("views" in View) {
+          View.views.on("change", function updateViews() {
+            let i = 0;
+
+            while (true) {
+              const name = i === 0 ? "view" : "view" + i;
+              const newView = View.views.getItemAt(i);
+
+              if (newView) {
+                window[name] = newView;
+              } else if (window[name]) {
+                delete window[name];
+              } else {
+                break;
+              }
+
+              i++;
+            }
+          });
+        }
+
+        window.isCompare = false;
+
+        require(["require", "esri/Map", "esri/views/MapView"], function (
+          require,
+          EsriMap,
+          MapView
+        ) {
+          "use strict";
+
+          const view = new MapView({
+            map: new EsriMap({ basemap: "streets-vector" }),
+            container: "viewDiv",
+            center: [0, 40],
+            scale: 500000,
+          });
+          function rand(min, max) {
+            return min + Math.random() * (max - min);
+          }
+          function numberOrUndefined(str) {
+            return str ? +str : void 0;
+          }
+          const chartChoiceControl = document.getElementById("center-chips");
+          chartChoiceControl?.addEventListener(
+            "calciteChipGroupSelect",
+            async (event) => {
+              const easing = document.getElementById("easing-choice").value;
+              const speedFactor = numberOrUndefined(
+                document.getElementById("speedFactor").value
+              );
+              const duration = numberOrUndefined(
+                document.getElementById("duration").value
+              );
+              const maxDuration = numberOrUndefined(
+                document.getElementById("maxDuration").value
+              );
+              const minDuration = numberOrUndefined(
+                document.getElementById("minDuration").value
+              );
+              const scale = rand(5000, 1000000);
+              const center = document
+                .getElementById("center-chips")
+                .selectedItems[0].value.split(",")
+                .map((val) => +val);
+              console.log("going to:", center, "at scale", scale);
+              const goToPromise = view.goTo(
+                {
+                  center,
+                  scale,
+                },
+                {
+                  easing,
+                  speedFactor,
+                  duration,
+                  maxDuration,
+                  minDuration,
+                  enableHop: true,
+                }
+              );
+              await goToPromise;
+              console.log("done");
+            }
+          );
+          view.ui.add("inputs", "top-right");
+        });
+      });
+    </script>
+  </body>
+</html>

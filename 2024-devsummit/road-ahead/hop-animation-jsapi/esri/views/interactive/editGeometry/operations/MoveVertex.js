@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(e){class f{constructor(a,b,c,d){this._helper=a;this.dx=b;this.dy=c;this.dz=d}_move(a,b,c,d){this._helper.addDelta(a.pos,b,c,d)}apply(a){this._move(a,this.dx,this.dy,this.dz)}undo(a){this._move(a,-this.dx,-this.dy,-this.dz)}canAccumulate(a){return a instanceof f}accumulate(a,b){this._move(a,b.dx,b.dy,b.dz)}accumulateParams(a){this.dx+=a.dx;this.dy+=a.dy;this.dz+=a.dz}}e.MoveVertex=f;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

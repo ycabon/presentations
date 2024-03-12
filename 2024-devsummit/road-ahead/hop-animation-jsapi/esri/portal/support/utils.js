@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../kernel","../../request"],function(d,h,f){async function g(a,b,c){if(!h.id?.findCredential(a.restUrl))return null;if("loaded"===a.loadStatus&&""===b&&a.user?.sourceJSON&&!1===c)return a.user.sourceJSON;const e={responseType:"json",query:{f:"json"}};c&&(e.query.returnUserLicenseTypeExtensions=!0);if(""===b)return a=await f(a.restUrl+"/community/self",e),a.data&&(a=a.data,a?.username)?a:null;a=await f(a.restUrl+"/community/users/"+b,e);return a.data?(a=a.data,a.error?null:a):
+null}d.hasUserTypeExtension=async function(a,b,c){return(await g(a,b,!0))?.userLicenseTypeExtensions?.includes(c)??!1};d.lookupUser=g;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

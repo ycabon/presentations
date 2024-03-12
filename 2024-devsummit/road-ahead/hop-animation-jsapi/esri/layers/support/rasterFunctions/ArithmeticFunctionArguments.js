@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ./BaseFunctionArguments".split(" "),function(b,c,a,g,h,e,f){var d;a=d=class extends f{constructor(){super(...arguments);this.raster2=void 0}get rasters(){return[this.raster,this.raster2]}clone(){return new d({raster:this.raster,raster2:this.raster2,operation:this.operation})}};b.__decorate([c.property({json:{write:!0}})],
+a.prototype,"operation",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"raster2",void 0);b.__decorate([c.property({readOnly:!0})],a.prototype,"rasters",null);return a=d=b.__decorate([e.subclass("esri.layers.support.rasterFunctions.ArithmeticFunctionArguments")],a)});

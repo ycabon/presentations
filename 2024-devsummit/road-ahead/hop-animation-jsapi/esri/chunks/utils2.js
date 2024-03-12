@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./dom"],function(b,d){b.CSS={chipInvisible:"chip--invisible",selectionDisplayFit:"selection-display-fit",selectionDisplaySingle:"selection-display-single",listContainer:"list-container"};b.ComboboxChildSelector="CALCITE-COMBOBOX-ITEM, CALCITE-COMBOBOX-ITEM-GROUP";b.ComboboxItem="CALCITE-COMBOBOX-ITEM";b.ComboboxItemGroup="CALCITE-COMBOBOX-ITEM-GROUP";b.getAncestors=function(a){a=a.parentElement?.closest("CALCITE-COMBOBOX-ITEM, CALCITE-COMBOBOX-ITEM-GROUP");const c=a?.parentElement?.closest("CALCITE-COMBOBOX-ITEM, CALCITE-COMBOBOX-ITEM-GROUP");
+return[a,c].filter(e=>e)};b.getDepth=function(a){return document.evaluate("ancestor::calcite-combobox-item | ancestor::calcite-combobox-item-group",a,null,XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,null).snapshotLength};b.getItemAncestors=function(a){return a.ancestors?.filter(c=>"CALCITE-COMBOBOX-ITEM"===c.nodeName)||[]};b.getItemChildren=function(a){return d.nodeListToArray(a.querySelectorAll("calcite-combobox-item"))};b.hasActiveChildren=function(a){return 0<d.nodeListToArray(a.querySelectorAll("calcite-combobox-item")).filter(c=>
+c.selected).length};b.isSingleLike=function(a){return a.includes("single")}});

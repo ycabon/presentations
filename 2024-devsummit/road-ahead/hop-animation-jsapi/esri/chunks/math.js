@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){const g=new RegExp(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/),e=a=>(a=(""+a).match(g))&&0!==parseInt(a[1])?Math.max(0,(a[1]?a[1].length:0)-(a[2]?+a[2]:0)):0;d.clamp=(a,b,c)=>Math.max(b,Math.min(a,c));d.closeToRangeEdge=function(a,b,c){return a<c?-1:a>b-c?1:0};d.decimalPlaces=e;d.getDecimals=function(a){return 0<e(a)&&0<a?parseFloat(`0.${a.toString().split(".")[1]}`):a};d.remap=function(a,b,c,f,h){return(a-b)*(h-f)/(c-b)+f}});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../core/Error ./classBreaks ./dotDensity ./heatmap ./predominance ./relationship ./simple ./uniqueValues".split(" "),function(e,f,g,h,k,l,m,n,p){e.getTemplates=async function(c){var {layer:d}=c;c=c.renderer||d.renderer;if(!c)throw new f("getTemplates:invalid-parameters","'renderer' or 'layer.renderer' must be provided");const {renderer:a,layer:b}={layer:d,renderer:c};return a?"simple"===a.type?n.getTemplates({renderer:a,layer:b}):"class-breaks"===a.type?g.getTemplates({renderer:a,
+layer:b}):"dot-density"===a.type?h.getTemplates({renderer:a,layer:b}):"heatmap"===a.type?k.getTemplates({renderer:a,layer:b}):"unique-value"===a.type?(d=a.authoringInfo?.type,"predominance"===d?l.getTemplates({renderer:a,layer:b}):"relationship"===d?m.getTemplates({renderer:a,layer:b}):p.getTemplates({renderer:a,layer:b})):null:null};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

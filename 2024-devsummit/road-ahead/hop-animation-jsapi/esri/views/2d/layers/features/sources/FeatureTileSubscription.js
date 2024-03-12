@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../core/Handles","../../../../../core/promiseUtils"],function(b,c,d){class e{constructor(a,f){this._handles=new c;this._abortController=new AbortController;this._resolver=d.createResolver();this._aborted=this._isDone=!1;this.tile=a;this._version=f;this._handles.add([])}destroy(){this.pause();this._handles.destroy()}get key(){return this.tile.key}get version(){return this._version}set version(a){this._version=a}get signal(){return this._abortController.signal}get options(){return{signal:this._abortController.signal}}get done(){return this._resolver.promise}get isDone(){return this._isDone}resolve(){this._isDone=
+!0;this._resolver.resolve()}get paused(){return this._aborted}resume(){this._abortController=new AbortController;this._aborted=!1}pause(){this._aborted||(this._aborted=!0,this._abortController.abort())}}b.FeatureTileSubscription=e;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

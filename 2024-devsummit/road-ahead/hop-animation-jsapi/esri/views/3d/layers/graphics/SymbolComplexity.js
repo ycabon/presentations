@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(b){class c{constructor(a){this.estimated=!1;this.verticesPerFeature=a.verticesPerFeature??0;this.verticesPerCoordinate=a.verticesPerCoordinate??0;this.drawCallsPerFeature=a.drawCallsPerFeature??0;this.memory=a.memory??new e}}class f extends c{constructor(a){super(a);this.estimated=!0}}class g extends c{constructor(a,d){super(d);this.numComplexities=a}}class h extends f{constructor(a,d){super(d);this.numComplexities=a}}class e{constructor(){this.resourceBytes=this.bytesPerFeatureLabel=
+this.bytesPerFeature=0;this.draped={bytesPerFeature:0,bytesPerFeatureLabel:0}}}b.AggregateSymbolComplexity=g;b.EstimatedAggregateSymbolComplexity=h;b.EstimatedSymbolComplexity=f;b.SymbolComplexity=c;b.SymbolComplexityMemory=e;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/MemCachePool","./TerrainAttributes"],function(e,g,h){class k{constructor(a){this._storage=new g.MemCachePool((b,c)=>a.newCache(b,c),"TileGeometry")}acquire(a){a=4*Math.ceil(a/4);const b=this._storage,c=a.toString(),f=b.pop(c);if(f)return f;const d=h.terrainAttributesLayout.createBuffer(a);d.release=()=>b.put(c,d);return d}clear(){this._storage.clear()}destroy(){this._storage.destroy()}}e.TerrainAttributesCache=k;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

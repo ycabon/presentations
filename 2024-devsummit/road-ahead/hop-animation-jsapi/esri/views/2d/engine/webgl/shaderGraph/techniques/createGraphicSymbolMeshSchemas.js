@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../layers/features/schema/processor/VisualVariablesSchema","../../../../layers/features/schema/processor/symbols/ComplexSymbolSchema"],function(f,g,c){f.createGraphicSymbolMeshSchemas=async function(b,h,e){const d=[];b={scaleInfo:c.getScaleInfo(b),scaleExpression:null};for(const a of h)switch(a.type){case "marker":d.push(...c.createComplexMarkerMeshInfos(e.instances.marker,a,g.noVisualVariables,b));break;case "fill":null==a.spriteRasterizationParam?d.push(...c.createComplexSimpleFillMeshInfos(e.instances.fill,
+a,b)):d.push(...c.createComplexFillMeshInfos(e.instances.complexFill,a,!1,b));break;case "line":a.spriteRasterizationParam?d.push(...c.createComplexTexturedLineMeshInfos(e.instances.texturedLine,a,!1,b)):d.push(...c.createComplexSimpleLineMeshInfos(e.instances.line,a,!1,b));break;case "text":d.push(...c.createComplexTextMeshInfos(e.instances.text,a,g.noVisualVariables,b))}return d};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

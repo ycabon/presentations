@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../chunks/tslib.es6","../core/shaderLibrary/ShaderOutput","../core/shaderTechnique/ShaderTechniqueConfiguration","../materials/DefaultTechniqueConfiguration"],function(d,b,e,c,f){class a extends f.DefaultTechniqueConfiguration{constructor(){super(...arguments);this.output=e.ShaderOutput.Color;this.clippingEnabled=this.hasOccludees=this.useFixedSizes=this.drawScreenSize=this.hasSlicePlane=!1}}b.__decorate([c.parameter({count:e.ShaderOutput.COUNT})],a.prototype,"output",
+void 0);b.__decorate([c.parameter()],a.prototype,"hasSlicePlane",void 0);b.__decorate([c.parameter()],a.prototype,"drawScreenSize",void 0);b.__decorate([c.parameter()],a.prototype,"useFixedSizes",void 0);b.__decorate([c.parameter()],a.prototype,"hasOccludees",void 0);b.__decorate([c.parameter()],a.prototype,"clippingEnabled",void 0);b.__decorate([c.parameter({constValue:!0})],a.prototype,"hasSliceInVertexProgram",void 0);d.PointRendererTechniqueConfiguration=a;Object.defineProperty(d,Symbol.toStringTag,
+{value:"Module"})});

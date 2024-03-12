@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./calcite-input-time-picker"],function(a,c){var b={name:"lv",weekdays:"sv\u0113tdiena pirmdiena otrdiena tre\u0161diena ceturtdiena piektdiena sestdiena".split(" "),months:"janv\u0101ris febru\u0101ris marts apr\u012blis maijs j\u016bnijs j\u016blijs augusts septembris oktobris novembris decembris".split(" "),weekStart:1,weekdaysShort:"Sv P O T C Pk S".split(" "),monthsShort:"jan feb mar apr mai j\u016bn j\u016bl aug sep okt nov dec".split(" "),weekdaysMin:"Sv P O T C Pk S".split(" "),
+ordinal:function(d){return d},formats:{LT:"HH:mm",LTS:"HH:mm:ss",L:"DD.MM.YYYY.",LL:"YYYY. [gada] D. MMMM",LLL:"YYYY. [gada] D. MMMM, HH:mm",LLLL:"YYYY. [gada] D. MMMM, dddd, HH:mm"},relativeTime:{future:"p\u0113c %s",past:"pirms %s",s:"da\u017e\u0101m sekund\u0113m",m:"min\u016btes",mm:"%d min\u016bt\u0113m",h:"stundas",hh:"%d stund\u0101m",d:"dienas",dd:"%d dien\u0101m",M:"m\u0113ne\u0161a",MM:"%d m\u0113ne\u0161iem",y:"gada",yy:"%d gadiem"}};c.d.locale(b,null,!0);a.default=b;Object.defineProperty(a,
+Symbol.toStringTag,{value:"Module"})});

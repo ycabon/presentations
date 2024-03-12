@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../assets","../../../core/has"],function(f,c,g,l){async function h(a){if(a)return{default:a}=await (new Promise((b,d)=>f(["../../../chunks/arcgis-knowledge-client-core-simd"],b,d))).then(b=>b.arcgisKnowledgeClientCoreSimd),a({locateFile:b=>g.getAssetUrl("esri/rest/knowledgeGraph/wasmInterface/"+b)});({default:a}=await (new Promise((b,d)=>f(["../../../chunks/arcgis-knowledge-client-core"],b,d))).then(b=>b.arcgisKnowledgeClientCore));return a({locateFile:b=>g.getAssetUrl("esri/rest/knowledgeGraph/wasmInterface/"+
+b)})}let e=null,k;c.getNewInterface=h;c.getWasmInterface=async function(){var a=e??k;if(a)return a;a=l("wasm-simd");return k=h(a)};c.test={setWasmInterfacePromise:a=>e=a,restoreWasmInterfacePromise:()=>e=null};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

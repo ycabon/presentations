@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./calcite-input-time-picker"],function(b,f){var e={name:"en-gb",weekdays:"Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" "),weekdaysShort:"Sun Mon Tue Wed Thu Fri Sat".split(" "),weekdaysMin:"Su Mo Tu We Th Fr Sa".split(" "),months:"January February March April May June July August September October November December".split(" "),monthsShort:"Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" "),weekStart:1,yearStart:4,relativeTime:{future:"in %s",past:"%s ago",
+s:"a few seconds",m:"a minute",mm:"%d minutes",h:"an hour",hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%d years"},formats:{LT:"HH:mm",LTS:"HH:mm:ss",L:"DD/MM/YYYY",LL:"D MMMM YYYY",LLL:"D MMMM YYYY HH:mm",LLLL:"dddd, D MMMM YYYY HH:mm"},ordinal:function(c){var a=["th","st","nd","rd"],d=c%100;return"["+c+(a[(d-20)%10]||a[d]||a[0])+"]"}};f.d.locale(e,null,!0);b.default=e;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

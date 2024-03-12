@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./shaders/MaterialPrograms"],function(f){class g{constructor(a){this._rctx=a;this._programByKey=new Map}dispose(){this._programByKey.forEach(a=>a.dispose());this._programByKey.clear()}getProgram(a,c=[]){const d=a.vsPath+"."+a.fsPath+JSON.stringify(c);if(this._programByKey.has(d))return this._programByKey.get(d);c={...c.map(b=>"string"===typeof b?{name:b,value:!0}:b).reduce((b,e)=>({...b,[e.name]:e.value}),{})};const {vsPath:h,fsPath:k,attributes:l}=a;a=f.createProgramTemplate(h,k,l,c);a=
+this._rctx.programCache.acquire(a.shaders.vertexShader,a.shaders.fragmentShader,a.attributes);if(!a)throw Error("Unable to get program for key: ${key}");this._programByKey.set(d,a);return a}}return g});

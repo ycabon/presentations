@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/JSONSupport ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,c,f,g,h,e){var d;a=d=class extends a.JSONSupport{constructor(){super(...arguments);this.field=null;this.minValue=0;this.maxValue=255}clone(){return new d({field:this.field,minValue:this.minValue,maxValue:this.maxValue})}};b.__decorate([c.property({type:String,
+json:{write:!0}})],a.prototype,"field",void 0);b.__decorate([c.property({type:Number,nonNullable:!0,json:{write:!0}})],a.prototype,"minValue",void 0);b.__decorate([c.property({type:Number,nonNullable:!0,json:{write:!0}})],a.prototype,"maxValue",void 0);return a=d=b.__decorate([e.subclass("esri.renderers.support.pointCloud.ColorModulation")],a)});

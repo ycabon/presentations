@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../Color ../../../core/JSONSupport ../../../core/lang ../../../core/accessorSupport/decorators/property ../../../core/accessorSupport/ensureType ../../../core/accessorSupport/decorators/subclass ./ChartMediaInfoValueSeries".split(" "),function(b,f,a,e,c,g,h,k){var d;a=d=class extends a.JSONSupport{constructor(l){super(l);this.colors=null;this.fields=[];this.normalizeField=null;this.series=[];this.tooltipField=null}clone(){return new d({colors:e.clone(this.colors),
+fields:e.clone(this.fields),normalizeField:this.normalizeField,tooltipField:this.tooltipField})}};b.__decorate([c.property({type:[f],json:{type:[[g.Integer]],write:!0}})],a.prototype,"colors",void 0);b.__decorate([c.property({type:[String],json:{write:!0}})],a.prototype,"fields",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"normalizeField",void 0);b.__decorate([c.property({type:[k],json:{read:!1}})],a.prototype,"series",void 0);b.__decorate([c.property({type:String,
+json:{write:!0}})],a.prototype,"tooltipField",void 0);return a=d=b.__decorate([h.subclass("esri.popup.content.support.ChartMediaInfoValue")],a)});

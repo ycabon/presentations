@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["require","exports","../../../chunks/componentsUtils","../../support/widgetUtils","../../support/jsxFactory"],function(g,f,h,p,b){f.PlayerActionsGroup=function({viewModel:a}){const {state:d,playing:e}=a,c="not-ready"===d||"waiting"===d,k=b.tsx("calcite-action",{active:e,alignment:"center",bind:a,disabled:c,icon:e?"pause-f":"play-f",key:"play",onclick:e?a.pause:a.play,text:e?"pause":"play"}),l=b.tsx("calcite-action",{alignment:"center",bind:a,disabled:c,icon:"reverse-f",key:"reverse",onclick:a.seekBackward,
+text:"reverse"}),m=b.tsx("calcite-action",{alignment:"center",bind:a,disabled:c,icon:"forward-f",key:"forward",onclick:a.seekForward,text:"forward"}),n=b.tsx("calcite-action",{alignment:"center",bind:a,disabled:c,icon:"beginning-f",key:"beginning",onclick:a.seekToBeginning,text:"beginning"});a=b.tsx("calcite-action",{alignment:"center",bind:a,disabled:c,icon:"end-f",key:"end",onclick:a.seekToEnding,text:"end"});return b.tsx("div",{styles:{display:"flex"}},[n,l,k,m,a])};f.loadPlayerActionsGroupComponents=
+()=>h.loadCalciteComponents({action:()=>new Promise((a,d)=>g(["../../../chunks/calcite-action"],a,d))});Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

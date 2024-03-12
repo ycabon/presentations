@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../../../chunks/tslib.es6","../../GraphShaderModule","../../graph/glsl"],function(g,h,c,a){class d extends c.UniformGroup{getSizeForViewScale(b){return a.cond([a.lessThanEqual(b,this.values.first()),this.sizes.first()],[a.greaterThanEqual(b,this.values.last()),this.sizes.last()],[!0,()=>{const e=this.values.findIndex(m=>a.greaterThan(m,b));var f=this.values.get(e);const k=e.subtract(1),l=this.values.get(k);f=b.subtract(l).divide(f.subtract(l));return a.mix(this.sizes.get(k),
+this.sizes.get(e),f)}])}}h.__decorate([c.uniform(a.FixedArray.ofType(a.Float,8))],d.prototype,"sizes",void 0);h.__decorate([c.uniform(a.FixedArray.ofType(a.Float,8))],d.prototype,"values",void 0);g.VisualVariableSizeScaleStops=d;Object.defineProperty(g,Symbol.toStringTag,{value:"Module"})});

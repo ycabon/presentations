@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../geometry","./scaleUtils","../Extent"],function(d,n,k,l){function f(a,b,c){const e=a.hasZ?a.z:void 0;if(b?.map)return(null!=c?k.getExtentForScale(b,c):b.extent).clone().centerAt(a).set({zmax:e,zmin:e});const {x:g,y:h,spatialReference:m}=a;return new l({xmin:g-.25,ymin:h-.25,xmax:g+.25,ymax:h+.25,spatialReference:m,zmin:e,zmax:e})}d.createExtentFromGeometry=function(a,b,c){switch(a?.type){case "extent":return a;case "multipoint":case "polygon":case "polyline":return a.extent;
+case "point":return f(a,b,c);default:return null}};d.createExtentFromPoint=f;d.getPointFromGeometry=function(a){switch(a?.type){case "point":return a;case "extent":return a.center;case "polygon":return a.centroid;case "multipoint":case "polyline":return a.extent?.center;default:return null}};d.getPointWithElevation=async function(a,b){if(a.hasZ||"2d"===b.type)return a;const c=b.map?.ground;if(!c?.layers.length)return a;({geometry:a}=await c.queryElevation(a,{cache:b.basemapTerrain?.elevationQueryCache}));
+return a};d.scaleExtent=function(a,b,c){return f(a.center,b,c)};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

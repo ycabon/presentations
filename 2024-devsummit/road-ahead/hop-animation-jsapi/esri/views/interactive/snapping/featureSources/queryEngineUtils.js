@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../sketch/normalizedPoint","../candidates/DrapedEdgeSnappingCandidate","../candidates/EdgeSnappingCandidate","../candidates/VertexSnappingCandidate"],function(d,f,g,h,k){function b({x:a,y:c,z:e}){return f.fromValues(a,c,e??0)}d.convertSnappingCandidate=function(a,c){switch(a.type){case "edge":return a.draped?new g.DrapedEdgeSnappingCandidate({edgeStart:b(a.start),edgeEnd:b(a.end),targetPoint:b(a.target),objectId:a.objectId,getGroundElevation:c}):new h.EdgeSnappingCandidate({edgeStart:b(a.start),
+edgeEnd:b(a.end),targetPoint:b(a.target),objectId:a.objectId,isDraped:!1});case "vertex":return new k.VertexSnappingCandidate({targetPoint:b(a.target),objectId:a.objectId,isDraped:!1})}};d.makeGetGroundElevation=function(a,c){return null!=a&&"3d"===a.type?(e,l)=>a.elevationProvider.getElevation(e,l,0,c,"ground"):()=>null};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

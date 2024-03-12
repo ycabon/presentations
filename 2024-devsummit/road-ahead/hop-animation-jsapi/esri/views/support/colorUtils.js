@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../Color","../../core/colorUtils"],function(k,m,v){async function n(a){await a.whenReady();var b=a.basemapView?.baseLayerViews.map(c=>c.layer).toArray()??[];if(!b.length)return b=(b=getComputedStyle(a.container).backgroundColor)?new m(b):void 0,("background"in a?a.background?.color:void 0)||(0!==b?.a?b:null)||null;a=(await a.takeScreenshot({format:"png",layers:b})).data.data;b=a.length;let d=0,e=0,f=0,p=0,g=0,q=0;for(let c=0;c<b;c+=4){const r=a[c],t=a[c+1],u=a[c+2],l=a[c+3],
+h=l/255;d+=r*r*h;e+=t*t*h;f+=u*u*h;g+=h;l&&(p+=l,q++)}d=Math.round(Math.sqrt(d/g));e=Math.round(Math.sqrt(e/g));f=Math.round(Math.sqrt(f/g));return new m([d,e,f,p/q/255])}k.getBackgroundColor=n;k.getBackgroundColorTheme=async function(a){if(!a)return null;a=await n(a);return null!=a?v.getColorTheme(a):null};Object.defineProperty(k,Symbol.toStringTag,{value:"Module"})});

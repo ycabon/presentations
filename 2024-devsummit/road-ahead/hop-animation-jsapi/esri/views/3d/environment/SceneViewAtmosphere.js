@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../chunks/tslib.es6 ../../../core/Accessor ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass".split(" "),function(a,c,e,f,h,k,l,g){var b;a.SceneViewAtmosphere=b=class extends e{set quality(d){["low","high"].includes(d)&&this._set("quality",d)}clone(){return new b({quality:this.quality})}};c.__decorate([f.property({type:["low","high"],value:"low"})],a.SceneViewAtmosphere.prototype,
+"quality",null);a.SceneViewAtmosphere=b=c.__decorate([g.subclass("esri.views.3d.environment.SceneViewAtmosphere")],a.SceneViewAtmosphere);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

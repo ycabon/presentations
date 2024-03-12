@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../Graphic ../../core/Accessor ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../geometry/Point".split(" "),function(b,e,a,c,h,k,l,f,d){a=class extends a{constructor(g){super(g);this.intersectedGraphic=this.intersectedLocation=this.location=null;this.visible=void 0}};b.__decorate([c.property({type:d})],a.prototype,"location",void 0);b.__decorate([c.property({type:d})],
+a.prototype,"intersectedLocation",void 0);b.__decorate([c.property({type:e})],a.prototype,"intersectedGraphic",void 0);b.__decorate([c.property({type:Boolean})],a.prototype,"visible",void 0);return a=b.__decorate([f.subclass("esri.widgets.lineOfSight.LineOfSightTarget")],a)});

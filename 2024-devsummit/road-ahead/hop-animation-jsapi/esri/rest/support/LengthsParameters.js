@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../geometry ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/RandomLCG ../../core/has ../../core/accessorSupport/decorators/subclass ../../geometry/support/jsonUtils ../../geometry/Polyline".split(" "),function(c,a,f,d,g,n,p,h,k,l){a=class extends f.JSONSupport{constructor(b){super(b);this.polylines=this.lengthUnit=this.geodesic=this.calculationType=null}};c.__decorate([d.property({type:String,
+json:{write:!0}})],a.prototype,"calculationType",void 0);c.__decorate([d.property({type:Boolean,json:{write:!0}})],a.prototype,"geodesic",void 0);c.__decorate([d.property({json:{write:!0}})],a.prototype,"lengthUnit",void 0);c.__decorate([d.property({type:[l],json:{read:{reader:b=>b?b.map(e=>k.fromJSON(e)):null},write:{writer:(b,e)=>{e.polylines=b.map(m=>m.toJSON())}}}})],a.prototype,"polylines",void 0);a=c.__decorate([h.subclass("esri.rest.support.LengthsParameters")],a);a.from=g.ensureType(a);return a});

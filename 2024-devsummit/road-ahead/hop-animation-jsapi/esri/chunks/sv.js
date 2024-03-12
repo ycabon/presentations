@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./calcite-input-time-picker"],function(a,e){var d={name:"sv",weekdays:"s\u00f6ndag m\u00e5ndag tisdag onsdag torsdag fredag l\u00f6rdag".split(" "),weekdaysShort:"s\u00f6n m\u00e5n tis ons tor fre l\u00f6r".split(" "),weekdaysMin:"s\u00f6 m\u00e5 ti on to fr l\u00f6".split(" "),months:"januari februari mars april maj juni juli augusti september oktober november december".split(" "),monthsShort:"jan feb mar apr maj jun jul aug sep okt nov dec".split(" "),weekStart:1,yearStart:4,
+ordinal:function(b){var c=b%10;return"["+b+(1===c||2===c?"a":"e")+"]"},formats:{LT:"HH:mm",LTS:"HH:mm:ss",L:"YYYY-MM-DD",LL:"D MMMM YYYY",LLL:"D MMMM YYYY [kl.] HH:mm",LLLL:"dddd D MMMM YYYY [kl.] HH:mm",lll:"D MMM YYYY HH:mm",llll:"ddd D MMM YYYY HH:mm"},relativeTime:{future:"om %s",past:"f\u00f6r %s sedan",s:"n\u00e5gra sekunder",m:"en minut",mm:"%d minuter",h:"en timme",hh:"%d timmar",d:"en dag",dd:"%d dagar",M:"en m\u00e5nad",MM:"%d m\u00e5nader",y:"ett \u00e5r",yy:"%d \u00e5r"}};e.d.locale(d,
+null,!0);a.default=d;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

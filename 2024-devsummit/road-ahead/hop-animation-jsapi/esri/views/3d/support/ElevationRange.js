@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(c){class d{constructor(a=Infinity,b=-Infinity){this.elevationRangeMin=a;this.elevationRangeMax=b}get elevationRangeValid(){return!Number.isNaN(this.elevationRangeMin)}invalidateElevationRange(){this.elevationRangeMin=NaN}expandElevationRangeValues(a,b){this.elevationRangeMin=Math.min(this.elevationRangeMin,a);this.elevationRangeMax=Math.max(this.elevationRangeMax,b)}expandElevationRange(a){this.elevationRangeMin=Math.min(this.elevationRangeMin,a.elevationRangeMin);this.elevationRangeMax=
+Math.max(this.elevationRangeMax,a.elevationRangeMax)}setElevationRange(a){this.elevationRangeMin=a.elevationRangeMin;this.elevationRangeMax=a.elevationRangeMax}}c.ElevationRange=d;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

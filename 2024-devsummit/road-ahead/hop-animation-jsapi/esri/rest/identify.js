@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../request ../geometry/support/normalizeUtils ./utils ./operations/identify ./support/IdentifyParameters ./support/IdentifyResult".split(" "),function(h,k,l,g,m,n,p){function q(a){a=a.data;a.results=a.results||[];a.exceededTransferLimit=!!a.exceededTransferLimit;a.results=a.results.map(c=>p.fromJSON(c));return a}function r(a){return a=n.from(a)}function t(a,c){function e(b){f.set(b.id,b);b.sublayers&&b.sublayers.forEach(e)}if(!c?.length)return a;const f=new Map;c.forEach(e);for(const b of a.results)b.feature.sourceLayer=
+f.get(b.layerId);return a}h.identify=async function(a,c,e){c=r(c);const f=c.geometry?[c.geometry]:[],b=g.parseUrl(a);b.path+="/identify";return l.normalizeCentralMeridian(f).then(d=>{d=m.identifyToIdentifyRESTParameters(c,{geometry:d?.[0]});d=g.encode({...b.query,f:"json",...d});d=g.asValidOptions(d,e);return k(b.path,d).then(q).then(u=>t(u,c.sublayers))})};Object.defineProperty(h,Symbol.toStringTag,{value:"Module"})});

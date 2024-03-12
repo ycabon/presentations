@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../chunks/tslib.es6 ./Accessor ./has ./lang ./Logger ./maybe ./accessorSupport/PropertyOrigin ./accessorSupport/utils ./accessorSupport/decorators/subclass".split(" "),function(g,n,t,m,u,x,v,e,p,q){m=k=>{k=class extends k{clone(){var a=p.getProperties(this);v.assertIsSome(a,"unable to clone instance of non-accessor class");var h=a.metadata;const w=a.store,r={};a=new Map;for(var b in h){var c=h[b];const d=w?.originOf(b),f=c.clonable;if(c.readOnly||!1===f||d!==e.OriginId.USER&&d!==e.OriginId.DEFAULTS&&
+d!==e.OriginId.WEB_MAP&&d!==e.OriginId.WEB_SCENE)continue;c=this[b];let l=null;l="function"===typeof f?f(c):"reference"===f?c:u.tryClone(c);if(null==c||null!=l)d===e.OriginId.DEFAULTS?a.set(b,l):r[b]=l}h=new (Object.getPrototypeOf(this).constructor)(r);if(a.size&&(b=p.getProperties(h)?.store))for(const [d,f]of a)b.set(d,f,e.OriginId.DEFAULTS);return h}};return k=n.__decorate([q.subclass("esri.core.Clonable")],k)};g.Clonable=class extends m(t){};g.Clonable=n.__decorate([q.subclass("esri.core.Clonable")],
+g.Clonable);g.ClonableMixin=m;Object.defineProperty(g,Symbol.toStringTag,{value:"Module"})});

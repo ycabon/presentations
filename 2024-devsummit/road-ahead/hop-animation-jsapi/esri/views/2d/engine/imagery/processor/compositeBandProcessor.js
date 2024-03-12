@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./utils"],function(d){const e={vsPath:"raster/rfx/vs",fsPath:"raster/rfx/compositeband",attributes:new Map([["a_position",0],["a_texcoord",1]])};return{createProgram:function(c,a){a=c.rasterFunction.parameters.rasters.filter(f=>"Constant"===f.name);const b=[];a.length&&(b.push("oneConstant"),2===a.length&&b.push("twoConstant"));return c.painter.materialManager.getProgram(e,b)},bindTextureAndUniforms:function(c,a,b){d.setMultipleImageTextures(c,a,b);d.setCoordsAndTransforms(a)}}});

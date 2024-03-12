@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../core/shaderTechnique/ReloadableShaderModule ../core/shaderTechnique/ShaderTechnique ../lib/Program ../lib/VertexAttribute ../../../../chunks/LaserlinePath.glsl ../../../webgl/enums ../../../webgl/renderState".split(" "),function(h,b,k,l,m,a,n,f,c){class d extends l.ShaderTechnique{initializeProgram(e){return new m.Program(e.rctx,d.shader.get().build(this.configuration),g)}initializePipeline(){return c.makePipelineState({blending:c.simpleBlendingParams(f.BlendFactor.ONE,
+f.BlendFactor.ONE_MINUS_SRC_ALPHA),colorWrite:c.defaultColorWriteParams})}}d.shader=new k.ReloadableShaderModule(n.LaserlinePath,()=>new Promise((e,p)=>h(["./LaserlinePath.glsl"],e,p)));const g=new Map([[a.VertexAttribute.START,0],[a.VertexAttribute.END,1],[a.VertexAttribute.UP,2],[a.VertexAttribute.EXTRUDE,3]]);b.LaserlinePathTechnique=d;b.attributeLocations=g;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

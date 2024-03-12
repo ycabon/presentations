@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/uid"],function(d,e){class f{constructor(a,b,c){this._createTexture=a;this._parametersKey=b;this._repository=new Map;this._orphanCache=c.newCache(`procedural-texture-repository:${e.generateUID()}`,g=>g.dispose())}destroy(){for(const [,{texture:a}]of this._repository)a.dispose();this._repository.clear();this._orphanCache.destroy()}swap(a,b=null){a=this._acquire(a);this.release(b);return a}release(a){if(null!=a){a=this._parametersKey(a);var b=this._repository.get(a);
+b&&(b.refCount--,0===b.refCount&&(this._repository.delete(a),{texture:b}=b,this._orphanCache.put(a,b,b.usedMemory)))}}_acquire(a){if(null==a)return null;const b=this._parametersKey(a);var c=this._repository.get(b);if(c)return c.refCount++,c.texture;a=this._orphanCache.pop(b)??this._createTexture(a);c=new h(a);this._repository.set(b,c);return a}}class h{constructor(a){this.texture=a;this.refCount=1}}d.ProceduralTextureRepository=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

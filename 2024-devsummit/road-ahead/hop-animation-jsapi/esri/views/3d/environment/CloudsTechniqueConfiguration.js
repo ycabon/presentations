@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../chunks/tslib.es6","../../../core/has","./CloudsData","../webgl-engine/core/shaderTechnique/ShaderTechniqueConfiguration"],function(b,e,f,g,c){b.RayMarchingSteps=void 0;(function(a){a[a.SIXTEEN=0]="SIXTEEN";a[a.HUNDRED=1]="HUNDRED";a[a.TWOHUNDRED=2]="TWOHUNDRED";a[a.COUNT=3]="COUNT"})(b.RayMarchingSteps||(b.RayMarchingSteps={}));class d extends c.ShaderTechniqueConfiguration{constructor(){super(...arguments);this.steps=b.RayMarchingSteps.SIXTEEN;this.writeTextureChannels=
+g.CloudsTextureChannels.RG}}e.__decorate([c.parameter({count:b.RayMarchingSteps.COUNT})],d.prototype,"steps",void 0);e.__decorate([c.parameter({constValue:f("esri-mobile")?1024:2048})],d.prototype,"cubeMapSize",void 0);e.__decorate([c.parameter()],d.prototype,"writeTextureChannels",void 0);b.CloudsTechniqueConfiguration=d;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

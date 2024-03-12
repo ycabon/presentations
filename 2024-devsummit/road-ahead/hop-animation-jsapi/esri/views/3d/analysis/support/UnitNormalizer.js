@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/unitUtils"],function(b,c){class d{constructor(a=null){this.spatialReference=a}get spatialReference(){return this._spatialReference}set spatialReference(a){a!==this._spatialReference&&(this._spatialReference=a,this._updateNormalizationFactors())}normalizeDistance(a){return a*this._metersPerDistanceUnit}normalizeElevation(a){return a*this._metersPerElevationUnit}normalizeArea(a){return a*this._squareMetersPerAreaUnit}_updateNormalizationFactors(){this._metersPerDistanceUnit=
+c.getMetersPerUnitForSR(this._spatialReference,1);this._metersPerElevationUnit=c.getMetersPerUnitForSR(this._spatialReference,1);this._squareMetersPerAreaUnit=this._metersPerDistanceUnit*this._metersPerDistanceUnit}}b.UnitNormalizer=d;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

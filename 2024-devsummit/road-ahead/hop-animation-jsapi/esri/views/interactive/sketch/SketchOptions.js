@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/Accessor ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ./SketchLabelOptions ./SketchTooltipOptions ./SketchValueOptions".split(" "),function(b,a,c,k,l,m,g,d,e,f){a=class extends a{constructor(h){super(h);this.labels=new d;this.tooltips=new e;this.values=new f}};b.__decorate([c.property({nonNullable:!0,type:d})],a.prototype,"labels",void 0);
+b.__decorate([c.property({nonNullable:!0,type:e})],a.prototype,"tooltips",void 0);b.__decorate([c.property({nonNullable:!0,type:f})],a.prototype,"values",void 0);return a=b.__decorate([g.subclass("esri.views.interactive.sketch.SketchOptions")],a)});

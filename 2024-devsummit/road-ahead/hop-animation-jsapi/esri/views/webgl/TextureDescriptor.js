@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./enums","./Util"],function(c,b,d){class e{constructor(a=0,f=a){this.width=a;this.height=f;this.target=b.TextureType.TEXTURE_2D;this.pixelFormat=b.PixelFormat.RGBA;this.dataType=b.PixelType.UNSIGNED_BYTE;this.samplingMode=b.TextureSamplingMode.LINEAR;this.wrapMode=b.TextureWrapMode.REPEAT;this.maxAnisotropy=1;this.isOpaque=this.hasMipmap=this.flipped=!1;this.unpackAlignment=4;this.preMultiplyAlpha=!1;this.depth=1;this.isImmutable=!1}}c.TextureDescriptor=e;c.estimateMemory=function(a){return 0>=
+a.width||0>=a.height?0:Math.round(a.width*a.height*(a.hasMipmap?4/3:1)*(null==a.internalFormat?4:d.getBytesPerElementFormat(a.internalFormat)))};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(e){class f{static from(d){let b=0,c=0,g=0;d.forEach(a=>{if(a=a._readGeometry())c+=a.isPoint?1:a.lengths.reduce((h,k)=>h+k,0),g+=a.isPoint?1:a.lengths.length,b+=1});return new f(b,c,g)}constructor(d,b,c){this.featureCount=d;this.vertexCount=b;this.ringCount=c}toJSON(){return{featureCount:this.featureCount,ringCount:this.featureCount,vertexCount:this.featureCount}}}e.FeatureStoreStatistics=f;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

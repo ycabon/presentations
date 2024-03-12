@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/workers/WorkerHandle"],function(d,e){class f extends e.WorkerHandle{constructor(a){super("PointCloudWorker","transform",{transform:b=>this._getTransferList(b)},a)}_getTransferList(a){const b=[a.geometryBuffer];null!=a.primaryAttributeData&&a.primaryAttributeData.buffer&&b.push(a.primaryAttributeData.buffer);null!=a.modulationAttributeData&&a.modulationAttributeData.buffer&&b.push(a.modulationAttributeData.buffer);if(null!=a.filterAttributesData)for(const c of a.filterAttributesData)null!=
+c&&c.buffer&&b.push(c.buffer);for(const c of a.userAttributesData)c.buffer&&b.push(c.buffer);return b}}d.PointCloudWorkerHandle=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

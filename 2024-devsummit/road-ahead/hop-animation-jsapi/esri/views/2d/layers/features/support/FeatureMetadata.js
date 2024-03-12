@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../geometry/SpatialReference","../../../../../layers/support/FieldsIndex"],function(b,f,c){class d{constructor(a){this._options=a;this._fieldsIndex="fieldsIndex"in a?c.fromJSON(a.fieldsIndex):new c(a.fields);a.spatialReference&&(this._spatialReference=f.fromJSON(a.spatialReference));this._arcadeSchema={fields:this.fieldsIndex.fields,fieldsIndex:this.fieldsIndex,geometryType:this.geometryType,objectIdField:this.objectIdField,globalIdField:this._options.globalIdField,
+spatialReference:this._spatialReference,timeInfo:this._options.timeInfo,typeIdField:this._options.typeIdField,types:this._options.types}}get fieldsIndex(){return this._fieldsIndex}get geometryType(){return this._options.geometryType}get objectIdField(){return this._options.objectIdField}get arcadeSchema(){return this._arcadeSchema}get spatialReference(){return this._spatialReference}}class e extends d{static create(a){return new e({fields:[],objectIdField:"uid",geometryType:null,spatialReference:a})}}
+b.FeatureMetadata=d;b.GraphicsMetadata=e;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

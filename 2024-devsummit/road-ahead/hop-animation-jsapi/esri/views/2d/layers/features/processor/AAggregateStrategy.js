@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../layers/graphics/data/QueryEngine","../../../../../layers/support/FieldsIndex","./AProcessorStrategy"],function(a,b,c,d){class e extends d.AProcessorStrategy{constructor(f,g,h,k){super(f,g);this.spatialReference=h;this.aggregateFields=k}get aggregateQueryEngine(){this._aggregateQueryEngine||(this._aggregateQueryEngine=new b.QueryEngine({featureStore:this,fieldsIndex:new c(this.aggregateFields),geometryType:"esriGeometryPolygon",objectIdField:"aggregateId",hasM:!1,
+hasZ:!1,spatialReference:this.spatialReference,cacheSpatialQueries:!0}));return this._aggregateQueryEngine}}a.AAggregateStrategy=e;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

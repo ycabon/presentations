@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(m){function k(d,a,b,c){return[[[b-d/Math.SQRT2,c-d/Math.SQRT2],[b+d/Math.SQRT2,c-d/Math.SQRT2],[b+a/Math.SQRT2,c-a/Math.SQRT2],[b-a/Math.SQRT2,c-a/Math.SQRT2]],[[b+d/Math.SQRT2,c-d/Math.SQRT2],[b+d/Math.SQRT2,c+d/Math.SQRT2],[b+a/Math.SQRT2,c+a/Math.SQRT2],[b+a/Math.SQRT2,c-a/Math.SQRT2]],[[b+d/Math.SQRT2,c+d/Math.SQRT2],[b-d/Math.SQRT2,c+d/Math.SQRT2],[b-a/Math.SQRT2,c+a/Math.SQRT2],[b+a/Math.SQRT2,c+a/Math.SQRT2]],[[b-d/Math.SQRT2,c+d/Math.SQRT2],[b-d/Math.SQRT2,c-d/
+Math.SQRT2],[b-a/Math.SQRT2,c-a/Math.SQRT2],[b-a/Math.SQRT2,c+a/Math.SQRT2]]]}function l(d,a,b){const [c,e,f,h]=d;return`M ${c.join(" ")} A ${a} ${a} 0 0 1 ${e.join(" ")} L ${f.join(" ")} A ${b} ${b} 0 0 0 ${h.join(" ")} Z`}m.getAllArcPath=function(d,a,b){const [c,e,f,h]=[...d,0];return[...k(c,e,a,b).map(g=>l(g,c,e)),...k(e,f,a,b).map(g=>l(g,e,f)),...k(f,h,a,b).map(g=>l(g,f,h))]};Object.defineProperty(m,Symbol.toStringTag,{value:"Module"})});

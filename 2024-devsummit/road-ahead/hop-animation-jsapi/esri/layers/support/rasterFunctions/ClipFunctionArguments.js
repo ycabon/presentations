@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../geometry ../../../core/jsonMap ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ../../../geometry/support/jsonUtils ./BaseFunctionArguments".split(" "),function(c,f,b,e,k,l,m,g,h,a){var d;b=new b.JSONMap({1:"outside",2:"inside"},{useNumericKeys:!0});a=d=class extends a{constructor(){super(...arguments);this.clippingType="outside"}clone(){return new d({clippingGeometry:this.clippingGeometry.clone(),
+clippingType:this.clippingType})}};c.__decorate([e.property({types:f.geometryTypes,json:{read:h.fromJSON,write:!0}})],a.prototype,"clippingGeometry",void 0);c.__decorate([e.property({json:{read:b.read,write:b.write}})],a.prototype,"clippingType",void 0);return a=d=c.__decorate([g.subclass("esri.layers.support.rasterFunctions.ClipFunctionArguments")],a)});

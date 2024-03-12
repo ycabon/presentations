@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../core/has ../SimpleFillSymbol ../SimpleLineSymbol ../SimpleMarkerSymbol ../TextSymbol ./defaultsJSON".split(" "),function(a,f,c,d,e,m,b){const g=e.fromJSON(b.defaultPointSymbolJSON),h=d.fromJSON(b.defaultPolylineSymbolJSON),k=c.fromJSON(b.defaultPolygonSymbolJSON);f=m.fromJSON(b.defaultTextSymbolJSON);e=e.fromJSON(b.errorPointSymbolJSON);d=d.fromJSON(b.errorPolylineSymbolJSON);c=c.fromJSON(b.errorPolygonSymbolJSON);a.defaultPointSymbol2D=g;a.defaultPolygonSymbol2D=k;a.defaultPolylineSymbol2D=
+h;a.defaultTextSymbol2D=f;a.errorPointSymbol2D=e;a.errorPolygonSymbol2D=c;a.errorPolylineSymbol2D=d;a.getDefaultSymbol2D=function(l){if(null==l)return null;switch(l.type){case "point":case "multipoint":return g;case "polyline":return h;case "polygon":case "extent":return k}return null};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

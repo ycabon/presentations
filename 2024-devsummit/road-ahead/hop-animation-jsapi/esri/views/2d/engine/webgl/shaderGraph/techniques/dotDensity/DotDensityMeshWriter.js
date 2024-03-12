@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../fill/AFillMeshWriter","../../../../../../webgl/enums"],function(c,e,b){const d={createComputedParams:a=>a,attributes:{id:{type:b.DataType.UNSIGNED_BYTE,count:3,pack:"id"},bitset:{type:b.DataType.UNSIGNED_BYTE,count:1},pos:{type:b.DataType.SHORT,count:2,pack:"position",packPrecisionFactor:10},inverseArea:{type:b.DataType.FLOAT,count:1,packTessellation:({inverseArea:a})=>a}}};class f extends e.AFillMeshWriter{constructor(){super(...arguments);this.vertexSpec=d}createTesselationParams(a){return{inverseArea:1/
+a.readGeometryArea()}}}c.DotDensityMeshWriter=f;c.dotDensityVertexSpec=d;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

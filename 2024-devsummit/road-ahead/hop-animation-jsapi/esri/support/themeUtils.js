@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(b){function c(){return getComputedStyle(document.body).getPropertyValue("--esri-calcite-mode-name").replaceAll(/\s|'|"/g,"").startsWith("dark")}function d(){return`${"calcite-mode-"}${c()?"dark":"light"}`}function f(a){Array.from(a.classList).forEach(e=>{e.startsWith("calcite-mode-")&&a.classList.remove(e)})}b.getCalciteThemeClass=d;b.isDarkTheme=c;b.setCalciteThemeClass=function(a){f(a);a.classList.add(d())};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

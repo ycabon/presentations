@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../featureConversionUtils","../OptimizedGeometry"],function(k,d,p){const t=new p,u=new p,q=new p,r={esriGeometryPoint:d.convertToPoint,esriGeometryPolyline:d.convertToPolyline,esriGeometryPolygon:d.convertToPolygon,esriGeometryMultipoint:d.convertToMultipoint},v=(a,b)=>"_geVersion"!==a?b:void 0;k.cleanFromGeometryEngine=function(a){return a&&"_geVersion"in a?JSON.parse(JSON.stringify(a,v)):a};k.getGeometry=function(a,b,f,c,h,e,g=b,l=f){const m=b&&g,n=f&&l;c=null!=c?"coords"in c?
+c:c.geometry:null;if(null==c)return null;if(h)return b=d.generalizeOptimizedGeometry(u,c,b,f,a,h,g,l),e&&(b=d.quantizeOptimizedGeometry(q,b,m,n,a,e)),r[a]?.(b,m,n)??null;if(e)return e=d.quantizeOptimizedGeometry(q,c,b,f,a,e,g,l),r[a]?.(e,m,n)??null;d.removeZMValues(t,c,b,f,g,l);return r[a]?.(t,m,n)??null};k.transformCentroid=function(a,b,f,c=a.hasZ,h=a.hasM){if(null==b)return null;const e=a.hasZ&&c,g=a.hasM&&h;return f?(a=d.quantizeOptimizedGeometry(q,b,a.hasZ,a.hasM,"esriGeometryPoint",f,c,h),d.convertToPoint(a,
+e,g)):d.convertToPoint(b,e,g)};Object.defineProperty(k,Symbol.toStringTag,{value:"Module"})});

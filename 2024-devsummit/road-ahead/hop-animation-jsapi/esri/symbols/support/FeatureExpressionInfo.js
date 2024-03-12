@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../layers/support/fieldUtils".split(" "),function(c,a,e,k,l,m,f,g){var d;a=d=class extends a.JSONSupport{constructor(b){super(b)}async collectRequiredFields(b,h){return g.collectArcadeFieldNames(b,h,this.expression)}clone(){return new d({expression:this.expression,title:this.title})}equals(b){return this.expression===
+b.expression&&this.title===b.title}};c.__decorate([e.property({type:String,json:{write:!0}})],a.prototype,"expression",void 0);c.__decorate([e.property({type:String,json:{write:!0}})],a.prototype,"title",void 0);return a=d=c.__decorate([f.subclass("esri.layers.support.FeatureExpressionInfo")],a)});

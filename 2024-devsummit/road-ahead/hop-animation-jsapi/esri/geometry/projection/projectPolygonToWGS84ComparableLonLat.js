@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../chunks/vec32","../../core/libs/gl-matrix-2/factories/vec3f64","./projectors"],function(e,h,k,l){const m=k.create();e.projectPolygonToWGS84ComparableLonLat=function({hasZ:d,spatialReference:b,rings:c},n,f=0){b=l.getWGS84ComparableLonLatProjector(b);if(null==b)return!1;d=d?a=>a:a=>h.set(m,a[0],a[1],f);for(const a of c){c=[];for(const p of a){const g=[0,0,f];b(d(p),0,g,0);c.push(g)}n.push(c)}return!0};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

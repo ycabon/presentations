@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/arrayUtils","../../../../core/libs/gl-matrix-2/factories/vec2f64","../../../../core/libs/gl-matrix-2/math/vec2","./UpdateVertices"],function(e,f,k,g,c){class h{constructor(a,b,d,l,m=c.AccumulationType.CUMULATIVE){this.origin=a;this.axis1=b;this.factor1=d;this.factor2=l;this._accumulationType=m;this.axis2=k.fromValues(b[1],-b[0])}_scale(a,b,d){g.projectAndScale(a.pos,a.pos,this.origin,this.axis1,b);g.projectAndScale(a.pos,a.pos,this.origin,this.axis2,d)}apply(a){this._scale(a,
+this.factor1,this.factor2)}undo(a){this._scale(a,1/this.factor1,1/this.factor2)}canAccumulate(a){return a instanceof h&&f.equals(this.origin,a.origin)&&f.equals(this.axis1,a.axis1)}accumulate(a,b){b._accumulationType===c.AccumulationType.REPLACE?this._scale(a,b.factor1/this.factor1,b.factor2/this.factor2):this._scale(a,b.factor1,b.factor2)}accumulateParams(a){const b=a._accumulationType===c.AccumulationType.REPLACE;this.factor1=b?a.factor1:this.factor1*a.factor1;this.factor2=b?a.factor2:this.factor2*
+a.factor2}}e.ScaleVertex=h;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/Accessor","../core/shaderLibrary/ShaderOutput"],function(a,f,b){const e={required:[]},g={required:[b.ShaderOutput.LinearDepth]},h={required:[b.ShaderOutput.CompositeColor]},k={required:[b.ShaderOutput.Highlight]};b={required:[b.ShaderOutput.Depth,b.ShaderOutput.Normal]};class c extends f{consumes(){return e}get usedMemory(){return 0}get isDecoration(){return!1}get running(){return!1}get materialReference(){return null}modify(d){}get numGeometries(){return 0}get hasOccludees(){return!1}queryRenderOccludedState(d){return!1}}
+class l extends c{}class m extends c{constructor(){super(...arguments);this.drapedPriority=0}}class n extends c{}class p extends c{}class q extends c{}a.ASyncPreparesRenderPlugin=q;a.AsyncRenderPlugin=p;a.ConsumesCompositeColor=h;a.ConsumesDepth=g;a.ConsumesDepthNormal=b;a.ConsumesHighlight=k;a.ConsumesNone=e;a.SyncPrepareRenderPlugin=m;a.SyncPreparesRenderPlugin=n;a.SyncRenderPlugin=l;a.isPrepareRenderPlugin=function(d){return"prepareTechnique"in d};a.isPreparesRenderPlugin=function(d){return"prepareTechniques"in
+d};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

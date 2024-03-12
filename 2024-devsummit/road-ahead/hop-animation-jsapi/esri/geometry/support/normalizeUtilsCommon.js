@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../Polyline","../SpatialReference","./jsonUtils"],function(c,b,d,h){function f(a){return h.isPolygon(a)?a.rings:a.paths}b={102100:{maxX:2.0037508342788905E7,minX:-2.0037508342788905E7,plus180Line:new b({paths:[[[2.0037508342788905E7,-2.0037508342788905E7],[2.0037508342788905E7,2.0037508342788905E7]]],spatialReference:d.WebMercator}),minus180Line:new b({paths:[[[-2.0037508342788905E7,-2.0037508342788905E7],[-2.0037508342788905E7,2.0037508342788905E7]]],spatialReference:d.WebMercator})},
+4326:{maxX:180,minX:-180,plus180Line:new b({paths:[[[180,-180],[180,180]]],spatialReference:d.WGS84}),minus180Line:new b({paths:[[[-180,-180],[-180,180]]],spatialReference:d.WGS84})}};c.cutParams=b;c.getGeometryParts=f;c.offsetMagnitude=function(a,e){return Math.ceil((a-e)/(2*e))};c.updatePolyGeometry=function(a,e){const k=f(a);for(const l of k)for(const g of l)g[0]+=e;return a};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

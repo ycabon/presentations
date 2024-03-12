@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./ElevationSamplerData"],function(m,q){class r{constructor(a,b=null){this.tile=a;null!=b&&null!=a&&(this._samplerData=new q.ElevationSamplerData(b,a.extent))}get zmin(){return null!=this._samplerData?this._samplerData.data.minValue:0}get zmax(){return null!=this._samplerData?this._samplerData.data.maxValue:0}get hasNoDataValues(){return!!this._samplerData?.data.hasNoDataValues}sample(a,b){if(null!=this._samplerData){var {safeWidth:f,data:t,dx:u,dy:v,y1:w,x0:x}=this._samplerData,
+{width:n,values:g,noDataValue:h}=t;b=v*(w-b);b=0>b?0:b>f?f:b;a=u*(a-x);var k=0>a?0:a>f?f:a;a=Math.floor(b);var p=Math.floor(k),c=a*n+p,d=c+n,e=g[c],l=g[d];c=g[c+1];d=g[d+1];if(e!==h&&l!==h&&c!==h&&d!==h)return k-=p,e+=(c-e)*k,e+(l+(d-l)*k-e)*(b-a)}}}m.ElevationTile=r;Object.defineProperty(m,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ./featureReferenceUtils ../core/Accessor ../core/Clonable ../core/JSONSupport ../core/maybe ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/RandomLCG ../core/accessorSupport/decorators/subclass ../core/accessorSupport/decorators/persistable ../geometry/Point ../symbols/support/ElevationInfo".split(" "),function(c,e,a,g,h,f,d,p,q,r,k,l,m,n){a=class extends h.JSONSupportMixin(g.ClonableMixin(a)){constructor(b){super(b);this.feature=this.elevationInfo=
+this.position=null}equals(b){return f.equalsMaybe(this.position,b.position)&&f.equalsMaybe(this.elevationInfo,b.elevationInfo)&&e.featureReferenceEquals(this.feature,b.feature)}};c.__decorate([d.property({type:m,json:{write:{isRequired:!0}}})],a.prototype,"position",void 0);c.__decorate([d.property({type:n}),l.persistable()],a.prototype,"elevationInfo",void 0);c.__decorate([d.property(e.featureReferenceProperty)],a.prototype,"feature",void 0);return a=c.__decorate([k.subclass("esri.analysis.LineOfSightAnalysisObserver")],
+a)});

@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(function(){class g{constructor(b=[],a=[],d=!1){this.lengths=b??[];this.coords=a??[];this.hasIndeterminateRingOrder=d}static fromRect(b){const [a,d,c,f]=b;b=c-a;const e=f-d;return new g([5],[a,d,b,0,0,e,-b,0,0,-e])}get isPoint(){return 0===this.lengths.length}get maxLength(){return Math.max(...this.lengths)}get size(){return this.lengths.reduce((b,a)=>b+a)}forEachVertex(b){let a=0;this.lengths.length||b(this.coords[0],this.coords[1]);for(let d=0;d<this.lengths.length;d++){const c=this.lengths[d];
+for(let f=0;f<c;f++)b(this.coords[2*(f+a)],this.coords[2*(f+a)+1]);a+=c}}deltaDecode(){const b=this.clone(),{coords:a,lengths:d}=b;let c=0;for(const f of d){for(let e=1;e<f;e++)a[2*(c+e)]+=a[2*(c+e)-2],a[2*(c+e)+1]+=a[2*(c+e)-1];c+=f}return b}clone(b){if(0===this.lengths.length)return new g([],[this.coords[0],this.coords[1]]);var a=2*(0===this.lengths.length?1:this.lengths.reduce((d,c)=>d+c));a=this.coords.slice(0,a);return b?(b.set(a),new g(this.lengths,b,this.hasIndeterminateRingOrder)):new g(Array.from(this.lengths),
+Array.from(a),this.hasIndeterminateRingOrder)}}return g});

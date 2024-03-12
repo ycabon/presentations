@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/JSONSupport ../../core/lang ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/accessorSupport/decorators/subclass ../../views/3d/environment/SunnyWeather ../../views/3d/environment/weather ../lightingTypes ../SunLighting".split(" "),function(a,b,f,d,e,n,p,g,h,k,l,m){var c;a.SlideEnvironment=c=class extends f.JSONSupport{constructor(){super(...arguments);this.lighting=new m;this.weather=new h}clone(){return new c({lighting:d.clone(this.lighting),
+weather:d.clone(this.weather)})}};b.__decorate([e.property({types:l.lightingTypes,json:{write:!0}})],a.SlideEnvironment.prototype,"lighting",void 0);b.__decorate([e.property({types:k.weatherTypes,json:{write:!0}})],a.SlideEnvironment.prototype,"weather",void 0);a.SlideEnvironment=c=b.__decorate([g.subclass("esri.webscene.Environment")],a.SlideEnvironment);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

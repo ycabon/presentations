@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ../Viewpoint ../core/JSONSupport ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/RandomLCG ../core/accessorSupport/decorators/subclass ../geometry/SpatialReference ./Environment".split(" "),function(b,g,a,c,l,m,n,h,k,f){var d;a=d=class extends a.JSONSupport{constructor(e){super(e);this.environment=new f;this.viewpoint=this.spatialReference=null}set viewingMode(e){this._set("viewingMode",e)}clone(){return new d({environment:this.environment.clone(),
+spatialReference:this.spatialReference?this.spatialReference.clone():null,viewingMode:this.viewingMode,viewpoint:this.viewpoint?this.viewpoint.clone():null})}};b.__decorate([c.property({type:f,json:{write:{isRequired:!0}}})],a.prototype,"environment",void 0);b.__decorate([c.property({type:k})],a.prototype,"spatialReference",void 0);b.__decorate([c.property({type:["local","global"]})],a.prototype,"viewingMode",null);b.__decorate([c.property({type:g,json:{write:{isRequired:!0}}})],a.prototype,"viewpoint",
+void 0);return a=d=b.__decorate([h.subclass("esri.webscene.InitialViewProperties")],a)});

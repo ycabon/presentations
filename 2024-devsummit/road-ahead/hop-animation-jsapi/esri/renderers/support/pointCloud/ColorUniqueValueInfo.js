@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../Color ../../../core/JSONSupport ../../../core/lang ../../../core/accessorSupport/decorators/property ../../../core/accessorSupport/ensureType ../../../core/accessorSupport/decorators/subclass".split(" "),function(b,f,a,e,c,g,h){var d;a=d=class extends a.JSONSupport{constructor(){super(...arguments);this.color=this.values=this.label=this.description=null}clone(){return new d({description:this.description,label:this.label,values:e.clone(this.values),color:e.clone(this.color)})}};
+b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"description",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"label",void 0);b.__decorate([c.property({type:[String],json:{write:!0}})],a.prototype,"values",void 0);b.__decorate([c.property({type:f,json:{type:[g.Integer],write:!0}})],a.prototype,"color",void 0);return a=d=b.__decorate([h.subclass("esri.renderers.support.pointCloud.ColorUniqueValueInfo")],a)});

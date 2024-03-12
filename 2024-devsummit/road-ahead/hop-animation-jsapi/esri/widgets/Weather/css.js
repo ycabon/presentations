@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../support/legacyIcon"],function(a,b){a.css={base:"esri-weather",widgetIcon:b.legacyIcon.partlyCloudy,content:"esri-weather__content",hasError:"esri-weather__content--has-error",selector:"esri-weather__selector",options:"esri-weather__options",optionsHidden:"esri-weather__options--hidden",error:"esri-weather__error",warning:"esri-weather__warning"};a.labeledSliderCss={base:"esri-weather__labeled-slider"};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

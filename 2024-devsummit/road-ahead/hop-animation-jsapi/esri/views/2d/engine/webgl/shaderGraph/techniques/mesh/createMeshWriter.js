@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./instanceIdUtils","./MeshWriterInputEvaluator","./MeshWriterRegistry"],function(f,l,h,m){async function k(b,e,a,d,c,g,n){a=m.meshWriterRegistry[a];b=await h.MeshWriterInputEvaluator.create(b,e,c);d=new a.constructor(d,b,g,n);await d.loadDependencies();return d}f.createMeshWriter=k;f.createMeshWriterDirect=async function(b,e,a,d,c,g){b=await h.MeshWriterInputEvaluator.create(b,e,c);a=new a(d,b,g,c.params.effects?.effectInfos);await a.loadDependencies();return a};f.createMeshWriterGroupFromSchema=
+async function(b,e,a,d){return Promise.all(a.map(c=>k(b,e,c.meshWriterName,l.castStrictInstanceId(c.id),c.options,d,c.optionalAttributes)))};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

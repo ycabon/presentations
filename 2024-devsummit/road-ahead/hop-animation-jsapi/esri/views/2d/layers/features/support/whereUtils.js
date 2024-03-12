@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../core/Error","../../../../../core/Logger","../../../../../core/sql"],function(e,g,h,k){const f=()=>h.getLogger("esri.views.2d.layers.features.support.whereUtils"),l={getAttribute(b,d){return b.readAttribute(d)}};e.createWhereClause=async function(b,d){try{const c=await k.parseWhereClause(b,d);if(!c.isStandardized){const a=new g("mapview - bad input","Unable to apply filter's definition expression, as expression is not standardized.",c);f().error(a)}return a=>{a=a.readArcadeFeature();
+return c.testFeature(a,l)}}catch(c){return f().warn("mapview-bad-where-clause","Encountered an error when evaluating where clause",b),a=>!0}};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../featureTechniqueUtils","../Technique","../mesh/MeshWriterRegistry","../shaders/FillShader"],function(e,b,f,g,h){class k extends f.Technique{constructor(){super(...arguments);this.meshWriter=g.meshWriterRegistry.FillMeshWriter;this.shaders={geometry:new h.FillShader}}render(a,c){const {context:l,painter:d}=a;d.setShader({shader:this.shaders.geometry,uniforms:{...b.resolveDynamicUniforms(a,c.target,c.instance.getInput().geometry),...b.getFeatureUniforms(a,c.target)},defines:b.getSelectionDefines(a),
+optionalAttributes:c.instance.optionalAttributes,useComputeBuffer:b.isHittest(a)});d.setPipelineState(b.getFeaturePipelineState(a));d.submitDraw(l,c)}}e.FillTechnique=k;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

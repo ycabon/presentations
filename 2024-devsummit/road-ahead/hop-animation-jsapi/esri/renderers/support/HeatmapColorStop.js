@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../Color ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/RandomLCG ../../core/has ../../core/accessorSupport/decorators/subclass".split(" "),function(b,e,a,d,f,k,l,g){var c;a=c=class extends a.JSONSupport{constructor(h){super(h);this.ratio=this.color=null}clone(){return new c({color:this.color&&this.color.clone(),ratio:this.ratio})}};b.__decorate([d.property({type:e,json:{type:[f.Integer],default:null,
+write:!0}})],a.prototype,"color",void 0);b.__decorate([d.property({type:Number,json:{write:!0}})],a.prototype,"ratio",void 0);return a=c=b.__decorate([g.subclass("esri.renderers.support.HeatmapColorStop")],a)});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/RandomLCG ../../core/has ../../core/accessorSupport/decorators/subclass ./rasterEnums".split(" "),function(b,a,c,e,g,h,f,d){a=class extends a.JSONSupport{constructor(){super(...arguments);this.pixelType="unknown"}};b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"name",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],
+a.prototype,"description",void 0);b.__decorate([c.property({type:e.Integer,json:{type:e.Integer,write:!0,name:"_object_id"}})],a.prototype,"id",void 0);b.__decorate([c.property({type:String,json:{type:d.pixelTypeKebabDict.jsonValues,read:d.pixelTypeKebabDict.read,write:d.pixelTypeKebabDict.write}})],a.prototype,"pixelType",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"type",void 0);return a=b.__decorate([f.subclass("esri.layers.support.RasterFunctionInfo")],a)});

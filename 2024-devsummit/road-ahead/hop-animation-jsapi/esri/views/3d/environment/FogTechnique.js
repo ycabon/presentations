@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../chunks/Fog.glsl ../webgl-engine/core/shaderTechnique/ReloadableShaderModule ../webgl-engine/core/shaderTechnique/ShaderTechnique ../webgl-engine/core/shaderTechnique/ShaderTechniqueConfiguration ../webgl-engine/lib/DefaultVertexAttributeLocations ../webgl-engine/lib/Program ../../webgl/enums ../../webgl/renderState".split(" "),function(f,e,g,h,k,l,m,n,b,c){class d extends k.ShaderTechnique{constructor(a){super(a,new l.ShaderTechniqueConfiguration,()=>this.destroy())}initializeProgram(a){return new n.Program(a.rctx,
+d.shader.get().build(),m.Default3D)}initializePipeline(){return c.makePipelineState({blending:c.separateBlendingParams(b.BlendFactor.SRC_ALPHA,b.BlendFactor.ZERO,b.BlendFactor.ONE_MINUS_SRC_ALPHA,b.BlendFactor.ONE),colorWrite:c.defaultColorWriteParams})}}d.shader=new h.ReloadableShaderModule(g.Fog,()=>new Promise((a,p)=>f(["./Fog.glsl"],a,p)));e.FogTechnique=d;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

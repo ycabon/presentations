@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../Color ../../../../core/has ../../../../core/screenUtils ../../../../core/libs/gl-matrix-2/factories/vec4f64 ./layerUtils ../../webgl-engine/lib/edgeRendering/interfaces".split(" "),function(b,p,t,e,c,f,g){function h(a,d){if(null==a)return null;const k=null!=a.color?c.fromArray(p.toUnitRGBA(a.color)):c.fromValues(0,0,0,0),l=e.pt2px(a.size),m=e.pt2px(a.extensionLength);switch(a.type){case "solid":return n({color:k,size:l,extensionLength:m,...d});case "sketch":return{...q,
+color:k,size:l,extensionLength:m,...d,type:"sketch"}}}function n(a){return{...r,...a,type:"solid"}}const r={color:c.fromValues(0,0,0,.2),size:1,extensionLength:0,opacity:1,objectTransparency:g.Transparency.OPAQUE,hasSlicePlane:!1},q={color:c.fromValues(0,0,0,.2),size:1,extensionLength:0,opacity:1,objectTransparency:g.Transparency.OPAQUE,hasSlicePlane:!1};b.createMaterial=function(a,d){return h(a&&a.enabled&&a.edges||null,d)};b.createMaterialFromEdges=h;b.createSolidEdgeMaterial=n;b.hasEdges=function(a){return a&&
+a.enabled&&(f.isExtrudeSymbol3DLayer(a)||f.isFillSymbol3DLayer(a))&&null!=a.edges};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

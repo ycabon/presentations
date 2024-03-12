@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./FieldIndex ./GraphProperty".split(" "),function(b,a,c,h,k,l,d,e,f){a=class extends a.JSONSupport{constructor(g){super(g);this.fieldIndexes=this.properties=this.strict=this.role=this.alias=this.name=null}};b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"name",void 0);b.__decorate([c.property({type:String,
+json:{write:!0}})],a.prototype,"alias",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"role",void 0);b.__decorate([c.property({type:Boolean,json:{write:!0}})],a.prototype,"strict",void 0);b.__decorate([c.property({type:[f],json:{write:!0}})],a.prototype,"properties",void 0);b.__decorate([c.property({type:[e],json:{write:!0}})],a.prototype,"fieldIndexes",void 0);return a=b.__decorate([d.subclass("esri.rest.knowledgeGraph.GraphObjectType")],a)});

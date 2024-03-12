@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./accessorSupport/tracking","./accessorSupport/tracking/SimpleObservable"],function(b,e){class f{constructor(a=c=>c.values().next().value){this._peeker=a;this._observable=new e.SimpleObservable;this._items=new Set}get length(){b.trackAccess(this._observable);return this._items.size}clear(){0!==this.length&&(this._items.clear(),this._observable.notify())}last(){if(0!==this.length){for(var a of this._items);return a}}peek(){if(0!==this.length)return this._peeker(this._items)}push(a){this.contains(a)||
+(this._items.add(a),this._observable.notify())}contains(a){b.trackAccess(this._observable);return this._items.has(a)}pop(){if(0!==this.length){var a=this.peek();this._items.delete(a);this._observable.notify();return a}}popLast(){if(0!==this.length){var a=this.last();this._items.delete(a);this._observable.notify();return a}}remove(a){this.contains(a)&&(this._items.delete(a),this._observable.notify())}filter(a){const c=this.length;this._items.forEach(d=>{a(d)||this._items.delete(d)});c!==this._items.size&&
+this._observable.notify();return this}*[Symbol.iterator](){b.trackAccess(this._observable);yield*this._items}}return f});

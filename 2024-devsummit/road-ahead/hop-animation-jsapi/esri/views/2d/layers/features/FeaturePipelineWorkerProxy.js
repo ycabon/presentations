@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/workers/workers"],function(b,d){class c{constructor(a){this._connection=a;this.pipeline=this._connection.createInvokeProxy();this.features=this._connection.createInvokeProxy("features");this.aggregates=this._connection.createInvokeProxy("aggregates");this.processor=this._connection.createInvokeProxy("processor");this.streamMessenger=this._connection.createInvokeProxy("streamMessenger")}destroy(){this._connection.destroy()}get closed(){return this._connection.closed}}
+b.FeaturePipelineWorkerProxy=c;b.createFeaturePipelineWorkerProxy=async function(a){a=await d.open("FeaturePipelineWorker",{client:a,strategy:"dedicated"});return new c(a)};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

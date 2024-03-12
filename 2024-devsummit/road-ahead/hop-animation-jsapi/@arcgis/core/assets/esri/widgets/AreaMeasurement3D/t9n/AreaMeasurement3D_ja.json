@@ -1,0 +1,1 @@
+{"area":"面積","hint":"シーンで始点となる位置をクリックし、計測を開始します。","newMeasurement":"新しい計測","perimeterLength":"周長","snappingDisablePrompt":"Ctrl キーを押したままにすると、スナップが一時的に無効になります。","snappingDisablePromptAlternate":"Ctrl キーを押したままにすると、スナップが一時的に無効になります。","unit":"単位","unsupported":"SceneView では 3D の面積計測のみがサポートされています。","widgetLabel":"エリアの計測"}

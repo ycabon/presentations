@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../core/promiseUtils"],function(e,n){function l(a,b,f){if(a instanceof g&&!(a instanceof h)){const c=new h;c.fn=a;c.parameterEvaluator=f;c.context=b;return c}return a}class g{constructor(){}}class p extends g{constructor(a){super();this.fn=a}createFunction(a){return(...b)=>this.fn(a,{preparsed:!0,arguments:b})}call(a,b){return this.fn(a,b)}marshalledCall(a,b,f,c){return c(a,b,(k,q,m)=>{m=m.map(d=>d instanceof g&&!(d instanceof h)?l(d,a,c):d);k=this.call(f,{args:m});return n.isPromiseLike(k)?
+k.then(d=>l(d,f,c)):k})}}class h extends g{constructor(){super(...arguments);this.context=this.fn=null}createFunction(a){return this.fn.createFunction(this.context)}call(a,b){return this.fn.marshalledCall(a,b,this.context,this.parameterEvaluator)}marshalledCall(a,b,f){return this.fn.marshalledCall(a,b,this.context,this.parameterEvaluator)}}e.ArcadeFunction=g;e.NativeFunction=p;e.ScopeMarshalledFunction=h;e.wrapModuleScopedResponse=l;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

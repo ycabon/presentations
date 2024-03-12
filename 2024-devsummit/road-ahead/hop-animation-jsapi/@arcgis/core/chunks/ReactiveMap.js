@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{t as e}from"./tracking.js";import{S as t}from"./SimpleObservable.js";class s{constructor(e){this._observable=new t,this._map=new Map(e)}get size(){return e(this._observable),this._map.size}clear(){this._map.size>0&&(this._map.clear(),this._observable.notify())}delete(e){const t=this._map.delete(e);return t&&this._observable.notify(),t}entries(){return e(this._observable),this._map.entries()}forEach(t,s){e(this._observable),this._map.forEach(((e,r)=>t.call(s,e,r,this)),s)}get(t){return e(this._observable),this._map.get(t)}has(t){return e(this._observable),this._map.has(t)}keys(){return e(this._observable),this._map.keys()}set(e,t){return this._map.set(e,t),this._observable.notify(),this}values(){return e(this._observable),this._map.values()}[Symbol.iterator](){return e(this._observable),this._map[Symbol.iterator]()}get[Symbol.toStringTag](){return this._map[Symbol.toStringTag]}}export{s as R};

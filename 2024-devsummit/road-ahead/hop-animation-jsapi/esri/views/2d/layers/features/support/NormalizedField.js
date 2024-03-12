@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./AComputedField"],function(c,e){class f extends e.AComputedField{constructor(a,b){super();this._field=a;this._normalizationInfo=b}resize(a){throw Error("Method not implemented.");}read(a,b){return this._readNormalized(a)}readWithDefault(a,b){return this._readNormalized(a)}referencesScale(){return!1}referencesGeometry(){return!1}_readNormalized(a){const b=a.readAttribute(this._field);if(null==b)return null;const {normalizationField:g,normalizationTotal:d,normalizationType:h}=this._normalizationInfo;
+a=a.readAttribute(g);switch(h??"esriNormalizeByField"){case "esriNormalizeByField":return a?(a||void 0)&&b/a:null;case "esriNormalizeByLog":return Math.log(b)*Math.LOG10E;case "esriNormalizeByPercentOfTotal":return d?b/d*100:null}}}c.NormalizedField=f;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

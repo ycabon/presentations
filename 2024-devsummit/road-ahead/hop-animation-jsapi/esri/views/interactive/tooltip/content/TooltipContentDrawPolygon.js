@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/DrawHeaderActions ./Fields ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(a,d,t,u,v,w,e,f,g,h,x,c){a.TooltipContentDrawPolygon=class extends h.TooltipContent{_renderContent(){const {fieldContext:k,info:l,mode:m}=this,{area:n,
+distance:p,elevation:q,direction:r,visibleElements:b}=l;return c.tsx(g.Fields,{context:k,fields:[b.direction?r:void 0,b.distance?p:void 0,b.elevation?q:void 0,b.area?n:void 0],mode:m})}_renderActions(){return c.tsx(f.DrawHeaderActions,{sketchOptions:this.info.sketchOptions})}};a.TooltipContentDrawPolygon=d.__decorate([e.subclass("esri.views.interactive.tooltip.content.TooltipContentDrawPolygon")],a.TooltipContentDrawPolygon);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./handleUtils"],function(e,l){function h(a){return null!=a&&"object"===typeof a&&"on"in a&&"function"===typeof a.on||m(a)}function m(a){return null!=a&&"object"===typeof a&&"addEventListener"in a&&"function"===typeof a.addEventListener}function k(a,b,c){if(!h(a))throw new TypeError("target is not a Evented or EventTarget object");return m(a)?n(a,b,c):a.on(b,c)}function n(a,b,c,d){if(Array.isArray(b)){const f=b.slice();for(const g of f)a.addEventListener(g,c,d);return l.makeHandle(()=>
+{for(const g of f)a.removeEventListener(g,c,d)})}a.addEventListener(b,c,d);return l.makeHandle(()=>a.removeEventListener(b,c,d))}e.addEventListener=n;e.isEventedOrEventTarget=h;e.on=k;e.once=function(a,b,c){if(!h(a))throw new TypeError("target is not a Evented or EventTarget object");if("once"in a)return a.once(b,c);const d=k(a,b,f=>{d.remove();c.call(a,f)});return d};e.pausable=function(a,b,c){let d=!1;const f=k(a,b,g=>{d||c.call(a,g)});return{resume(){d=!1},pause(){d=!0},remove(){f.remove()}}};
+Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

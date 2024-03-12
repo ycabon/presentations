@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/MemCachePool","../../../../core/PooledArray"],function(c,e,d){class f{constructor(a,b){this._last=new d;this._incarnation=0;this._cache=new e.MemCachePool(a,b)}destroy(){this._last?.forAll(a=>a.dispose());this._last=null;this._cache.destroy()}set interactive(a){a&&!this._last?this._last=new d:a||(this._last?.forAll(b=>b.dispose()),this._last=null)}clean(){this._last?.filterInPlace(a=>a.incarnation<this._incarnation?(this._cache.put(a.key,a),!1):!0)}frame(){++this._incarnation}pop(a){if(this._last){const b=
+this._last.find(g=>g.key===a);if(b)return this._last.removeUnordered(b),b}return this._cache.pop(a)}put(a){a.incarnation=this._incarnation;this._last?this._last.push(a):this._cache.put(a.key,a)}get usedMemory(){return this._last?.reduce((a,b)=>a+b.usedMemory,0)??0}}c.FBOPool=f;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

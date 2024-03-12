@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(b){class d{constructor(){this.setIdentity()}getAngle(){if(null==this.rz||0===this.rz&&1!==this.rzCos&&0!==this.rzSin)this.rz=Math.atan2(this.rzSin,this.rzCos);return this.rz}setIdentity(){this.tz=this.ty=this.tx=0;this.s=1;this.rz=this.ry=this.rx=0;this.rzCos=1;this.rzSin=0}setTranslate(a,c){this.tx=a;this.ty=c}setTranslateZ(a){this.tz=a}setRotateCS(a,c){this.rz=void 0;this.rzCos=a;this.rzSin=c}setRotate(a){this.rz=a;this.rzSin=this.rzCos=void 0}setRotateY(a){this.ry=a}setScale(a){this.s=
+a}setMeasure(a){this.m=a}}class e{next(){return null}}b.EmptyPlacementCursor=e;b.Placement=d;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

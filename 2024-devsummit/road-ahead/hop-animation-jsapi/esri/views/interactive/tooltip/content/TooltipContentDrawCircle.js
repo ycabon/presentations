@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ../components/ValueByValue ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(b,l,r,t,u,v,m,d,n,p,w,a){b.TooltipContentDrawCircle=class extends p.TooltipContent{_renderContent(){const {area:q,radius:g,xSize:h,ySize:k,
+visibleElements:e}=this.info,f=this._messagesTooltip.sketch,c=this._formatters;return a.tsx(a.tsxFragment,null,e.radius&&null!=g?a.tsx(d.TooltipField,{title:f.radius,value:c.length(g)}):null,e.size&&null!=h&&null!=k?a.tsx(d.TooltipField,{title:f.size,value:a.tsx(n.ValueByValue,{left:c.length(h),right:c.length(k)})}):null,e.area?a.tsx(d.TooltipField,{title:f.area,value:c.area(q)}):null)}};b.TooltipContentDrawCircle=l.__decorate([m.subclass("esri.views.interactive.tooltip.content.TooltipContentDrawCircle")],
+b.TooltipContentDrawCircle);Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

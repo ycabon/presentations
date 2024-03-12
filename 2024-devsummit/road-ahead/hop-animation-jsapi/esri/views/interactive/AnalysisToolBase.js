@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/reactiveUtils ../../core/Logger ../../core/has ../../core/RandomLCG ../../core/Error ../../core/accessorSupport/decorators/subclass ./InteractiveToolBase".split(" "),function(a,d,c,g,h,k,l,e,f){a.AnalysisToolBase=class extends f.InteractiveToolBase{constructor(b){super(b)}initialize(){this.addHandles(c.watch(()=>this.analysisViewData.visible,b=>this.visible=b,c.syncAndInitial))}deactivate(){this.onDeactivate();this.created||this.analysis.clear()}resetCreated(){this._set("created",
+!1)}};a.AnalysisToolBase=d.__decorate([e.subclass("esri.views.interactive.AnalysisToolBase")],a.AnalysisToolBase);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

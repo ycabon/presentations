@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){class e{constructor(a,c,b){this.view=a;this.vertexIndex=c;this.vertices=b;this.defaultPrevented=!1;this.type="vertex-add"}preventDefault(){this.defaultPrevented=!0}}class f{constructor(a,c,b){this.view=a;this.vertexIndex=c;this.vertices=b;this.defaultPrevented=!1;this.type="vertex-update"}preventDefault(){this.defaultPrevented=!0}}class g{constructor(a,c,b){this.view=a;this.vertexIndex=c;this.vertices=b;this.defaultPrevented=!1;this.type="vertex-remove"}preventDefault(){this.defaultPrevented=
+!0}}class h{constructor(a,c,b,k=null){this.view=a;this.vertexIndex=c;this.vertices=b;this.mapPoint=k;this.coordinates=null;this.defaultPrevented=!1;this.type="cursor-update";this.coordinates=1===b.length?b[0]:null}preventDefault(){this.defaultPrevented=!0}}class l{constructor(a){this.vertices=a;this.coordinates=null;this.defaultPrevented=!1;this.type="draw-complete";this.coordinates=1===a.length?a[0]:null}preventDefault(){this.defaultPrevented=!0}}d.CursorUpdateEvent=h;d.DrawCompleteEvent=l;d.VertexAddEvent=
+e;d.VertexRemoveEvent=g;d.VertexUpdateEvent=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

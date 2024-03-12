@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../../chunks/tslib.es6 ../../../../core/Accessor ../../../../core/accessorSupport/decorators/property ../../../../core/accessorSupport/decorators/cast ../../../../core/RandomLCG ../../../../core/has ../../../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,c,g,k,l,h){var d;a=d=class extends a{constructor(e){super(e);this.autoCloseMenu=!1;this.label=this.items=this.iconClass=null;this.selectionEnabled=this.selected=this.open=!1;this.clickFunction=null}castItems(e){return e?
+e.map(f=>f instanceof d?f:new d(f)):null}};b.__decorate([c.property()],a.prototype,"autoCloseMenu",void 0);b.__decorate([c.property()],a.prototype,"iconClass",void 0);b.__decorate([c.property()],a.prototype,"items",void 0);b.__decorate([g.cast("items")],a.prototype,"castItems",null);b.__decorate([c.property()],a.prototype,"label",void 0);b.__decorate([c.property()],a.prototype,"open",void 0);b.__decorate([c.property()],a.prototype,"selected",void 0);b.__decorate([c.property()],a.prototype,"selectionEnabled",
+void 0);b.__decorate([c.property()],a.prototype,"clickFunction",void 0);return a=d=b.__decorate([h.subclass("esri.widgets.FeatureTable.Grid.support.ButtonMenuItem")],a)});

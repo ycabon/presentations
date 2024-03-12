@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/compilerUtils","../../../webgl/enums"],function(d,f,b){const e={baseColorFactor:[1,1,1,1],metallicFactor:1,roughnessFactor:1},g={pbrMetallicRoughness:e,emissiveFactor:[0,0,0],alphaMode:"OPAQUE",alphaCutoff:.5,doubleSided:!1},h={ESRI_externalColorMixMode:"tint"},k={magFilter:b.TextureSamplingMode.LINEAR,minFilter:b.TextureSamplingMode.LINEAR_MIPMAP_LINEAR,wrapS:b.TextureWrapMode.REPEAT,wrapT:b.TextureWrapMode.REPEAT};d.material=(a={})=>{const l={...e,...a.pbrMetallicRoughness};
+var c={...h,...a.extras};switch(c.ESRI_externalColorMixMode){case "multiply":case "tint":case "ignore":case "replace":break;default:f.neverReached(c.ESRI_externalColorMixMode),c.ESRI_externalColorMixMode="tint"}return{...g,...a,pbrMetallicRoughness:l,extras:c}};d.textureSampler=a=>({...k,...a});Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

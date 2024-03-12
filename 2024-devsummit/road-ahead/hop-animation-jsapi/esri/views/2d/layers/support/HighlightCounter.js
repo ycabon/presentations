@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../engine/highlightReasons"],function(e,f){class g{constructor(){this._idToCounters=new Map}get empty(){return 0===this._idToCounters.size}addReason(a,b){for(const c of a)a=this._idToCounters.get(c),a||(a=new Map,this._idToCounters.set(c,a)),a.set(b,(a.get(b)||0)+1)}deleteReason(a,b){for(const c of a){a=this._idToCounters.get(c);if(!a)continue;let d=a.get(b);if(null==d)break;d--;0<d?a.set(b,d):a.delete(b);0===a.size&&this._idToCounters.delete(c)}}getHighestReason(a){a=this._idToCounters.get(a);
+if(!a)return null;let b=null;for(const c of f.highlightReasons)a.get(c)&&(b=c);return b?b:null}ids(){return this._idToCounters.keys()}}e.HighlightCounter=g;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

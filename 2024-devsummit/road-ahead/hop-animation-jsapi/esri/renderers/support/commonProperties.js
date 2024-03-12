@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../symbols ../../core/object ../../core/accessorSupport/extensions/serializableProperty/reader ../../symbols/support/jsonUtils ../../symbols/Symbol ../../symbols/PolygonSymbol3D".split(" "),function(c,b,f,d,e,g,h){d={types:b.symbolTypesRenderer,json:{write:{writer:e.write},origins:{"web-scene":{types:b.symbolTypesRenderer3D,write:{writer:e.write},read:{reader:d.createTypeReader({types:b.symbolTypesRenderer3D})}}}}};f=f.deepMerge({json:{origins:{"web-scene":{write:{isRequired:!0}}}}},
+d);const l={cast:a=>null==a||"string"===typeof a||"number"===typeof a?a:`${a}`,json:{type:String,write:{writer:(a,k)=>{k.value=a?.toString()}}}};c.rendererBackgroundFillSymbolProperty={types:{base:g,key:"type",typeMap:{"simple-fill":b.symbolTypes.typeMap["simple-fill"],"picture-fill":b.symbolTypes.typeMap["picture-fill"],"polygon-3d":b.symbolTypes.typeMap["polygon-3d"]}},json:{write:{writer:e.write},origins:{"web-scene":{type:h,write:{writer:e.write}}}}};c.rendererSymbolProperty=d;c.requiredRendererSymbolProperty=
+f;c.uniqueValueProperty=l;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

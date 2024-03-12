@@ -1,0 +1,5 @@
+/*
+All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+*/
+import{symbolTypesRenderer as e,symbolTypesRenderer3D as s,symbolTypes as r}from"../symbols.js";import{d as o}from"../config.js";import{c as t}from"../core/accessorSupport/decorators/subclass.js";import{write as i}from"../symbols/support/jsonUtils.js";import p from"../symbols/Symbol.js";import l from"../symbols/PolygonSymbol3D.js";const y={types:e,json:{write:{writer:i},origins:{"web-scene":{types:s,write:{writer:i},read:{reader:t({types:s})}}}}},m=o({json:{origins:{"web-scene":{write:{isRequired:!0}}}}},y),n={types:{base:p,key:"type",typeMap:{"simple-fill":r.typeMap["simple-fill"],"picture-fill":r.typeMap["picture-fill"],"polygon-3d":r.typeMap["polygon-3d"]}},json:{write:{writer:i},origins:{"web-scene":{type:l,write:{writer:i}}}}},a={cast:e=>null==e||"string"==typeof e||"number"==typeof e?e:`${e}`,json:{type:String,write:{writer:(e,s)=>{s.value=e?.toString()}}}};export{y as a,m as b,n as r,a as u};

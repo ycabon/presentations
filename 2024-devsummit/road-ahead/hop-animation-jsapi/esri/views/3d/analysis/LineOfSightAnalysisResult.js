@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../chunks/tslib.es6 ../../../core/Accessor ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,d,c,g,h,k,e){a.LineOfSightAnalysisResult=class extends d{constructor(f){super(f);this.elevationAlignedTargetLocation=this.intersectedLocation=this.intersectedGraphic=this.target=null;this.visible=void 0}};b.__decorate([c.property()],a.LineOfSightAnalysisResult.prototype,
+"target",void 0);b.__decorate([c.property()],a.LineOfSightAnalysisResult.prototype,"intersectedGraphic",void 0);b.__decorate([c.property()],a.LineOfSightAnalysisResult.prototype,"intersectedLocation",void 0);b.__decorate([c.property()],a.LineOfSightAnalysisResult.prototype,"elevationAlignedTargetLocation",void 0);b.__decorate([c.property({type:Boolean})],a.LineOfSightAnalysisResult.prototype,"visible",void 0);a.LineOfSightAnalysisResult=b.__decorate([e.subclass("esri.views.3d.analysis.LineOfSightAnalysisResult")],
+a.LineOfSightAnalysisResult);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

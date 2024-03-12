@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/libs/gl-matrix-2/factories/mat4f64","../../geometry/projection/computeTranslationToOriginAndRotation","../../geometry/projection/projectBuffer"],function(d,l,m,k){d.fromRenderCoordinates=function(b,e,c,a,g,f,h){f=f||b.spatialReference;return k.projectBuffer(e,b.renderCoordsHelper.spatialReference,c,a,f,g,h)?a:null};d.renderCoordinateTransformAt=function(b,e,c,a){a||=l.create();c=c||b.spatialReference;return m.computeTranslationToOriginAndRotation(c,e,a,b.renderCoordsHelper.spatialReference)?
+a:null};d.toRenderCoordinates=function(b,e,c,a,g,f,h){a=a||b.spatialReference;return k.projectBuffer(e,a,c,g,b.renderCoordsHelper.spatialReference,f,h)?g:null};d.webgl=null;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

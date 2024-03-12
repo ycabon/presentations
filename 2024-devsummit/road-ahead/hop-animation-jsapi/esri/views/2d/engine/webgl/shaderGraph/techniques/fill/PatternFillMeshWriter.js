@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../definitions","./FillMeshWriter","../../../../../../webgl/enums"],function(d,e,f,g){const k={createComputedParams:a=>a,attributes:{...f.fillVertexSpec.attributes,tlbr:{count:4,type:g.DataType.UNSIGNED_SHORT,pack:({sprite:a})=>{const {rect:c,width:b,height:l}=a;a=c.x+e.spritePadding;const h=c.y+e.spritePadding;return[a,h,a+b,h+l]}},inverseRasterizationScale:{count:1,type:g.DataType.BYTE,packPrecisionFactor:16,pack:({sprite:a})=>1/a.rasterizationScale}}};class m extends f.FillMeshWriter{constructor(){super(...arguments);
+this.vertexSpec=k}_write(a,c,b){b=b?.asOptimized()??c.readGeometryForDisplay();if(b=this._clip(b))a.recordStart(this.instanceId,this.attributeLayout,this.evaluatedMeshParams.sprite?.textureBinding),this._writeGeometry(a,c,b),a.recordEnd()}}d.PatternFillMeshWriter=m;d.patternFillVertexSpec=k;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

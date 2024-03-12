@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../../core/has","../brushes","../Container","./ClippingInfo","./enums"],function(h,d,e,f,b){class g extends e.Container{set clips(a){super.clips=a;this._updateClippingInfo(a)}renderChildren(a){a.painter.setPipelineState(null);null==this._renderPasses&&(this._renderPasses=this.prepareRenderPasses(a.painter));for(const c of this._renderPasses)try{c.render(a)}catch(k){}}prepareRenderPasses(a){return[a.registerRenderPass({name:"clip",brushes:[d.brushes.clip],target:()=>this._clippingInfos,
+drawPhase:b.WGLDrawPhase.MAP|b.WGLDrawPhase.LABEL|b.WGLDrawPhase.LABEL_ALPHA|b.WGLDrawPhase.DEBUG|b.WGLDrawPhase.HIGHLIGHT})]}_updateClippingInfo(a){null!=this._clippingInfos&&(this._clippingInfos.forEach(c=>c.destroy()),this._clippingInfos=null);null!=a&&a.length&&(this._clippingInfos=a.items.map(c=>f.fromClipArea(this.stage,c)));this.requestRender()}}return g});

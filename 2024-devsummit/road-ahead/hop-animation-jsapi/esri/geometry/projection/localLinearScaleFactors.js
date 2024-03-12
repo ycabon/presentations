@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../chunks/vec32","./projectors","../support/Ellipsoid","../support/spatialReferenceUtils"],function(h,l,a,k,m){h.localLinearScaleFactors=function(d,e,b,g){if(null==e||null==g)return!1;const f=a.classifySpatialReference(e,a.sourceClassificationCache);var c=a.classifySpatialReference(g,a.destClassificationCache);if(f===c&&f!==a.ProjectionID.UNKNOWN||m.equals(e,g))return b[0]=1,b[1]=1,b[2]=1,!0;if(f===a.ProjectionID.SPHERICAL_ECEF){e=l.length(d);d=e/Math.sqrt(d[0]*d[0]+d[1]*d[1]);
+e/=k.earth.radius;if(c===a.ProjectionID.WEB_MERCATOR)return b[0]=d*e,b[1]=d*e,b[2]=1,!0;if(c===a.ProjectionID.WGS84||c===a.ProjectionID.CGCS2000)return c=a.invPlateCarreeScale,b[0]=c*d*e,b[1]=c*e,b[2]=1,!0}else if(f===a.ProjectionID.PLATE_CARREE){if(c===a.ProjectionID.WGS84||c===a.ProjectionID.CGCS2000)return b[0]=a.invPlateCarreeScale,b[1]=a.invPlateCarreeScale,b[2]=1,!0;if(c===a.ProjectionID.WEB_MERCATOR)return c=d[1]/k.earth.radius,b[0]=1,b[1]=1/Math.cos(c),b[2]=1,!0}return!1};Object.defineProperty(h,
+Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(a,h,n,p,q,r,k,c,l,t,b){a.TooltipContentTranslateVertexZ=class extends l.TooltipContent{_renderContent(){const {distance:m,elevation:d,visibleElements:e}=this.info,f=
+this._messagesTooltip.sketch,g=this._formatters;return b.tsx(b.tsxFragment,null,e.distance?b.tsx(c.TooltipField,{title:f.distance,value:g.verticalLengthRelative(m)}):null,e.elevation&&null!=d?.actual?b.tsx(c.TooltipField,{title:f.elevation,value:g.verticalLength(d.actual)}):null)}};a.TooltipContentTranslateVertexZ=h.__decorate([k.subclass("esri.views.interactive.tooltip.content.TooltipContentTranslateVertexZ")],a.TooltipContentTranslateVertexZ);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

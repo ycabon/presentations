@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../support/arcadeOnDemand","../../../arcade/callExpressionWithCursor","./AComputedField"],function(c,f,d,g){class e extends g.AComputedField{static async create(a,b){a=await f.createRendererExpression(a,b.spatialReference,b.fields);return new e(a)}constructor(a){super();this._compiled=a}resize(a){}read(a,b){return d.callExpressionWithCursor(this._compiled,a,b)}readWithDefault(a,b,h){return d.callExpressionWithCursorWithDefault(this._compiled,a,b,h)}referencesScale(){return this._compiled?.referencesScale()??
+!1}referencesGeometry(){return this._compiled?.referencesGeometry()??!1}}c.ComputedExpression=e;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

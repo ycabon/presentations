@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../chunks/vec32","../../../../core/libs/gl-matrix-2/factories/vec3f64"],function(a,k,l){a.defaultAdvancedMRRFactors=[1,1,.5];a.defaultEsriSymbologyMRRFactors=[0,1,.2];a.defaultSchematicMRRFactors=[0,.6,.2];a.useSchematicPBR=function({normalTexture:e,metallicRoughnessTexture:f,metallicFactor:b,roughnessFactor:c,emissiveTexture:g,emissiveFactor:d,occlusionTexture:h}){return null==e&&null==f&&null==g&&(null==d||k.exactEquals(d,l.ZEROS))&&null==h&&(null==c||1===c)&&(null==
+b||1===b)};a.useSchematicPBRI3S=function({normalTexture:e,metallicRoughnessTexture:f,metallicFactor:b,roughnessFactor:c,emissiveTexture:g,emissiveFactor:d,occlusionTexture:h}){return null==e&&null==f&&null==g&&(null==d||k.exactEquals(d,l.ZEROS))&&null==h&&(null==c||1===c)&&(null==b||1===b||0===b)};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

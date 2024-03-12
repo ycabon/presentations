@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ../SizeSlider/SizeSliderViewModel".split(" "),function(g,n,a,u,v,p,q){a=class extends q{constructor(b){super(b);this.primaryHandleEnabled=!0}getGradientStopInfo(b,d){if(!this.stops?.length)return[];const {min:r,max:e,stops:h}=this,t=[d,d,d,b,b],k=[],l=e-r;h.forEach((c,f)=>{const m=t[f];c=(e-c.value)/l;k.push({offset:0===
+f?c:(e-h[f-1].value)/l,color:m},{offset:c,color:m})});return k}};g.__decorate([n.property({readOnly:!0})],a.prototype,"primaryHandleEnabled",void 0);return a=g.__decorate([p.subclass("esri.widgets.smartMapping.SizeSlider.BinaryColorSizeSliderViewModel")],a)});

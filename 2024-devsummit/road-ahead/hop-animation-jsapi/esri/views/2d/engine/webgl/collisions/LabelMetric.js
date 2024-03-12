@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./BoundingBox","../util/serializationUtils"],function(l,p,m){class n{constructor(a,b,c,d,e,f,g,h,k=[]){this.entityTexel=a;this.anchorX=b;this.anchorY=c;this.directionX=d;this.directionY=e;this.maxScale=f;this.minScale=g;this.referenceBounds=h;this.bounds=k}serialize(a){a.push(this.entityTexel);a.writeF32(this.anchorX);a.writeF32(this.anchorY);a.writeF32(this.directionX);a.writeF32(this.directionY);a.writeF32(this.maxScale);a.writeF32(this.minScale);a.writeF32(this.referenceBounds.size);
+a.writeF32(this.referenceBounds.offsetX);a.writeF32(this.referenceBounds.offsetY);m.serializeList(a,this.bounds)}static deserialize(a){const b=a.readInt32(),c=a.readF32(),d=a.readF32(),e=a.readF32(),f=a.readF32(),g=a.readF32(),h=a.readF32(),k=a.readF32(),q=a.readF32(),r=a.readF32();a=m.deserializeList(a,p)??[];return new n(b,c,d,e,f,g,h,{size:k,offsetX:q,offsetY:r},a)}}l.LabelMetric=n;Object.defineProperty(l,Symbol.toStringTag,{value:"Module"})});

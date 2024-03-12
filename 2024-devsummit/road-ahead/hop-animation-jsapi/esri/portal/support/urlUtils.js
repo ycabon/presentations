@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){const l=/^https:\/\/([a-z\d-]+)(\.maps([^.]*))?\.arcgis\.com/i,m={devext:{customBaseUrl:"mapsdevext.arcgis.com",portalHostname:"devext.arcgis.com"},qaext:{customBaseUrl:"mapsqa.arcgis.com",portalHostname:"qaext.arcgis.com"},www:{customBaseUrl:"maps.arcgis.com",portalHostname:"www.arcgis.com"}};d.isSecureProxyService=function(a){return/\/(sharing|usrsvcs)\/(appservices|servers)\//i.test(a)};d.parseKnownArcGISOnlineDomain=function(a){a=a?.match(l);if(!a)return null;const [,
+e,n,f]=a;if(!e)return null;let b=a=null,c=null;const {devext:g,qaext:h,www:k}=m;if(n)if(a=e,f)switch(f.toLowerCase()){case "devext":({customBaseUrl:b,portalHostname:c}=g);break;case "qa":({customBaseUrl:b,portalHostname:c}=h);break;default:return null}else({customBaseUrl:b,portalHostname:c}=k);else switch(e.toLowerCase()){case "devext":({customBaseUrl:b,portalHostname:c}=g);break;case "qaext":({customBaseUrl:b,portalHostname:c}=h);break;case "www":({customBaseUrl:b,portalHostname:c}=k);break;default:return null}return{customBaseUrl:b,
+isPortal:!1,portalHostname:c,urlKey:a}};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

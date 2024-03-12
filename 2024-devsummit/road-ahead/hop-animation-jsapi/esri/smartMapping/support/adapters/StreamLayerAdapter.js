@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/Logger ../../../core/has ../../../core/RandomLCG ../../../core/Error ../../../core/accessorSupport/decorators/subclass ../../../layers/support/fieldUtils ../utils ./InMemoryLayerAdapter ./support/utils ../../../statistics/utils".split(" "),function(e,c,q,r,t,f,g,h,k,d,l){c=class extends k{async _summaryStatsFromClientQuery(a,b){const {signal:m,view:n}=a;a=d.getSummaryStatsQuery(this,a,b);a.outStatistics=a.outStatistics?.filter(p=>"totalcount_value"!==
+p.outStatisticFieldName);a=await this._fetchFeatureSetFromMemory(a,n,m);b=d.getSummaryStatisticsFromFeatureSet(a,h.isAnyDateField(b)||g.isTimeOnlyField(b));return l.processSummaryStatisticsResult(b)}};return c=e.__decorate([f.subclass("esri.smartMapping.support.adapters.StreamLayerAdapter")],c)});

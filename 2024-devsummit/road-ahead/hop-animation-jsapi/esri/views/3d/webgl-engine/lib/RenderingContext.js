@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../effects/ScreenSpaceGeometry","../../../webgl/AppleAmdDriverHelper","../../../webgl/RenderingContext"],function(d,f,g,h){class k extends h.RenderingContext{constructor(a,b,c){super(a,b);this.gl=a;this.newCache=c;this._appleAmdDriverHelper=null;this._refCount=1;this.screen=new f.ScreenSpaceGeometry(this)}destroy(){0<--this._refCount||this.dispose()}ref(){++this._refCount}dispose(){super.dispose();this._appleAmdDriverHelper?.dispose();this.screen.destroy()}bindTechnique(a,b,c,e,
+l){this.useProgram(a.program);this.setPipelineState(a.getPipeline(!!l));a.program.bindPass(c,b);e&&a.program.bindDraw(e,b,c);return a.program}runAppleAmdDriverHelper(){this.driverTest.drawArraysRequiresIndicesTypeReset.result&&(this._appleAmdDriverHelper??(this._appleAmdDriverHelper=new g.AppleAmdDriverHelper(this)),this._appleAmdDriverHelper.run())}get test(){return{cachedWebGLObjects:this.programCache.test.cachedWebGLProgramObjects+this.screen.test.cachedWebGLObjects+(this._appleAmdDriverHelper?.test.cachedWebGLObjects??
+0)}}}d.RenderingContext=k;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

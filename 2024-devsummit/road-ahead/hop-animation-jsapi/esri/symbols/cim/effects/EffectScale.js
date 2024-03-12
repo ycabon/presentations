@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../geometry/support/boundsUtils"],function(e,f){class d{static local(){null===d.instance&&(d.instance=new d);return d.instance}execute(a,b,c,h,k){return new g(a,b,c)}}d.instance=null;class g{constructor(a,b,c){this._inputGeometries=a;this._xFactor=void 0!==b.XScaleFactor?b.XScaleFactor:1.15;this._yFactor=void 0!==b.YScaleFactor?b.YScaleFactor:1.15}next(){const a=this._inputGeometries.next();if(a){if(1===this._xFactor&&1===this._yFactor||"esriGeometryPoint"===a.geometryType)return a;
+if(0<a.totalSize){var b=f.getCursorBoundsXY(a);const c=(b[2]+b[0])/2;b=(b[3]+b[1])/2;a.reset();return this._scaleCursor(a.clone(),c,b)}}return null}_scaleCursor(a,b,c){for(;a.nextPath();)for(;a.nextPoint();)a.x=b+(a.x-b)*this._xFactor,a.y=c+(a.y-c)*this._yFactor;a.reset();return a}}e.EffectScale=d;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

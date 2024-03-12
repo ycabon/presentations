@@ -1,0 +1,1 @@
+{"distance":"Afstand","hint":"Start måling ved at klikke i kortet for at placere det første punkt","mode":"Tilstand","modes":{"auto":"Auto","planar":"Plan","geodesic":"Geodætisk"},"newMeasurement":"Nye målinger","unit":"Enhed","unsupported":"2D-afstandsmåling understøttes kun i MapView.","widgetLabel":"Afstandsmåling"}

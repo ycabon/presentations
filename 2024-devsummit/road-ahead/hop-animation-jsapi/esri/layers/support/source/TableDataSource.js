@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../chunks/tslib.es6 ../../../core/JSONSupport ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/enumeration ../../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,f,c,m,n,p,g,h){var d;a.TableDataSource=d=class extends f.JSONSupport{constructor(e){super(e);this.type="table"}clone(){const {workspaceId:e,gdbVersion:k,dataSourceName:l}=this;return new d({workspaceId:e,
+gdbVersion:k,dataSourceName:l})}};b.__decorate([g.enumeration({table:"table"})],a.TableDataSource.prototype,"type",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.TableDataSource.prototype,"workspaceId",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.TableDataSource.prototype,"gdbVersion",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.TableDataSource.prototype,"dataSourceName",void 0);a.TableDataSource=d=b.__decorate([h.subclass("esri.layers.support.source.TableDataSource")],
+a.TableDataSource);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

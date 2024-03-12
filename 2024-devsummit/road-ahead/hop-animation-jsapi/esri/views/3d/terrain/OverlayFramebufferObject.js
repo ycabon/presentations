@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/maybe"],function(d,e){class f{constructor(c,a,b){this._fbos=c;this._format=a;this._name=b}get valid(){return null!=this._handle?.getTexture()}dispose(){this._handle=e.releaseMaybe(this._handle)}get texture(){return this._handle?.getTexture()}bind(c,a,b){this._handle&&this._handle.fbo.width===a&&this._handle.fbo.height===b?c.bindFramebuffer(this._handle?.fbo):(this._handle?.release(),this._handle=this._fbos.acquire(a,b,this._name,this._format))}generateMipMap(){this._handle?.getTexture()?.descriptor?.hasMipmap&&
+this._handle?.getTexture()?.generateMipmap()}}d.OverlayFramebufferObject=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

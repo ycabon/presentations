@@ -1,0 +1,13 @@
+{
+  "name":    "esri",
+  "version": "4.29",
+  "author":  "Esri Inc",
+  "directories": {
+    "lib": "."
+  },
+  "main":        "main",
+  "description": "The ArcGIS Maps SDK for JavaScript (JavaScript Maps SDK) is a browser based SDK for developing high performance, easy to use mapping applications. The SDK allows you to easily embed maps in your web pages. The JavaScript Maps SDK is hosted by Esri on ArcGIS Online and is available for free use, subject to the terms and conditions.",
+  "keywords":    [ "Esri", "ArcGIS", "JavaScript", "Map" ],
+  "homepage":    "http://js.arcgis.com",
+  "dojoBuild":   "esri.profile.js"
+}

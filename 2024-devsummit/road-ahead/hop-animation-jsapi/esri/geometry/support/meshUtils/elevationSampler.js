@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../core/workers/workers ../../../core/libs/gl-matrix-2/factories/vec3f64 ../ray ../triangle ./ElevationSamplerWorker ../../../layers/support/ElevationSampler".split(" "),function(k,n,p,l,q,r,t){function u(){++f;d&&(clearTimeout(d),d=0);return e?e:e=n.open("ElevationSamplerWorker").catch(()=>null)}function v(a){--f;null!=a&&0===f&&(d=setTimeout(()=>{a.close();e=null;d=0},1E4))}class w extends t.ElevationSamplerBase{constructor(a,c,b){super();this._rindex=c;this.demResolution=
+{min:0,max:0};this.spatialReference=a.spatialReference.clone();this.extent=a.extent.clone();this.noDataValue=b?.noDataValue||0}elevationAt(a,c){let b=Number.NEGATIVE_INFINITY;l.fromValues([a,c,0],[0,0,-1],m);this._rindex.search({minX:a,maxX:a,minY:c,maxY:c},g=>{q.intersectRay(g,m,h)&&h[2]>b&&(b=h[2])});return b===Number.NEGATIVE_INFINITY?this.noDataValue:b}}const x=new r;let f=0,e=null,d=0;const m=l.fromValues([0,0,0],[0,0,-1]),h=p.create();k.create=async function(a,c){const b=await u(),g=await x.createIndex(a,
+b);v(b);return new w(a,g,c)};Object.defineProperty(k,Symbol.toStringTag,{value:"Module"})});

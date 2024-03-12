@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(e){class c{static local(){null===c.instance&&(c.instance=new c);return c.instance}execute(a,b,d,f,g){return new h(a,b,d)}}c.instance=null;class h{constructor(a,b,d){this._inputGeometries=a;this._reverse=void 0!==b.reverse?b.reverse:!0}next(){for(var a=this._inputGeometries.next();a;){if(!this._reverse)return a;if("esriGeometryPolyline"===a.geometryType){for(a=a.clone();a.nextPath();)for(let b=0;b<a.pathSize/2;b++){a.seekInPath(b);const d=a.x,f=a.y;a.seekInPath(a.pathSize-
+b-1);const g=a.x,k=a.y;a.x=d;a.y=f;a.seekInPath(b);a.x=g;a.y=k}a.reset();return a}a=this._inputGeometries.next()}return null}}e.EffectReverse=c;Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

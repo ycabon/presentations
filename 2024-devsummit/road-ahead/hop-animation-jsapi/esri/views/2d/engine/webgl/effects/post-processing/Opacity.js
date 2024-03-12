@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../../core/maybe","../../../../../webgl/enums","../../../../../webgl/Texture","../../../../../webgl/TextureDescriptor"],function(g,l,f,m,n){class p{constructor(){this._size=[0,0];this._layerFBOTexture=null}dispose(){this._layerFBOTexture=l.disposeMaybe(this._layerFBOTexture)}draw(b,c,d){const {width:a,height:h}=c;this._createOrResizeResources(b,a,h);const {context:e,painter:q}=b;({amount:b}=d);d=e.gl;const k=this._layerFBOTexture;e.bindFramebuffer(c);c.copyToTexture(0,
+0,a,h,0,0,k);e.setBlendingEnabled(!0);e.setStencilTestEnabled(!1);e.setDepthTestEnabled(!1);e.setClearColor(0,0,0,0);e.clear(d.COLOR_BUFFER_BIT);q.blitTexture(e,k,f.TextureSamplingMode.NEAREST,b)}_createOrResizeResources(b,c,d){({context:b}=b);if(!this._layerFBOTexture||this._size[0]!==c||this._size[1]!==d)if(this._size[0]=c,this._size[1]=d,this._layerFBOTexture)this._layerFBOTexture.resize(c,d);else{const a=new n.TextureDescriptor;a.internalFormat=f.PixelFormat.RGBA;a.wrapMode=f.TextureWrapMode.CLAMP_TO_EDGE;
+a.samplingMode=f.TextureSamplingMode.NEAREST;a.width=c;a.height=d;this._layerFBOTexture=new m.Texture(b,a)}}}g.Opacity=p;Object.defineProperty(g,Symbol.toStringTag,{value:"Module"})});

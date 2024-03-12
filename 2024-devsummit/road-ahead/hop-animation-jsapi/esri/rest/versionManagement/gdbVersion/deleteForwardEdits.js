@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../request","../../../core/Error","../../utils"],function(f,g,h,c){f.deleteForwardEdits=async function(b,a,d,e){if(!a)throw new h("post:missing-guid","guid for version is missing");b=c.parseUrl(b);d=d.toJSON();e=c.asValidOptions(b.query,{query:c.encode({...d,f:"json"}),...e,method:"post"});a.startsWith("{")&&(a=a.slice(1,-1));({data:a}=await g(`${b.path}/versions/${a}/deleteForwardEdits`,e));return a.success};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

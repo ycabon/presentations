@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Clonable ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../views/SceneView".split(" "),function(b,a,d,c,h,k,l,e,f){a=class extends a.ClonableMixin(d.JSONSupport){constructor(g){super(g);this.minFOV=this.maxFOV=0;this.view=null;this.zoomFactor=5}get canZoomIn(){return this.view?0===this.minFOV?!0:this.view.camera.fov>this.minFOV:!1}get canZoomOut(){return this.view?
+0===this.maxFOV?!0:this.view.camera.fov<this.maxFOV:!1}};b.__decorate([c.property({type:Boolean,readOnly:!0})],a.prototype,"canZoomIn",null);b.__decorate([c.property({type:Boolean,readOnly:!0})],a.prototype,"canZoomOut",null);b.__decorate([c.property({type:Number})],a.prototype,"maxFOV",void 0);b.__decorate([c.property({type:Number})],a.prototype,"minFOV",void 0);b.__decorate([c.property({type:f})],a.prototype,"view",void 0);b.__decorate([c.property({type:Number})],a.prototype,"zoomFactor",void 0);
+return a=b.__decorate([e.subclass("esri.widgets.PanoramicViewer.PanoramicZoomConditions")],a)});

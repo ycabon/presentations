@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../geometry ../../core/Clonable ../../core/JSONSupport ../../core/accessorSupport/decorators/property ../../core/accessorSupport/ensureType ../../core/RandomLCG ../../core/has ../../core/accessorSupport/decorators/subclass ../../core/accessorSupport/decorators/writer ../../geometry/SpatialReference ../../geometry/support/jsonUtils".split(" "),function(b,e,a,f,c,g,q,r,h,k,l,m){a=class extends a.ClonableMixin(f.JSONSupport){constructor(){super(...arguments);this.geometries=
+[];this.outSpatialReference=this.rasterIds=null}writeGeometries(d,n,t){n.geometries=d?.length?{geometryType:m.getJsonType(d[0]),geometries:d.map(p=>({...p.toJSON(),spatialReference:void 0}))}:null}};b.__decorate([c.property({types:[e.geometryTypes]})],a.prototype,"geometries",void 0);b.__decorate([k.writer("geometries")],a.prototype,"writeGeometries",null);b.__decorate([c.property({type:[g.Integer],json:{write:!0}})],a.prototype,"rasterIds",void 0);b.__decorate([c.property({type:l,json:{name:"outSR",
+write:!0}})],a.prototype,"outSpatialReference",void 0);return a=b.__decorate([h.subclass("esri.rest.support.ImageToMapMultirayParameters")],a)});

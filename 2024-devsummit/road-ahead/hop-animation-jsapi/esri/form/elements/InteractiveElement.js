@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../chunks/tslib.es6","../../core/accessorSupport/decorators/property","../../core/accessorSupport/decorators/subclass","./Element"],function(b,c,d,a){a=class extends a{constructor(e){super(e);this.label=this.description=null}};b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"description",void 0);b.__decorate([c.property({type:String,json:{write:!0}})],a.prototype,"label",void 0);return a=b.__decorate([d.subclass("esri.form.elements.InteractiveElement")],a)});

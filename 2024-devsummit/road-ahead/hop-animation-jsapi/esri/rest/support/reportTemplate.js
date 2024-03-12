@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/jsonMap"],function(b,c){var a=new c.JSONMap({"Attribute List Letter ANSI A Landscape":"attribute-list-letter-ansi-a-landscape","Attribute List Letter ANSI A Portrait":"attribute-list-letter-ansi-a-portrait","Attribute List With Group Letter ANSI A Landscape":"attribute-list-with-group-letter-ansi-a-landscape","Attribute List With Group Letter ANSI A Portrait":"attribute-list-with-group-letter-ansi-a-portrait","Page per Feature Letter ANSI A Landscape":"page-per-feature-letter-ansi-a-landscape",
+"Page per Feature Letter ANSI A Portrait":"page-per-feature-letter-ansi-a-portrait"});c=a.fromJSON.bind(a);a=a.toJSON.bind(a);b.fromJSON=c;b.toJSON=a;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

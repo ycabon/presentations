@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/Error"],function(a,b){class c extends b{constructor(){super("mesh-not-loaded","Mesh must be loaded before applying operations")}}class d extends b{constructor(){super("component-not-found","Provided component is not part of the list of components")}}class e extends b{constructor(){super("invalid-polygon","expected polygon to be a Polygon instance")}}class f extends b{constructor(){super("invalid-input:location","Expected location to be a Point instance")}}a.ComponentNotFoundError=
+d;a.InvalidLocationError=f;a.InvalidPolygonError=e;a.MeshNotLoadedError=c;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

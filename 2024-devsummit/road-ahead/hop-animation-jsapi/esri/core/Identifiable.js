@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../chunks/tslib.es6","./accessorSupport/decorators/subclass"],function(b,c,d){let f=0;const g=a=>{a=class extends a{constructor(...e){super(...e);Object.defineProperty(this,"uid",{writable:!1,configurable:!1,value:Date.now().toString(16)+"-object-"+f++})}};return a=c.__decorate([d.subclass("esri.core.Identifiable")],a)};b.Identifiable=class extends g(class{}){};b.Identifiable=c.__decorate([d.subclass("esri.core.Identifiable")],b.Identifiable);b.IdentifiableMixin=g;b.NumericIdentifiableMixin=
+a=>{a=class extends a{constructor(...e){super(...e);Object.defineProperty(this,"uid",{writable:!1,configurable:!1,value:f++})}};return a=c.__decorate([d.subclass("esri.core.NumericIdentifiable")],a)};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

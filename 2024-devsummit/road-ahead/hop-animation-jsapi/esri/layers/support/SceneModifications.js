@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../request ../../core/Collection ../../core/JSONSupport ../../core/urlUtils ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ./SceneModification".split(" "),function(h,m,d,n,p,q,t,u,v,r,f){var e;d=e=class extends n.JSONSupportMixin(d.ofType(f)){constructor(a){super(a);this.url=null}clone(){return new e({url:this.url,items:this.items.map(a=>a.clone())})}toJSON(a){return this.toArray().map(b=>
+b.toJSON(a)).filter(b=>!!b.geometry)}static fromJSON(a,b){const c=new e;for(const g of a)c.add(f.fromJSON(g,b));return c}static async fromUrl(a,b,c){const g={url:p.urlToObject(a),origin:"service"};c=await m(a,{responseType:"json",signal:c?.signal});b=b.toJSON();const k=[];for(const l of c.data)k.push(f.fromJSON({...l,geometry:{...l.geometry,spatialReference:b}},g));return new e({url:a,items:k})}};h.__decorate([q.property({type:String})],d.prototype,"url",void 0);return d=e=h.__decorate([r.subclass("esri.layers.support.SceneModifications")],
+d)});

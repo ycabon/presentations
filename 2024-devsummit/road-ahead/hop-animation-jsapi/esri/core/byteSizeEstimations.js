@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){function f(a){return 32+a.length}function g(a){if(!a)return 0;if(Array.isArray(a)){var b=a.length;if(0===b||"number"===typeof a[0])a=32+8*b;else{var c=16;for(let e=0;e<b;e++)c+=h(a[e]);a=c}return a}c=32;for(b in a)a.hasOwnProperty(b)&&(c+=h(a[b]));return c}function h(a){switch(typeof a){case "object":return g(a);case "string":return f(a);case "number":return 16;case "boolean":return 4;default:return 8}}d.estimateAttributesObjectSize=function(a){if(!a)return 0;let b=
+32;for(const c in a)if(a.hasOwnProperty(c)){const e=a[c];switch(typeof e){case "string":b+=f(e);break;case "number":b+=16;break;case "boolean":b+=4}}return b};d.estimateFixedArraySize=function(a,b){return 16+a.length*b};d.estimateNestedObjectSize=g;d.estimateNumberByteSize=function(){return 16};d.estimateStringByteSize=f;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ./BaseFunctionArguments".split(" "),function(b,c,a,g,h,e,f){var d;a=d=class extends f{constructor(){super(...arguments);this.noDataRanges=this.outputValues=this.inputRanges=null;this.isLastInputRangeInclusive=this.allowUnmatched=!1}clone(){return new d({inputRanges:[...this.inputRanges],outputValues:[...this.outputValues],
+noDataRanges:[...this.noDataRanges],allowUnmatched:this.allowUnmatched,isLastInputRangeInclusive:this.isLastInputRangeInclusive})}};b.__decorate([c.property({json:{write:!0}})],a.prototype,"inputRanges",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"outputValues",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"noDataRanges",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,"allowUnmatched",void 0);b.__decorate([c.property({json:{write:!0}})],a.prototype,
+"isLastInputRangeInclusive",void 0);return a=d=b.__decorate([e.subclass("esri.layers.support.rasterFunctions.RemapFunctionArguments")],a)});

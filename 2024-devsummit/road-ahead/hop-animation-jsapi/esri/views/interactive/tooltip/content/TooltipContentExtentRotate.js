@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(a,c,l,m,n,p,d,e,f,q,b){a.TooltipContentExtentRotate=class extends f.TooltipContent{_renderContent(){const {angle:g,visibleElements:h}=this.info,k=this._messagesTooltip.sketch;
+return b.tsx(b.tsxFragment,null,h.rotation?b.tsx(e.TooltipField,{title:k.rotation,value:this._formatters.angleRelative(g)}):null)}};a.TooltipContentExtentRotate=c.__decorate([d.subclass("esri.views.interactive.tooltip.content.TooltipContentExtentRotate")],a.TooltipContentExtentRotate);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

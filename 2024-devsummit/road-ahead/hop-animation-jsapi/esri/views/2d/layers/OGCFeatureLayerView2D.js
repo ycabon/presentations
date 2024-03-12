@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/Logger ../../../core/has ../../../core/RandomLCG ../../../core/Error ../../../core/accessorSupport/decorators/subclass ./FeatureLayerView2D ../../layers/OGCFeatureLayerView".split(" "),function(b,a,g,h,k,c,d,e){a=class extends e(d){supportsSpatialReference(f){return this.layer.serviceSupportsSpatialReference(f)}};return a=b.__decorate([c.subclass("esri.views.2d.layers.OGCFeatureLayerView2D")],a)});

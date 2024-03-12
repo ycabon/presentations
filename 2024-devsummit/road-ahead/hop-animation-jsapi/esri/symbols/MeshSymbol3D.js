@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../chunks/tslib.es6 ../core/Collection ../core/lang ../core/accessorSupport/decorators/property ../core/has ../core/Logger ../core/accessorSupport/decorators/enumeration ../core/accessorSupport/decorators/subclass ./FillSymbol3DLayer ./Symbol3D".split(" "),function(c,f,d,k,a,p,l,m,g,n){var b;const h=f.ofType({base:null,key:"type",typeMap:{fill:g}});a=b=class extends n{constructor(e){super(e);this.symbolLayers=new h;this.type="mesh-3d"}clone(){return new b({styleOrigin:d.clone(this.styleOrigin),
+symbolLayers:d.clone(this.symbolLayers),thumbnail:d.clone(this.thumbnail)})}static fromSimpleFillSymbol(e){return new b({symbolLayers:new f([g.fromSimpleFillSymbol(e)])})}};c.__decorate([k.property({type:h})],a.prototype,"symbolLayers",void 0);c.__decorate([l.enumeration({MeshSymbol3D:"mesh-3d"},{readOnly:!0})],a.prototype,"type",void 0);return a=b=c.__decorate([m.subclass("esri.symbols.MeshSymbol3D")],a)});

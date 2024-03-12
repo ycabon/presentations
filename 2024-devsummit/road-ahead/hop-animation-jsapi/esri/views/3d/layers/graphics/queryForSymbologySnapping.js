@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/promiseUtils","../../../../support/arcadeOnDemand"],function(n,t,u){const p={candidates:[],sourceCandidateIndices:[]};n.queryForSymbologySnapping=async function(d,a,m){if(null==d||0===a.candidates.length)return p;var f=d.graphics3DGraphicsByObjectID??d.graphics3DGraphics,c=[];const q=[],{renderer:g}=d,v=null!=g&&"arcadeRequired"in g&&g.arcadeRequired?u.loadArcade():null;var k=async(e,{graphic:h,graphics3DSymbol:w})=>{const x=await v;h=await d.getRenderingInfoAsync(h,
+g,x,{signal:m});return null==h?[]:w.queryForSnapping(e,y,h,m)};const {candidates:r,spatialReference:y}=a;for(a=0;a<r.length;++a){var l=r[a],{objectId:b}=l;b="number"===typeof b?f?.get(b):void 0;if(null==b)continue;const {graphics3DSymbol:e}=b;e.symbologySnappingSupported&&(c.push(k(l,b)),q.push(a))}if(0===c.length)return p;f=await Promise.all(c);t.throwIfAborted(m);c=[];k=[];for(a=0;a<f.length;++a){l=f[a];b=q[a];for(const e of l)c.push(e),k.push(b)}return{candidates:c,sourceCandidateIndices:k}};Object.defineProperty(n,
+Symbol.toStringTag,{value:"Module"})});

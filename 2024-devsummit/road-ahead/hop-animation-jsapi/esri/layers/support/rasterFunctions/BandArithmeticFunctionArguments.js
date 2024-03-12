@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/lang ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/accessorSupport/decorators/enumeration ../../../core/accessorSupport/decorators/subclass ./bandIndexUtils ./BaseFunctionArguments".split(" "),function(b,d,e,a,l,f,g,h,k){var c;a=c=class extends k{constructor(){super(...arguments);this.method="custom"}clone(){return new c({method:this.method,bandIndexes:this.bandIndexes,raster:d.clone(this.raster)})}};
+b.__decorate([e.property({json:{type:String,write:!0}})],a.prototype,"bandIndexes",void 0);b.__decorate([f.enumeration(h.bandIndexMethodMap)],a.prototype,"method",void 0);return a=c=b.__decorate([g.subclass("esri.layers.support.rasterFunctions.BandArithmeticFunctionArguments")],a)});

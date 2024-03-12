@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Accessor ../../core/Identifiable ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,e,c,h,k,l,f){a=class extends e.IdentifiableMixin(a){constructor(d){super(d);this.label=this.items=null}get id(){return this.label}findByTemplate(d){return this.items.find(g=>g.template===d)}};b.__decorate([c.property()],a.prototype,"items",void 0);b.__decorate([c.property()],
+a.prototype,"label",void 0);b.__decorate([c.property()],a.prototype,"id",null);return a=b.__decorate([f.subclass("esri.widgets.FeatureTemplates.TemplateItemGroup")],a)});

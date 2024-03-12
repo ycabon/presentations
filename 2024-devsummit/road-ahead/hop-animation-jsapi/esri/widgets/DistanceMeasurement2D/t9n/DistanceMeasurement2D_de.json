@@ -1,0 +1,1 @@
+{"distance":"Entfernung","hint":"Beginnen Sie die Messung, indem Sie auf die Karte klicken, um den ersten Punkt zu positionieren.","mode":"Modus","modes":{"auto":"Automatisch","planar":"Planar","geodesic":"Geodätisch"},"newMeasurement":"Neue Messung","unit":"Einheit","unsupported":"Die 2D-Entfernungsmessung wird nur in MapView unterstützt.","widgetLabel":"Entfernungsmessung"}

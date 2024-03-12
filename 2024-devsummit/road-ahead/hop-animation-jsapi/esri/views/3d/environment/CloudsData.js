@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(b){b.CloudsRenderingStages=void 0;(function(a){a[a.RENDERING=0]="RENDERING";a[a.FADING=1]="FADING";a[a.FINISHED=2]="FINISHED"})(b.CloudsRenderingStages||(b.CloudsRenderingStages={}));b.CloudsTextureChannels=void 0;(function(a){a[a.RG=0]="RG";a[a.BA=1]="BA"})(b.CloudsTextureChannels||(b.CloudsTextureChannels={}));b.ensureClouds=function(a){return null!=a&&!a.running};b.isReadyCloudsData=function(a){return null!=a?.cubeMap};Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

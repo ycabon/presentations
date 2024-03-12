@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(function(){class c{constructor(a){this._start=this.size=0;this.maxSize=a;this._buffer=Array(a)}get entries(){return this._buffer}enqueue(a){if(this.size===this.maxSize){const b=this._buffer[this._start];this._buffer[this._start]=a;this._start=(this._start+1)%this.maxSize;return b}this._buffer[(this._start+this.size++)%this.maxSize]=a;return null}dequeue(){if(0===this.size)return null;const a=this._buffer[this._start];this._buffer[this._start]=null;this.size--;this._start=(this._start+1)%this.maxSize;
+return a}peek(){return 0===this.size?null:this._buffer[this._start]}find(a){if(0===this.size)return null;for(const b of this._buffer)if(null!=b&&a(b))return b;return null}clear(a){let b=this.dequeue();for(;null!=b;)a&&a(b),b=this.dequeue()}}return c});

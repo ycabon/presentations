@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/has ../../../core/reactiveUtils ../../../core/Logger ../../../core/RandomLCG ../../../core/Error ../../../core/accessorSupport/decorators/subclass ./FeatureLayerView2D".split(" "),function(k,l,b,a,q,r,m,n){a=class extends n{initialize(){this.addHandles([b.watch(()=>this.view.scale,()=>this._update(),b.initial)],"constructor")}isUpdating(){const c=this.layer.sublayers.some(p=>null!=p.renderer),d=this._commandsQueue.updateTracking.updating,e=null!=this._updatingRequiredFieldsPromise,
+f=!this._worker,g=this.dataUpdating,h=c&&(d||e||f||g);l("esri-2d-log-updating")&&console.log(`Updating FLV2D: ${h}\n  -> hasRenderer ${c}\n  -> hasPendingCommand ${d}\n  -> updatingRequiredFields ${e}\n  -> updatingProxy ${f}\n  -> updatingPipeline ${g}\n`);return h}};return a=k.__decorate([m.subclass("esri.views.2d.layers.SubtypeGroupLayerView2D")],a)});

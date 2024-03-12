@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../Color","../../core/screenUtils","../../core/accessorSupport/ensureType","../../webdoc/support/opacityUtils"],function(c,f,d,e,g){d={type:Number,cast:d.toPt,json:{write:!0}};c.colorAndTransparencyProperty={type:f,json:{type:[e.Integer],default:null,read:{source:["color","transparency"],reader:function(b,a){b=null!=a.transparency?g.transparencyToOpacity(a.transparency):1;return(a=a.color)&&Array.isArray(a)?new f([a[0]||0,a[1]||0,a[2]||0,b]):null}},write:{target:{color:{type:[e.Integer]},
+transparency:{type:e.Integer}},writer:function(b,a){a.color=b.toJSON().slice(0,3);b=g.opacityToTransparency(b.a);0!==b&&(a.transparency=b)}}}};c.screenSizeProperty=d;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

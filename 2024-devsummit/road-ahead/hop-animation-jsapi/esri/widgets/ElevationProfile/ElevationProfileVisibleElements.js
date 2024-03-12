@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Accessor ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,c,e,f,g,d){a=class extends a{constructor(){super(...arguments);this.uniformChartScalingToggle=this.unitSelector=this.selectButton=this.sketchButton=this.settingsButton=this.clearButton=this.chart=this.legend=!0}};b.__decorate([c.property()],a.prototype,"legend",void 0);b.__decorate([c.property()],
+a.prototype,"chart",void 0);b.__decorate([c.property()],a.prototype,"clearButton",void 0);b.__decorate([c.property()],a.prototype,"settingsButton",void 0);b.__decorate([c.property()],a.prototype,"sketchButton",void 0);b.__decorate([c.property()],a.prototype,"selectButton",void 0);b.__decorate([c.property()],a.prototype,"unitSelector",void 0);b.__decorate([c.property()],a.prototype,"uniformChartScalingToggle",void 0);return a=b.__decorate([d.subclass("esri.widgets.ElevationProfile.ElevationProfileVisibleElements")],
+a)});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["./TextHelperCanvas","./TextRenderer","./TextTextureAtlas","./Texture","../../../webgl/enums"],function(d,e,f,g,c){class h{constructor(b,a,k){this._renderer=new e.TextRenderer(b,a,k,f.TextTextureAtlas.maxSize)}get key(){return this._renderer.key}get baselineAnchorY(){return 1-this._renderer.firstRenderedBaselinePosition/this._renderer.renderedHeight}get displayWidth(){return this._renderer.displayWidth}get displayHeight(){return this._renderer.displayHeight}create(){const b=d.getTextHelperCanvas(l,
+this._renderer.renderedWidth,this._renderer.renderedHeight),a=b.getContext("2d");a.save();this._renderer.render(a,0,0);a.restore();return new g.Texture(b,{wrap:{s:c.TextureWrapMode.CLAMP_TO_EDGE,t:c.TextureWrapMode.CLAMP_TO_EDGE},noUnpackFlip:!1,mipmap:!0,preMultiplyAlpha:!0})}}const l={canvas:null};return h});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./types"],function(b,c){function d(a,e){a=c.parsingErrorMessages[a];return e?a.replaceAll(/\${(.*?)}/g,(h,f)=>e[f]?.toString()??""):a}class g{constructor(a=!1){this.tolerant=a;this.errors=[]}recordError(a){this.errors.push(a)}tolerate(a){if(this.tolerant)this.recordError(a);else throw a;}throwError(a){a.description=a.description??d(a.code,a.data);throw new c.ParsingError(a);}tolerateError(a){a.description=a.description??d(a.code,a.data);a=new c.ParsingError(a);if(this.tolerant)this.recordError(a);
+else throw a;}}b.ErrorHandler=g;b.formatErrorDescription=d;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

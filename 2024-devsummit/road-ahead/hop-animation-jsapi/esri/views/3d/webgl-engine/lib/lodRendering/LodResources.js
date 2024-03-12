@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../core/arrayUtils","../VertexAttribute"],function(e,f,g){class h{constructor(b,a=null){this.geometry=b;this.textures=a}}class k{constructor(b,a,c){this.components=b;this.minScreenSpaceRadius=a;this.pivotOffset=c;this.numVertices=this.geometries.reduce((d,l)=>d+l.attributes.get(g.VertexAttribute.POSITION).indices.length,0)}get geometries(){return f.unique(this.components.map(b=>b.geometry))}}class m{constructor(b){this.levels=b;this.levels.sort((a,c)=>a.minScreenSpaceRadius===
+c.minScreenSpaceRadius?a.numVertices-c.numVertices:a.minScreenSpaceRadius-c.minScreenSpaceRadius)}}e.LodComponentResources=h;e.LodLevelResources=k;e.LodResources=m;e.geometriesFromLodResources=function(b){const a=[];b.levels.forEach(c=>c.components.forEach(d=>a.push(d.geometry)));return f.unique(a)};e.materialsFromLodResources=function(b){const a=[];b.levels.forEach(c=>c.components.forEach(d=>a.push(d.geometry.material)));return f.unique(a)};e.texturesFromLodResources=function(b){const a=[];b.levels.forEach(c=>
+c.components.forEach(d=>{null!=d.textures&&a.push(...d.textures)}));return f.unique(a)};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

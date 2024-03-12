@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(b,k,p,q,r,t,l,c,m,u,a){b.TooltipContentReshapeEdgeOffset=class extends m.TooltipContent{_renderContent(){const {area:g,distance:n,totalLength:h,visibleElements:d}=this.info,
+e=this._messagesTooltip.sketch,f=this._formatters;return a.tsx(a.tsxFragment,null,d.distance?a.tsx(c.TooltipField,{title:e.distance,value:f.lengthRelative(n)}):null,d.area&&null!=g?a.tsx(c.TooltipField,{title:e.area,value:f.area(g)}):null,d.totalLength&&null!=h?a.tsx(c.TooltipField,{title:e.totalLength,value:f.length(h)}):null)}};b.TooltipContentReshapeEdgeOffset=k.__decorate([l.subclass("esri.views.interactive.tooltip.content.TooltipContentReshapeEdgeOffset")],b.TooltipContentReshapeEdgeOffset);
+Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

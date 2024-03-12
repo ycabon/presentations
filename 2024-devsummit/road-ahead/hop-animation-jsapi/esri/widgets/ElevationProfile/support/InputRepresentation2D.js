@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/asyncUtils","../../../core/maybe","../../../core/promiseUtils","../../../views/support/layerViewUtils"],function(c,f,d,g,h){class k{constructor(a){this._params=a;this._highlightHandle=this._highlightTask=null}destroy(){this.remove()}remove(){this._highlightTask=d.abortMaybe(this._highlightTask);this._highlightHandle=d.removeMaybe(this._highlightHandle)}update(a){this.remove();if(null!=a&&null!=a.geometry&&"polyline"===a.geometry.type){var l=a.layer;this._highlightTask=
+f.createTask(async b=>{const e=await this._params.view.whenLayerView(l);g.throwIfAborted(b);if(b=h.highlightsSupported(e)?e:null)this._highlightHandle=b.highlight(a)})}}}c.InputRepresentation2D=k;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

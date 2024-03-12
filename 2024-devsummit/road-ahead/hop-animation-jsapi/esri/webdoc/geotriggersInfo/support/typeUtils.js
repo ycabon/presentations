@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/jsonMap"],function(b,a){const c=new a.JSONMap({enterContainsAndExitDoesNotContain:"enter-contains-and-exit-does-not-contain",enterContainsAndExitDoesNotIntersect:"enter-contains-and-exit-does-not-intersect",enterIntersectsAndExitDoesNotIntersect:"enter-intersects-and-exit-does-not-intersect"}),d=new a.JSONMap({useGeometry:"use-geometry",useGeometryWithAccuracy:"use-geometry-with-accuracy"});a=new a.JSONMap({enter:"enter",enterOrExit:"enter-or-exit",exit:"exit"});b.enterExitRuleKebabDict=
+c;b.feedAccuracyModeKebabDict=d;b.fenceNotificationRuleKebabDict=a;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

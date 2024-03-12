@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../core/has ../../../../core/Logger ../../../../chunks/vec32 ../SnappingDomain ./SnappingHint".split(" "),function(c,p,q,b,e,f){class d extends f.SnappingHint{constructor(a,g,h,k,l=e.SnappingDomain.ALL,m=!0,n=!0){super(k,l);this.type=a;this.lineStart=g;this.lineEnd=h;this.fadeLeft=m;this.fadeRight=n}equals(a){return a instanceof d?this.type===a.type&&b.exactEquals(this.lineStart,a.lineStart)&&b.exactEquals(this.lineEnd,a.lineEnd)&&this.fadeLeft===a.fadeLeft&&this.fadeRight===
+a.fadeRight:!1}get length(){return b.distance(this.lineStart,this.lineEnd)}}c.LineSnappingHint=d;Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

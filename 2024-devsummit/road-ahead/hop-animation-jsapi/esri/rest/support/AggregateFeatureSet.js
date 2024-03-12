@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../AggregateGraphic ../../geometry ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/reader ../../core/accessorSupport/decorators/subclass ./FeatureSet ../../geometry/SpatialReference".split(" "),function(f,h,b,p,w,x,y,q,r,t,u){b=class extends t{constructor(){super(...arguments);this.features=[]}readFeatures(k,d){d=u.fromJSON(d.spatialReference);const l=[];for(let g=0;g<k.length;g++){var a=
+k[g];const e=h.fromJSON(a);var c=a.geometry?.spatialReference;null==e.geometry||c||(e.geometry.spatialReference=d);a=a.aggregateGeometries;c=e.aggregateGeometries;if(a&&null!=c)for(const m in c){const n=c[m],v=a[m]?.spatialReference;null==n||v||(n.spatialReference=d)}l.push(e)}return l}};f.__decorate([p.property({type:[h],json:{write:!0}})],b.prototype,"features",void 0);f.__decorate([q.reader("features")],b.prototype,"readFeatures",null);return b=f.__decorate([r.subclass("esri.rest.support.AggregateFeatureSet")],
+b)});

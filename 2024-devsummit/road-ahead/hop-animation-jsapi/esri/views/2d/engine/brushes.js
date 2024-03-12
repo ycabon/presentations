@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ./webgl/brushes/BrushBitmap ./webgl/brushes/BrushClip ./webgl/brushes/BrushOverlay ./webgl/brushes/WGLBrushStencil ./webgl/brushes/WGLBrushTileDebugInfo ./webgl/brushes/WGLBrushVTLBackground ./webgl/brushes/WGLBrushVTLCircle ./webgl/brushes/WGLBrushVTLFill ./webgl/brushes/WGLBrushVTLLine ./webgl/brushes/WGLBrushVTLSymbol".split(" "),function(a,b,c,d,e,f,g,h,k,l,m){a.brushes={clip:c,stencil:e,bitmap:b,overlay:d,tileDebugInfo:f,vtlBackground:g.WGLBrushVTLBackground,vtlFill:k.WGLBrushVTLFill,
+vtlLine:l.WGLBrushVTLLine,vtlCircle:h.WGLBrushVTLCircle,vtlSymbol:m.WGLBrushVTLSymbol};Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

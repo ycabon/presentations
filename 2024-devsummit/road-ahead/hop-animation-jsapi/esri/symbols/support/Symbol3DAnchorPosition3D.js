@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../chunks/tslib.es6 ../../core/Accessor ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(a,b,e,c,g,h,k,f){var d;a.Symbol3DAnchorPosition3D=d=class extends e{constructor(){super(...arguments);this.z=this.y=this.x=0}clone(){return new d({x:this.x,y:this.y,z:this.z})}};b.__decorate([c.property({type:Number})],a.Symbol3DAnchorPosition3D.prototype,"x",void 0);b.__decorate([c.property({type:Number})],
+a.Symbol3DAnchorPosition3D.prototype,"y",void 0);b.__decorate([c.property({type:Number})],a.Symbol3DAnchorPosition3D.prototype,"z",void 0);a.Symbol3DAnchorPosition3D=d=b.__decorate([f.subclass("esri.symbols.support.Symbol3DAnchorPosition3D")],a.Symbol3DAnchorPosition3D);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

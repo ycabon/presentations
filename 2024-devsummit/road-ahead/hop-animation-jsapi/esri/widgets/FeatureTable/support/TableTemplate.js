@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/JSONSupport ../../../core/lang ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/accessorSupport/decorators/subclass ../../../form/ExpressionInfo".split(" "),function(b,a,d,e,k,l,f,g){var c;a=c=class extends a.JSONSupport{constructor(h){super(h);this.columnTemplates=[];this.expressionInfos=null}clone(){return new c({columnTemplates:d.clone(this.columnTemplates),expressionInfos:d.clone(this.expressionInfos)})}};
+b.__decorate([e.property()],a.prototype,"columnTemplates",void 0);b.__decorate([e.property({type:[g],json:{write:!0}})],a.prototype,"expressionInfos",void 0);return a=c=b.__decorate([f.subclass("esri.widgets.FeatureTable.support.TableTemplate")],a)});

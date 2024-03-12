@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../core/sql","../../../../../layers/support/FeatureFilter"],function(e,h,k){function l(b,a,c){if(null==b.floorInfo||!c.floors?.length)return a;c=c.floors;const {floorField:d,viewAllLevelIds:g}=b.floorInfo;g.length&&(c=g);b=c.filter(f=>""!==f).map(f=>"'"+f+"'");b.push("''");a?.includes(d)&&(c=new RegExp("AND \\("+d+".*NULL\\)","g"),a=a.replace(c,""),c=new RegExp("\\("+d+".*NULL\\)","g"),a=a.replace(c,""),a=a.replaceAll(/\s+/g," ").trim());b=("("+d+" IN ({ids}) OR "+d+
+" IS NULL)").replace("{ids}",b.join(", "));return h.sqlAnd(a,b)}e.addFloorFilter=function(b,a,c){b=l(b,a?.where,c);if(!b)return a;a??=new k;a.where=b;return a};e.hasFloorFilter=function(b,a){return null!=b.floorInfo&&(0<b.floorInfo.viewAllLevelIds.length||0<a.floors.length)};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

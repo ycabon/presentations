@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../core/accessorSupport/ensureType ../elements/AttachmentElement ../elements/Element ../elements/FieldElement ../elements/RelationshipElement ../elements/TextElement".split(" "),function(e,n,g,h,k,l,m){e.buildTypeMaps=function(a){return{typesWithGroup:{base:h,key:"type",typeMap:{attachment:g,field:k,group:a,relationship:l,text:m}},typesWithoutGroup:{base:h,key:"type",typeMap:{attachment:g,field:k,relationship:l,text:m}}}};e.ensureType=function(a,b,f=!0){return a?a.map(d=>n.ensureOneOfType(f?
+b.typesWithGroup:b.typesWithoutGroup,d)):null};e.fromJSON=function(a,b,f=!0){if(!a)return null;const d=f?b.typesWithGroup.typeMap:b.typesWithoutGroup.typeMap;return a.filter(c=>d[c.type]).map(c=>d[c.type].fromJSON(c))};e.toJSON=function(a,b,f=!0){if(!a)return null;const d=f?b.typesWithGroup.typeMap:b.typesWithoutGroup.typeMap;return a.filter(c=>d[c.type]).map(c=>c.toJSON())};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/ObjectStack","../../chunks/vec32","./ray"],function(e,m,h,g){function f(a){return a?{ray:g.create(a.ray),c0:a.c0,c1:a.c1}:{ray:g.create(),c0:0,c1:Number.MAX_VALUE}}function l(a,b,c,d=f()){g.copy(a,d.ray);d.c0=b;d.c1=c;return d}function k(a,b,c){return h.add(c,a.ray.origin,h.scale(c,a.ray.direction,b))}const n=new m.ObjectStack(()=>f());e.copy=function(a,b=f()){return l(a.ray,a.c0,a.c1,b)};e.create=f;e.fromLineSegmentAndDirection=function(a,b,c=f()){const d=h.length(a.vector);
+g.fromValues(a.origin,b,c.ray);c.c0=0;c.c1=d;return c};e.fromRay=function(a,b=f()){g.copy(a,b.ray);b.c0=0;b.c1=Number.MAX_VALUE;return b};e.fromValues=l;e.getAt=k;e.getEnd=function(a,b){return k(a,a.c1,b)};e.getStart=function(a,b){return k(a,a.c0,b)};e.wrap=function(a,b,c){const d=n.get();d.ray=a;d.c0=b;d.c1=c;return d};Object.defineProperty(e,Symbol.toStringTag,{value:"Module"})});

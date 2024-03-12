@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/Logger ../../../core/has ../../../core/RandomLCG ../../../core/Error ../../../core/accessorSupport/decorators/subclass ./LayerView2D ../../layers/GroupLayerView".split(" "),function(c,a,h,k,l,d,e,f){a=class extends e.LayerView2DMixin(f){attach(){this._updateStageChildren();this.addAttachHandles(this.layerViews.on("after-changes",()=>this._updateStageChildren()))}detach(){this.container.removeAllChildren()}update(b){}moveStart(){}viewChange(){}moveEnd(){}_updateStageChildren(){this.container.removeAllChildren();
+this.layerViews.forEach((b,g)=>this.container.addChildAt(b.container,g))}};return a=c.__decorate([d.subclass("esri.views.2d.layers.GroupLayerView2D")],a)});

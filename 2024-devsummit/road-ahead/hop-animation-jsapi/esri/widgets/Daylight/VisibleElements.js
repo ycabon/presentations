@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/Accessor ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass".split(" "),function(b,a,c,f,g,h,d){a=class extends a{constructor(e){super(e);this.shadowsToggle=this.sunLightingToggle=this.timezone=this.datePicker=this.playButtons=this.header=!0}};b.__decorate([c.property({type:Boolean,nonNullable:!0})],a.prototype,"header",void 0);b.__decorate([c.property({type:Boolean,
+nonNullable:!0})],a.prototype,"playButtons",void 0);b.__decorate([c.property({type:Boolean,nonNullable:!0})],a.prototype,"datePicker",void 0);b.__decorate([c.property({type:Boolean,nonNullable:!0})],a.prototype,"timezone",void 0);b.__decorate([c.property({type:Boolean,nonNullable:!0})],a.prototype,"sunLightingToggle",void 0);b.__decorate([c.property({type:Boolean,nonNullable:!0})],a.prototype,"shadowsToggle",void 0);return a=b.__decorate([d.subclass("esri.widgets.Daylight.VisibleElements")],a)});

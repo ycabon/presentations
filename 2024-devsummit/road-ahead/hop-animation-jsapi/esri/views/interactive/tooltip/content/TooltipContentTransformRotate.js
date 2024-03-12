@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/quantityFormatUtils ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(b,h,d,m,n,p,q,k,e,l,r,c){b.TooltipContentTransformRotate=class extends l.TooltipContent{_renderContent(){const {info:a}=this,{visibleElements:f}=
+a,g=this._messagesTooltip.sketch;return c.tsx(c.tsxFragment,null,f.rotation&&null!=a.rotation?c.tsx(e.TooltipField,{key:"rotation",title:g.rotation,value:d.formatRelativeAngle(a.rotation,a.rotationType,a.rotationPrecision)}):null,f.orientation&&null!=a.orientation?c.tsx(e.TooltipField,{key:"orientation",title:g.orientation,value:d.formatAngle(a.orientation,a.rotationType,a.orientationPrecision)}):null)}};b.TooltipContentTransformRotate=h.__decorate([k.subclass("esri.views.interactive.tooltip.content.TooltipContentTransformRotate")],
+b.TooltipContentTransformRotate);Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

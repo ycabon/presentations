@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../chunks/tslib.es6","../../../../../core/Accessor","../../../../../core/accessorSupport/decorators/property","../../../../../core/accessorSupport/decorators/subclass"],function(a,b,d,c,e){a.StreamConnectionState=class extends d{constructor(f){super(f)}get connectionStatus(){return this.connection?.connectionStatus}get errorString(){return this.connection?.errorString}};b.__decorate([c.property()],a.StreamConnectionState.prototype,"connection",void 0);b.__decorate([c.property()],
+a.StreamConnectionState.prototype,"connectionStatus",null);b.__decorate([c.property()],a.StreamConnectionState.prototype,"errorString",null);a.StreamConnectionState=b.__decorate([e.subclass("esri.views.2d.layers.features.sources.StreamConnectionState")],a.StreamConnectionState);Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

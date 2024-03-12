@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../../chunks/tslib.es6 ../../../core/accessorSupport/decorators/property ../../../core/has ../../../core/Logger ../../../core/RandomLCG ../../../core/accessorSupport/decorators/subclass ../../Widget ./BuildingDisciplinesNode ../../support/widgetUtils ../../support/jsxFactory".split(" "),function(b,c,a,p,q,f,g,h,r,e){const k={expand:"expand",collapse:"collapse",hideSublayer:"hideSublayer",showSublayer:"showSublayer"};a=class extends g{constructor(d){super(d);this.toggleSiblingsVisibility=
+!1}render(){const {vm:d}=this,l=this.toggleSiblingsVisibility,m=this.messages??k;return e.tsx("div",{class:"esri-building-disciplines-tree",role:"tree"},d.root.children.toArray().reverse().map(n=>e.tsx(h,{messages:m,node:n,toggleSiblingsVisibility:l})))}};b.__decorate([c.property()],a.prototype,"vm",void 0);b.__decorate([c.property()],a.prototype,"messages",void 0);b.__decorate([c.property()],a.prototype,"toggleSiblingsVisibility",void 0);return a=b.__decorate([f.subclass("esri.widgets.BuildingExplorer.BuildingDisciplinesTree.BuildingDisciplinesTree")],
+a)});

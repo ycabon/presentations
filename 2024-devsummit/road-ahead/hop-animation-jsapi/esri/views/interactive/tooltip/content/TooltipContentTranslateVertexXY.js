@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../chunks/tslib.es6 ../../../../core/Logger ../../../../core/has ../../../../core/RandomLCG ../../../../core/Error ../../../../core/accessorSupport/decorators/subclass ../components/TooltipField ./TooltipContent ../../../../widgets/support/widgetUtils ../../../../widgets/support/jsxFactory".split(" "),function(b,l,q,r,t,u,m,c,n,v,a){b.TooltipContentTranslateVertexXY=class extends n.TooltipContent{_renderContent(){const {area:g,distance:p,elevation:h,totalLength:k,visibleElements:d}=
+this.info,e=this._messagesTooltip.sketch,f=this._formatters;return a.tsx(a.tsxFragment,null,d.distance?a.tsx(c.TooltipField,{title:e.distance,value:f.lengthRelative(p)}):null,d.elevation&&null!=h?.actual?a.tsx(c.TooltipField,{title:e.elevation,value:f.verticalLength(h.actual)}):null,d.area&&null!=g?a.tsx(c.TooltipField,{title:e.area,value:f.area(g)}):null,d.totalLength&&null!=k?a.tsx(c.TooltipField,{title:e.totalLength,value:f.length(k)}):null)}};b.TooltipContentTranslateVertexXY=l.__decorate([m.subclass("esri.views.interactive.tooltip.content.TooltipContentTranslateVertexXY")],
+b.TooltipContentTranslateVertexXY);Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

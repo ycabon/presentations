@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./ASourceChunk"],function(b,c){class d extends c.ASourceChunk{constructor(a,e,f,g,h){super();this._reader=a;this._queryJSON=e;this._tile=f;this._page=g;this._end=h;this.chunkId=`${this._tile.key.id}.${this._page}${this.end?"e":""}`}get queryInfo(){return{type:"paged-tile",chunkId:this.chunkId,tileId:this._tile.key.id,queryJSON:this._queryJSON,page:this._page,size:this.size(),end:this.end}}get reader(){return this._reader}get first(){return 0===this._page}get end(){return this._end}get page(){return this._page}get tile(){return this._tile}getTileReader(a){return this._tile.key.id===
+a.key.id?this.reader:null}}b.PagedTileSourceChunk=d;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

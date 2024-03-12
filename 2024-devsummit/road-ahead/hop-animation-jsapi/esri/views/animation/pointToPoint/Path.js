@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../core/time"],function(h,k){h.Path=class{constructor(){this.segments=[]}get time(){return this.segments.reduce((b,a)=>k.Seconds(b+a.time),k.Seconds(0))}interpolateComponentsAt(b,a){b=Math.min(Math.max(b,0),1);b*=this.time;let g=0,l=0;const d=this.definition,n=this.segments.reduce((e,c)=>e||c.definition.hasZoom,!1);for(let e=0;e<this.segments.length;e++){const c=this.segments[e],f=c.definition;if(b<=c.time||e===this.segments.length-1){a=this.segmentInterpolateComponentsAt(c,
+0===c.time?0:b/c.time,a);d.hasPan&&!isNaN(a.pan)&&isFinite(d.compared.pan)?a.pan=(g+f.compared.pan*a.pan)/d.compared.pan:a.pan=1;d.hasRotate&&!isNaN(a.rotate)&&isFinite(d.compared.rotate)?a.rotate=(l+f.compared.rotate*a.rotate)/d.compared.rotate:a.rotate=1;if(n&&!isNaN(a.zoom)&&isFinite(f.compared.targetZoom)){const {sourceZoom:m,targetZoom:p}=f.compared;a.zoom=(a.zoom*(p-m)+m)/this.segments[this.segments.length-1].definition.compared.targetZoom}else a.zoom=1;return a}b-=c.time;g+=f.compared.pan;
+l+=f.compared.rotate}}segmentInterpolateComponentsAt(b,a,g){return b.interpolateComponentsAt(a,g)}};Object.defineProperty(h,Symbol.toStringTag,{value:"Module"})});

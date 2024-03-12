@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["../../../../../webgl/enums","../../../../../webgl/FramebufferObject","../../../../../webgl/RenderbufferDescriptor","../../../../../webgl/TextureDescriptor"],function(e,g,h,k){function f(c,a,b){const d=new k.TextureDescriptor(a,b);d.wrapMode=e.TextureWrapMode.CLAMP_TO_EDGE;return new g.FramebufferObject(c,d,new h.RenderbufferDescriptor(e.RenderbufferFormat.STENCIL_INDEX8,a,b))}class l{constructor(){this._height=this._width=void 0;this._resources=null}dispose(){this._resources&&(this._resources.sharedBlur1Fbo.dispose(),
+this._resources.sharedBlur2Fbo.dispose(),this._resources=null)}_initialize(c,a,b){this._width=a;this._height=b;const d=f(c,a,b);c=f(c,a,b);this._resources={sharedBlur1Fbo:d,sharedBlur2Fbo:c}}setup(c,a,b){!this._resources||this._width===a&&this._height===b||this.dispose();this._resources||this._initialize(c,a,b)}get sharedBlur1Tex(){return this._resources.sharedBlur1Fbo.colorTexture}get sharedBlur1Fbo(){return this._resources.sharedBlur1Fbo}get sharedBlur2Tex(){return this._resources.sharedBlur2Fbo.colorTexture}get sharedBlur2Fbo(){return this._resources.sharedBlur2Fbo}}
+return l});

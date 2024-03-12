@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(b){function c(){return[1,0,0,1,0,0]}function e(a){return[a[0],a[1],a[2],a[3],a[4],a[5]]}function f(a,d,k,l,m,n){return[a,d,k,l,m,n]}function g(a,d){return new Float64Array(a,d,6)}const h=c(),p=Object.freeze(Object.defineProperty({__proto__:null,IDENTITY:h,clone:e,create:c,createView:g,fromValues:f},Symbol.toStringTag,{value:"Module"}));b.IDENTITY=h;b.clone=e;b.create=c;b.createView=g;b.fromValues=f;b.mat2df64=p;Object.defineProperty(b,Symbol.toStringTag,{value:"Module"})});

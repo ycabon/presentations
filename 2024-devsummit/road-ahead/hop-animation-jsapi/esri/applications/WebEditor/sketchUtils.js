@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/events","../../core/promiseUtils","../../core/reactiveUtils"],function(f,g,e,h){function k(a){const c=e.createResolver();a=g.on(a.contentContainer,"focusout",({relatedTarget:b})=>{(b=b instanceof HTMLElement?b.tagName.toLowerCase():null)&&l.has(b)||c.resolve()});return{promise:c.promise,handle:a}}function m(a){({activeComponent:a}=a);switch(a?.type){case "draw-2d":case "draw-3d":return a;default:return null}}const l=new Set(["calcite-input","calcite-button","calcite-action",
+"calcite-dropdown","calcite-dropdown-item"]);f.showTooltipAndFocusField=async function(a,c,b){const d=m(a);if(d?.activeTooltipInfo?.editableFields?.find(n=>n.name===c)){a.tooltipOptions.forceEnabled=!0;var {handle:p,promise:q}=k(d.tooltip);try{await d.tooltip.enterInputMode(c),e.isAborted(b)||(await Promise.race([h.whenOnce(()=>d.destroyed||"feedback"===d.tooltip.content?.mode,b),q]),e.isAborted(b)||(a.tooltipOptions.forceEnabled=!1))}finally{p.remove()}}};Object.defineProperty(f,Symbol.toStringTag,
+{value:"Module"})});

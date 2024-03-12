@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../DisplayEntity","../shaderGraph/techniques/mesh/dataViewUtils","../util/Reader","../util/serializationUtils"],function(f,n,p,q,r){function t(a){const d=a.layout.stride,u=new DataView(a.vertices),g=[],v=a.vertices.byteLength/d;let h=0;for(let k=0;k<v;k++){const l={};for(const b of a.layout.attributes){let m=`${b.offset} ${b.name}`,c=p.unpackDataView(u,b,h);if(b.packPrecisionFactor)if(m+=` (precision: ${b.packPrecisionFactor})`,"number"===typeof c)c/=b.packPrecisionFactor;else for(let e=
+0;e<c.length;e++)c[e]/=b.packPrecisionFactor;l[m]=c}h+=d;g.push(l)}return{vertices:g,layout:a.layout}}f.debugMeshDataInfo=function(a){if(!a)return null;const d=r.deserializeList(new q(a.entities),n);a=a.data.map(t);return{entities:d,vertexData:a}};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

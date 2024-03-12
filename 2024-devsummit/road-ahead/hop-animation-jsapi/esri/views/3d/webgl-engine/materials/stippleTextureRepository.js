@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("exports ../../../../core/floatRGBA ./ProceduralTextureRepository ../../../webgl/enums ../../../webgl/Texture ../../../webgl/TextureDescriptor".split(" "),function(k,r,t,n,u,v){function l(b){return b.pattern.map(d=>Math.round(d*b.pixelRatio))}function p(b){if(null==b)return 1;b=l(b);return Math.floor(b.reduce((d,a)=>d+a))}function q(b){return l(b).reduce((d,a)=>Math.max(d,a))}k.computeLongestPattern=q;k.computeTextureSize=p;k.createStippleTextureRepository=function(b,d){return new t.ProceduralTextureRepository(a=>
+{var e=l(a),g=1/a.pixelRatio,c=p(a);a=q(a);const w=(Math.floor(.5*(a-1))+.5)*g;a=[];let m=1;for(var h of e){for(let f=0;f<h;f++)a.push(m*(Math.min(f,h-1-f)+.5)*g/w*.5+.5);m=-m}e=Math.round(e[0]/2);e=[...a.slice(e),...a.slice(0,e)];g=new Uint8Array(4*c);h=0;for(const f of e)r.packFloatRGBA(f,g,h),h+=4;const {encodedData:x,textureSize:y}={encodedData:g,textureSize:c};c=new v.TextureDescriptor;c.internalFormat=n.PixelFormat.RGBA;c.width=y;c.height=1;c.wrapMode=n.TextureWrapMode.REPEAT;return new u.Texture(b,
+c,x)},a=>`${a.pattern.join(",")}-r${a.pixelRatio}`,d)};Object.defineProperty(k,Symbol.toStringTag,{value:"Module"})});

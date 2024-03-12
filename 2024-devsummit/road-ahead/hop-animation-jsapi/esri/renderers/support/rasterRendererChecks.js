@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){function g(a){return["u8","s8"].includes(a.pixelType)&&null!=a.statistics?.[0]?.min&&null!=a.statistics[0]?.max&&1===a.bandCount}d.isClassBreaksSupported=function(a,e=!1){const {attributeTable:b,bandCount:c}=a;return 1===c&&(!e||null!=b||null!=a.histograms)};d.isColormapRendererSupported=function(a,e=!1){const {bandCount:b,colormap:c,pixelType:f}=a;return 1===b&&(!!c?.length||!e&&"u8"===f)};d.isFlowRendererSupported=function(a){({dataType:a}=a);return"vector-uv"===a||
+"vector-magdir"===a};d.isShadedReliefRendererSupported=function(a){const {bandCount:e,dataType:b,pixelType:c}=a;return"elevation"===b||"generic"===b&&1===e&&("s16"===c||"s32"===c||"f32"===c||"f64"===c)};d.isSingleBand8BitRasterWithStats=g;d.isUVRendererSupported=function(a,e){const {attributeTable:b,bandCount:c}=a;return null==b&&g(a)?!0:null==b||1<c||e&&null==b.fields.find(f=>f.name.toLowerCase()===e.toLowerCase())?!1:!0};d.isVectorFieldRendererSupported=function(a){({dataType:a}=a);return"vector-uv"===
+a||"vector-magdir"===a};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

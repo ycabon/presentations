@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("require exports ../../../core/arrayUtils ../../../chunks/componentsUtils ../../support/widgetUtils ../../support/jsxFactory".split(" "),function(f,a,g,h,q,d){const e={base:"esri-editor__actions"};a.FooterActions=function({buttons:b,key:c}){return d.tsx("div",{class:e.base,key:c??"footer-actions",slot:"footer"},b.filter(g.isSome).map(({disabled:k,onClick:l,label:m,...n},p)=>d.tsx("calcite-button",{disabled:k??!1,key:`action-${p}`,onclick:l,slot:"footer-actions",width:"full",...n},m)))};a.css=
+e;a.loadFooterActionsComponents=()=>h.loadCalciteComponents({button:()=>new Promise((b,c)=>f(["../../../chunks/calcite-button"],b,c))});Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

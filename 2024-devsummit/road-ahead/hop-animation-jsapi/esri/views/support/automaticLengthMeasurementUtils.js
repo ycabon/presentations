@@ -1,0 +1,4 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","./euclideanLengthMeasurementUtils","./geodesicLengthMeasurementUtils"],function(c,d,e){c.autoDistance2D=function(a,b,f){return e.geodesicDistance(a,b,f)??d.euclideanHorizontalDistance(a,b,f)};c.autoDistanceBetweenPoints2D=function(a,b){return e.geodesicDistanceBetweenPoints(a,b)??d.euclideanHorizontalDistanceBetweenPoints(a,b)};c.autoLength2D=function(a){return e.geodesicLength(a)??d.euclideanHorizontalLength(a)};Object.defineProperty(c,Symbol.toStringTag,{value:"Module"})});

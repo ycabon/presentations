@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../rest/support/Query"],function(d,l){function g(a){return f(a)*h(a)}function h(a){return a.capabilities.query.maxRecordCount||2E3}function f(a){return a.capabilities.query.supportsMaxRecordCountFactor?l.MAX_MAX_RECORD_COUNT_FACTOR:1}d.getMaxRecordCountFactor=f;d.getMaximumQuerySize=g;d.getMaximumRecordCount=h;d.queryAllJSON=async function(a,b,m){b=b.clone();a.capabilities.query.supportsMaxRecordCountFactor&&(b.maxRecordCountFactor=f(a));const k=g(a),n=a.capabilities.query.supportsPagination;
+b.start=0;b.num=k;let c=null;for(;;){const e=await a.source.queryFeaturesJSON(b,m);null==c?c=e:c.features=c.features.concat(e.features);c.exceededTransferLimit=e.exceededTransferLimit;if(!n||!e.exceededTransferLimit)break;b.start+=k}return c};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

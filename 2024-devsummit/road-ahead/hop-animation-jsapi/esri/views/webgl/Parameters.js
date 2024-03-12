@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports"],function(d){class e{constructor(a,b,c){b=b.textureFilterAnisotropic;c=c.maxAnisotropy??Infinity;this.versionString=a.getParameter(a.VERSION);this.maxVertexTextureImageUnits=a.getParameter(a.MAX_VERTEX_TEXTURE_IMAGE_UNITS);this.maxVertexAttributes=a.getParameter(a.MAX_VERTEX_ATTRIBS);this.maxMaxAnisotropy=b?Math.min(a.getParameter(b.MAX_TEXTURE_MAX_ANISOTROPY),c):1;this.maxTextureImageUnits=a.getParameter(a.MAX_TEXTURE_IMAGE_UNITS);this.maxTextureSize=a.getParameter(a.MAX_TEXTURE_SIZE);
+this.maxRenderbufferSize=a.getParameter(a.MAX_RENDERBUFFER_SIZE);this.maxViewportDims=a.getParameter(a.MAX_VIEWPORT_DIMS);this.maxUniformBufferBindings=a.getParameter(a.MAX_UNIFORM_BUFFER_BINDINGS);this.maxVertexUniformBlocks=a.getParameter(a.MAX_VERTEX_UNIFORM_BLOCKS);this.maxFragmentUniformBlocks=a.getParameter(a.MAX_FRAGMENT_UNIFORM_BLOCKS);this.maxUniformBlockSize=a.getParameter(a.MAX_UNIFORM_BLOCK_SIZE);this.uniformBufferOffsetAlignment=a.getParameter(a.UNIFORM_BUFFER_OFFSET_ALIGNMENT);this.maxArrayTextureLayers=
+a.getParameter(a.MAX_ARRAY_TEXTURE_LAYERS);this.maxSamples=a.getParameter(a.MAX_SAMPLES)}}d.Parameters=e;Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../request","../../networks/support/typeUtils","../utils","./support/QueryAssociationsResult"],function(f,g,h,e,k){function l(a){const {returnDeletes:b,elements:c,gdbVersion:m,moment:n}=a.toJSON(),p=JSON.stringify(c.map(d=>({globalId:d.globalId,networkSourceId:d.networkSourceId,terminalId:d.terminalId})));a=JSON.stringify(a.types.map(d=>h.associationTypeKebabDict.toJSON(d))).replaceAll('"connectivity"','"junctionJunctionConnectivity"');return{returnDeletes:b,elements:p,types:a,
+gdbVersion:m,moment:n}}f.queryAssociations=async function(a,b,c){a=e.parseUrl(a);b={...l(b),f:"json"};b=e.encode({...a.query,...b});c=e.asValidOptions(b,{...c,method:"post"});({data:c}=await g(`${a.path}/associations/query`,c));return k.fromJSON(c)};Object.defineProperty(f,Symbol.toStringTag,{value:"Module"})});

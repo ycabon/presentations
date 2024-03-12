@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../../chunks/vec32","../../../../../core/libs/gl-matrix-2/factories/vec3f64"],function(r,h,p){const u=p.create(),v=p.create(),w=p.create(),k=p.create();r.smoothNormals=function(b,x){if(b.components)for(const q of b.components)if(q.faces&&"smooth"===q.shading){b=q;var l=x;null==l.normal&&(l.normal=new Float32Array(l.position.length));b=b.faces;const {position:d,normal:a}=l;l=b.length/3;for(let m=0;m<l;++m){const e=3*b[3*m],f=3*b[3*m+1],g=3*b[3*m+2];var c=h.set(u,d[e],d[e+
+1],d[e+2]),n=h.set(v,d[f],d[f+1],d[f+2]);const t=h.set(w,d[g],d[g+1],d[g+2]);n=h.subtract(n,n,c);c=h.subtract(t,t,c);c=h.cross(n,n,c);a[e]+=c[0];a[e+1]+=c[1];a[e+2]+=c[2];a[f]+=c[0];a[f+1]+=c[1];a[f+2]+=c[2];a[g]+=c[0];a[g+1]+=c[1];a[g+2]+=c[2]}for(b=0;b<a.length;b+=3)h.set(k,a[b],a[b+1],a[b+2]),h.normalize(k,k),a[b]=k[0],a[b+1]=k[1],a[b+2]=k[2]}};Object.defineProperty(r,Symbol.toStringTag,{value:"Module"})});

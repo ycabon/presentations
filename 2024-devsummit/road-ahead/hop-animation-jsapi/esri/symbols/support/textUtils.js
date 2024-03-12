@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../core/mathUtils","../../core/accessorSupport/ensureType"],function(a,e,f){const g={type:Number,cast:b=>{b=f.ensureNumber(b);return 0===b?1:e.clamp(b,.1,4)},nonNullable:!0},c=["left","right","center"],d=["baseline","top","middle","bottom"],h={type:c,nonNullable:!0},k={type:d,nonNullable:!0};a.backgroundPadding=8;a.fontDecorations=["none","underline","line-through"];a.fontStyles=["normal","italic","oblique"];a.fontWeights=["normal","lighter","bold","bolder"];a.horizontalAlignmentProperty=
+h;a.horizontalAlignments=c;a.lineHeightProperty=g;a.verticalAlignmentProperty=k;a.verticalAlignments=d;Object.defineProperty(a,Symbol.toStringTag,{value:"Module"})});

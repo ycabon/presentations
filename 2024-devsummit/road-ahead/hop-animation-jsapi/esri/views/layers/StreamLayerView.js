@@ -1,0 +1,6 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define("../../chunks/tslib.es6 ../../core/accessorSupport/decorators/property ../../core/has ../../core/Logger ../../core/RandomLCG ../../core/accessorSupport/decorators/subclass ../../layers/support/FeatureFilter".split(" "),function(b,c,g,h,k,e,f){return a=>{a=class extends a{resume(){this._isUserPaused=!1;this.suspended||this._doResume()}pause(){this._isUserPaused=!0;this.suspended||this._doPause()}disconnect(){this._doDisconnect()}connect(){this._doConnect()}clear(){this._doClear()}constructor(...d){super(...d);
+this._isUserPaused=!1;this.filter=null}get connectionStatus(){return(this._isUserPaused||this.suspended)&&"connected"===this._streamConnectionStatus?"paused":this._streamConnectionStatus}_onSuspendedChange(d){d?this._doPause():this._isUserPaused||this._doResume()}};b.__decorate([c.property()],a.prototype,"_isUserPaused",void 0);b.__decorate([c.property({readOnly:!0})],a.prototype,"connectionStatus",null);b.__decorate([c.property({type:f})],a.prototype,"filter",void 0);return a=b.__decorate([e.subclass("esri.layers.mixins.StreamLayerView")],
+a)}});

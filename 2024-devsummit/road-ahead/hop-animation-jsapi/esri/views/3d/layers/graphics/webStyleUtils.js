@@ -1,0 +1,5 @@
+// All material copyright Esri, All Rights Reserved, unless otherwise specified.
+// See https://js.arcgis.com/4.29/esri/copyright.txt for details.
+//>>built
+define(["exports","../../../../core/Error","../../../../symbols/support/styleUtils","../../../../symbols/support/webStyleSymbolUtils"],function(d,k,e,f){d.getResourceUrlFromSymbolStyle=async function(a){if(null===a||null==a.styleName&&null==a.styleUrl)return null;var b=a.name;if(null==b)throw new k("symbolstyleutils:style-symbol-reference-name-missing","Missing name in style symbol reference");const g={portal:a.portal};a=await e.fetchStyle(a,g).catch(()=>null);if(null===a)return null;const h=f.getStyleItemFromStyle(b,
+a.data);if(h&&!h.formatInfos?.some(c=>"gltf_basisu"===c.type))return null;b=await f.fetchSymbolFromStyle(a,b,g,"webRef",(c,l)=>e.symbolUrlFromStyleItem(c,l,["gltf_basisu","gltf"])).catch(()=>null);if(null===b||"point-3d"!==b.type)return null;b=b.symbolLayers.items[0];return"object"===b.type?b.resource:null};Object.defineProperty(d,Symbol.toStringTag,{value:"Module"})});

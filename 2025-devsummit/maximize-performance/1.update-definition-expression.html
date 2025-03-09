@@ -26,49 +26,15 @@
       src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"
     ></script>
 
-    <style>
-      #histogram {
-        width: 500px;
-        height: 150px;
-      }
-
-      .labels {
-        padding: 5px;
-      }
-
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-
-      .application-container {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .application-container arcgis-map {
-        flex: 1;
-      }
-
-      .application-container calcite-slider {
-        flex: 0;
-        margin: 24px;
-      }
-    </style>
+    <link rel="stylesheet" href="./style.css" />
 
     <script>
       require(["esri/WebMap"], (WebMap) =>
         (async () => {
           // https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=4b0901f42a9d4006b0fd847555f693dc
           // layers:
-          //   - Global Temperatures from 1880 to 2018 by row
-          //   - Global Temperature anomalies by row
+          //   - Long table: Global Temperatures from 1880 to 2018 by row
+          //   - Wide table: Global Temperature anomalies by column
           const map = new WebMap({
             portalItem: {
               id: "4b0901f42a9d4006b0fd847555f693dc",
@@ -76,14 +42,11 @@
           });
 
           await map.load();
-          map.layers.forEach((layer) => (layer.visible = false));
-
-          // Set initial temperature anomaly renderer on layer based
-          // on data recorded for the year 1880
-          const layer = map.layers.find(
+          map.layers = map.layers.filter(
             (layer) =>
               layer.title === "Global Temperatures from 1880 to 2018 by row"
           );
+          const layer = map.layers.at(0);
 
           layer.visible = true;
           layer.outFields = ["*"];
@@ -93,19 +56,16 @@
           mapElement.constraints = { snapToZoom: false };
           mapElement.map = map;
 
-          // When the user changes the slider's value,
-          // change the renderer and histogram to reflect
-          // data corresponding to the year indicated on the slider
+          // Update the year filter based on the slider input
           const slider = document.querySelector("#yearSlider");
-          slider.addEventListener("calciteSliderChange", (event) => {
+          slider.addEventListener("calciteSliderInput", (event) => {
             const year = event.target.value;
             setYear(year);
           });
 
           function setYear(value) {
             slider.value = value;
-            // Update the underlying data value driving the expression
-            // based on the given year provided by the slider
+            // Update the server-side filter with the current year
             layer.definitionExpression = `YEAR = ${value}`;
           }
 

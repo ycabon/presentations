@@ -5,7 +5,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2.client-side-layerview-filter</title>
+    <title>6.time-properties</title>
 
     <!-- Load Calcite -->
     <script
@@ -29,7 +29,10 @@
     <link rel="stylesheet" href="./style.css" />
 
     <script>
-      require(["esri/WebMap"], (WebMap) =>
+      require(["esri/WebMap", "esri/core/reactiveUtils"], (
+        WebMap,
+        reactiveUtils
+      ) =>
         (async () => {
           const startYear = 1880;
 
@@ -45,39 +48,53 @@
 
           await map.load();
           map.layers = map.layers.filter(
-            (layer) =>
-              layer.title === "Global Temperatures from 1880 to 2018 by row"
+            (layer) => layer.title === "Global Temperature anomalies by column"
           );
           const layer = map.layers.at(0);
 
           layer.visible = true;
           layer.definitionExpression = null;
-          layer.outFields = ["*"];
+
+          // Configure the visual variable to compute the field name
+          // based on the year of the time extent
+          layer.renderer.visualVariables.forEach((variable) => {
+            variable.field = null;
+            variable.valueExpression = `
+              Expects($feature, "_${startYear}")
+              var year = Year($view.timeProperties.currentStart)
+              var fieldName = "_" + year
+              return $feature[fieldName]
+            `;
+          });
 
           // Configure the map element to display the map
           const mapElement = document.querySelector("#mapElement");
           mapElement.constraints = { snapToZoom: false };
+          mapElement.timeExtent = {
+            start: new Date(startYear, 0, 1),
+          };
           mapElement.map = map;
 
+          // Configure the time slider with:
+          //  - a full time extent from 1880 to 2018
+          //  - a stop interval of 1 year
+          // Time slider auto updates the map view's time extent
+          const timeSlider = document.querySelector("#timeSlider");
+          timeSlider.mode = "instant";
+          timeSlider.fullTimeExtent = {
+            start: new Date(1880, 0, 1),
+            end: new Date(2018, 0, 1),
+          };
+          timeSlider.stops = {
+            interval: {
+              value: 1,
+              unit: "years",
+            },
+          };
+
           const layerView = await mapElement.whenLayerView(layer);
-
-          // Update the year filter based on the slider input
-          const slider = document.querySelector("#yearSlider");
-          slider.addEventListener("calciteSliderInput", (event) => {
-            const year = event.target.value;
-            setYear(year);
-          });
-
-          async function setYear(value) {
-            slider.value = value;
-
-            // Update the client-side filter with the current year
-            layerView.filter = {
-              where: `YEAR = ${value}`,
-            };
-          }
-
-          setYear(startYear);
+          await reactiveUtils.whenOnce(() => !layerView.updating);
+          layer.outFields = ["*"];
         })());
     </script>
   </head>
@@ -87,20 +104,10 @@
       <arcgis-map id="mapElement" popup-disabled>
         <arcgis-zoom position="top-left"></arcgis-zoom>
       </arcgis-map>
-      <!-- This slider will allow the user to update the renderer based on a provided year between 1880 and 2018 -->
-      <calcite-slider
-        id="yearSlider"
-        value="1880"
-        precise
-        label-ticks
-        label-handles
-        fill-placement="none"
-        max="2018"
-        min="1880"
-        scale="l"
-        ticks="20"
-      >
-      </calcite-slider>
+      <arcgis-time-slider
+        id="timeSlider"
+        reference-element="mapElement"
+      ></arcgis-time-slider>
     </div>
   </body>
 </html>

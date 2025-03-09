@@ -31,6 +31,8 @@
     <script>
       require(["esri/WebMap"], (WebMap) =>
         (async () => {
+          const startYear = 1880;
+
           // https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=4b0901f42a9d4006b0fd847555f693dc
           // layers:
           //   - Long table: Global Temperatures from 1880 to 2018 by row
@@ -79,7 +81,7 @@
             layer.renderer = renderer;
           }
 
-          setYear(1880);
+          setYear(startYear);
         })());
     </script>
   </head>

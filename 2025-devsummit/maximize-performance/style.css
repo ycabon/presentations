@@ -18,7 +18,8 @@ body {
   flex: 1;
 }
 
-.application-container calcite-slider {
+.application-container calcite-slider,
+.application-container arcgis-time-slider {
   flex: 0;
   margin: 24px;
 }

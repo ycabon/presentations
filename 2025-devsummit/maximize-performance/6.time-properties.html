@@ -55,17 +55,25 @@
           layer.visible = true;
           layer.definitionExpression = null;
 
-          // Configure the visual variable to compute the field name
-          // based on the year of the time extent
-          layer.renderer.visualVariables.forEach((variable) => {
+          // Configure the renderer to compute the field name
+          // based on the year of the time extent which can be accessed
+          // via $view.timeProperties.currentStart
+          const valueExpression = `
+            Expects($feature, "_${startYear}")
+            var year = Year($view.timeProperties.currentStart)
+            var fieldName = "_" + year
+            return $feature[fieldName]
+          `;
+
+          // Replace the field with the value expression
+          const renderer = layer.renderer.clone();
+          renderer.field = null;
+          renderer.valueExpression = valueExpression;
+          renderer.visualVariables.forEach((variable) => {
             variable.field = null;
-            variable.valueExpression = `
-              Expects($feature, "_${startYear}")
-              var year = Year($view.timeProperties.currentStart)
-              var fieldName = "_" + year
-              return $feature[fieldName]
-            `;
+            variable.valueExpression = valueExpression;
           });
+          layer.renderer = renderer;
 
           // Configure the map element to display the map
           const mapElement = document.querySelector("#mapElement");

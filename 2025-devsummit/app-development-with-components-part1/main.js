@@ -28,7 +28,7 @@ require({
     //
     //--------------------------------------------------------------------------
 
-    class Application extends EventTarget {
+    class ApplicationState extends EventTarget {
       constructor() {
         super();
 
@@ -38,15 +38,17 @@ require({
           },
         });
 
-        this.trailsFilter = {
-          park: null,
-          parkExtent: null,
-          trailCategories: null,
-        };
-
-        this.selectedTrail = null;
         this.trailCategories = [];
         this.parks = [];
+        this.parksByName = new Map();
+
+        this.selectedTrailCategories = [];
+        this.selectedParkName = null;
+        this.selectedTrail = null;
+      }
+
+      get selectedParkExtent() {
+        return this.parksByName.get(this.selectedParkName)?.extent ?? null;
       }
 
       async load() {
@@ -54,40 +56,50 @@ require({
 
         this.layer = this.map.layers.find((layer) => layer.title === "Trails");
 
-        const [parks, trailCategories] = await Promise.all([
-          fetchParks(this.layer),
-          fetchTrailCategories(this.layer, this.trailsFilter),
+        await Promise.all([
+          this.#updateParkList(),
+          this.#updateTrailCategories(),
         ]);
-
-        this.parks = parks;
-        this.parksByName = new Map(
-          parks.map((park) => {
-            return [park.key, park];
-          })
-        );
-
-        this.trailCategories = trailCategories;
       }
 
-      selectPark(parkName) {
+      async selectPark(parkName) {
         const park = this.parksByName.get(parkName);
-        this.trailsFilter.park = park.key;
-        this.trailsFilter.parkExtent = park.extent;
+        this.selectedParkName = park.name;
+        this.#updateTrailCategories();
         this.dispatchEvent(new CustomEvent("filterChange"));
       }
 
       selectTrailCategories(categories) {
-        this.trailsFilter.trailUses = categories;
+        this.selectedTrailCategories = categories;
         this.dispatchEvent(new CustomEvent("filterChange"));
       }
 
       selectTrail(feature) {
-        state.selectedTrail = feature;
+        this.selectedTrail = feature;
         this.dispatchEvent(new CustomEvent("selectedTrailChange"));
+      }
+
+      async #updateParkList() {
+        const parks = await fetchParks(this.layer);
+        this.parks = parks;
+        this.parksByName = new Map(
+          parks.map((park) => {
+            return [park.name, park];
+          })
+        );
+      }
+
+      async #updateTrailCategories() {
+        const trailCategories = await fetchTrailCategories(
+          this.layer,
+          this.selectedParkName
+        );
+        this.trailCategories = trailCategories;
+        this.dispatchEvent(new CustomEvent("filterChange"));
       }
     }
 
-    const state = new Application();
+    const state = new ApplicationState();
 
     mapElement.map = state.map;
     mapElement.constraints = {
@@ -108,13 +120,13 @@ require({
 
     async function setupFilterPanel() {
       // Create bookmarks
-      updateParkList(parkList, state.parks, state.trailsFilter);
+      updateParkList(parkList, state.parks, state.selectedParkName);
 
       // Populate the trail categories filter
       updateTrailCategoriesChipGroup(
         trailCategoriesChipGroup,
         state.trailCategories,
-        state.trailsFilter
+        state.selectedTrailCategories
       );
     }
 
@@ -190,7 +202,7 @@ require({
     //
     //--------------------------------------------------------------------------
 
-    function updateParkList(parkList, parks, filterState) {
+    function updateParkList(parkList, parks, selectedParkName) {
       const trailLengthFormatter = new Intl.NumberFormat(parkList.locale, {
         style: "unit",
         unit: "kilometer",
@@ -202,12 +214,12 @@ require({
         parks,
         () => document.createElement("calcite-list-item"),
         (item, park) => {
-          item.label = park.key;
+          item.label = park.name;
           item.description = `${
             park.trailCount
           } trails - ${trailLengthFormatter.format(park.totalLength / 1000)}`;
-          item.value = park.key;
-          item.selected = park.key === filterState.park;
+          item.value = park.name;
+          item.selected = park.name === selectedParkName;
         }
       );
     }
@@ -221,17 +233,17 @@ require({
     function updateTrailCategoriesChipGroup(
       trailUseChipGroup,
       trailCategories,
-      trailsFilter
+      selectedTrailCategories
     ) {
       updateElementChildren(
         trailUseChipGroup,
         trailCategories,
         () => document.createElement("calcite-chip"),
         (chip, category) => {
-          chip.value = category.key;
-          chip.innerText = `${category.key}  (${category.count})`;
+          chip.value = category.name;
+          chip.innerText = `${category.name}  (${category.count})`;
           chip.selected =
-            trailsFilter.trailUses?.includes(category.key) ?? false;
+            selectedTrailCategories.includes(category.name) ?? false;
         }
       );
     }
@@ -243,16 +255,17 @@ require({
     //--------------------------------------------------------------------------
 
     state.addEventListener("filterChange", () => {
-      const { trailsFilter, layer } = state;
+      const layer = state.layer;
+
       updateTrailCategoriesChipGroup(
         trailCategoriesChipGroup,
         state.trailCategories,
-        trailsFilter
+        state.selectedTrailCategories
       );
 
       const where = sqlAnd(
-        createParkWhereClause(trailsFilter.park),
-        createTrailUseWhereClause(trailsFilter.trailUses)
+        createParkWhereClause(state.selectedParkName),
+        createTrailUseWhereClause(state.selectedTrailCategories)
       );
 
       layer.featureEffect = {
@@ -266,7 +279,7 @@ require({
         trailsTable.objectIds = objectIds;
       });
 
-      mapElement.goTo(trailsFilter.parkExtent);
+      mapElement.goTo(state.selectedParkExtent);
     });
 
     state.addEventListener("selectedTrailChange", () => {

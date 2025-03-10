@@ -2,13 +2,20 @@ define(["./utils", "./parks"], function (
   { sqlAnd },
   { createParkWhereClause }
 ) {
-  async function fetchTrailCategories(layer, trailsFilter) {
+  /**
+   * Fetches trail categories from a given layer based on the provided trails filter.
+   *
+   * @param {Object} layer - The layer from which to fetch trail categories.
+   * @param {Object} trailsFilter - The filter criteria for trails.
+   * @returns {Promise<Array>} A promise that resolves to an array of trail categories.
+   */
+  async function fetchTrailCategories(layer, selectedParkName) {
     await layer.load();
 
     const trailUseFieldName = "TRLUSE";
     const query = layer.createQuery();
 
-    query.where = sqlAnd(query.where, createParkWhereClause(trailsFilter.park));
+    query.where = sqlAnd(query.where, createParkWhereClause(selectedParkName));
     query.groupByFieldsForStatistics = [trailUseFieldName];
     query.outStatistics = [
       {
@@ -48,7 +55,7 @@ define(["./utils", "./parks"], function (
    * @param {string} trailUseFieldName - The name of the field in the feature attributes that contains the trail use information.
    *
    * @returns {Array<Object>} An array of objects representing the trail use categories and their respective counts.
-   * @property {string} key - The name of the trail use category.
+   * @property {string} name - The name of the trail use category.
    * @property {number} count - The count of the trail use category.
    */
   function getTrailCategories(statisticsFeatures, trailUseFieldName) {
@@ -75,10 +82,10 @@ define(["./utils", "./parks"], function (
       }
     }
 
-    return Object.keys(trailCategoriesCounts).map((key) => {
+    return Object.keys(trailCategoriesCounts).map((name) => {
       return {
-        key,
-        count: trailCategoriesCounts[key],
+        name,
+        count: trailCategoriesCounts[name],
       };
     });
   }
@@ -103,9 +110,9 @@ define(["./utils", "./parks"], function (
   };
 
   function getCategoryForTrailUse(trailUse) {
-    for (const [key, values] of Object.entries(trailCategories)) {
+    for (const [name, values] of Object.entries(trailCategories)) {
       if (values.has(trailUse)) {
-        return key;
+        return name;
       }
     }
     trailCategories.Other.add(trailUse);

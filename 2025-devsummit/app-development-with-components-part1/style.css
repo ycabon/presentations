@@ -3,14 +3,14 @@
 .content-container {
   height: calc(100% - 2rem);
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: 400px repeat(5, 1fr);
+  grid-template-rows: 1fr 1fr 255px;
   gap: 1rem;
   margin: 1rem;
 }
 
 #mapElement {
-  grid-column: span 6 / span 6;
+  grid-column: span 5 / span 5;
   grid-row: span 2 / span 2;
   grid-column-start: 2;
   grid-row-start: 1;
@@ -34,14 +34,6 @@
 
 #parkList {
   flex: 1;
-}
-
-#elevationPanel arcgis-elevation-profile {
-  flex: 1;
-}
-
-.esri-elevation-profile {
-  --chart-height: 288px;
 }
 
 /** Styling */

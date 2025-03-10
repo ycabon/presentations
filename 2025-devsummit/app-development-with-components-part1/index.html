@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -42,23 +43,31 @@
       </calcite-navigation>
 
       <div class="content-container">
-        <arcgis-map
-          id="mapElement"
-          item-id="f599313f70204fc79bcc2885db89d09f"
-          ground="world-elevation"
-        >
-        </arcgis-map>
+        <arcgis-map id="mapElement" ground="world-elevation"> </arcgis-map>
+
+        <arcgis-feature-table
+          id="trailsTable"
+          reference-element="mapElement"
+          multiple-selection-disabled
+        ></arcgis-feature-table>
+
         <calcite-panel id="elevationPanel" heading="Elevation profile">
           <calcite-chip-group slot="header-actions-end">
-            <calcite-chip id="distance" icon="walking-distance"></calcite-chip>
-            <calcite-chip id="elevation" icon="altitude"></calcite-chip>
+            <calcite-chip
+              id="distanceChip"
+              icon="walking-distance"
+            ></calcite-chip>
+            <calcite-chip id="elevationChip" icon="altitude"></calcite-chip>
           </calcite-chip-group>
           <arcgis-elevation-profile
+            id="elevationProfile"
             reference-element="mapElement"
             unit="imperial"
             hide-clear-button
             hide-legend
             hide-settings-button
+            hide-select-button
+            hide-sketch-button
           ></arcgis-elevation-profile>
         </calcite-panel>
 

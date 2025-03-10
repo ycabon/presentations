@@ -10,22 +10,26 @@
 }
 
 #mapElement {
-  grid-column: span 4 / span 4;
+  grid-column: span 5 / span 5;
   grid-row: span 2 / span 2;
   grid-column-start: 2;
   grid-row-start: 1;
 }
 
 #elevationPanel {
-  grid-column: span 4 / span 4;
-  grid-column-start: 2;
+  grid-column: span 2 / span 2;
+  grid-column-start: 5;
   grid-row-start: 3;
 }
 
 #filterPanel {
   grid-row: span 3 / span 3;
-  grid-column-start: 1;
-  grid-row-start: 1;
+}
+
+#trailsTable {
+  grid-column: span 3 / span 3;
+  grid-column-start: 2;
+  grid-row-start: 3;
 }
 
 #parkList {
@@ -37,7 +41,7 @@
 }
 
 .esri-elevation-profile {
-  --chart-height: calc(100% - 68px);
+  --chart-height: 288px;
 }
 
 /** Styling */
@@ -55,4 +59,33 @@
 
 .calciteBlockNoPadding {
   --calcite-block-padding: 0;
+}
+
+calcite-shell.custom-theme {
+  --calcite-color-brand: #308e29;
+  --calcite-color-brand-hover: #267121;
+  --calcite-color-brand-press: #1d5519;
+  --calcite-color-background: #faf3e3;
+  --calcite-color-foreground-1: #fffaed;
+  --calcite-color-foreground-2: #fae9c8;
+  --calcite-color-foreground-3: #fce5b6;
+  --calcite-color-foreground-current: #ebd09d;
+  --calcite-color-info: #267121;
+  --calcite-color-success: #308e29;
+  --calcite-color-warning: #f1c21b;
+  --calcite-color-danger: #d83020;
+  --calcite-color-danger-hover: #a82b1e;
+  --calcite-color-danger-press: #851012;
+  --calcite-color-text-1: #3a3335;
+  --calcite-color-text-2: #3d3638;
+  --calcite-color-text-3: #463d40;
+  --calcite-color-text-inverse: #ffffff;
+  --calcite-color-text-link: #267121;
+  --calcite-color-border-1: #e6ddd1;
+  --calcite-color-border-2: #e8e1dc;
+  --calcite-color-border-3: #e6ddd1;
+}
+
+calcite-navigation-logo {
+  --calcite-ui-icon-color: var(--calcite-color-brand);
 }

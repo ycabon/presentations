@@ -3,23 +3,17 @@
 .content-container {
   height: calc(100% - 2rem);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 1rem;
   margin: 1rem;
 }
 
 #mapElement {
-  grid-column: span 5 / span 5;
+  grid-column: span 6 / span 6;
   grid-row: span 2 / span 2;
   grid-column-start: 2;
   grid-row-start: 1;
-}
-
-#elevationPanel {
-  grid-column: span 2 / span 2;
-  grid-column-start: 5;
-  grid-row-start: 3;
 }
 
 #filterPanel {
@@ -29,6 +23,12 @@
 #trailsTable {
   grid-column: span 3 / span 3;
   grid-column-start: 2;
+  grid-row-start: 3;
+}
+
+#elevationPanel {
+  grid-column: span 2 / span 2;
+  grid-column-start: 5;
   grid-row-start: 3;
 }
 
@@ -84,6 +84,8 @@ calcite-shell.custom-theme {
   --calcite-color-border-1: #e6ddd1;
   --calcite-color-border-2: #e8e1dc;
   --calcite-color-border-3: #e6ddd1;
+
+  --vaadin-grid-cell-background: #faf3e3;
 }
 
 calcite-navigation-logo {

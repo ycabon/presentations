@@ -54,32 +54,43 @@
 }
 
 calcite-shell.custom-theme {
-  --calcite-color-brand: #308e29;
-  --calcite-color-brand-hover: #267121;
-  --calcite-color-brand-press: #1d5519;
-  --calcite-color-background: #faf3e3;
-  --calcite-color-foreground-1: #fffaed;
-  --calcite-color-foreground-2: #fae9c8;
-  --calcite-color-foreground-3: #fce5b6;
-  --calcite-color-foreground-current: #ebd09d;
-  --calcite-color-info: #267121;
-  --calcite-color-success: #308e29;
-  --calcite-color-warning: #f1c21b;
-  --calcite-color-danger: #d83020;
-  --calcite-color-danger-hover: #a82b1e;
-  --calcite-color-danger-press: #851012;
-  --calcite-color-text-1: #3a3335;
-  --calcite-color-text-2: #3d3638;
-  --calcite-color-text-3: #463d40;
-  --calcite-color-text-inverse: #ffffff;
-  --calcite-color-text-link: #267121;
-  --calcite-color-border-1: #e6ddd1;
-  --calcite-color-border-2: #e8e1dc;
-  --calcite-color-border-3: #e6ddd1;
+  --calcite-color-brand: #00c291;
+  --calcite-color-brand-hover: #00ad82;
+  --calcite-color-brand-press: #00916d;
+  --calcite-color-background: #f2f7f4;
+  --calcite-color-foreground-1: #fafffd;
+  --calcite-color-foreground-2: #edf7f3;
+  --calcite-color-foreground-3: #e4ebe8;
+  --calcite-color-foreground-current: #c7ffda;
+  --calcite-color-info: #007f99;
+  --calcite-color-success: #47ac35;
+  --calcite-color-warning: #eeb417;
+  --calcite-color-danger: #d92024;
+  --calcite-color-danger-hover: #a91e20;
+  --calcite-color-danger-press: #7c1315;
+  --calcite-color-text-1: #222927;
+  --calcite-color-text-2: #333d3a;
+  --calcite-color-text-3: #3a4541;
+  --calcite-color-text-inverse: #fafffd;
+  --calcite-color-text-link: #04716c;
+  --calcite-color-border-1: #c3c7c5;
+  --calcite-color-border-2: #cdd4d0;
+  --calcite-color-border-3: #dfe8e3;
+  --calcite-color-border-input: #727d77;
 
-  --vaadin-grid-cell-background: #faf3e3;
+  --vaadin-grid-cell-background: var(--calcite-color-background);
+}
+
+.custom-theme .esri-widget {
+  background-color: var(--calcite-color-background);
 }
 
 calcite-navigation-logo {
-  --calcite-ui-icon-color: var(--calcite-color-brand);
+  color: var(--calcite-color-brand);
+}
+
+arcgis-search {
+  display: flex;
+  align-items: center;
+  margin: 1rem;
 }

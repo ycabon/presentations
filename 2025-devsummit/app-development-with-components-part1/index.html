@@ -40,6 +40,16 @@
           heading="US National Parks"
           description="Trail Explorer"
         ></calcite-navigation-logo>
+        <arcgis-search
+          id="search"
+          reference-element="mapElement"
+          active-source-index="0"
+          location-disabled
+          popup-disabled
+          result-graphic-disabled
+          search-all-disabled
+          slot="content-end"
+        ></arcgis-search>
       </calcite-navigation>
 
       <div class="content-container">
@@ -62,7 +72,7 @@
           <arcgis-elevation-profile
             id="elevationProfile"
             reference-element="mapElement"
-            unit="imperial"
+            unit="metric"
             hide-clear-button
             hide-legend
             hide-settings-button

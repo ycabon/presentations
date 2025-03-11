@@ -8,7 +8,10 @@ import {
 } from "./application/trailCategories.js";
 
 // Import Maps SDK modules
-const WebMap = await $arcgis.import("esri/WebMap");
+const [WebMap, reactiveUtils] = await $arcgis.import([
+  "esri/WebMap",
+  "esri/core/reactiveUtils",
+]);
 
 //--------------------------------------------------------------------------
 //
@@ -23,6 +26,7 @@ const trailCategoriesChipGroup = document.querySelector(
 );
 const trailsTable = document.querySelector("#trailsTable");
 const elevationProfile = document.querySelector("#elevationProfile");
+const search = document.querySelector("#search");
 
 //--------------------------------------------------------------------------
 //
@@ -55,16 +59,14 @@ class ApplicationState extends EventTarget {
 
   async load() {
     await this.map.load();
-
     this.layer = this.map.layers.find((layer) => layer.title === "Trails");
-
     await Promise.all([this.#updateParkList(), this.#updateTrailCategories()]);
   }
 
   async selectPark(parkName) {
     const park = this.parksByName.get(parkName);
     this.selectedParkName = park.name;
-    this.#updateTrailCategories();
+    await this.#updateTrailCategories();
     this.dispatchEvent(new CustomEvent("filterChange"));
   }
 
@@ -73,7 +75,18 @@ class ApplicationState extends EventTarget {
     this.dispatchEvent(new CustomEvent("filterChange"));
   }
 
-  selectTrail(feature) {
+  async selectTrail(feature) {
+    // Fetch the geometry if it's not already available
+    if (feature && !feature.geometry) {
+      const {
+        features: [{ geometry }],
+      } = await state.layer.queryFeatures({
+        objectIds: [feature.getObjectId()],
+        returnGeometry: true,
+      });
+      feature.geometry = geometry;
+    }
+
     this.selectedTrail = feature;
     this.dispatchEvent(new CustomEvent("selectedTrailChange"));
   }
@@ -94,7 +107,6 @@ class ApplicationState extends EventTarget {
       this.selectedParkName
     );
     this.trailCategories = trailCategories;
-    this.dispatchEvent(new CustomEvent("filterChange"));
   }
 }
 
@@ -110,6 +122,8 @@ await state.load();
 setupFilterPanel();
 setupTrailsTable();
 setupElevationProfile();
+setupPopup();
+setupSearch();
 
 //--------------------------------------------------------------------------
 //
@@ -117,7 +131,7 @@ setupElevationProfile();
 //
 //--------------------------------------------------------------------------
 
-async function setupFilterPanel() {
+function setupFilterPanel() {
   // Create bookmarks
   updateParkList(parkList, state.parks, state.selectedParkName);
 
@@ -127,76 +141,87 @@ async function setupFilterPanel() {
     state.trailCategories,
     state.selectedTrailCategories
   );
+
+  // Listen for changes to update the state
+  parkList.addEventListener("calciteListChange", () => {
+    const item = parkList.selectedItems[0];
+    state.selectTrail(null);
+    state.selectPark(item.value);
+  });
+
+  trailCategoriesChipGroup.addEventListener("calciteChipGroupSelect", () => {
+    state.selectTrailCategories(
+      trailCategoriesChipGroup.selectedItems.map((chip) => chip.value)
+    );
+  });
 }
-
-parkList.addEventListener("calciteListChange", () => {
-  const item = parkList.selectedItems[0];
-  state.selectPark(item.value);
-});
-
-trailCategoriesChipGroup.addEventListener("calciteChipGroupSelect", () => {
-  state.selectTrailCategories(
-    trailCategoriesChipGroup.selectedItems.map((chip) => chip.value)
-  );
-});
-
-//--------------------------------------------------------------------------
-//
-//  Trails Table
-//
-//--------------------------------------------------------------------------
 
 function setupTrailsTable() {
   trailsTable.layer = state.layer;
   trailsTable.addEventListener("arcgisCellClick", async (event) => {
-    const feature = event.detail.feature;
-
-    if (!feature.geometry) {
-      const {
-        features: [{ geometry }],
-      } = await state.layer.queryFeatures({
-        objectIds: [feature.getObjectId()],
-        returnGeometry: true,
-      });
-      feature.geometry = geometry;
-    }
-
-    state.selectTrail(feature);
+    state.selectTrail(event.detail.feature);
   });
 }
-
-//--------------------------------------------------------------------------
-//
-//  Elevation Profile
-//
-//--------------------------------------------------------------------------
 
 function setupElevationProfile() {
-  elevationProfile.addEventListener("arcgisReady", async () => {
-    elevationProfile.addEventListener("arcgisPropertyChange", (e) => {
-      if (e.detail.name !== "progress") {
-        return;
-      }
+  const gainFormatter = new Intl.NumberFormat(parkList.locale, {
+    style: "unit",
+    unit: "meter",
+    maximumFractionDigits: 1,
+  });
+  const distanceFormatter = new Intl.NumberFormat(parkList.locale, {
+    style: "unit",
+    unit: "kilometer",
+    maximumFractionDigits: 1,
+  });
 
-      if (elevationProfile.progress === 1) {
-        const statistics = elevationProfile.profiles.items[0].statistics;
-        const gain =
-          Math.round((statistics.elevationGain + Number.EPSILON) * 100) / 100;
-        const distance =
-          Math.round((statistics.maxDistance + Number.EPSILON) * 100) / 100;
+  elevationProfile.addEventListener("arcgisPropertyChange", (e) => {
+    if (e.detail.name !== "progress") {
+      return;
+    }
 
-        document.querySelector("#elevationChip").innerText =
-          gain + " " + elevationProfile.effectiveUnits.elevation;
-        document.querySelector("#distanceChip").innerText =
-          distance + " " + elevationProfile.effectiveUnits.distance;
+    if (elevationProfile.progress === 1) {
+      const statistics = elevationProfile.profiles.items[0].statistics;
+      document.querySelector("#elevationChip").innerText = gainFormatter.format(
+        statistics.elevationGain
+      );
+      document.querySelector("#distanceChip").innerText =
+        distanceFormatter.format(statistics.maxDistance);
+    }
+  });
+}
+
+function setupPopup() {
+  // Dock the popup on top-right corner
+  mapElement.popup = {
+    actions: [],
+    dockEnabled: true,
+    dockOptions: {
+      buttonEnabled: false,
+      breakpoint: false,
+    },
+  };
+
+  reactiveUtils.watch(
+    () => mapElement.popup.selectedFeature,
+    (feature) => {
+      if (feature) {
+        state.selectTrail(feature);
       }
-    });
+    }
+  );
+}
+
+function setupSearch() {
+  search.addEventListener("arcgisSelectResult", (event) => {
+    const { result } = event.detail;
+    state.selectTrail(result.feature);
   });
 }
 
 //--------------------------------------------------------------------------
 //
-//  Park List
+//  DOM updates
 //
 //--------------------------------------------------------------------------
 
@@ -221,12 +246,6 @@ function updateParkList(parkList, parks, selectedParkName) {
     }
   );
 }
-
-//--------------------------------------------------------------------------
-//
-//  Trail Categories
-//
-//--------------------------------------------------------------------------
 
 function updateTrailCategoriesChipGroup(
   trailUseChipGroup,
@@ -254,28 +273,35 @@ function updateTrailCategoriesChipGroup(
 state.addEventListener("filterChange", () => {
   const layer = state.layer;
 
+  // Reflect the new selected trail categories in the UI
   updateTrailCategoriesChipGroup(
     trailCategoriesChipGroup,
     state.trailCategories,
     state.selectedTrailCategories
   );
 
+  // Create a where clause to filter the trails
+  //   - by park name
+  //   - by trail use categories
   const where = sqlAnd(
     createParkWhereClause(state.selectedParkName),
     createTrailUseWhereClause(state.selectedTrailCategories)
   );
 
+  // De-emphasize trails that don't match the filter
   layer.featureEffect = {
     filter: {
       where,
     },
-    excludedEffect: "grayscale(100%) opacity(50%)",
+    excludedEffect: "grayscale(100%) blur(4px) opacity(50%)",
   };
 
+  // Update the trails table with the filtered trails
   layer.queryObjectIds({ where }).then((objectIds) => {
     trailsTable.objectIds = objectIds;
   });
 
+  // Zoom to the selected park
   mapElement.goTo(state.selectedParkExtent);
 });
 
@@ -283,4 +309,10 @@ state.addEventListener("selectedTrailChange", () => {
   const trail = state.selectedTrail;
   elevationProfile.input = trail;
   trailsTable.highlightIds = trail ? [trail.getObjectId()] : [];
+  if (trail) {
+    mapElement.goTo(state.selectedTrail);
+    mapElement.openPopup({ features: [trail] });
+  } else {
+    mapElement.closePopup();
+  }
 });

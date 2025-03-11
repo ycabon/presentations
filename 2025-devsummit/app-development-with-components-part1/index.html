@@ -27,7 +27,7 @@
     />
     <script src="https://js.arcgis.com/4.32/"></script>
 
-    <!-- Add application specific code -->
+    <!-- Add application styling -->
     <link rel="stylesheet" href="./style.css" />
   </head>
 
@@ -40,6 +40,8 @@
           heading="US National Parks"
           description="Trail Explorer"
         ></calcite-navigation-logo>
+
+        <!-- Add a Search Component -->
         <arcgis-search
           id="search"
           reference-element="mapElement"
@@ -53,8 +55,10 @@
       </calcite-navigation>
 
       <div class="content-container">
+        <!-- Add a Map Component -->
         <arcgis-map id="mapElement" ground="world-elevation"> </arcgis-map>
 
+        <!-- Add a Table Component -->
         <arcgis-feature-table
           id="trailsTable"
           reference-element="mapElement"
@@ -63,12 +67,15 @@
 
         <calcite-panel id="elevationPanel" heading="Elevation profile">
           <calcite-chip-group slot="header-actions-end">
+            <!-- Add Chips components to display elevation gain and distance -->
             <calcite-chip
               id="distanceChip"
               icon="walking-distance"
             ></calcite-chip>
             <calcite-chip id="elevationChip" icon="altitude"></calcite-chip>
           </calcite-chip-group>
+
+          <!-- Add an Elevation Profile Component -->
           <arcgis-elevation-profile
             id="elevationProfile"
             reference-element="mapElement"
@@ -81,6 +88,7 @@
           ></arcgis-elevation-profile>
         </calcite-panel>
 
+        <!-- Add Filter Components -->
         <calcite-panel id="filterPanel" heading="Trail Filters">
           <calcite-block heading="Categories" open>
             <calcite-chip-group
@@ -105,6 +113,10 @@
       </div>
     </calcite-shell>
 
+    <!--
+        Add application code
+        type "module"
+    -->
     <script type="module" src="./main.js"></script>
   </body>
 </html>

@@ -1,5 +1,10 @@
 /** Layout */
 
+/*
+CSS Grid layout 
+generated with the help of https://cssgridgenerator.io/
+*/
+
 .content-container {
   height: calc(100% - 2rem);
   display: grid;

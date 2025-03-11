@@ -28,57 +28,55 @@
 
     <link rel="stylesheet" href="./style.css" />
 
-    <script>
-      require(["esri/WebMap"], (WebMap) =>
-        (async () => {
-          const startYear = 1880;
+    <script type="module">
+      const WebMap = await $arcgis.import("esri/WebMap");
+      const startYear = 1880;
 
-          // https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=4b0901f42a9d4006b0fd847555f693dc
-          // layers:
-          //   - Long table: Global Temperatures from 1880 to 2018 by row
-          //   - Wide table: Global Temperature anomalies by column
-          const map = new WebMap({
-            portalItem: {
-              id: "4b0901f42a9d4006b0fd847555f693dc",
-            },
-          });
+      // https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=4b0901f42a9d4006b0fd847555f693dc
+      // layers:
+      //   - Long table: Global Temperatures from 1880 to 2018 by row
+      //   - Wide table: Global Temperature anomalies by column
+      const map = new WebMap({
+        portalItem: {
+          id: "4b0901f42a9d4006b0fd847555f693dc",
+        },
+      });
 
-          await map.load();
-          map.layers = map.layers.filter(
-            (layer) =>
-              layer.title === "Global Temperatures from 1880 to 2018 by row"
-          );
-          const layer = map.layers.at(0);
+      await map.load();
+      map.layers = map.layers.filter(
+        (layer) =>
+          layer.title === "Global Temperatures from 1880 to 2018 by row"
+      );
+      const layer = map.layers.at(0);
 
-          layer.visible = true;
-          layer.definitionExpression = null;
-          layer.outFields = ["*"];
+      layer.visible = true;
+      layer.definitionExpression = null;
+      layer.outFields = ["*"];
 
-          // Configure the map element to display the map
-          const mapElement = document.querySelector("#mapElement");
-          mapElement.constraints = { snapToZoom: false };
-          mapElement.map = map;
+      // Configure the map element to display the map
+      const mapElement = document.querySelector("#mapElement");
+      mapElement.constraints = { snapToZoom: false };
+      mapElement.map = map;
 
-          const layerView = await mapElement.whenLayerView(layer);
+      const layerView = await mapElement.whenLayerView(layer);
 
-          // Update the year filter based on the slider input
-          const slider = document.querySelector("#yearSlider");
-          slider.addEventListener("calciteSliderInput", (event) => {
-            const year = event.target.value;
-            setYear(year);
-          });
+      // Update the year filter based on the slider input
+      const slider = document.querySelector("#yearSlider");
+      slider.addEventListener("calciteSliderInput", (event) => {
+        const year = event.target.value;
+        setYear(year);
+      });
 
-          async function setYear(value) {
-            slider.value = value;
+      async function setYear(value) {
+        slider.value = value;
 
-            // Update the client-side filter with the current year
-            layerView.filter = {
-              where: `YEAR = ${value}`,
-            };
-          }
+        // Update the client-side filter with the current year
+        layerView.filter = {
+          where: `YEAR = ${value}`,
+        };
+      }
 
-          setYear(startYear);
-        })());
+      setYear(startYear);
     </script>
   </head>
 

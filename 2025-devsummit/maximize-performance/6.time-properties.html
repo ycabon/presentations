@@ -28,82 +28,80 @@
 
     <link rel="stylesheet" href="./style.css" />
 
-    <script>
-      require(["esri/WebMap", "esri/core/reactiveUtils"], (
-        WebMap,
-        reactiveUtils
-      ) =>
-        (async () => {
-          const startYear = 1880;
+    <script type="module">
+      const [WebMap, reactiveUtils] = await $arcgis.import([
+        "esri/WebMap",
+        "esri/core/reactiveUtils",
+      ]);
+      const startYear = 1880;
 
-          // https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=4b0901f42a9d4006b0fd847555f693dc
-          // layers:
-          //   - Long table: Global Temperatures from 1880 to 2018 by row
-          //   - Wide table: Global Temperature anomalies by column
-          const map = new WebMap({
-            portalItem: {
-              id: "4b0901f42a9d4006b0fd847555f693dc",
-            },
-          });
+      // https://jsapi.maps.arcgis.com/apps/mapviewer/index.html?webmap=4b0901f42a9d4006b0fd847555f693dc
+      // layers:
+      //   - Long table: Global Temperatures from 1880 to 2018 by row
+      //   - Wide table: Global Temperature anomalies by column
+      const map = new WebMap({
+        portalItem: {
+          id: "4b0901f42a9d4006b0fd847555f693dc",
+        },
+      });
 
-          await map.load();
-          map.layers = map.layers.filter(
-            (layer) => layer.title === "Global Temperature anomalies by column"
-          );
-          const layer = map.layers.at(0);
+      await map.load();
+      map.layers = map.layers.filter(
+        (layer) => layer.title === "Global Temperature anomalies by column"
+      );
+      const layer = map.layers.at(0);
 
-          layer.visible = true;
-          layer.definitionExpression = null;
+      layer.visible = true;
+      layer.definitionExpression = null;
 
-          // Configure the renderer to compute the field name
-          // based on the year of the time extent which can be accessed
-          // via $view.timeProperties.currentStart
-          const valueExpression = `
-            Expects($feature, "_${startYear}")
-            var year = Year($view.timeProperties.currentStart)
-            var fieldName = "_" + year
-            return $feature[fieldName]
-          `;
+      // Configure the renderer to compute the field name
+      // based on the year of the time extent which can be accessed
+      // via $view.timeProperties.currentStart
+      const valueExpression = `
+          Expects($feature, "_${startYear}")
+          var year = Year($view.timeProperties.currentStart)
+          var fieldName = "_" + year
+          return $feature[fieldName]
+        `;
 
-          // Replace the field with the value expression
-          const renderer = layer.renderer.clone();
-          renderer.field = null;
-          renderer.valueExpression = valueExpression;
-          renderer.visualVariables.forEach((variable) => {
-            variable.field = null;
-            variable.valueExpression = valueExpression;
-          });
-          layer.renderer = renderer;
+      // Replace the field with the value expression
+      const renderer = layer.renderer.clone();
+      renderer.field = null;
+      renderer.valueExpression = valueExpression;
+      renderer.visualVariables.forEach((variable) => {
+        variable.field = null;
+        variable.valueExpression = valueExpression;
+      });
+      layer.renderer = renderer;
 
-          // Configure the map element to display the map
-          const mapElement = document.querySelector("#mapElement");
-          mapElement.constraints = { snapToZoom: false };
-          mapElement.timeExtent = {
-            start: new Date(startYear, 0, 1),
-          };
-          mapElement.map = map;
+      // Configure the map element to display the map
+      const mapElement = document.querySelector("#mapElement");
+      mapElement.constraints = { snapToZoom: false };
+      mapElement.timeExtent = {
+        start: new Date(startYear, 0, 1),
+      };
+      mapElement.map = map;
 
-          // Configure the time slider with:
-          //  - a full time extent from 1880 to 2018
-          //  - a stop interval of 1 year
-          // Time slider auto updates the map view's time extent
-          const timeSlider = document.querySelector("#timeSlider");
-          timeSlider.mode = "instant";
-          timeSlider.fullTimeExtent = {
-            start: new Date(1880, 0, 1),
-            end: new Date(2018, 0, 1),
-          };
-          timeSlider.stops = {
-            interval: {
-              value: 1,
-              unit: "years",
-            },
-          };
+      // Configure the time slider with:
+      //  - a full time extent from 1880 to 2018
+      //  - a stop interval of 1 year
+      // Time slider auto updates the map view's time extent
+      const timeSlider = document.querySelector("#timeSlider");
+      timeSlider.mode = "instant";
+      timeSlider.fullTimeExtent = {
+        start: new Date(1880, 0, 1),
+        end: new Date(2018, 0, 1),
+      };
+      timeSlider.stops = {
+        interval: {
+          value: 1,
+          unit: "years",
+        },
+      };
 
-          const layerView = await mapElement.whenLayerView(layer);
-          await reactiveUtils.whenOnce(() => !layerView.updating);
-          layer.outFields = ["*"];
-        })());
+      const layerView = await mapElement.whenLayerView(layer);
+      await reactiveUtils.whenOnce(() => !layerView.updating);
+      layer.outFields = ["*"];
     </script>
   </head>
 

@@ -98,7 +98,6 @@ const trailCategories = {
     "Horse",
     "Saddle",
     "PackOrSaddle",
-    "Pack",
   ]),
   Other: new Set(),
 };

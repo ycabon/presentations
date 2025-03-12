@@ -76,7 +76,7 @@
         slider.value = value;
 
         // Update the field used by the renderer and its visual variables
-        renderer = layer.renderer.clone();
+        const renderer = layer.renderer.clone();
         renderer.field = `_${value}`;
         renderer.visualVariables.forEach((variable) => {
           variable.field = `_${value}`;

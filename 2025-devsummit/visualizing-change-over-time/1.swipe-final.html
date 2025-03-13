@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>1. Swipe</title>
+
+    <!-- Load Calcite -->
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"
+    ></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.32/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.32/"></script>
+
+    <!-- Load map components -->
+    <script
+      type="module"
+      src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"
+    ></script>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- 1. add center and zoom -->
+    <arcgis-map id="mapElement" center="-116.51058,33.82255" zoom="13">
+      <!-- 3. add swipe -->
+      <arcgis-swipe
+        id="swipe"
+        direction="horizontal"
+        swipe-position="50"
+      ></arcgis-swipe>
+    </arcgis-map>
+
+    <script>
+      (async () => {
+        const [WebMap, Layer] = await $arcgis.import([
+          "esri/WebMap",
+          "esri/layers/Layer",
+        ]);
+
+        const mapElement = document.getElementById("mapElement");
+        const swipe = document.getElementById("swipe");
+
+        // 2. add layers from portal items
+        const layers = await Promise.all([
+          await Layer.fromPortalItem({
+            portalItem: {
+              id: "c76c760642f8407eaae1d68174fa2d2f",
+            },
+          }),
+          await Layer.fromPortalItem({
+            portalItem: {
+              id: "903f0abe9c3b452dafe1ca5b8dd858b9",
+            },
+          }),
+        ]);
+
+        const map = new WebMap({
+          basemap: "satellite",
+          layers,
+        });
+
+        mapElement.map = map;
+
+        // 4. configure leading and trailing layers
+        swipe.leadingLayers = [layers[0]];
+        swipe.trailingLayers = [layers[1]];
+      })();
+    </script>
+  </body>
+</html>

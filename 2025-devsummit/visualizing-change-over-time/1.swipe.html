@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>1. Swipe</title>
+
+    <!-- Load Calcite -->
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"
+    ></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.32/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.32/"></script>
+
+    <!-- Load map components -->
+    <script
+      type="module"
+      src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"
+    ></script>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- 1. add center and zoom -->
+    <arcgis-map id="mapElement" center="" zoom="">
+      <!-- 3. add swipe -->
+    </arcgis-map>
+
+    <script>
+      (async () => {
+        const [WebMap, Layer] = await $arcgis.import([
+          "esri/WebMap",
+          "esri/layers/Layer",
+        ]);
+
+        const mapElement = document.getElementById("mapElement");
+        const swipe = document.getElementById("swipe");
+
+        // 2. add layers from portal items
+        const layers = [];
+
+        const map = new WebMap({
+          basemap: "satellite",
+          layers,
+        });
+
+        mapElement.map = map;
+
+        // 4. configure leading and trailing layers
+      })();
+    </script>
+  </body>
+</html>

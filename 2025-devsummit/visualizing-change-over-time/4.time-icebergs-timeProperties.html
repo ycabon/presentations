@@ -1,0 +1,191 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+
+    <!-- Load Calcite -->
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"
+    ></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.32/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.32/"></script>
+
+    <!-- Load map components -->
+    <script
+      type="module"
+      src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"
+    ></script>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <arcgis-map id="mapElement"></arcgis-map>
+    <arcgis-time-slider
+      id="timeSlider"
+      mode="time-window"
+      play-rate="50"
+    ></arcgis-time-slider>
+  </body>
+
+  <script type="module">
+    (async () => {
+      const [WebMap, Extent, FeatureLayer, TileLayer, FeatureFilter] =
+        await $arcgis.import([
+          "esri/WebMap",
+          "esri/geometry/Extent",
+          "esri/layers/FeatureLayer",
+          "esri/layers/TileLayer",
+          "esri/layers/support/FeatureFilter",
+        ]);
+
+      const mapElement = document.getElementById("mapElement");
+      const timeSlider = document.getElementById("timeSlider");
+
+      // create dark spilhaus layer to use as basemap
+      //   https://www.arcgis.com/home/item.html?id=7f602ea6b536421e97134037db9d4f0c
+      const spilhausBasemap = new TileLayer({
+        portalItem: {
+          id: "7f602ea6b536421e97134037db9d4f0c",
+        },
+        // dim brightness to create darker style basemap
+        effect: "saturate(10%) brightness(0.3)",
+      });
+
+      // https://www.arcgis.com/home/item.html?id=a670418fe06e4ae5b1ea2d6b5312589c
+      const layer = new FeatureLayer({
+        portalItem: {
+          id: "a670418fe06e4ae5b1ea2d6b5312589c",
+        },
+        definitionExpression:
+          "date >= date '2002-09-08' AND date < date '2003-09-08'",
+        // effect: "bloom(150%, 1px, 0.2)",
+        renderer: {
+          type: "simple",
+          symbol: {
+            type: "picture-marker",
+            url: "data:image/png;base64,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",
+          },
+          visualVariables: [
+            {
+              type: "size",
+              field: "size",
+              minSize: 15,
+              maxSize: 45,
+              minDataValue: -7075,
+              maxDataValue: 130498,
+            },
+            {
+              type: "opacity",
+              valueExpression: `
+                return 15
+              `,
+              stops: [
+                {
+                  value: 0,
+                  opacity: 0,
+                },
+                {
+                  value: 15,
+                  opacity: 1,
+                },
+              ],
+            },
+          ],
+        },
+      });
+
+      layer.load().then(() => {
+        layer.timeInfo = {
+          startField: "date",
+        };
+      });
+
+      const map = new WebMap({
+        basemap: {
+          baseLayers: [spilhausBasemap],
+        },
+        layers: [layer],
+      });
+
+      mapElement.map = map;
+      mapElement.extent = new Extent({
+        spatialReference: {
+          wkid: 54099,
+        },
+        xmax: -2032652.513304136,
+        xmin: -4717765.305404721,
+        ymax: -3214349.9841679195,
+        ymin: -5231801.93573849,
+      });
+
+      timeSlider.stops = {
+        interval: {
+          value: 6,
+          unit: "hours",
+        },
+      };
+
+      // start time of the time slider
+      const start = new Date(2002, 8, 8);
+      let end = new Date(start.getTime() + 24 * 60 * 60 * 1000);
+
+      // set time slider's full extent until end date of layer's fullTimeExtent
+      timeSlider.fullTimeExtent = {
+        start,
+        end: new Date(2003, 8, 8),
+      };
+
+      // timeExtent property is set so that timeslider
+      // widget show the first day. We are setting
+      // the thumbs positions.
+      timeSlider.timeExtent = {
+        start,
+        end,
+      };
+
+      const layerView = await mapElement.whenLayerView(layer);
+
+      // update the filter and the renderer with a new arcade expression
+      function updateFilter() {
+        layerView.filter = new FeatureFilter({
+          timeExtent: timeSlider.timeExtent,
+        });
+
+        // update to use $view.timeProperties
+        // See profiles https://developers.arcgis.com/arcade/profiles/
+        const renderer = layer.renderer.clone();
+        renderer.visualVariables[1].valueExpression = `
+          var endDate = Date("${timeSlider.timeExtent.end.toISOString()}");
+          var curDate = $feature.date;
+          var diff = DateDiff(endDate, curDate, "days");
+          if (diff < 15) {
+            return 15 - diff
+          } else {
+            return 0
+          }
+        `;
+        layer.renderer = renderer;
+      }
+
+      // initialize the filter
+      updateFilter();
+
+      // Listen for further timeExtent changes
+      timeSlider.addEventListener("arcgisPropertyChange", async (event) => {
+        if (event.detail.name === "timeExtent") {
+          updateFilter();
+        }
+      });
+    })();
+  </script>
+</html>

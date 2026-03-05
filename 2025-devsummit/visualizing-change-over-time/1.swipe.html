@@ -32,8 +32,9 @@
 
   <body>
     <!-- 1. add center and zoom -->
-    <arcgis-map id="mapElement" center="" zoom="">
+    <arcgis-map id="mapElement" center="-116.51309,33.81896" zoom="13">
       <!-- 3. add swipe -->
+      <arcgis-swipe id="swipe" direction="horizontal" swipe-position="50"></arcgis-swipe>
     </arcgis-map>
 
     <script>
@@ -47,7 +48,19 @@
         const swipe = document.getElementById("swipe");
 
         // 2. add layers from portal items
-        const layers = [];
+        const layers = await Promise.all([
+          Layer.fromPortalItem({
+            portalItem: {
+              id: "903f0abe9c3b452dafe1ca5b8dd858b9"
+            }
+          }),
+          // 2024
+          Layer.fromPortalItem({
+            portalItem: {
+              id: "c76c760642f8407eaae1d68174fa2d2f"
+            }
+          })
+        ]);
 
         const map = new WebMap({
           basemap: "satellite",
@@ -57,6 +70,8 @@
         mapElement.map = map;
 
         // 4. configure leading and trailing layers
+        swipe.leadingLayers = [layers[0]];
+        swipe.trailingLayers = [layers[1]];
       })();
     </script>
   </body>

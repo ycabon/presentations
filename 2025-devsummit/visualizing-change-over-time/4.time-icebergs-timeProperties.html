@@ -88,16 +88,23 @@
             {
               type: "opacity",
               valueExpression: `
-                return 15
+                var endDate = $view.timeProperties.currentEnd;
+                var curDate = $feature.date;
+                var diff = DateDiff(endDate, curDate, "days");
+                if (diff < 15) {
+                  return 15 - diff
+                } else {
+                  return 0
+                }
               `,
               stops: [
                 {
                   value: 0,
-                  opacity: 0,
+                  opacity: 1,
                 },
                 {
                   value: 15,
-                  opacity: 1,
+                  opacity: 0,
                 },
               ],
             },
@@ -161,21 +168,6 @@
         layerView.filter = new FeatureFilter({
           timeExtent: timeSlider.timeExtent,
         });
-
-        // update to use $view.timeProperties
-        // See profiles https://developers.arcgis.com/arcade/profiles/
-        const renderer = layer.renderer.clone();
-        renderer.visualVariables[1].valueExpression = `
-          var endDate = Date("${timeSlider.timeExtent.end.toISOString()}");
-          var curDate = $feature.date;
-          var diff = DateDiff(endDate, curDate, "days");
-          if (diff < 15) {
-            return 15 - diff
-          } else {
-            return 0
-          }
-        `;
-        layer.renderer = renderer;
       }
 
       // initialize the filter

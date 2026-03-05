@@ -86,6 +86,14 @@
               maxDataValue: 130498,
             },
             // Add opacity visual variable with a stop at 0 and 15
+            {
+              type: "opacity",
+              valueExpression: "return 0",
+              stops: [
+                { value: 0, opacity: 1},
+                { value: 15, opacity: 0}
+              ]
+            }
           ],
         },
       });
@@ -156,6 +164,19 @@
         layerView.filter = new FeatureFilter({
           timeExtent: timeSlider.timeExtent,
         });
+
+        const renderer = layer.renderer.clone();
+        renderer.visualVariables[1].valueExpression = `
+          var endDate = Date("${timeSlider.timeExtent.end}");
+          var curDate = Date($feature.date);
+          var diff = DateDiff(endDate, curDate, "days");
+          if (diff < 15) {
+            return 15 - diff
+          } else {
+            return 0
+          }
+        `;
+          
       }
 
       // initialize the filter

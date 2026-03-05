@@ -31,7 +31,7 @@
 
   <body>
     <arcgis-map id="mapElement"></arcgis-map>
-    <!-- Add time slider with mode time-window and play-rate -->
+    <arcgis-time-slider id="timeSlider" mode="time-window" playrate="50"></arcgis-time-slider>
   </body>
 
   <script type="module">
@@ -150,7 +150,8 @@
 
       // Listen for further timeExtent changes
       timeSlider.addEventListener("arcgisPropertyChange", (event) => {
-        if (event.propertyName === "timeExtent") {
+        console.log(event)
+        if (event.detail.name === "timeExtent") {
           updateFilter();
         }
       });

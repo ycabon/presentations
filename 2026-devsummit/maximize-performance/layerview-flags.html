@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>
+      Scale-dependent DisplayFilter | Sample | ArcGIS Maps SDK for JavaScript
+    </title>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      #panel {
+        max-height: fit-content;
+        width: 280px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <calcite-shell>
+      <arcgis-map>
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+        <calcite-panel heading="LayerView Flags" id="panel" slot="top-right">
+          <div style="padding: 12px"></div>
+        </calcite-panel>
+        <arcgis-expand slot="top-left" mode="floating">
+          <arcgis-legend></arcgis-legend>
+        </arcgis-expand>
+      </arcgis-map>
+    </calcite-shell>
+    <script type="module">
+      const [Map, FeatureLayer] = await $arcgis.import([
+        "@arcgis/core/Map.js",
+        "@arcgis/core/layers/FeatureLayer.js",
+      ]);
+
+      // set up a scale dependent display filter for rivers layer
+      const layer = new FeatureLayer({
+        portalItem: {
+          id: "25e37d6a6c1649aab19af89331d102e0",
+        },
+
+        minScale: 0,
+        maxScale: 0,
+      });
+
+      // get the arcgis-map component element and wait for it to be ready
+      const viewElement = document.querySelector("arcgis-map");
+
+      viewElement.map = new Map({
+        basemap: "topo-vector",
+        layers: [layer],
+      });
+      viewElement.center = [-73.95, 40.73];
+      viewElement.zoom = 12;
+
+      // wait for the view element to be ready
+      await viewElement.viewOnReady();
+
+      // get the layer view for the rivers layer
+      const layerView = await viewElement.whenLayerView(layer);
+    </script>
+  </body>
+</html>

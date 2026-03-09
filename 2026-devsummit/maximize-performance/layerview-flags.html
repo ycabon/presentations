@@ -24,6 +24,68 @@
         max-height: fit-content;
         width: 280px;
       }
+
+      #flagContainer {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 6px 10px;
+        align-items: center;
+      }
+
+      .flag-name {
+        font-weight: 500;
+        color: var(--calcite-color-text-1, #2b2b2b);
+      }
+
+      .flag-value {
+        font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono",
+          monospace;
+      }
+
+      #transitionHeader {
+        margin-top: 10px;
+      }
+
+      #transitionControls {
+        display: flex;
+        justify-content: flex-end;
+        margin: 6px 0;
+      }
+
+      #transitionList {
+        margin: 0;
+        padding-left: 20px;
+        max-height: 160px;
+        overflow: auto;
+        font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono",
+          monospace;
+        font-size: 12px;
+      }
+
+      #transitionList li {
+        margin-bottom: 2px;
+      }
+
+      #transitionList li.latest {
+        animation: flashIn 700ms ease-out;
+      }
+
+      #transitionList li.row-true {
+        color: #1f7a3d;
+      }
+
+      #transitionList li.row-false {
+        color: #c0342a;
+      }
+
+      @keyframes flashIn {
+        from {
+          background: rgba(255, 214, 10, 0.35);
+        }
+        to {
+          background: transparent;
+        }
+      }
     </style>
   </head>
 
@@ -34,13 +96,68 @@
         <calcite-panel heading="LayerView Flags" id="panel" slot="top-right">
           <div style="padding: 12px">
             <calcite-label>
-              Features in view
+              Features on layer
+              <calcite-input
+                id="layerFeatureCount"
+                read-only
+                value="--"
+              ></calcite-input>
+            </calcite-label>
+            <calcite-label>
+              Features in memory
               <calcite-input
                 id="featureCount"
                 read-only
                 value="--"
               ></calcite-input>
             </calcite-label>
+            <calcite-label>LayerView status</calcite-label>
+            <div id="flagContainer">
+              <span class="flag-name">hasAllFeatures</span>
+              <calcite-input
+                class="flag-value"
+                id="flag-hasAllFeatures"
+                read-only
+                value="--"
+              ></calcite-input>
+
+              <span class="flag-name">hasAllFeaturesInView</span>
+              <calcite-input
+                class="flag-value"
+                id="flag-hasAllFeaturesInView"
+                read-only
+                value="--"
+              ></calcite-input>
+
+              <span class="flag-name">hasFullGeometries</span>
+              <calcite-input
+                class="flag-value"
+                id="flag-hasFullGeometries"
+                read-only
+                value="--"
+              ></calcite-input>
+
+              <span class="flag-name">availableFields</span>
+              <calcite-input
+                class="flag-value"
+                id="flag-availableFields"
+                read-only
+                value="--"
+              ></calcite-input>
+            </div>
+
+            <calcite-label id="transitionHeader"
+              >Transition order</calcite-label
+            >
+            <ol id="transitionList"></ol>
+            <div id="transitionControls">
+              <calcite-button
+                id="clearTransitions"
+                appearance="outline"
+                scale="s"
+                >Clear</calcite-button
+              >
+            </div>
           </div>
         </calcite-panel>
         <arcgis-expand slot="top-left" mode="floating">
@@ -75,7 +192,7 @@
         layers: [layer],
       });
       viewElement.center = [-73.95, 40.73];
-      viewElement.zoom = 12;
+      viewElement.zoom = 13;
 
       // wait for the view element to be ready
       await viewElement.viewOnReady();
@@ -83,10 +200,33 @@
       // get the layer view for the rivers layer
       const layerView = await viewElement.whenLayerView(layer);
 
+      const layerFeatureCountInput = document.querySelector("#layerFeatureCount");
       const featureCountInput = document.querySelector("#featureCount");
+      const transitionList = document.querySelector("#transitionList");
+      const clearTransitionsButton =
+        document.querySelector("#clearTransitions");
+      const flagInputs = {
+        hasAllFeatures: document.querySelector("#flag-hasAllFeatures"),
+        hasAllFeaturesInView: document.querySelector(
+          "#flag-hasAllFeaturesInView"
+        ),
+        hasFullGeometries: document.querySelector("#flag-hasFullGeometries"),
+        availableFields: document.querySelector("#flag-availableFields"),
+      };
       const numberFormat = new Intl.NumberFormat("en-US", {
         maximumFractionDigits: 0,
       });
+      const trackedProps = ["updating", "dataUpdating"];
+      const previousValues = {
+        updating: layerView.updating,
+        dataUpdating: layerView.dataUpdating,
+      };
+
+      clearTransitionsButton.addEventListener("click", () => {
+        transitionList.innerHTML = "";
+      });
+
+      updateLayerFeatureCount();
 
       reactiveUtils.watch(
         () => layerView.dataUpdating,
@@ -110,6 +250,79 @@
         const count = await layerView.queryFeatureCount(query);
         featureCountInput.value = numberFormat.format(count);
       });
+
+      async function updateLayerFeatureCount() {
+        try {
+          const count = await layer.queryFeatureCount();
+          layerFeatureCountInput.value = numberFormat.format(count);
+        } catch (error) {
+          layerFeatureCountInput.value = "--";
+        }
+      }
+
+      // keep the flag UI in sync with layerview properties
+      const flagProps = [
+        "hasAllFeatures",
+        "hasAllFeaturesInView",
+        "hasFullGeometries",
+        "availableFields",
+      ];
+
+      flagProps.forEach((prop) => {
+        reactiveUtils.watch(
+          () => layerView[prop],
+          (value) => updateFlag(prop, value),
+          { initial: true }
+        );
+      });
+
+      trackedProps.forEach((prop) => {
+        reactiveUtils.watch(
+          () => layerView[prop],
+          (value) => {
+            if (value === previousValues[prop]) return;
+            previousValues[prop] = value;
+            appendTransition(prop, value);
+          },
+          { initial: true }
+        );
+      });
+
+      function updateFlag(prop, value) {
+        const input = flagInputs[prop];
+        if (!input) return;
+
+        if (prop === "availableFields") {
+          const list = Array.isArray(value) ? value : [];
+          input.value = list.length ? list.join(", ") : "--";
+          return;
+        }
+
+        if (value === undefined) {
+          input.value = "--";
+          return;
+        }
+
+        const boolVal = value === true;
+        input.value = String(value);
+      }
+
+      function appendTransition(prop, value) {
+        const row = document.createElement("li");
+        row.textContent = `${prop} -> ${value}`;
+        row.classList.add("latest", value ? "row-true" : "row-false");
+
+        const previousLatest = transitionList.querySelector("li.latest");
+        if (previousLatest) {
+          previousLatest.classList.remove("latest");
+        }
+
+        transitionList.prepend(row);
+
+        while (transitionList.children.length > 10) {
+          transitionList.removeChild(transitionList.lastChild);
+        }
+      }
     </script>
   </body>
 </html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relative Date Filter Between Visualization</title>
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+    <style>
+      :root {
+        --vp-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+        --vp-c-bg: #ffffff;
+        --vp-c-bg-soft: #f3f4f6;
+        --vp-c-bg-alt: #fafafa;
+        --vp-c-bg-mute: #2f2f31;
+        --vp-c-text-1: #333333;
+        --vp-c-text-2: #4b5563;
+        --vp-c-divider: #e5e7eb;
+        --vp-c-brand-1: #0079c1;
+        --vp-c-brand-2: #005a92;
+      }
+
+      html.dark {
+        --vp-c-bg: #1e1e20;
+        --vp-c-bg-soft: #3a3a3c;
+        --vp-c-bg-alt: #232326;
+        --vp-c-text-1: #ebebf5;
+        --vp-c-text-2: #c3c6d1;
+        --vp-c-divider: #42424b;
+        --vp-c-brand-1: #0079c1;
+        --vp-c-brand-2: #005a92;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        background: var(--vp-c-bg);
+      }
+
+      .rdf-container {
+        font-family: var(
+          --vp-font-family-base,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif
+        );
+        /* background: var(--vp-c-bg, white); */
+        color: var(--vp-c-text-1, #333);
+        padding: 24px;
+        /* border-radius: 8px; */
+        /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--vp-c-divider, #e5e7eb); */
+        margin: 0 auto;
+        width: 100%;
+        max-width: 900px;
+        box-sizing: border-box;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+
+      .rdf-header h3 {
+        margin-top: 0;
+        margin-bottom: 8px;
+        color: var(--vp-c-text-1);
+      }
+
+      .rdf-header p {
+        margin-top: 0;
+        margin-bottom: 16px;
+        color: var(--vp-c-text-2, #4b5563);
+        font-size: 14px;
+      }
+
+      .rdf-canvas {
+        background: var(--vp-c-bg-alt, #fafafa);
+        border: 1px solid var(--vp-c-divider, #ddd);
+        border-radius: 6px;
+        margin-bottom: 20px;
+        width: 100%;
+        display: block;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+
+      .controls-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .native-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+      }
+
+      .native-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .native-btn.primary {
+        background-color: var(--vp-c-brand-1, #0079c1);
+        color: white;
+      }
+
+      .native-btn.primary:hover:not(:disabled) {
+        background-color: var(--vp-c-brand-2, #005a92);
+      }
+
+      html.dark .native-btn.primary {
+        background-color: var(--vp-c-bg-mute, #2f2f31);
+        color: var(--vp-c-text-2, #ebebf599);
+        border-color: var(--vp-c-divider, #42424b);
+      }
+
+      html.dark .native-btn.primary:hover:not(:disabled) {
+        background-color: var(--vp-c-bg-soft, #3a3a3c);
+        color: var(--vp-c-text-1, #ffffff);
+        border-color: var(--vp-c-brand-1, #0079c1);
+      }
+
+      .native-btn.outline {
+        background-color: transparent;
+        color: var(--vp-c-text-1);
+        border-color: var(--vp-c-divider);
+      }
+
+      .native-btn.outline:hover:not(:disabled) {
+        background-color: var(--vp-c-bg-soft);
+        border-color: var(--vp-c-text-2);
+      }
+
+      .native-checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--vp-c-text-1);
+        cursor: pointer;
+      }
+
+      .native-checkbox-label input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      .slider-container {
+        flex-grow: 1;
+        background: var(--vp-c-bg-soft, #f3f4f6);
+        padding: 12px 16px;
+        border-radius: 6px;
+        transition: background-color 0.3s;
+      }
+
+      .slider-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        margin-bottom: 12px;
+        color: var(--vp-c-text-1);
+        font-weight: 500;
+      }
+
+      .native-slider {
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .log {
+        font-size: 13px;
+        color: var(--vp-c-text-1, #1f2937);
+        background: var(--vp-c-bg-soft, #f3f4f6);
+        padding: 12px;
+        border-radius: 6px;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 64px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+        line-height: 1.5;
+        transition: background-color 0.3s;
+      }
+
+      .color-client {
+        color: #27ae60;
+        font-weight: 500;
+      }
+
+      .color-server {
+        color: #d35400;
+        font-weight: 500;
+      }
+
+      .color-sql {
+        color: #8e44ad;
+      }
+
+      html.dark .color-client {
+        color: #2ecc71;
+      }
+
+      html.dark .color-server {
+        color: #f39c12;
+      }
+
+      html.dark .color-sql {
+        color: #b27cea;
+      }
+
+      @media (max-width: 820px) {
+        body {
+          padding: 12px;
+        }
+
+        .rdf-container {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-panel heading="Relative Date Between Filter">
+        <div class="rdf-container">
+          <div class="rdf-header">
+            <h3>Relative Date Filter: BETWEEN Visualization</h3>
+            <p>
+              Adjust the interval slider and pause the playhead to see exactly
+              how the server vs. client boundaries are calculated at any given
+              <code>CURRENT_TIMESTAMP</code>.
+            </p>
+          </div>
+
+          <canvas
+            id="rdfCanvas"
+            width="760"
+            height="300"
+            class="rdf-canvas"
+          ></canvas>
+
+          <div class="controls-row">
+            <button class="native-btn primary" id="togglePlayBtn">
+              Pause Time
+            </button>
+
+            <button class="native-btn outline" id="executeQueryBtn" disabled>
+              Execute Query
+            </button>
+
+            <label class="native-checkbox-label">
+              <input type="checkbox" id="autoQueryInput" checked />
+              Auto-Query
+            </label>
+          </div>
+
+          <div class="controls-row">
+            <div class="slider-container">
+              <div class="slider-header">
+                <span>Interval Size</span>
+                <span id="intervalValue">2.5 minutes</span>
+              </div>
+              <input
+                id="intervalSlider"
+                type="range"
+                class="native-slider"
+                min="0.1"
+                max="4.0"
+                step="0.1"
+                value="2.5"
+              />
+            </div>
+          </div>
+
+          <div class="log" id="logContent">Waiting for query...</div>
+        </div>
+      </calcite-panel>
+    </calcite-shell>
+
+    <script>
+      const defaultBinWidth = 100;
+
+      function getRelativeDateFilterTheme(isDarkMode) {
+        return isDarkMode
+          ? {
+              grid: "#3a3a3c",
+              textBin: "#a1a1aa",
+              serverFill: "rgba(255, 153, 0, 0.15)",
+              serverStroke: "#d35400",
+              serverText: "#f39c12",
+              clientFill: "rgba(46, 204, 113, 0.15)",
+              clientStroke: "#27ae60",
+              clientText: "#2ecc71",
+              playhead: "#ff4d4d",
+              hatch: "rgba(255, 255, 255, 0.4)",
+            }
+          : {
+              grid: "#e0e0e0",
+              textBin: "#888888",
+              serverFill: "rgba(255, 153, 0, 0.25)",
+              serverStroke: "#e67e22",
+              serverText: "#d35400",
+              clientFill: "rgba(46, 204, 113, 0.6)",
+              clientStroke: "#27ae60",
+              clientText: "#27ae60",
+              playhead: "#e74c3c",
+              hatch: "rgba(0, 0, 0, 0.4)",
+            };
+      }
+
+      function getHatchPattern(context, color) {
+        const pCanvas = document.createElement("canvas");
+        pCanvas.width = 8;
+        pCanvas.height = 8;
+        const pCtx = pCanvas.getContext("2d");
+        if (!pCtx) {
+          return null;
+        }
+
+        pCtx.strokeStyle = color;
+        pCtx.lineWidth = 1;
+        pCtx.beginPath();
+        pCtx.moveTo(0, 8);
+        pCtx.lineTo(8, 0);
+        pCtx.stroke();
+        return context.createPattern(pCanvas, "repeat");
+      }
+
+      function formatRelativeDateFilterTimestamp(
+        px,
+        binWidth = defaultBinWidth
+      ) {
+        const baseTime = new Date("2026-01-01T12:00:00Z").getTime();
+        const msToAdd = (px / binWidth) * 60000;
+        const d = new Date(baseTime + msToAdd);
+        return `${d.toISOString().replace("T", " ").substring(0, 19)}.000`;
+      }
+
+      const canvas = document.getElementById("rdfCanvas");
+      const ctx = canvas.getContext("2d");
+      const togglePlayBtn = document.getElementById("togglePlayBtn");
+      const executeQueryBtn = document.getElementById("executeQueryBtn");
+      const autoQueryInput = document.getElementById("autoQueryInput");
+      const intervalSlider = document.getElementById("intervalSlider");
+      const intervalValue = document.getElementById("intervalValue");
+      const logContent = document.getElementById("logContent");
+
+      const state = {
+        binWidth: defaultBinWidth,
+        speed: 0.5,
+        isPlaying: true,
+        isAutoQuery: true,
+        intervalMinutes: 2.5,
+        isDarkMode: false,
+      };
+
+      let now = 200;
+      let lastQueryExact = null;
+      let lastQuerySnapped = null;
+      let animationFrameId = null;
+      let themeObserver = null;
+      let darkMediaQuery = null;
+
+      function setLogHtml(html) {
+        logContent.innerHTML = html;
+      }
+
+      function syncTheme() {
+        state.isDarkMode =
+          document.documentElement.classList.contains("dark") ||
+          (darkMediaQuery &&
+            darkMediaQuery.matches &&
+            !document.documentElement.classList.contains("light"));
+      }
+
+      function togglePlay() {
+        state.isPlaying = !state.isPlaying;
+        togglePlayBtn.textContent = state.isPlaying
+          ? "Pause Time"
+          : "Play Time";
+      }
+
+      function handleAutoQueryToggle() {
+        state.isAutoQuery = autoQueryInput.checked;
+        executeQueryBtn.disabled = state.isAutoQuery;
+        if (!state.isAutoQuery) {
+          setLogHtml("Auto-Query off. Waiting for manual query...");
+        }
+      }
+
+      function executeQuery() {
+        const interval = state.intervalMinutes * state.binWidth;
+
+        const exactEnd = now;
+        const exactStart = now - interval;
+        lastQueryExact = { start: exactStart, end: exactEnd };
+
+        const currentBinIndex = Math.floor(now / state.binWidth);
+        const binStart = currentBinIndex * state.binWidth;
+        const binEnd = (currentBinIndex + 1) * state.binWidth;
+
+        const snappedStart = binStart - interval;
+        const snappedEnd = binEnd;
+        lastQuerySnapped = { start: snappedStart, end: snappedEnd };
+
+        const sqlString = `UPDATED BETWEEN TIMESTAMP '${formatRelativeDateFilterTimestamp(
+          binStart,
+          state.binWidth
+        )}' - INTERVAL '${state.intervalMinutes.toFixed(
+          1
+        )}' MINUTE AND TIMESTAMP '${formatRelativeDateFilterTimestamp(
+          binEnd,
+          state.binWidth
+        )}'`;
+
+        setLogHtml(`
+          <strong>Query Active @ Timestamp: ${(now / state.binWidth).toFixed(
+            2
+          )} mins</strong><br>
+          <span class="color-client">Exact Filter:</span> ${(
+            exactStart / state.binWidth
+          ).toFixed(2)} to ${(exactEnd / state.binWidth).toFixed(
+          2
+        )} (Width: ${state.intervalMinutes.toFixed(1)}m)<br>
+          <span class="color-server">Server Query:</span> ${(
+            snappedStart / state.binWidth
+          ).toFixed(2)} to ${(snappedEnd / state.binWidth).toFixed(
+          2
+        )} (Width: ${((snappedEnd - snappedStart) / state.binWidth).toFixed(
+          1
+        )}m)<br><br>
+          <span class="color-sql"><strong>Generated SQL:</strong><br>${sqlString}</span>
+        `);
+      }
+
+      function handleSliderInput() {
+        state.intervalMinutes = Number(intervalSlider.value);
+        intervalValue.textContent = `${state.intervalMinutes.toFixed(
+          1
+        )} minutes`;
+
+        if (state.isAutoQuery || Boolean(lastQueryExact)) {
+          executeQuery();
+        }
+      }
+
+      function draw() {
+        const theme = getRelativeDateFilterTheme(state.isDarkMode);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = theme.grid;
+        ctx.lineWidth = 1;
+        for (let i = 0; i < canvas.width; i += state.binWidth) {
+          ctx.beginPath();
+          ctx.moveTo(i, 0);
+          ctx.lineTo(i, canvas.height);
+          ctx.stroke();
+          ctx.fillStyle = theme.textBin;
+          ctx.font = "12px sans-serif";
+          ctx.fillText(`Bin ${i / state.binWidth}`, i + 5, 20);
+        }
+
+        if (state.isAutoQuery) {
+          executeQuery();
+        }
+
+        if (lastQueryExact && lastQuerySnapped) {
+          const snappedW = lastQuerySnapped.end - lastQuerySnapped.start;
+          const exactW = lastQueryExact.end - lastQueryExact.start;
+
+          ctx.fillStyle = theme.serverText;
+          ctx.font = "bold 12px sans-serif";
+          ctx.fillText(
+            `1. Server Query: ${
+              snappedW / state.binWidth
+            } mins fetched (Hatched area is trimmed by client)`,
+            10,
+            60
+          );
+
+          ctx.fillStyle = theme.serverFill;
+          ctx.strokeStyle = theme.serverStroke;
+          ctx.lineWidth = 2;
+          ctx.fillRect(lastQuerySnapped.start, 70, snappedW, 40);
+          ctx.strokeRect(lastQuerySnapped.start, 70, snappedW, 40);
+
+          ctx.fillStyle = getHatchPattern(ctx, theme.hatch);
+
+          const leftDiscardW = Math.max(
+            0,
+            lastQueryExact.start - lastQuerySnapped.start
+          );
+          if (leftDiscardW > 0) {
+            ctx.fillRect(lastQuerySnapped.start, 70, leftDiscardW, 40);
+          }
+
+          const rightDiscardW = Math.max(
+            0,
+            lastQuerySnapped.end - lastQueryExact.end
+          );
+          if (rightDiscardW > 0) {
+            ctx.fillRect(lastQueryExact.end, 70, rightDiscardW, 40);
+          }
+
+          ctx.fillStyle = theme.clientText;
+          ctx.font = "bold 12px sans-serif";
+          ctx.fillText(
+            `2. Client Filter: ${exactW / state.binWidth} mins shown`,
+            10,
+            150
+          );
+
+          ctx.fillStyle = theme.clientFill;
+          ctx.strokeStyle = theme.clientStroke;
+          ctx.fillRect(lastQueryExact.start, 160, exactW, 40);
+          ctx.strokeRect(lastQueryExact.start, 160, exactW, 40);
+        }
+
+        ctx.strokeStyle = theme.playhead;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(now, 0);
+        ctx.lineTo(now, canvas.height - 30);
+        ctx.stroke();
+        ctx.fillStyle = theme.playhead;
+        ctx.beginPath();
+        ctx.arc(now, canvas.height - 30, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText(
+          "CURRENT_TIMESTAMP",
+          Math.max(10, Math.min(now - 65, canvas.width - 140)),
+          canvas.height - 10
+        );
+
+        if (state.isPlaying) {
+          now += state.speed;
+          if (now > canvas.width) {
+            now = 0;
+            if (!state.isAutoQuery) {
+              lastQueryExact = null;
+              lastQuerySnapped = null;
+              setLogHtml("Waiting for query...");
+            }
+          }
+        }
+
+        animationFrameId = requestAnimationFrame(draw);
+      }
+
+      function start() {
+        darkMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        syncTheme();
+
+        themeObserver = new MutationObserver(syncTheme);
+        themeObserver.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+        darkMediaQuery.addEventListener("change", syncTheme);
+
+        togglePlayBtn.addEventListener("click", togglePlay);
+        executeQueryBtn.addEventListener("click", executeQuery);
+        autoQueryInput.addEventListener("change", handleAutoQueryToggle);
+        intervalSlider.addEventListener("input", handleSliderInput);
+
+        draw();
+      }
+
+      window.addEventListener("beforeunload", () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+        if (themeObserver) {
+          themeObserver.disconnect();
+        }
+        if (darkMediaQuery) {
+          darkMediaQuery.removeEventListener("change", syncTheme);
+        }
+      });
+
+      start();
+    </script>
+  </body>
+</html>

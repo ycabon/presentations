@@ -38,6 +38,7 @@
       }
 
       .rdf-container {
+        margin: 0 auto;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
         /* background: var(--vp-c-bg, white); */
@@ -48,7 +49,7 @@
         /* border: 1px solid var(--vp-c-divider, #e5e7eb); */
         /* margin: 0 auto; */
         width: 100%;
-        /* max-width: 688px; */
+        max-width: 900px;
         box-sizing: border-box;
       }
 
@@ -124,6 +125,7 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+        flex: 0;
         border: 1px solid var(--vp-c-divider, #e5e7eb);
       }
 
@@ -282,7 +284,7 @@
   </head>
   <body>
     <calcite-shell>
-      <calcite-panel heading="Relative Time Filter Simulation">
+      <calcite-panel heading="Relative Date Filter Simulation">
         <div class="rdf-container">
           <div class="metrics-dashboard">
             <div class="metric-card db-hits">

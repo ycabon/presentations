@@ -60,6 +60,7 @@
         font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono",
           monospace;
         font-size: 12px;
+        list-style-type: none;
       }
 
       #transitionList li {
@@ -95,6 +96,26 @@
         <arcgis-zoom slot="top-left"></arcgis-zoom>
         <calcite-panel heading="LayerView Flags" id="panel" slot="top-right">
           <div style="padding: 12px">
+            <calcite-label
+              >Created_Date Filter
+              <arcgis-slider
+                range-labels-placement="end"
+                value-labels-placement="start"
+                value-labels-display="auto"
+                style="height: auto"
+                layout="horizontal"
+                show-range-labels
+              >
+                <arcgis-histogram
+                  slot="content-start"
+                  color-blending-enabled
+                  style="width: 242px; height: 60px"
+                  min="7500"
+                  max="200001"
+                  layout="horizontal"
+                ></arcgis-histogram>
+              </arcgis-slider>
+            </calcite-label>
             <calcite-label>
               Features on layer
               <calcite-input
@@ -149,7 +170,7 @@
             <calcite-label id="transitionHeader"
               >Transition order</calcite-label
             >
-            <ol id="transitionList"></ol>
+            <ul id="transitionList"></ul>
             <div id="transitionControls">
               <calcite-button
                 id="clearTransitions"
@@ -166,13 +187,17 @@
       </arcgis-map>
     </calcite-shell>
     <script type="module">
-      const [Map, FeatureLayer, reactiveUtils, promiseUtils] =
+      const [Map, FeatureLayer, sql, reactiveUtils, promiseUtils, histogram] =
         await $arcgis.import([
           "@arcgis/core/Map.js",
           "@arcgis/core/layers/FeatureLayer.js",
+          "@arcgis/core/core/sql.js",
           "@arcgis/core/core/reactiveUtils.js",
           "@arcgis/core/core/promiseUtils.js",
+          "@arcgis/core/smartMapping/statistics/histogram.js",
         ]);
+
+      let counter = 1;
 
       // set up a scale dependent display filter for rivers layer
       const layer = new FeatureLayer({
@@ -188,11 +213,11 @@
       const viewElement = document.querySelector("arcgis-map");
 
       viewElement.map = new Map({
-        basemap: "topo-vector",
+        basemap: "gray",
         layers: [layer],
       });
       viewElement.center = [-73.95, 40.73];
-      viewElement.zoom = 13;
+      viewElement.zoom = 12;
 
       // wait for the view element to be ready
       await viewElement.viewOnReady();
@@ -200,7 +225,10 @@
       // get the layer view for the rivers layer
       const layerView = await viewElement.whenLayerView(layer);
 
-      const layerFeatureCountInput = document.querySelector("#layerFeatureCount");
+      const dateSlider = document.querySelector("arcgis-slider");
+      const dateHistogram = document.querySelector("arcgis-histogram");
+      const layerFeatureCountInput =
+        document.querySelector("#layerFeatureCount");
       const featureCountInput = document.querySelector("#featureCount");
       const transitionList = document.querySelector("#transitionList");
       const clearTransitionsButton =
@@ -216,16 +244,28 @@
       const numberFormat = new Intl.NumberFormat("en-US", {
         maximumFractionDigits: 0,
       });
+      const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "short",
+      });
       const trackedProps = ["updating", "dataUpdating"];
       const previousValues = {
         updating: layerView.updating,
         dataUpdating: layerView.dataUpdating,
       };
 
+      dateSlider.labelFormatter = (value) => {
+        const asNumber = Number(value);
+        if (!Number.isFinite(asNumber)) {
+          return "--";
+        }
+        return shortDateFormatter.format(new Date(asNumber));
+      };
+
       clearTransitionsButton.addEventListener("click", () => {
         transitionList.innerHTML = "";
       });
 
+      await initializeCreatedDateFilter();
       updateLayerFeatureCount();
 
       reactiveUtils.watch(
@@ -258,6 +298,82 @@
         } catch (error) {
           layerFeatureCountInput.value = "--";
         }
+      }
+
+      async function initializeCreatedDateFilter() {
+        try {
+          const histogramResult = await histogram({
+            layer,
+            field: "Created_Date",
+            view: viewElement.view,
+            numBins: 60,
+          });
+
+          const minValue = Math.floor(histogramResult.minValue);
+          const maxValue = Math.ceil(histogramResult.maxValue);
+
+          dateSlider.min = minValue;
+          dateSlider.max = maxValue;
+          dateSlider.values = [minValue, maxValue];
+
+          dateHistogram.min = minValue;
+          dateHistogram.max = maxValue;
+          dateHistogram.bins = histogramResult.bins;
+
+          const applyFilter = () => {
+            const [minDate, maxDate] = dateSlider.values;
+            applyCreatedDateFilter(minDate, maxDate);
+          };
+
+          const updateHistogramColorStops = () => {
+            const [minDate, maxDate] = getSliderValues();
+            dateHistogram.colorStops = [
+              {
+                minValue: minDate,
+                maxValue: maxDate,
+              },
+            ];
+          };
+
+          dateSlider.addEventListener("arcgisInput", updateHistogramColorStops);
+          dateSlider.addEventListener("arcgisChange", applyFilter);
+
+          updateHistogramColorStops();
+          applyCreatedDateFilter(minValue, maxValue);
+        } catch (error) {
+          console.error("Failed to initialize Created_Date histogram", error);
+        }
+      }
+
+      function getSliderValues() {
+        const rawValues = dateSlider.values;
+
+        if (Array.isArray(rawValues) && rawValues.length === 2) {
+          return rawValues.map((value) => Number(value));
+        }
+
+        if (typeof rawValues === "string") {
+          const parsed = rawValues
+            .split(",")
+            .map((value) => Number(value.trim()));
+          if (
+            parsed.length === 2 &&
+            parsed.every((value) => Number.isFinite(value))
+          ) {
+            return parsed;
+          }
+        }
+
+        return [Number(dateSlider.min), Number(dateSlider.max)];
+      }
+
+      function applyCreatedDateFilter(minDate, maxDate) {
+        const min = Math.floor(minDate);
+        const max = Math.ceil(maxDate);
+        layer.definitionExpression = `Created_Date >= ${sql.sqlTimestampLiteral(
+          min
+        )} AND Created_Date <= ${sql.sqlTimestampLiteral(max)}`;
+        updateLayerFeatureCount();
       }
 
       // keep the flag UI in sync with layerview properties
@@ -309,7 +425,7 @@
 
       function appendTransition(prop, value) {
         const row = document.createElement("li");
-        row.textContent = `${prop} -> ${value}`;
+        row.textContent = `#${counter++} ${prop} -> ${value}`;
         row.classList.add("latest", value ? "row-true" : "row-false");
 
         const previousLatest = transitionList.querySelector("li.latest");

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relative Date Filter Load Animation</title>
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+    <style>
+      :root {
+        --vp-c-bg: #ffffff;
+        --vp-c-bg-soft: #f3f4f6;
+        --vp-c-bg-alt: #fafafa;
+        --vp-c-bg-mute: #e5e7eb;
+        --vp-c-text-1: #333333;
+        --vp-c-text-2: #4b5563;
+        --vp-c-divider: #e5e7eb;
+        --vp-c-brand-1: #0079c1;
+        --vp-c-brand-2: #005a92;
+      }
+
+      html.dark {
+        --vp-c-bg: #1e1e20;
+        --vp-c-bg-soft: #27272a;
+        --vp-c-bg-alt: #232326;
+        --vp-c-bg-mute: #2f2f31;
+        --vp-c-text-1: #e5e7eb;
+        --vp-c-text-2: #a1a1aa;
+        --vp-c-divider: #3a3a3c;
+        --vp-c-brand-1: #4da3ff;
+        --vp-c-brand-2: #2d7fce;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        background: var(--vp-c-bg);
+        color: var(--vp-c-text-1);
+      }
+
+      .rdf-container {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        /* background: var(--vp-c-bg, white); */
+        color: var(--vp-c-text-1, #333);
+        padding: 16px;
+        /* border-radius: 8px; */
+        /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); */
+        /* border: 1px solid var(--vp-c-divider, #e5e7eb); */
+        /* margin: 0 auto; */
+        width: 100%;
+        /* max-width: 688px; */
+        box-sizing: border-box;
+      }
+
+      .metrics-dashboard {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .metric-card {
+        flex: 1;
+        background: var(--vp-c-bg-soft, #f3f4f6);
+        border-radius: 8px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid var(--vp-c-divider, #e5e7eb);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      }
+
+      .metric-value {
+        font-size: 20px;
+        font-weight: 700;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+      }
+
+      .metric-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--vp-c-text-2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+      }
+
+      .metric-card.db-hits .metric-value {
+        color: #e74c3c;
+      }
+
+      .metric-card.server-hits .metric-value {
+        color: #3498db;
+      }
+
+      .metric-card.cdn-hits .metric-value {
+        color: #27ae60;
+      }
+
+      .metric-card.ratio.good .metric-value {
+        color: #27ae60;
+      }
+
+      .metric-card.ratio.bad .metric-value {
+        color: #e74c3c;
+      }
+
+      .rdf-canvas {
+        background: var(--vp-c-bg-alt, #fafafa);
+        border: 1px solid var(--vp-c-divider, #ddd);
+        border-radius: 8px;
+        margin-bottom: 20px;
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .controls-toolbar {
+        background: var(--vp-c-bg-soft, #f3f4f6);
+        padding: 14px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        border: 1px solid var(--vp-c-divider, #e5e7eb);
+      }
+
+      .toolbar-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-end;
+      }
+
+      .toolbar-row.primary-row {
+        border-bottom: 1px solid var(--vp-c-divider);
+        padding-bottom: 16px;
+      }
+
+      .spacer {
+        flex-grow: 1;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .control-group label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--vp-c-text-2);
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .segmented-control {
+        display: flex;
+        background: var(--vp-c-bg-alt, #e5e7eb);
+        padding: 3px;
+        border-radius: 6px;
+        gap: 2px;
+      }
+
+      .seg-btn {
+        background: transparent;
+        color: var(--vp-c-text-2);
+        border: none;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .seg-btn:hover:not(.active) {
+        color: var(--vp-c-text-1);
+      }
+
+      .seg-btn.active {
+        background: var(--vp-c-bg, white);
+        color: var(--vp-c-brand-1, #0079c1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        font-weight: 600;
+      }
+
+      .action-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 16px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+      }
+
+      .pill-btn.primary {
+        background: var(--vp-c-brand-1, #0079c1);
+        color: white;
+      }
+
+      .pill-btn.primary:hover {
+        background: var(--vp-c-brand-2, #005a92);
+      }
+
+      .pill-btn.secondary {
+        background: var(--vp-c-bg, white);
+        border-color: var(--vp-c-divider);
+        color: var(--vp-c-text-1);
+      }
+
+      .pill-btn.secondary:hover {
+        background: var(--vp-c-bg-alt);
+      }
+
+      .pill-btn.edit-btn {
+        background: #fdf2ff;
+        border-color: #d7bde2;
+        color: #8e44ad;
+      }
+
+      .pill-btn.edit-btn:hover {
+        background: #f4e8ff;
+        border-color: #c39bd3;
+      }
+
+      html.dark .segmented-control {
+        background: var(--vp-c-bg-mute, #2f2f31);
+      }
+
+      html.dark .seg-btn.active {
+        background: var(--vp-c-bg, #1e1e20);
+        color: #4da3ff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      html.dark .pill-btn.secondary {
+        background: var(--vp-c-bg-mute);
+        border-color: var(--vp-c-divider);
+      }
+
+      html.dark .pill-btn.secondary:hover {
+        background: var(--vp-c-bg-soft);
+      }
+
+      html.dark .pill-btn.edit-btn {
+        background: rgba(142, 68, 173, 0.15);
+        border-color: rgba(142, 68, 173, 0.4);
+        color: #c39bd3;
+      }
+
+      html.dark .pill-btn.edit-btn:hover {
+        background: rgba(142, 68, 173, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 12px;
+        }
+
+        .metrics-dashboard {
+          flex-wrap: wrap;
+        }
+
+        .metric-card {
+          min-width: calc(50% - 6px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <calcite-shell>
+      <calcite-panel heading="Relative Time Filter Simulation">
+        <div class="rdf-container">
+          <div class="metrics-dashboard">
+            <div class="metric-card db-hits">
+              <span class="metric-value" id="dbHitsValue">0</span>
+              <span class="metric-label">DB Queries</span>
+            </div>
+            <div class="metric-card server-hits">
+              <span class="metric-value" id="serverHitsValue">0</span>
+              <span class="metric-label">Server Cache</span>
+            </div>
+            <div class="metric-card cdn-hits">
+              <span class="metric-value" id="cdnHitsValue">0</span>
+              <span class="metric-label">CDN Cache</span>
+            </div>
+            <div class="metric-card ratio bad" id="ratioCard">
+              <span class="metric-value" id="cacheRatioValue">0%</span>
+              <span class="metric-label">Hit Ratio</span>
+            </div>
+          </div>
+
+          <canvas
+            id="rdfCanvas"
+            width="654"
+            height="460"
+            class="rdf-canvas"
+          ></canvas>
+
+          <div class="controls-toolbar">
+            <div class="toolbar-row primary-row">
+              <div class="control-group">
+                <label>Strategy</label>
+                <div class="segmented-control" id="strategyControl">
+                  <button
+                    class="seg-btn active"
+                    data-control="strategy"
+                    data-value="unoptimized"
+                  >
+                    Unoptimized
+                  </button>
+                  <button
+                    class="seg-btn"
+                    data-control="strategy"
+                    data-value="optimized"
+                  >
+                    Optimized
+                  </button>
+                </div>
+              </div>
+
+              <div class="spacer"></div>
+
+              <div class="action-group">
+                <button class="pill-btn primary" id="playPauseBtn">
+                  Pause
+                </button>
+                <button class="pill-btn secondary" id="clearBtn">Clear</button>
+                <button class="pill-btn edit-btn" id="editDbBtn">
+                  Edit DB
+                </button>
+              </div>
+            </div>
+
+            <div class="toolbar-row sub-parameters">
+              <div class="control-group">
+                <label>CDN TTL</label>
+                <div class="segmented-control" id="cdnControl">
+                  <button
+                    class="seg-btn active"
+                    data-control="cdn"
+                    data-value="0"
+                  >
+                    Off
+                  </button>
+                  <button class="seg-btn" data-control="cdn" data-value="30">
+                    30s
+                  </button>
+                  <button class="seg-btn" data-control="cdn" data-value="120">
+                    2m
+                  </button>
+                  <button class="seg-btn" data-control="cdn" data-value="300">
+                    5m
+                  </button>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label>Clients</label>
+                <div class="segmented-control" id="clientsControl">
+                  <button class="seg-btn" data-control="clients" data-value="1">
+                    1
+                  </button>
+                  <button
+                    class="seg-btn active"
+                    data-control="clients"
+                    data-value="10"
+                  >
+                    10
+                  </button>
+                  <button
+                    class="seg-btn"
+                    data-control="clients"
+                    data-value="50"
+                  >
+                    50
+                  </button>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label>Refresh</label>
+                <div class="segmented-control" id="refreshControl">
+                  <button
+                    class="seg-btn active"
+                    data-control="refresh"
+                    data-value="30"
+                  >
+                    30s
+                  </button>
+                  <button
+                    class="seg-btn"
+                    data-control="refresh"
+                    data-value="60"
+                  >
+                    1m
+                  </button>
+                  <button
+                    class="seg-btn"
+                    data-control="refresh"
+                    data-value="120"
+                  >
+                    2m
+                  </button>
+                  <button
+                    class="seg-btn"
+                    data-control="refresh"
+                    data-value="300"
+                  >
+                    5m
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </calcite-panel>
+    </calcite-shell>
+
+    <script>
+      const canvas = document.getElementById("rdfCanvas");
+      const ctx = canvas.getContext("2d");
+      const dbHitsValue = document.getElementById("dbHitsValue");
+      const serverHitsValue = document.getElementById("serverHitsValue");
+      const cdnHitsValue = document.getElementById("cdnHitsValue");
+      const cacheRatioValue = document.getElementById("cacheRatioValue");
+      const ratioCard = document.getElementById("ratioCard");
+      const playPauseBtn = document.getElementById("playPauseBtn");
+
+      const binWidthPx = 100;
+      const filterMins = 2.0;
+      const simSpeed = 0.005;
+      const PLAYHEAD_RIGHT_PADDING = 120;
+      const SERVER_CACHE_TTL_MINS = 5;
+
+      const state = {
+        isPlaying: true,
+        isOptimized: false,
+        numClients: 10,
+        refreshSeconds: 30,
+        cdnTtlSeconds: 0,
+        isDarkMode: false,
+        dbHitsCount: 0,
+        serverHitsCount: 0,
+        cdnHitsCount: 0,
+      };
+
+      let now = 100;
+      let clients = [];
+      let hitMarkers = [];
+      let dbEditMarkers = [];
+      let cdnCache = {};
+      let serverCache = {};
+      let animationFrameId = null;
+      let themeObserver = null;
+      let darkMediaQuery = null;
+
+      function updateMetricUI() {
+        dbHitsValue.textContent = String(state.dbHitsCount);
+        serverHitsValue.textContent = String(state.serverHitsCount);
+        cdnHitsValue.textContent = String(state.cdnHitsCount);
+
+        const total =
+          state.dbHitsCount + state.serverHitsCount + state.cdnHitsCount;
+        const cacheRatio =
+          total === 0
+            ? 0
+            : Math.round(
+                ((state.serverHitsCount + state.cdnHitsCount) / total) * 100
+              );
+        cacheRatioValue.textContent = cacheRatio + "%";
+
+        ratioCard.classList.toggle("good", cacheRatio > 50);
+        ratioCard.classList.toggle("bad", cacheRatio <= 50);
+      }
+
+      function setActiveButton(control, value) {
+        const selector = `[data-control="${control}"]`;
+        document.querySelectorAll(selector).forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.value === String(value)
+          );
+        });
+      }
+
+      function syncTheme() {
+        state.isDarkMode =
+          document.documentElement.classList.contains("dark") ||
+          (darkMediaQuery &&
+            darkMediaQuery.matches &&
+            !document.documentElement.classList.contains("light"));
+      }
+
+      function initSimulation() {
+        state.dbHitsCount = 0;
+        state.serverHitsCount = 0;
+        state.cdnHitsCount = 0;
+        hitMarkers = [];
+        dbEditMarkers = [];
+        cdnCache = {};
+        serverCache = {};
+
+        const refreshMins = state.refreshSeconds / 60;
+
+        clients = Array.from({ length: state.numClients }).map(() => ({
+          lastPing: now - Math.random() * refreshMins,
+          pings: [],
+        }));
+
+        updateMetricUI();
+      }
+
+      function getTheme() {
+        return state.isDarkMode
+          ? {
+              bg: "#1e1e20",
+              grid: "#3a3a3c",
+              textBin: "#a1a1aa",
+              dbLane: "rgba(231, 76, 60, 0.08)",
+              serverLane: "rgba(52, 152, 219, 0.08)",
+              cdnLane: "rgba(46, 204, 113, 0.08)",
+              cDb: "#e74c3c",
+              cServer: "#3498db",
+              cCdn: "#2ecc71",
+              boxOpacity: 0.3,
+              serverPayloadFill: "rgba(255, 255, 255, 0.05)",
+              serverPayloadStroke: "rgba(255, 255, 255, 0.15)",
+              playhead: "#ff4d4d",
+              staleLine: "#ff4d4d",
+              editLine: "#9b59b6",
+            }
+          : {
+              bg: "#fafafa",
+              grid: "#e0e0e0",
+              textBin: "#888888",
+              dbLane: "rgba(231, 76, 60, 0.08)",
+              serverLane: "rgba(52, 152, 219, 0.08)",
+              cdnLane: "rgba(46, 204, 113, 0.08)",
+              cDb: "#c0392b",
+              cServer: "#2980b9",
+              cCdn: "#27ae60",
+              boxOpacity: 0.6,
+              serverPayloadFill: "rgba(0, 0, 0, 0.05)",
+              serverPayloadStroke: "rgba(0, 0, 0, 0.15)",
+              playhead: "#e74c3c",
+              staleLine: "#c0392b",
+              editLine: "#8e44ad",
+            };
+      }
+
+      function draw() {
+        const displayWidth = Math.max(
+          1,
+          Math.floor(canvas.getBoundingClientRect().width)
+        );
+        if (canvas.width !== displayWidth) {
+          canvas.width = displayWidth;
+        }
+
+        const theme = getTheme();
+        const cw = canvas.width;
+        const ch = canvas.height;
+        const nowX = cw - PLAYHEAD_RIGHT_PADDING;
+
+        if (state.isPlaying) {
+          now += simSpeed;
+          const currentBin = Math.floor(now);
+          const refreshMins = state.refreshSeconds / 60;
+          const cdnTtlMins = state.cdnTtlSeconds / 60;
+
+          clients.forEach((client) => {
+            if (now - client.lastPing >= refreshMins) {
+              client.lastPing += refreshMins;
+
+              let hitType = "";
+              let serverStart;
+              let serverEnd;
+              let clientStart;
+              let clientEnd;
+
+              if (!state.isOptimized) {
+                const queryKey = "unoptimized_query_string";
+
+                if (
+                  cdnTtlMins > 0 &&
+                  cdnCache[queryKey] &&
+                  cdnCache[queryKey].expires > now
+                ) {
+                  hitType = "CDN";
+                  state.cdnHitsCount++;
+                  serverStart = cdnCache[queryKey].start;
+                  serverEnd = cdnCache[queryKey].end;
+                } else {
+                  hitType = "DB";
+                  state.dbHitsCount++;
+                  serverStart = client.lastPing - filterMins;
+                  serverEnd = client.lastPing;
+
+                  if (cdnTtlMins > 0) {
+                    cdnCache[queryKey] = {
+                      expires: now + cdnTtlMins,
+                      start: serverStart,
+                      end: serverEnd,
+                    };
+                  }
+                }
+
+                clientStart = serverStart;
+                clientEnd = serverEnd;
+              } else {
+                const binStart = currentBin - filterMins;
+                const binEnd = currentBin + 1;
+                const queryKey = `binned_${binStart}_${binEnd}`;
+
+                serverStart = binStart;
+                serverEnd = binEnd;
+
+                if (
+                  cdnTtlMins > 0 &&
+                  cdnCache[queryKey] &&
+                  cdnCache[queryKey].expires > now
+                ) {
+                  hitType = "CDN";
+                  state.cdnHitsCount++;
+                } else if (
+                  serverCache[queryKey] &&
+                  serverCache[queryKey].expires > now
+                ) {
+                  hitType = "SERVER";
+                  state.serverHitsCount++;
+                  if (cdnTtlMins > 0) {
+                    cdnCache[queryKey] = { expires: now + cdnTtlMins };
+                  }
+                } else {
+                  hitType = "DB";
+                  state.dbHitsCount++;
+                  serverCache[queryKey] = {
+                    expires: now + SERVER_CACHE_TTL_MINS,
+                  };
+                  if (cdnTtlMins > 0) {
+                    cdnCache[queryKey] = { expires: now + cdnTtlMins };
+                  }
+                }
+
+                clientStart = client.lastPing - filterMins;
+                clientEnd = client.lastPing;
+              }
+
+              hitMarkers.push({
+                t: client.lastPing,
+                type: hitType,
+                sStart: serverStart,
+                sEnd: serverEnd,
+              });
+              client.pings.push({
+                t: client.lastPing,
+                serverStart,
+                serverEnd,
+                clientStart,
+                clientEnd,
+                hitType,
+              });
+            }
+
+            client.pings = client.pings.filter(
+              (p) => (now - p.serverEnd) * binWidthPx < cw
+            );
+          });
+
+          hitMarkers = hitMarkers.filter((m) => (now - m.t) * binWidthPx < cw);
+          dbEditMarkers = dbEditMarkers.filter(
+            (t) => (now - t) * binWidthPx < cw
+          );
+
+          updateMetricUI();
+        }
+
+        ctx.clearRect(0, 0, cw, ch);
+
+        ctx.fillStyle = theme.cdnLane;
+        ctx.fillRect(0, 0, cw, 25);
+        ctx.fillStyle = theme.serverLane;
+        ctx.fillRect(0, 25, cw, 25);
+        ctx.fillStyle = theme.dbLane;
+        ctx.fillRect(0, 50, cw, 25);
+
+        ctx.fillStyle = theme.textBin;
+        ctx.font = "bold 10px sans-serif";
+        ctx.fillText("CDN HITS", 10, 16);
+        ctx.fillText("SERVER HITS", 10, 41);
+        ctx.fillText("DB HITS", 10, 66);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 75);
+        ctx.lineTo(cw, 75);
+        ctx.strokeStyle = theme.grid;
+        ctx.stroke();
+
+        ctx.strokeStyle = theme.grid;
+        ctx.lineWidth = 1;
+        const firstVisibleBin = Math.floor(now - nowX / binWidthPx);
+        const lastVisibleBin = Math.ceil(now + (cw - nowX) / binWidthPx);
+
+        for (let i = firstVisibleBin; i <= lastVisibleBin; i++) {
+          const x = nowX - (now - i) * binWidthPx;
+          ctx.beginPath();
+          ctx.moveTo(x, 75);
+          ctx.lineTo(x, ch);
+          ctx.stroke();
+          ctx.fillStyle = theme.textBin;
+          ctx.font = "10px sans-serif";
+          ctx.fillText(`Bin ${i}`, x + 5, 90);
+        }
+
+        hitMarkers.forEach((m) => {
+          const x = nowX - (now - m.t) * binWidthPx;
+          if (m.type === "CDN") {
+            ctx.fillStyle = theme.cCdn;
+            ctx.fillRect(x - 1, 5, 2, 15);
+          } else if (m.type === "SERVER") {
+            ctx.fillStyle = theme.cServer;
+            ctx.fillRect(x - 1, 30, 2, 15);
+          } else if (m.type === "DB") {
+            ctx.fillStyle = theme.cDb;
+            ctx.fillRect(x - 1, 55, 2, 15);
+          }
+        });
+
+        let lastEditLabelX = -999;
+        dbEditMarkers.forEach((t) => {
+          const x = nowX - (now - t) * binWidthPx;
+
+          ctx.beginPath();
+          ctx.setLineDash([4, 4]);
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, ch);
+          ctx.strokeStyle = theme.editLine;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          if (x - lastEditLabelX > 65) {
+            const text = "DB EDITED";
+            ctx.font = "bold 10px sans-serif";
+            const textWidth = ctx.measureText(text).width;
+
+            ctx.fillStyle = theme.bg;
+            ctx.globalAlpha = 0.85;
+            ctx.fillRect(x + 4, 30, textWidth + 4, 14);
+            ctx.globalAlpha = 1.0;
+
+            ctx.fillStyle = theme.editLine;
+            ctx.fillText(text, x + 6, 40);
+
+            lastEditLabelX = x;
+          }
+        });
+
+        const laneStartY = 95;
+        const laneAreaH = ch - laneStartY - 35;
+        const laneH = laneAreaH / state.numClients;
+
+        clients.forEach((client, idx) => {
+          const yCenter = laneStartY + idx * laneH + laneH / 2;
+
+          client.pings.forEach((ping) => {
+            const sStartX = nowX - (now - ping.serverStart) * binWidthPx;
+            const sEndX = nowX - (now - ping.serverEnd) * binWidthPx;
+            const cStartX = nowX - (now - ping.clientStart) * binWidthPx;
+            const cEndX = nowX - (now - ping.clientEnd) * binWidthPx;
+            const dotX = nowX - (now - ping.t) * binWidthPx;
+
+            const maxBoxHeight = Math.max(8, laneH * 0.8);
+            const innerBoxHeight = Math.max(4, maxBoxHeight * 0.6);
+
+            let strokeColor;
+            let fillColor;
+            if (ping.hitType === "CDN") {
+              strokeColor = theme.cCdn;
+              fillColor = `rgba(46, 204, 113, ${theme.boxOpacity})`;
+            } else if (ping.hitType === "SERVER") {
+              strokeColor = theme.cServer;
+              fillColor = `rgba(52, 152, 219, ${theme.boxOpacity})`;
+            } else {
+              strokeColor = theme.cDb;
+              fillColor = `rgba(231, 76, 60, ${theme.boxOpacity})`;
+            }
+
+            if (state.isOptimized) {
+              ctx.fillStyle = theme.serverPayloadFill;
+              ctx.fillRect(
+                sStartX,
+                yCenter - maxBoxHeight / 2,
+                sEndX - sStartX,
+                maxBoxHeight
+              );
+              ctx.strokeStyle = theme.serverPayloadStroke;
+              ctx.strokeRect(
+                sStartX,
+                yCenter - maxBoxHeight / 2,
+                sEndX - sStartX,
+                maxBoxHeight
+              );
+            }
+
+            ctx.fillStyle = fillColor;
+            ctx.strokeStyle = strokeColor;
+            ctx.fillRect(
+              cStartX,
+              yCenter - innerBoxHeight / 2,
+              cEndX - cStartX,
+              innerBoxHeight
+            );
+            ctx.strokeRect(
+              cStartX,
+              yCenter - innerBoxHeight / 2,
+              cEndX - cStartX,
+              innerBoxHeight
+            );
+
+            if (cEndX < dotX - 2) {
+              ctx.beginPath();
+              ctx.setLineDash([2, 2]);
+              ctx.moveTo(cEndX, yCenter);
+              ctx.lineTo(dotX, yCenter);
+              ctx.strokeStyle = theme.staleLine;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+              ctx.setLineDash([]);
+            }
+
+            ctx.fillStyle = strokeColor;
+            ctx.beginPath();
+            ctx.arc(
+              dotX,
+              yCenter,
+              Math.max(2, innerBoxHeight / 3),
+              0,
+              Math.PI * 2
+            );
+            ctx.fill();
+          });
+        });
+
+        ctx.strokeStyle = theme.playhead;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(nowX, 0);
+        ctx.lineTo(nowX, ch - 15);
+        ctx.stroke();
+        ctx.fillStyle = theme.playhead;
+        ctx.beginPath();
+        ctx.arc(nowX, ch - 15, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText("CURRENT_TIMESTAMP", nowX - 142, ch - 10);
+
+        animationFrameId = requestAnimationFrame(draw);
+      }
+
+      function setOptimization(isOptimized) {
+        state.isOptimized = isOptimized;
+        setActiveButton("strategy", isOptimized ? "optimized" : "unoptimized");
+        initSimulation();
+      }
+
+      function setClients(count) {
+        state.numClients = count;
+        setActiveButton("clients", count);
+        initSimulation();
+      }
+
+      function setCdn(seconds) {
+        state.cdnTtlSeconds = seconds;
+        setActiveButton("cdn", seconds);
+        initSimulation();
+      }
+
+      function setRefresh(seconds) {
+        state.refreshSeconds = seconds;
+        setActiveButton("refresh", seconds);
+        initSimulation();
+      }
+
+      function togglePlay() {
+        state.isPlaying = !state.isPlaying;
+        playPauseBtn.textContent = state.isPlaying ? "Pause" : "Play";
+      }
+
+      function clearSimulation() {
+        initSimulation();
+      }
+
+      function simulateDbEdit() {
+        serverCache = {};
+        dbEditMarkers.push(now);
+      }
+
+      function bindEvents() {
+        document
+          .querySelectorAll('[data-control="strategy"]')
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              setOptimization(button.dataset.value === "optimized");
+            });
+          });
+
+        document
+          .querySelectorAll('[data-control="clients"]')
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              setClients(Number(button.dataset.value));
+            });
+          });
+
+        document.querySelectorAll('[data-control="cdn"]').forEach((button) => {
+          button.addEventListener("click", () => {
+            setCdn(Number(button.dataset.value));
+          });
+        });
+
+        document
+          .querySelectorAll('[data-control="refresh"]')
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              setRefresh(Number(button.dataset.value));
+            });
+          });
+
+        playPauseBtn.addEventListener("click", togglePlay);
+        document
+          .getElementById("clearBtn")
+          .addEventListener("click", clearSimulation);
+        document
+          .getElementById("editDbBtn")
+          .addEventListener("click", simulateDbEdit);
+      }
+
+      function start() {
+        darkMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        syncTheme();
+
+        themeObserver = new MutationObserver(syncTheme);
+        themeObserver.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+        darkMediaQuery.addEventListener("change", syncTheme);
+
+        bindEvents();
+        initSimulation();
+        draw();
+      }
+
+      window.addEventListener("beforeunload", () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+        if (themeObserver) {
+          themeObserver.disconnect();
+        }
+        if (darkMediaQuery) {
+          darkMediaQuery.removeEventListener("change", syncTheme);
+        }
+      });
+
+      start();
+    </script>
+  </body>
+</html>

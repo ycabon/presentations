@@ -32,7 +32,16 @@
       <arcgis-map>
         <arcgis-zoom slot="top-left"></arcgis-zoom>
         <calcite-panel heading="LayerView Flags" id="panel" slot="top-right">
-          <div style="padding: 12px"></div>
+          <div style="padding: 12px">
+            <calcite-label>
+              Features in view
+              <calcite-input
+                id="featureCount"
+                read-only
+                value="--"
+              ></calcite-input>
+            </calcite-label>
+          </div>
         </calcite-panel>
         <arcgis-expand slot="top-left" mode="floating">
           <arcgis-legend></arcgis-legend>
@@ -40,10 +49,13 @@
       </arcgis-map>
     </calcite-shell>
     <script type="module">
-      const [Map, FeatureLayer] = await $arcgis.import([
-        "@arcgis/core/Map.js",
-        "@arcgis/core/layers/FeatureLayer.js",
-      ]);
+      const [Map, FeatureLayer, reactiveUtils, promiseUtils] =
+        await $arcgis.import([
+          "@arcgis/core/Map.js",
+          "@arcgis/core/layers/FeatureLayer.js",
+          "@arcgis/core/core/reactiveUtils.js",
+          "@arcgis/core/core/promiseUtils.js",
+        ]);
 
       // set up a scale dependent display filter for rivers layer
       const layer = new FeatureLayer({
@@ -70,6 +82,34 @@
 
       // get the layer view for the rivers layer
       const layerView = await viewElement.whenLayerView(layer);
+
+      const featureCountInput = document.querySelector("#featureCount");
+      const numberFormat = new Intl.NumberFormat("en-US", {
+        maximumFractionDigits: 0,
+      });
+
+      reactiveUtils.watch(
+        () => layerView.dataUpdating,
+        (value) => {
+          if (value) {
+            featureCountInput.loading = true;
+          } else {
+            updateFeatureCount().then(
+              () => {
+                featureCountInput.loading = false;
+              },
+              () => {}
+            );
+          }
+        }
+      );
+
+      const updateFeatureCount = promiseUtils.debounce(async () => {
+        // query for the number of features intersecting the current view
+        const query = layerView.createQuery();
+        const count = await layerView.queryFeatureCount(query);
+        featureCountInput.value = numberFormat.format(count);
+      });
     </script>
   </body>
 </html>

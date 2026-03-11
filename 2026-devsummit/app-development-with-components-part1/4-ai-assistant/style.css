@@ -7,7 +7,7 @@
     "filter-panel map-element  map-element     assistant"
     "filter-panel trails-table elevation-panel assistant";
   grid-template-rows: 1fr auto;
-  grid-template-columns: 400px 2fr 1fr 200px;
+  grid-template-columns: 400px 2fr 1fr 400px;
   gap: 1rem;
   margin: 1rem;
 }
@@ -47,6 +47,11 @@
 #elevationPanel calcite-chip-group {
   margin-inline-end: 0.5rem;
   align-self: center;
+}
+
+#elevationPanel > #elevationProfile {
+  width: 100%;
+  height: 100%;
 }
 
 .calciteBlockNoPadding {

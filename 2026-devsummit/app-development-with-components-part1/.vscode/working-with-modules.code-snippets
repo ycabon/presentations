@@ -48,5 +48,22 @@
 			"});"
 		],
 		"description": "Require AMD elevationAnalysisUtils and wire setupElevationStatsChips"
+	},
+	"ArcGIS Assistant Block": {
+		"scope": "html",
+		"prefix": "arcgis-assistant-block",
+		"body": [
+			"<arcgis-assistant",
+			"  id=\"assistant\"",
+			"  reference-element=\"\"",
+			"  heading=\"\"",
+			"  log-enabled",
+			">",
+			"  <arcgis-assistant-navigation-agent></arcgis-assistant-navigation-agent>",
+			"  <arcgis-assistant-data-exploration-agent></arcgis-assistant-data-exploration-agent>",
+			"  <!-- <arcgis-assistant-help-agent></arcgis-assistant-help-agent> -->",
+			"</arcgis-assistant>"
+		],
+		"description": "Insert ArcGIS assistant element with navigation and data exploration agents"
 	}
 }

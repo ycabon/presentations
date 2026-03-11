@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>
+      Scale-dependent DisplayFilter | Sample | ArcGIS Maps SDK for JavaScript
+    </title>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      #displayFilterPanel {
+        max-height: fit-content;
+        width: 280px;
+      }
+
+      calcite-input {
+        font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono",
+          monospace;
+      }
+    </style>
+  </head>
+
+  <body>
+    <calcite-shell>
+      <arcgis-map zoom="12" center="-90,30">
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+        <calcite-panel
+          heading="Display Filter Control"
+          id="displayFilterPanel"
+          slot="top-right"
+        >
+          <calcite-switch
+            id="displayFilterSwitch"
+            slot="header-actions-end"
+          ></calcite-switch>
+          <div style="padding: 12px">
+            <calcite-label>
+              Map scale
+              <calcite-input id="mapScaleInfo" read-only></calcite-input>
+            </calcite-label>
+            <calcite-label>
+              Active filter
+              <calcite-input id="activeFilterInfo" read-only></calcite-input>
+            </calcite-label>
+            <calcite-label>
+              Features in memory
+              <calcite-input
+                id="featureCount"
+                read-only
+                value="--"
+              ></calcite-input>
+            </calcite-label>
+          </div>
+          <calcite-block
+            id="scaleFilterBlock"
+            label="scale filter block"
+          ></calcite-block>
+        </calcite-panel>
+        <arcgis-expand slot="top-left" mode="floating">
+          <arcgis-legend></arcgis-legend>
+        </arcgis-expand>
+      </arcgis-map>
+    </calcite-shell>
+    <script type="module">
+      const [reactiveUtils, promiseUtils, Map, FeatureLayer] =
+        await $arcgis.import([
+          "@arcgis/core/core/reactiveUtils.js",
+          "@arcgis/core/core/promiseUtils.js",
+          "@arcgis/core/Map.js",
+          "@arcgis/core/layers/FeatureLayer.js",
+        ]);
+
+      // set up a scale dependent display filter for rivers layer
+      const layer = new FeatureLayer({
+        portalItem: {
+          id: "5fbbf39fe52f4cf88c95cce1223a09dd",
+        },
+        minScale: 0,
+        maxScale: 0,
+        outFields: ["streamOrder"],
+        displayFilterEnabled: false,
+        displayFilterInfo: {
+          mode: "scale",
+          filters: [
+            {
+              title: "streamOrder >= 8",
+              minScale: 0,
+              maxScale: 36_978_595.474_472,
+              where: "streamOrder >= 8",
+            },
+            {
+              title: "streamOrder >= 7",
+              minScale: 36_978_595.474_472,
+              maxScale: 18_489_297.737_236,
+              where: "streamOrder >= 7",
+            },
+            {
+              title: "streamOrder >= 6",
+              minScale: 18_489_297.737_236,
+              maxScale: 4_622_324.434_309,
+              where: "streamOrder >= 6",
+            },
+            {
+              title: "streamOrder >= 5",
+              minScale: 4_622_324.434_309,
+              maxScale: 1_155_581.1_085_775,
+              where: "streamOrder >= 5",
+            },
+            {
+              title: "all",
+              minScale: 1_155_581.1_085_775,
+              maxScale: 0,
+            },
+          ],
+        },
+      });
+
+      const numberFormat = new Intl.NumberFormat("en-US", {
+        maximumFractionDigits: 0,
+      });
+
+      const displayFilterSwitch = document.querySelector(
+        "#displayFilterSwitch"
+      );
+      displayFilterSwitch.addEventListener("calciteSwitchChange", () => {
+        layer.displayFilterEnabled = displayFilterSwitch.checked;
+        updateFilterInfo();
+      });
+
+      // get the arcgis-map component element and wait for it to be ready
+      const viewElement = document.querySelector("arcgis-map");
+      viewElement.map = new Map({
+        basemap: "gray",
+        layers: [layer],
+      });
+      viewElement.constraints = {
+        snapToZoom: false,
+      };
+
+      // wait for the view element to be ready
+      await viewElement.viewOnReady();
+
+      // get the layer view for the rivers layer
+      const layerView = await viewElement.whenLayerView(layer);
+
+      // update the display filter
+      updateFilterInfo();
+
+      // also update the display filter info when user zooms in/out or pans
+      viewElement.addEventListener("arcgisViewChange", (event) => {
+        updateFilterInfo();
+      });
+
+      function updateFilterInfo() {
+        document.querySelector("#mapScaleInfo").value = numberFormat.format(
+          viewElement.scale
+        );
+        document.querySelector("#activeFilterInfo").value =
+          layerView.effectiveDisplayFilter?.title ?? "--";
+      }
+
+      const featureCountInput = document.querySelector("#featureCount");
+
+      reactiveUtils.watch(
+        () => layerView.dataUpdating,
+        (value) => {
+          if (value) {
+            featureCountInput.loading = true;
+          } else {
+            updateFeatureCount().then(
+              () => {
+                featureCountInput.loading = false;
+              },
+              () => {}
+            );
+          }
+        }
+      );
+
+      const updateFeatureCount = promiseUtils.debounce(async () => {
+        // query for the number of features intersecting the current view
+        const query = layerView.createQuery();
+        const count = await layerView.queryFeatureCount(query);
+        featureCountInput.value = numberFormat.format(count);
+      });
+    </script>
+  </body>
+</html>

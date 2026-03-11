@@ -5,26 +5,10 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>6.time-properties</title>
-
-    <!-- Load Calcite -->
-    <script
-      type="module"
-      src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"
-    ></script>
+    <title>3.time-properties</title>
 
     <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.32/esri/themes/light/main.css"
-    />
-    <script src="https://js.arcgis.com/4.32/"></script>
-
-    <!-- Load map components -->
-    <script
-      type="module"
-      src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"
-    ></script>
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
 
     <link rel="stylesheet" href="./style.css" />
 
@@ -108,12 +92,13 @@
   <body>
     <div class="application-container">
       <arcgis-map id="mapElement" popup-disabled>
-        <arcgis-zoom position="top-left"></arcgis-zoom>
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+
+        <arcgis-time-slider
+          id="timeSlider"
+          reference-element="mapElement"
+        ></arcgis-time-slider>
       </arcgis-map>
-      <arcgis-time-slider
-        id="timeSlider"
-        reference-element="mapElement"
-      ></arcgis-time-slider>
     </div>
   </body>
 </html>

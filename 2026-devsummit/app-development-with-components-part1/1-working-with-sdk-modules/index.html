@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Zion National Park</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="https://js.arcgis.com/5.0"></script>
+  </head>
+
+  <body class="burnt-orange-theme">
+    <calcite-shell>
+      <calcite-navigation slot="header" id="nav">
+        <calcite-navigation-logo
+          href="#"
+          thumbnail="./hiker-48.svg"
+          alt="Application logo"
+          slot="logo"
+          heading="Zion Trail Explorer"
+        ></calcite-navigation-logo>
+        <arcgis-search
+          slot="content-end"
+          reference-element="map"
+        ></arcgis-search>
+      </calcite-navigation>
+
+      <div class="content-container">
+        <div class="content-start" id="map-div">
+          <calcite-panel id="map-container">
+            <arcgis-map
+              item-id="a2a490fe264c4363b4fa2981d03f43f5"
+              id="map"
+              ground="world-elevation"
+            >
+              <arcgis-expand slot="bottom-left">
+                <arcgis-legend></arcgis-legend>
+              </arcgis-expand>
+              <arcgis-popup
+                slot="popup"
+                hide-action-bar
+                hide-collapse-button
+                hide-feature-navigation
+                dock-enabled
+              ></arcgis-popup>
+              <arcgis-zoom slot="top-left"></arcgis-zoom>
+            </arcgis-map>
+            <calcite-panel id="elevation-panel" heading="Elevation profile">
+              <!-- <calcite-chip-group slot="header-actions-end">
+                <calcite-chip
+                  icon="walking-distance"
+                  id="distance"
+                ></calcite-chip>
+                <calcite-chip icon="altitude" id="elevation"></calcite-chip>
+              </calcite-chip-group> -->
+              <arcgis-elevation-profile
+                reference-element="map"
+                unit="imperial"
+                hide-clear-button
+                hide-legend
+                hide-settings-button
+              ></arcgis-elevation-profile>
+            </calcite-panel>
+          </calcite-panel>
+        </div>
+        <div class="content-end" id="table-div">
+          <calcite-panel>
+            <calcite-shell class="panel-shell">
+              <arcgis-feature-table
+                reference-element="map"
+                attachments-enabled
+                sync-view-selection
+              ></arcgis-feature-table>
+            </calcite-shell>
+          </calcite-panel>
+        </div>
+      </div>
+    </calcite-shell>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+arcgis-search {
+  display: flex;
+  margin-right: 1em;
+}
+
+.forest-theme {
+  --calcite-color-brand: #529853;
+  --calcite-color-brand-hover: #427a43;
+  --calcite-color-brand-press: #406340;
+  --calcite-color-text-1: #406340;
+  --calcite-color-text-2: #003600;
+  --calcite-color-focus: #bfd4bf;
+  --calcite-color-foreground-2: #d5e1d525;
+  --calcite-color-foreground-3: #ededed;
+  --calcite-navigation-background-color: #dfeae2;
+
+  calcite-navigation {
+    --calcite-color-text-1: #003600;
+  }
+
+  .content-start {
+    background: #fafcfa;
+  }
+
+  .content-end {
+    background: #edf0ed;
+  }
+}
+
+.orange-theme {
+  --calcite-color-brand: #d97000;
+  --calcite-color-brand-hover: #ab5f0e;
+  --calcite-color-brand-press: #804609;
+  --calcite-color-text-1: #361c00;
+  --calcite-color-text-2: #804609;
+  --calcite-color-focus: #d97000;
+  --calcite-color-foreground-2: #fbfaf9;
+  --calcite-color-foreground-3: #ededed;
+  --calcite-navigation-background-color: #fee6cb;
+
+  calcite-navigation {
+    --calcite-color-text-1: #361c00;
+  }
+}
+
+.burnt-orange-theme {
+  --calcite-color-brand: #bf6c13;
+  --calcite-color-brand-hover: #ab5f0e;
+  --calcite-color-brand-press: #804609;
+  --calcite-color-text-1: #361c00;
+  --calcite-color-text-2: #804609;
+  --calcite-color-focus: #bf6c13;
+  --calcite-color-foreground-2: #fbfaf9;
+  --calcite-color-foreground-3: #ededed;
+  --calcite-navigation-background-color: #fef5e5;
+
+  calcite-navigation {
+    --calcite-color-text-1: #361c00;
+  }
+
+  .content-start {
+    background: #efeae3;
+  }
+
+  .content-end {
+    background: #e7dfd7;
+  }
+}
+
+.brown-theme {
+  --calcite-color-brand: #a66e32;
+  --calcite-color-brand-hover: #ab5f0e;
+  --calcite-color-brand-press: #804609;
+  --calcite-color-text-1: #361c00;
+  --calcite-color-text-2: #804609;
+  --calcite-color-focus: #bf6c13;
+  --calcite-color-foreground-2: #fbfaf9;
+  --calcite-color-foreground-3: #ededed;
+  --calcite-navigation-background-color: #fef5e5;
+
+  calcite-navigation {
+    --calcite-color-text-1: #361c00;
+  }
+}
+
+arcgis-code-editor {
+  height: 100%;
+}
+
+calcite-navigation-logo {
+  --calcite-ui-icon-color: var(--calcite-color-brand);
+}
+
+arcgis-elevation-profile {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#elevation-panel {
+  box-shadow: none;
+  border: none;
+  height: 400px;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  border-radius: 0;
+  border-top: 1px solid var(--calcite-color-border-3);
+}
+
+#elevation-panel calcite-chip-group {
+  margin-inline-end: 0.5rem;
+}
+
+calcite-shell-panel[slot="panel-bottom"] {
+  margin-bottom: 1rem;
+}
+
+.esri-ui-corner .esri-component {
+  box-shadow: none;
+}
+
+calcite-chip-group {
+  align-self: center;
+}
+
+arcgis-feature-table {
+  height: 100%;
+}
+
+#map-container {
+  margin: 1rem;
+  width: calc(100% - 2rem);
+  border: 1px solid var(--calcite-color-border-2);
+  border-radius: 8px;
+  box-shadow: var(--calcite-shadow-md);
+}
+
+calcite-shell-panel[slot="panel-bottom"] {
+  margin-bottom: 1rem;
+}
+
+.esri-ui-corner .esri-component {
+  box-shadow: none;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background: #fafcfa;
+}
+
+.content-container calcite-panel:not(.esri-feature-table__content) {
+  margin: 1rem;
+  height: calc(100% - 2rem);
+  width: calc(100% - 2rem);
+  border-radius: 8px;
+  box-shadow: var(--calcite-shadow-sm);
+}
+
+.content-start {
+  height: 100%;
+  width: 65%;
+}
+
+.content-end {
+  height: 100%;
+  width: 35%;
+}
+
+/* Make calcite dialog content and editor fill available space */
+calcite-dialog > div {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 800px;
+  min-height: 500px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+calcite-tabs,
+calcite-tab {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+calcite-tab {
+  padding: 0;
+}

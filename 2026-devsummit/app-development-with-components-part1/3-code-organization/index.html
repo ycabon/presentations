@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>National Park Trails</title>
+
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <!-- Add application styling -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <calcite-shell class="custom-theme">
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo
+          slot="logo"
+          icon="map"
+          heading="US National Parks"
+          description="Trail Explorer"
+        ></calcite-navigation-logo>
+
+        <!-- Add a Search Component -->
+        <arcgis-search
+          id="search"
+          reference-element="mapElement"
+          active-source-index="0"
+          location-disabled
+          popup-disabled
+          result-graphic-disabled
+          search-all-disabled
+          slot="content-end"
+        ></arcgis-search>
+      </calcite-navigation>
+
+      <div class="content-container">
+        <!-- Add a Map Component -->
+        <arcgis-map id="mapElement"></arcgis-map>
+
+        <!-- Add a Table Component -->
+        <arcgis-feature-table
+          id="trailsTable"
+          reference-element="mapElement"
+          multiple-selection-disabled
+        ></arcgis-feature-table>
+
+        <calcite-panel id="elevationPanel" heading="Elevation profile">
+          <calcite-chip-group slot="header-actions-end">
+            <!-- Add Chips components to display elevation gain and distance -->
+            <calcite-chip
+              id="distanceChip"
+              icon="walking-distance"
+            ></calcite-chip>
+            <calcite-chip id="elevationChip" icon="altitude"></calcite-chip>
+          </calcite-chip-group>
+
+          <!-- Add an Elevation Profile Component -->
+          <arcgis-elevation-profile
+            id="elevationProfile"
+            reference-element="mapElement"
+            unit="metric"
+            hide-clear-button
+            hide-legend
+            hide-settings-button
+            hide-start-button
+            hide-select-button
+          ></arcgis-elevation-profile>
+        </calcite-panel>
+
+        <!-- Add Filter Components -->
+        <calcite-panel id="filterPanel" heading="Trail Filters">
+          <calcite-block heading="Categories" open>
+            <calcite-chip-group
+              id="trailCategoriesChipGroup"
+              selection-mode="multiple"
+            ></calcite-chip-group>
+          </calcite-block>
+          <calcite-block class="calciteBlockNoPadding" heading="Parks" open>
+            <calcite-list
+              id="parkList"
+              filter-enabled
+              label="Park features"
+              filter-label="Filter parks"
+              filter-placeholder="Filter parks"
+              interaction-mode="interactive"
+              selection-appearance="icon"
+              selection-mode="single-persist"
+            >
+            </calcite-list>
+          </calcite-block>
+        </calcite-panel>
+      </div>
+    </calcite-shell>
+
+    <!--
+        Add application code
+        type "module"
+    -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

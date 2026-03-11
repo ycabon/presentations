@@ -1,0 +1,51 @@
+{
+  "Elevation Analysis Utils AMD Module": {
+    "prefix": "elevation-analysis-utils-amd",
+    "description": "Insert AMD module with setupElevationStatsChips function",
+    "body": [
+      "define([], function () {",
+      "  async function setupElevationStatsChips(",
+      "    mapElement,",
+      "    elevationProfile,",
+      "    distanceElement,",
+      "    elevationElement",
+      "  ) {}",
+      "",
+      "  return {",
+      "    setupElevationStatsChips,",
+      "  };",
+      "});"
+    ]
+  },
+  "Elevation Stats Watch Block": {
+    "prefix": "elevation-stats-watch",
+    "description": "Insert watch logic for elevation profile analysis statistics",
+    "body": [
+      "await mapElement.viewOnReady();",
+      "await elevationProfile.componentOnReady();",
+      "",
+      "const analysisView = await mapElement.whenAnalysisView(",
+      "  elevationProfile.analysis",
+      ");",
+      "",
+      "reactiveUtils.watch(",
+      "  () => analysisView.statistics,",
+      "  (statistics) => {",
+      "    if (!statistics) {",
+      "      elevationElement.innerText = distanceElement.innerText = \"\";",
+      "      return;",
+      "    }",
+      "    const formatter = new Intl.NumberFormat(\"en-US\", {",
+      "      maximumFractionDigits: 2,",
+      "      style: \"unit\",",
+      "      unit: \"meter\",",
+      "    });",
+      "    const elevationGain = formatter.format(statistics.elevationGain);",
+      "    const distance = formatter.format(statistics.maxDistance);",
+      "    elevationElement.innerText = elevationGain;",
+      "    distanceElement.innerText = distance;",
+      "  }",
+      ");"
+    ]
+  }
+}

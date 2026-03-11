@@ -72,3 +72,31 @@ view.selectionManager.on("selection-change", async (event) => {
 //////////////////////////////////////////////////////
 //  Update Elevation Chips
 //////////////////////////////////////////////////////
+
+const reactiveUtils = await $arcgis.import("@arcgis/core/core/reactiveUtils");
+
+await mapElement.viewOnReady();
+await elevationProfile.componentOnReady();
+
+const analysisView = await mapElement.whenAnalysisView(
+  elevationProfile.analysis
+);
+
+reactiveUtils.watch(
+  () => analysisView.statistics,
+  (statistics) => {
+    if (!statistics) {
+      elevationElement.innerText = distanceElement.innerText = "";
+      return;
+    }
+    const formatter = new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 2,
+      style: "unit",
+      unit: "meter",
+    });
+    const elevationGain = formatter.format(statistics.elevationGain);
+    const distance = formatter.format(statistics.maxDistance);
+    elevationElement.innerText = elevationGain;
+    distanceElement.innerText = distance;
+  }
+);

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>FeatureLayer - 4.29</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv canvas {
+        filter: drop-shadow(0px 20px 15px #888);
+      }
+    </style>
+
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <script type="module">
+      const [Map, FeatureLayer, color] = await $arcgis.import([
+        "@arcgis/core/Map",
+        "@arcgis/core/layers/FeatureLayer",
+        "@arcgis/core/smartMapping/renderers/color",
+      ]);
+
+      // http://jsapi.maps.arcgis.com/home/item.html?id=715b438682ca4a92a899a26f3d06fff5
+
+      // commune boundaries from https://www.data.gouv.fr/fr/datasets/decoupage-administratif-communal-francais-issu-d-openstreetmap/
+      // Indicator https://statistiques-locales.insee.fr/#c=indicator&i=filosofi.med&s=2015
+
+      const layer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Median_Disposable_Income_2015/FeatureServer",
+        title: "Median Disposable Income 2015",
+        copyright:
+          "Insee | © les contributeurs d'OpenStreetMap sous licence ODbL",
+        opacity: 1,
+        renderer: {
+          type: "simple",
+          symbol: {
+            type: "simple-fill",
+            color: "gray",
+            outline: null,
+          },
+        },
+
+        // More in labelling part
+        labelingInfo: [
+          {
+            minScale: 500000,
+            labelExpressionInfo: {
+              expression: "$feature.nom",
+            },
+            symbol: {
+              type: "text",
+              font: {
+                size: 10,
+                family: "sans-serif",
+              },
+              haloColor: "rgba(255,255,255,0.8)",
+              haloSize: "1px",
+            },
+          },
+        ],
+      });
+
+      layer
+        .load()
+        .then(() =>
+          color.createContinuousRenderer({
+            layer,
+            field: "medianIncome2015",
+            theme: "above-and-below",
+          })
+        )
+        .then((result) => {
+          console.log(result);
+          result.renderer.defaultSymbol.outline = null;
+          result.renderer.classBreakInfos[0].symbol.outline = null;
+          layer.renderer = result.renderer;
+        });
+
+      const map = new Map({
+        layers: [layer],
+      });
+
+      const viewElement = document.querySelector("arcgis-map");
+      viewElement.map = map;
+      viewElement.spatialReference = {
+        wkid: 2154,
+      };
+      viewElement.center = {
+        spatialReference: {
+          wkid: 2154,
+        },
+        x: 603737.3294851505,
+        y: 6826948.894620353,
+      };
+      viewElement.scale = 2893742;
+    </script>
+  </head>
+
+  <body>
+    <arcgis-map>
+      <arcgis-legend slot="bottom-right"></arcgis-legend>
+    </arcgis-map>
+  </body>
+</html>
